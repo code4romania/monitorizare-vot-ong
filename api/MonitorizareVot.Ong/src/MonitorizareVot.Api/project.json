@@ -39,10 +39,13 @@
     "SimpleInjector.Integration.AspNetCore": "3.2.1",
     "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3",
     "Swashbuckle": "6.0.0-beta902",
-    "WebApiContrib.Core": "1.0.0",
     "FluentValidation": "6.4.0-beta3",
     "System.Linq.Queryable": "4.0.1",
-    "System.Collections.Immutable": "1.2.0"
+    "System.Collections.Immutable": "1.2.0",
+    "MonitorizareVot.Domain.Ong": "1.0.0-*",
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+    "Microsoft.Extensions.Configuration": "1.0.0"
   },
 
   "tools": {
