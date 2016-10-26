@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -75,6 +76,20 @@ namespace MonitorizareVot.Ong.Api
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            app.Use(async (context, next)=>
+            {
+                await next();
+
+                if(context.Response.StatusCode == 404  && !Path.HasExtension(context.Request.Path.Value)){
+                    context.Request.Path = "/index.html";
+                    await next();
+                } 
+            });
+
+            app.UseStaticFiles();
+
+            
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
