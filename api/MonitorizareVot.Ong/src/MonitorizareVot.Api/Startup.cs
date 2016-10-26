@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.Swagger.Model;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -34,6 +36,32 @@ namespace MonitorizareVot.Ong.Api
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            services.AddSwaggerGen();
+
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "Monitorizare Vot - API ONG",
+                    Description = "API care ofera suport portalului folosit de ONG.",
+                    TermsOfService = "TBD",
+                    Contact =
+                        new Contact
+                        {
+                            Email = "info@monitorizarevot.ro",
+                            Name = "Code for Romania",
+                            Url = "http://monitorizarevot.ro"
+                        },
+                });
+
+                var path = PlatformServices.Default.Application.ApplicationBasePath +
+                           System.IO.Path.DirectorySeparatorChar + "MonitorizareVot.Ong.Api.xml";
+
+                if (System.IO.File.Exists(path))
+                    options.IncludeXmlComments(path);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -47,6 +75,12 @@ namespace MonitorizareVot.Ong.Api
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
+            app.UseSwaggerUi();
         }
     }
 }
