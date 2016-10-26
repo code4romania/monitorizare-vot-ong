@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A77D74C-3CB5-4C26-943E-51DEEB0ACB2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0CFB5F5F-3419-4D47-BEC0-C99FD1006380}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MonitorizareVot.Api", "src\MonitorizareVot.Api\MonitorizareVot.Api.xproj", "{18837128-04C4-4671-9DB8-F79342959FB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18837128-04C4-4671-9DB8-F79342959FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18837128-04C4-4671-9DB8-F79342959FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18837128-04C4-4671-9DB8-F79342959FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18837128-04C4-4671-9DB8-F79342959FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18837128-04C4-4671-9DB8-F79342959FB8} = {5A77D74C-3CB5-4C26-943E-51DEEB0ACB2C}
+	EndGlobalSection
+EndGlobal
