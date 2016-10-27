@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operator/map';
 import { SharedModule } from './shared/shared.module';
 import { AnswersModule } from './answers/answers.module';
 import { HeaderModule } from './header/header.module';

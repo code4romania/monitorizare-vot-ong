@@ -1,18 +1,20 @@
 import { Answer } from '../shared/answer.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-answers-list',
   templateUrl: './answers-list.component.html',
   styleUrls: ['./answers-list.component.scss']
 })
-export class AnswersListComponent implements OnInit{
+export class AnswersListComponent implements OnInit, OnChanges{
 
   constructor() { }
 
   @Input() answers:Answer[];
 
   ngOnInit() {  
+  }
+  ngOnChanges(changes: SimpleChanges){
   }
 
   

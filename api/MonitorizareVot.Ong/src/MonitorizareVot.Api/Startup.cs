@@ -64,8 +64,6 @@ namespace MonitorizareVot.Ong.Api
 
             services.AddMvc();
 
-            services.AddCors();
-
             services.AddSwaggerGen();
 
             services.ConfigureSwaggerGen(options =>
@@ -108,10 +106,6 @@ namespace MonitorizareVot.Ong.Api
                 .ApplicationInsightsTraces(Configuration["ApplicationInsights:InstrumentationKey"])
                 .CreateLogger();
 
-            // Shows UseCors with CorsPolicyBuilder.
-            app.UseCors(builder =>
-               builder.AllowAnyHeader().AllowAnyOrigin());
-
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
@@ -122,8 +116,7 @@ namespace MonitorizareVot.Ong.Api
             app.Use(async (context, next)=>
             {
                 await next();
-
-                if(context.Response.StatusCode == 404  && !Path.HasExtension(context.Request.Path.Value)){
+                if(context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api")  && !Path.HasExtension(context.Request.Path.Value)){
                     context.Request.Path = "/index.html";
                     await next();
                 } 
@@ -160,6 +153,16 @@ namespace MonitorizareVot.Ong.Api
             BuildMediator();
 
             container.Verify();
+
+            app.Use(async (context, next) => {
+                if(context.Request.Path.Value.StartsWith("/api")){
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+                    context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+                }
+                await next();
+            });
 
             app.UseMvc();
             

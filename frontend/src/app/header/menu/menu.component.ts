@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MdTabGroup } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -8,6 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
+  @ViewChild(MdTabGroup) tabGroup : MdTabGroup;
   menuItems = [
     {
       link: '/raspunsuri/urgente',
@@ -28,8 +30,6 @@ export class MenuComponent implements OnInit {
       active: false
     }
   ];
-
-  selectedIndex: number;
 
   constructor(private router: Router) { }
 
@@ -52,7 +52,7 @@ export class MenuComponent implements OnInit {
   updateActiveTab() {
     this.menuItems.forEach((menuItem, index) => {
       if(this.router.isActive(menuItem.link, true)){
-        this.selectedIndex = index;
+        this.tabGroup.selectedIndex = index;
       }
     });
   }

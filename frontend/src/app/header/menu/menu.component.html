@@ -1,4 +1,4 @@
-<md-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabSelectedChange($event)">
+<md-tab-group (selectChange)="onTabSelectedChange($event)">
 	<md-tab *ngFor="let menuItem of menuItems">
 		<template class="thisistestclass" md-tab-label>
 			<a [routerLink]="menuItem.link" [routerLinkActive]="'active'">

@@ -1,4 +1,6 @@
 export class Answer{
-    public id: number;
-    public section:string;
+    public sectie: String;
+    public observator: String;
+    public idSectie: number;
+    public idObservator: number;
 }

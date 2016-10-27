@@ -1,5 +1,6 @@
 import { Http } from '@angular/http';
 import { Component } from '@angular/core';
+import 'rxjs/Rx'; 
 
 @Component({
   selector: 'app-root',
