@@ -64,6 +64,8 @@ namespace MonitorizareVot.Ong.Api
 
             services.AddMvc();
 
+            services.AddCors();
+
             services.AddSwaggerGen();
 
             services.ConfigureSwaggerGen(options =>
@@ -105,6 +107,10 @@ namespace MonitorizareVot.Ong.Api
                 .WriteTo
                 .ApplicationInsightsTraces(Configuration["ApplicationInsights:InstrumentationKey"])
                 .CreateLogger();
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+               builder.AllowAnyHeader().AllowAnyOrigin());
 
             app.UseApplicationInsightsRequestTelemetry();
 
