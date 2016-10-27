@@ -79,13 +79,14 @@
 
   "publishOptions": {
     "include": [
+      "wwwroot",
       "appsettings.json",
       "web.config"
     ]
   },
 
   "scripts": {
-    // "precompile": [ "dotnet restore" ],
+    //"prepublish": "ng build --target=production",
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
