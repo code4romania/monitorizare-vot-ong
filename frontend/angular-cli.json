@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "wwwroot",
+      "outDir": "../api/MonitorizareVot.Ong/src/MonitorizareVot.Api/wwwroot",
       "assets": "assets",
       "index": "index.html",
       "main": "main.ts",
