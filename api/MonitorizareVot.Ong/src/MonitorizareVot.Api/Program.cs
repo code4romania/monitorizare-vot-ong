@@ -9,7 +9,7 @@ namespace MonitorizareVot.Ong.Api
         public static void Main(string[] args)
         {
             var currentDir = Directory.GetCurrentDirectory();            
-            currentDir = GetParent(currentDir, 4) + "\\frontend";
+           // currentDir = GetParent(currentDir, 4) + "\\frontend";
             // maybe rewrite this as an extension method ( couldn't do that :D )
             var host = new WebHostBuilder()
                 .UseKestrel()

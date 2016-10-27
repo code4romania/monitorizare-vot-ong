@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
@@ -9,8 +10,14 @@ namespace MonitorizareVot.Ong.Api.Controllers
     [Route("api/v1/raspunsuri")]
     public class Raspunsuri : Controller
     {
+        private readonly IMediator _mediator;
+
+        public Raspunsuri(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
         [HttpGet()]
-        public async Task<Raspuns<ListaRaspunsuri<RaspunsuriModel>>> Urgente(FiltruRaspunsuriModel model)
+        public async Task<Raspuns<ListaRaspunsuri<RaspunsuriModel>>> Get(FiltruRaspunsuriModel model)
         {
             return await Task.FromResult(new Raspuns<ListaRaspunsuri<RaspunsuriModel>>
             {

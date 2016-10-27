@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MonitorizareVot.Domain.Ong
+namespace MonitorizareVot.Ong.Api.Tests
 {
     public class Class1
     {
