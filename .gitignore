@@ -250,3 +250,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/publish-module.psm1
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/mvonguat-publish.ps1
