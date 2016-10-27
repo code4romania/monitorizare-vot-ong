@@ -6,6 +6,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 {
     public partial class OngContext : DbContext
     {
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AccesObservatoriPerDevice>(entity =>
@@ -177,20 +178,13 @@ namespace MonitorizareVot.Domain.Ong.Models
 
             modelBuilder.Entity<Raspuns>(entity =>
             {
-                entity.HasKey(e => new { e.IdObservator, e.IdSectieDeVotare, e.IdIntrebare, e.IdOptiune })
-                    .HasName("PK_Raspuns");
-
-                entity.HasIndex(e => e.IdIntrebare)
-                    .HasName("IX_Raspuns_IdIntrebare");
-
-                entity.HasIndex(e => e.IdObservator)
-                    .HasName("IX_Raspuns_IdObservator");
-
-                entity.HasIndex(e => e.IdOptiune)
-                    .HasName("IX_Raspuns_IdOptiune");
+                entity.HasKey(e => e.IdObservator)
+                    .HasName("PK_Raspuns_1");
 
                 entity.HasIndex(e => e.IdSectieDeVotare)
                     .HasName("IX_Raspuns_IdSectieDeVotare");
+
+                entity.Property(e => e.IdObservator).ValueGeneratedNever();
 
                 entity.Property(e => e.DataUltimeiModificari)
                     .HasColumnType("datetime")
@@ -198,23 +192,17 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Value).HasMaxLength(1000);
 
-                entity.HasOne(d => d.IdIntrebareNavigation)
-                    .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdIntrebare)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Raspuns_Intrebare");
-
                 entity.HasOne(d => d.IdObservatorNavigation)
-                    .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdObservator)
+                    .WithOne(p => p.Raspuns)
+                    .HasForeignKey<Raspuns>(d => d.IdObservator)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Raspuns_Observator");
 
-                entity.HasOne(d => d.IdOptiuneNavigation)
+                entity.HasOne(d => d.IdRaspunsDisponibilNavigation)
                     .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdOptiune)
+                    .HasForeignKey(d => d.IdRaspunsDisponibil)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Raspuns_Optiune");
+                    .HasConstraintName("FK_Raspuns_RaspunsDisponibil");
 
                 entity.HasOne(d => d.IdSectieDeVotareNavigation)
                     .WithMany(p => p.Raspuns)
@@ -232,6 +220,10 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.HasIndex(e => e.IdOptiune)
                     .HasName("IX_RaspunsDisponibil_IdOptiune");
+
+                entity.HasIndex(e => new { e.IdOptiune, e.IdIntrebare })
+                    .HasName("IX_RaspunsDisponibil")
+                    .IsUnique();
 
                 entity.Property(e => e.IdRaspunsDisponibil).ValueGeneratedNever();
 

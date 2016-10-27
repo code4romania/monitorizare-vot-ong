@@ -36,11 +36,11 @@ namespace MonitorizareVot.Domain.Ong
             using (var serviceScope = provider.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<OngContext>();
-                logger.LogDebug($"Initializing Migration for OngContext...");
-                context.Database.Migrate();
+                logger.LogDebug($"Initializing Database...");
+                context.Database.EnsureCreated();
                 logger.LogDebug($"Migration finished");
                 logger.LogDebug($"Initializing data seeding...");
-                //context.EnsureSeedData();
+                context.EnsureSeedData();
                 logger.LogDebug($"Data seeded for {conn}");
 
             }
