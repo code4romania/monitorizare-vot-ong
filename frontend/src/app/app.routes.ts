@@ -1,7 +1,6 @@
 import { AnswersViewComponent } from './answers/answers-view/answers-view.component';
 import { AnswersComponent } from './answers/answers.component';
 import { Routes } from '@angular/router';
-
 const appRoutes: Routes = [
     {
         path: '',
@@ -10,7 +9,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'raspunsuri',
-        component: AnswersComponent
+        loadChildren:'./answers.module'
     }
 ];
 export default appRoutes;
