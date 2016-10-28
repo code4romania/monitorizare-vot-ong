@@ -9,7 +9,6 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  @ViewChild(MdTabGroup) tabGroup : MdTabGroup;
   menuItems = [
     {
       link: '/raspunsuri/urgente',
@@ -31,30 +30,8 @@ export class MenuComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) { }
-
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.updateActiveTab();
-      }
-    })
-  }
 
-  onTabSelectedChange(event){
-    var tab = this.menuItems[event.index];
-
-    if(!this.router.isActive(tab.link,true)){
-      this.router.navigateByUrl(tab.link);
-    }
-  }
-
-  updateActiveTab() {
-    this.menuItems.forEach((menuItem, index) => {
-      if(this.router.isActive(menuItem.link, true)){
-        this.tabGroup.selectedIndex = index;
-      }
-    });
   }
 
 }

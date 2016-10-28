@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnswersViewComponent implements OnInit {
 
-  answers: Answer[] = undefined;
+  answers: Answer[] = [];
   currentPage: number = 0;
   pageSize: number = 10;
   isValid: boolean = true;

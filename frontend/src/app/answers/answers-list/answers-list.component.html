@@ -1,14 +1,11 @@
-<md-list>
-	<md-list-item *ngFor="let answer of answers" routerLink="['raspuns',answer.id]">
-		<div md-line>
-			<div class="col-md-8">
-				<span class="section-title col-md-12">Sectie: {{answer.sectie}}</span>
-				<span class="col-md-12">{{answer.observator}}</span>
-			</div>
-			<button class="col-md-2" md-button color="primary">
-				See more
-			</button>
+<sm-list class="divided">
+	<sm-item class="item" *ngFor="let answer of answers">
+		<div class="right floated content">
+			<div class="ui button">Add</div>
 		</div>
-		<div md-line></div>
-	</md-list-item>
-</md-list>
+		<div class="content">
+			<div class="header">Sectie: {{answer.sectie}}</div>
+			Observator: {{answer.observator}}
+		</div>
+	</sm-item>
+</sm-list>

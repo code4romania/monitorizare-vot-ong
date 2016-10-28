@@ -1,9 +1,5 @@
-<md-tab-group (selectChange)="onTabSelectedChange($event)">
-	<md-tab *ngFor="let menuItem of menuItems">
-		<template class="thisistestclass" md-tab-label>
-			<a [routerLink]="menuItem.link" [routerLinkActive]="'active'">
-				{{menuItem.label}}
-			</a>
-		</template>
-	</md-tab>
-</md-tab-group>
+<sm-menu class="fluid four item labeled icon">
+	<a *ngFor="let menuItem of menuItems" sm-item [routerLink]="menuItem.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+		{{menuItem.label}}
+	</a>
+</sm-menu>
