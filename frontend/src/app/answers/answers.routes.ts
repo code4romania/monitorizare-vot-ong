@@ -4,7 +4,7 @@ import { AnswersViewComponent } from './answers-view/answers-view.component';
 
 const answersRoutes: Routes = [
     {
-        path: 'normale',
+        path: '',
         component: AnswersViewComponent,
         data: {
             urgent: false
