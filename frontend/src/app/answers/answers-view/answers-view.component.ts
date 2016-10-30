@@ -36,6 +36,9 @@ export class AnswersViewComponent implements OnInit {
         let answersData = data.data;
         this.isValid = data.esteValid;
         this.answers = answersData.data;
+        if(this.routeSnapshot.data['urgent']){
+          this.answers.splice(-1,1);
+        }
       })
 
   }
