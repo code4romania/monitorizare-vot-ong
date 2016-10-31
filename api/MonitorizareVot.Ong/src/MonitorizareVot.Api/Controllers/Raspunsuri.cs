@@ -24,7 +24,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 EsteValid = true,
                 Data = new ListaRaspunsuri<RaspunsuriModel>
                 {
-                    Data = new List<RaspunsuriModel> {
+                    Raspunsuri = new List<RaspunsuriModel> {
                         new RaspunsuriModel {Observator = "Ionescu Vasile", Sectie = "BU 123", IdSectie = 2, IdObservator = 112},
                         new RaspunsuriModel {Observator = "Popescu Ionut", Sectie = "BU 123", IdSectie = 2, IdObservator = 111},
                         new RaspunsuriModel {Observator = "Ionescu Maria", Sectie = "CT 13", IdSectie = 76, IdObservator = 10},
@@ -35,7 +35,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
                         new RaspunsuriModel {Observator = "Ionescu Vasile", Sectie = "BU 124", IdSectie = 88, IdObservator = 144},
                         new RaspunsuriModel {Observator = "Cernica Maria", Sectie = "GR 99", IdSectie = 98, IdObservator = 143},
                         new RaspunsuriModel {Observator = "Vlasceanu Ionut", Sectie = "TM 33", IdSectie = 99, IdObservator = 143},
-                },
+                    },
                     Page = 1,
                     PageSize = 10,
                     Total = 300

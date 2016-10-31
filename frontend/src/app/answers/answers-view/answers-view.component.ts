@@ -1,9 +1,9 @@
-import { Paginator } from '../../shared/paginator/paginator.service';
 import { environment } from '../../../environments/environment';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { Http, Response } from '@angular/http';
+import { Paginator, PaginatorFactory } from '../../shared/paginator/paginator.service';
 import { Answer } from '../shared/answer.model';
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-answers-view',
@@ -13,30 +13,31 @@ import { Component, OnInit } from '@angular/core';
 export class AnswersViewComponent implements OnInit {
 
   answers: Answer[] = [];
-  currentPage: number = 0;
-  pageSize: number = 10;
-  isValid: boolean = true;
+  isUrgent: boolean;
 
-  private routeSnapshot: ActivatedRouteSnapshot
+  paginator: Paginator;
 
-  constructor(private http: Http, route: ActivatedRoute, private paginator: Paginator) {
-    this.routeSnapshot = route.snapshot;
+  constructor(private http: Http, route: ActivatedRoute, paginatorFactory: PaginatorFactory) {
+    this.isUrgent = route.snapshot.data['urgent'] || false;
+    this.paginator = paginatorFactory.create();
   }
 
   ngOnInit() {
     this.http.get(`${environment.API_URL}/raspunsuri`, {
       body: {
-        page: this.currentPage,
-        pageSize: this.pageSize,
-        urgent: this.routeSnapshot.data['urgent'] || false
+        pagination: this.paginator.requestData(),
+        urgent: this.isUrgent
       }
     }).map(res => res.json())
+      .map(json => json.data)
       .map(this.paginator.updatePagination)
       .subscribe(data => {
-        let answersData = data.data;
-        this.isValid = data.esteValid;
-        this.answers = answersData.data;
-        if(this.routeSnapshot.data['urgent']){
+        console.log(`Got data`);
+        console.log(data);
+        this.answers = data.raspunsuri;
+
+        // just for debugging purposes
+        if(this.isUrgent){
           this.answers.splice(-1,1);
         }
       })
