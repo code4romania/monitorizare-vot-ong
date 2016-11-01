@@ -112,6 +112,7 @@ namespace MonitorizareVot.Domain.Ong
 
             context.SaveChanges();
         }
+
         private static void SeedSectiune(this OngContext context)
         {
             if (context.Sectiune.Any())

@@ -5,8 +5,6 @@ namespace MonitorizareVot.Ong.Api.Extensions
     public class Raspuns<T>
         where T: class 
     {
-
-        public bool EsteValid { get; set; }
         public T Data { get; set; }
     }
 

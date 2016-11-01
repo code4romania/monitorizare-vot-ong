@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
+using MonitorizareVot.Ong.Api.Filters;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/raspunsuri")]
+    [ValidateModelState]
     public class Raspunsuri : Controller
     {
         private readonly IMediator _mediator;
@@ -16,30 +17,20 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             _mediator = mediator;
         }
+
+        /// <summary>
+        /// Returneaza lista sectiilor de votare unde au raspuns observatorii care apartion ONG-ului cu id-ul primit
+        /// la intrebarile din formulare marcate cu RaspunsFlag == Urgent ordonate desc dupa DataModificare
+        /// </summary>
         [HttpGet()]
-        public async Task<Raspuns<ListaRaspunsuri<RaspunsuriModel>>> Get(FiltruRaspunsuriModel model)
+        public async Task<Raspuns<ListaRaspunsuri<RaspunsModel>>> Get(FiltruRaspunsuriModel model)
         {
-            return await Task.FromResult(new Raspuns<ListaRaspunsuri<RaspunsuriModel>>
+            // TODO get the idONG from token
+            int idONG = 1;
+
+            return await Task.FromResult(new Raspuns<ListaRaspunsuri<RaspunsModel>>
             {
-                EsteValid = true,
-                Data = new ListaRaspunsuri<RaspunsuriModel>
-                {
-                    Data = new List<RaspunsuriModel> {
-                        new RaspunsuriModel {Observator = "Ionescu Vasile", Sectie = "BU 123", IdSectie = 2, IdObservator = 112},
-                        new RaspunsuriModel {Observator = "Popescu Ionut", Sectie = "BU 123", IdSectie = 2, IdObservator = 111},
-                        new RaspunsuriModel {Observator = "Ionescu Maria", Sectie = "CT 13", IdSectie = 76, IdObservator = 10},
-                        new RaspunsuriModel {Observator = "ALbertin Merisor", Sectie = "IS 13", IdSectie = 67, IdObservator = 113},
-                        new RaspunsuriModel {Observator = "Vasilian Cristi", Sectie = "IS 123", IdSectie = 66, IdObservator = 114},
-                        new RaspunsuriModel {Observator = "Zorii Maria", Sectie = "CT 143", IdSectie = 78, IdObservator = 115},
-                        new RaspunsuriModel {Observator = "Ionescu Maria", Sectie = "CT 6", IdSectie = 77, IdObservator = 10},
-                        new RaspunsuriModel {Observator = "Ionescu Vasile", Sectie = "BU 124", IdSectie = 88, IdObservator = 144},
-                        new RaspunsuriModel {Observator = "Cernica Maria", Sectie = "GR 99", IdSectie = 98, IdObservator = 143},
-                        new RaspunsuriModel {Observator = "Vlasceanu Ionut", Sectie = "TM 33", IdSectie = 99, IdObservator = 143},
-                },
-                    Page = 1,
-                    PageSize = 10,
-                    Total = 300
-                }
+                Data = await _mediator.SendAsync(new RaspunsuriQuery { IdONG = idONG, Page = model.Page, PageSize = model.PageSize, Urgent = model.Urgent })
             });
         }
     }

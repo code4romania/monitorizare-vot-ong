@@ -17,7 +17,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using MonitorizareVot.Ong.Api.Services;
 using Serilog;
@@ -285,7 +284,11 @@ namespace MonitorizareVot.Ong.Api
 
         private void RegisterAutomapper()
         {
-            Mapper.Initialize(cfg => { cfg.AddProfiles(GetAssemblies()); });
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfiles(GetAssemblies());
+                cfg.CreateMissingTypeMaps = true;
+            });
 
             container.RegisterSingleton(Mapper.Configuration);
             container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
