@@ -1,5 +1,6 @@
 ﻿using MonitorizareVot.Domain.Ong.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MonitorizareVot.Ong.Api.Tests.Controllers
@@ -81,7 +82,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                      NumeIntreg = "Popescu Florin",
                      NumarTelefon = "0763000000",
                      EsteDinEchipa = true,
-                     Raspuns = new Raspuns { IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now }
+                     Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now } }
                  },
                  new Observator
                  {
@@ -89,7 +90,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                      NumeIntreg = "Cremarenco Alin",
                      NumarTelefon = "0763000001",
                      EsteDinEchipa = false,
-                     Raspuns = new Raspuns { IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                     Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                  },
                  new Observator
                  {
@@ -97,7 +98,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                      NumeIntreg = "Chivu Marin",
                      NumarTelefon = "0763000002",
                      EsteDinEchipa = false,
-                     Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                     Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                  },
                  new Observator
                  {
@@ -105,7 +106,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                      NumeIntreg = "Stanciu Florina",
                      NumarTelefon = "0763000003",
                      EsteDinEchipa = false,
-                     Raspuns = new Raspuns { IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                     Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                  },
                  new Observator
                  {
@@ -113,7 +114,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                      NumeIntreg = "Neacsu Andreea",
                      NumarTelefon = "0763000004",
                      EsteDinEchipa = true,
-                     Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                     Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                  },
                   new Observator
                   {
@@ -121,7 +122,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                       NumeIntreg = "Duta Andrei",
                       NumarTelefon = "0763000005",
                       EsteDinEchipa = true,
-                      Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                      Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                   },
                    new Observator
                    {
@@ -129,7 +130,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                        NumeIntreg = "Vlad George",
                        NumarTelefon = "0763000007",
                        EsteDinEchipa = true,
-                       Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                       Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                    },
                     new Observator
                     {
@@ -137,14 +138,14 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                         NumeIntreg = "Pascu Dan",
                         NumarTelefon = "0763000008",
                         EsteDinEchipa = true,
-                        Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                        Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                     }, new Observator
                     {
                         IdOng = idOng,
                         NumeIntreg = "Dumbrava Valeria",
                         NumarTelefon = "0763000009",
                         EsteDinEchipa = true,
-                        Raspuns = new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddHours(1) }
+                        Raspuns = new List<Raspuns> { new Raspuns { IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddHours(1) } }
                     }
              );
 

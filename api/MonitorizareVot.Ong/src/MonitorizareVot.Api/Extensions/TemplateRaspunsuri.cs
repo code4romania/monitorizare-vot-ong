@@ -13,6 +13,6 @@ namespace MonitorizareVot.Ong.Api.Extensions
         public int PageSize { get; set; }
         public int Total { get; set; }
         public int Page { get; set; }
-        public List<T> Data { get; set; }
+        public List<T> Raspunsuri { get; set; }
     }
 }

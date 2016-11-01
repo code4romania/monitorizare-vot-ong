@@ -1,12 +1,25 @@
 import { Injectable } from '@angular/core';
 @Injectable()
-export class Paginator {
-
+export class PaginatorFactory {
+    create(){
+        return new Paginator();
+    }
+   
+}
+export class Paginator{
     currentPage: number = undefined;
     pageSize: number = undefined;
     initialLoad: boolean = false;
     totalItems: number = undefined;
     hasMore: boolean = undefined;
+    
+    requestData() {
+        return {
+            page: this.currentPage,
+            pageSize: this.pageSize,
+        };
+    }
+    
 
     updatePagination(data) {
         let pageData = data;

@@ -36,7 +36,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             return new ListaRaspunsuri<RaspunsModel>
             {
-                Data = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
+                Raspunsuri = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
                 Total = await sectiiCuObservatori.CountAsync()

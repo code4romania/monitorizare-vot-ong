@@ -6,7 +6,7 @@ import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import routes from './app.routes';
 
 
@@ -22,7 +22,8 @@ import routes from './app.routes';
     BrowserModule,
     SharedModule,
     RouterModule.forRoot(routes, {
-      enableTracing: true
+      enableTracing: false,
+      preloadingStrategy: PreloadAllModules
     })
   ],
   bootstrap: [AppComponent]

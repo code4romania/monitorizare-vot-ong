@@ -70,8 +70,8 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             var model = JsonConvert.DeserializeObject<Raspuns<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.NotNull(model.Data.Data);
-            Assert.True(pageSize >= model.Data.Data.Count);
+            Assert.NotNull(model.Data.Raspunsuri);
+            Assert.True(pageSize >= model.Data.Raspunsuri.Count);
             Assert.Equal(page, model.Data.Page);
             Assert.Equal(pageSize, model.Data.PageSize);
             Assert.Equal(expectedTotal, model.Data.Total);
