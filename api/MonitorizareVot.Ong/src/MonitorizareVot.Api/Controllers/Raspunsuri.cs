@@ -23,12 +23,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// la intrebarile din formulare marcate cu RaspunsFlag == Urgent ordonate desc dupa DataModificare
         /// </summary>
         [HttpGet()]
-        public async Task<Raspuns<ListaRaspunsuri<RaspunsModel>>> Get(FiltruRaspunsuriModel model)
+        public async Task<ApiResponse<ListaRaspunsuri<RaspunsModel>>> Get(FiltruRaspunsuriModel model)
         {
             // TODO get the idONG from token
             int idONG = 1;
 
-            return await Task.FromResult(new Raspuns<ListaRaspunsuri<RaspunsModel>>
+            return await Task.FromResult(new ApiResponse<ListaRaspunsuri<RaspunsModel>>
             {
                 Data = await _mediator.SendAsync(new RaspunsuriQuery { IdONG = idONG, Page = model.Page, PageSize = model.PageSize, Urgent = model.Urgent })
             });
