@@ -35,7 +35,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<Raspuns<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiResponse<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
         }
 
@@ -84,7 +84,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<Raspuns<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiResponse<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
             Assert.NotNull(model.Data.Raspunsuri);
@@ -154,7 +154,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<Raspuns<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiResponse<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
             Assert.Equal(page, model.Data.Page);
@@ -176,7 +176,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<Raspuns<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiResponse<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
             Assert.Equal(page, model.Data.Page);
