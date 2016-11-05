@@ -14,7 +14,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int IdObservator { get; set; }
     }
 
-    public class RaspunsuriQuery : PagingModel, IAsyncRequest<ListaRaspunsuri<RaspunsModel>>
+    public class RaspunsuriQuery : PagingModel, IAsyncRequest<ApiListResponse<RaspunsModel>>
     {
         public int IdONG { get; set; }
         public bool Urgent { get; set; }

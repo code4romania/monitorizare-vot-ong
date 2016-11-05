@@ -9,8 +9,8 @@ namespace MonitorizareVot.Ong.Api.Extensions
         public T Data { get; set; }
     }
     
-    public class ListaRaspunsuri<T> : PagingResponseModel
+    public class ApiListResponse<T> : PagingResponseModel
     {
-        public List<T> Raspunsuri { get; set; }
+        public List<T> Data { get; set; }
     }
 }

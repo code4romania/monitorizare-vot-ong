@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
-        IAsyncRequestHandler<RaspunsuriQuery, ListaRaspunsuri<RaspunsModel>>
+        IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _mapper = mapper;
         }
 
-        public async Task<ListaRaspunsuri<RaspunsModel>> Handle(RaspunsuriQuery message)
+        public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message)
         {
             var sectiiCuObservatori = _context.Raspuns
                 .Where(x => x.IdObservatorNavigation.IdOng == message.IdONG && x.IdRaspunsDisponibilNavigation.RaspunsCuFlag == message.Urgent)
@@ -34,9 +34,9 @@ namespace MonitorizareVot.Ong.Api.Queries
                  .Take(message.PageSize)
                  .ToListAsync();
 
-            return new ListaRaspunsuri<RaspunsModel>
+            return new ApiListResponse<RaspunsModel>
             {
-                Raspunsuri = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
+                Data = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
                 Total = await sectiiCuObservatori.CountAsync()
