@@ -1,3 +1,7 @@
+import { AuthInterceptor } from './auth-interceptor.service';
+import { TokenService } from './token/token.service';
+import { InterceptorService } from 'ng2-interceptors';
+import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { SharedModule } from '../shared/shared.module';
 
 // import { AuthentificationService } from './authentification/authentification.service';
@@ -11,19 +15,24 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 @NgModule({
   imports: [
+    HttpModule,
     SharedModule
   ],
   exports: [
   ],
   providers: [
-    // AuthentificationService,
-    // TokenService,
-    // UserService,
-    // {
-    //   provide: Http,
-    //   useFactory: (conn: XHRBackend, req: RequestOptions) => new CustomHttp(conn, req),
-    //   deps: [XHRBackend, RequestOptions]
-    // }
+    AuthInterceptor,
+    {
+      provide: Http,
+      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, authInterceptor : AuthInterceptor) => {
+        debugger;
+        let service = new InterceptorService(xhrBackend, requestOptions);
+        service.addInterceptor(authInterceptor);
+        return service;
+      },
+      deps: [XHRBackend, RequestOptions, AuthInterceptor]
+    },
+    TokenService,
   ],
   declarations: []
 })
@@ -34,6 +43,5 @@ export class CoreModule {
         'CoreModule was already imported. It cannot be imported twice'
       )
     }
-
   }
 }

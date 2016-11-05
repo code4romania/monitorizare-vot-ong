@@ -1,4 +1,3 @@
-import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import 'rxjs/Rx'; 
 
@@ -8,8 +7,7 @@ import 'rxjs/Rx';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(http: Http) {
-    http.get('/api/test');
+  constructor() {
 
   }
 }
