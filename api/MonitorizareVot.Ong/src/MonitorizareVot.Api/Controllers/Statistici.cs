@@ -24,6 +24,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/NumarObservatori")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatori(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
@@ -42,6 +43,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// </param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/Sesizari")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> Sesizari(FiltruStatisticiSimple model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -59,6 +61,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -76,6 +79,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -93,6 +97,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariDeschidereJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -110,6 +115,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariDeschidereSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereSectii(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -127,6 +133,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariNumarareJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -144,6 +151,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("/SesizariNumarareSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareSectii(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
