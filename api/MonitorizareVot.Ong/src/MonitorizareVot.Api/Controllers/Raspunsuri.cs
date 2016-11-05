@@ -22,16 +22,18 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza lista sectiilor de votare unde au raspuns observatorii care apartion ONG-ului cu id-ul primit
         /// la intrebarile din formulare marcate cu RaspunsFlag == Urgent ordonate desc dupa DataModificare
         /// </summary>
-        [HttpGet()]
-        public async Task<ApiResponse<ApiListResponse<RaspunsModel>>> Get(FiltruRaspunsuriModel model)
+        [HttpGet]
+        public async Task<ApiListResponse<RaspunsModel>> Get(FiltruRaspunsuriModel model)
         {
             // TODO get the idONG from token
-            int idONG = 1;
-
-            return await Task.FromResult(new ApiResponse<ApiListResponse<RaspunsModel>>
-            {
-                Data = await _mediator.SendAsync(new RaspunsuriQuery { IdONG = idONG, Page = model.Page, PageSize = model.PageSize, Urgent = model.Urgent })
-            });
+            var idONG = 1;
+            return await _mediator.SendAsync(new RaspunsuriQuery
+                {
+                    IdONG = idONG,
+                    Page = model.Page,
+                    PageSize = model.PageSize,
+                    Urgent = model.Urgent
+                });
         }
     }
 }

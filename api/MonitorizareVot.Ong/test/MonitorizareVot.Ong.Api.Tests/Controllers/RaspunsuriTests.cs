@@ -128,12 +128,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ListaRaspunsuri<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.NotNull(model.Data.Raspunsuri);
-            var firstModel = model.Data.Raspunsuri.First();
-            var lastModel = model.Data.Raspunsuri.Last();
+            Assert.NotNull(model.Data.Data);
+            var firstModel = model.Data.Data.First();
+            var lastModel = model.Data.Data.Last();
             Assert.Equal(first.IdObservator, firstModel.IdObservator);
             Assert.Equal(first.IdSectie, firstModel.IdSectie);
             Assert.Equal(last.IdObservator, firstModel.IdObservator);
