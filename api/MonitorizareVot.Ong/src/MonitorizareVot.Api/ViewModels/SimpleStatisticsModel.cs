@@ -1,4 +1,7 @@
-﻿namespace MonitorizareVot.Ong.Api.ViewModels
+﻿using MediatR;
+using MonitorizareVot.Ong.Api.Extensions;
+
+namespace MonitorizareVot.Ong.Api.ViewModels
 {
     public class SimpleStatisticsModel
     {
@@ -6,5 +9,20 @@
         public string Value { get; set; }
     }
 
+    public class StatisticiNumarObservatoriQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
+    {
+           
+    }
 
+    public enum TipGrupareStatistici
+    {
+        Judet,
+        Sectie
+    }
+
+    public class StatisticiTopSesizariQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
+    {
+        public string Formular { get; set; }
+        public TipGrupareStatistici Grupare { get; set; }
+    }
 }
