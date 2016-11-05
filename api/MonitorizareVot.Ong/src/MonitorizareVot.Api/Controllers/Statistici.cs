@@ -8,7 +8,6 @@ using MonitorizareVot.Ong.Api.ViewModels;
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/statistici")]
-    [ValidateModelState]
     public class Statistici : Controller
     {
         private readonly IMediator _mediator;
@@ -24,7 +23,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/NumarObservatori")]
+        [Route("NumarObservatori")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatori(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
@@ -43,7 +42,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/Sesizari")]
+        [Route("Sesizari")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> Sesizari(FiltruStatisticiSimple model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -61,7 +60,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariJudete")]
+        [Route("SesizariJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -79,8 +78,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariSectii")]
-        public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii(PagingModel model)
+        [Route("SesizariSectii")]
+        public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii([FromForm] PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -97,7 +96,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariDeschidereJudete")]
+        [Route("SesizariDeschidereJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -115,7 +114,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariDeschidereSectii")]
+        [Route("SesizariDeschidereSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereSectii(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -133,7 +132,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariNumarareJudete")]
+        [Route("SesizariNumarareJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareJudete(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
@@ -151,7 +150,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/SesizariNumarareSectii")]
+        [Route("SesizariNumarareSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareSectii(PagingModel model)
         {
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery

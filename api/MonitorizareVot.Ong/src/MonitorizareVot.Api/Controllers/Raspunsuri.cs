@@ -8,7 +8,7 @@ using MonitorizareVot.Ong.Api.Filters;
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/raspunsuri")]
-    [ValidateModelState]
+    //[ValidateModelState]
     public class Raspunsuri : Controller
     {
         private readonly IMediator _mediator;
