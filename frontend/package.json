@@ -26,7 +26,6 @@
     "jquery": "^3.1.1",
     "lodash": "^4.16.4",
     "ng-semantic": "^1.1.11",
-    "ng2-interceptors": "^1.2.1",
     "rxjs": "5.0.0-beta.12",
     "semantic-ui-css": "^2.2.4",
     "ts-helpers": "^1.1.1",
