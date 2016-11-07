@@ -1,3 +1,4 @@
+import { publishLast } from 'rxjs/operator/publishLast';
 import { TokenizeResult } from '@angular/compiler/src/ml_parser/lexer';
 import { getHeapStatistics } from 'v8';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
@@ -31,107 +32,74 @@ export class AuthHttpService extends Http {
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     let jwtValid = false;
 
-    if (!jwtValid) {
-      if (!this.delegation) {
-        this.setDelegationObservable();
-      }
+    //if there's a delegation pending, we need to wait for it
+
+    if (this.delegation) {
       return this.delegation.flatMap(() => {
         return this.doRequest(url, options);
-      });
+      })
     }
+    // if the jwt isn't valid, we start the delegation and call request again
+    if (!jwtValid) {
+      this.setDelegationObservable();
+      return this.request(url, options);
+    }
+
     return this.doRequest(url, options);
   }
 
   private doRequest(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+    this.setTokenHeader(options);
+    return super.request(url, options).catch((err) => this.onRequestError(err, url, options));
+  }
+
+  private onRequestError(err: Response, url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+    if (err.status !== 401) {
+      return Observable.throw(err);
+    }
+
+    let tokenInvalid = false,
+      tokenExpired = true;
+
+    if (tokenInvalid) {
+      // TODO LOG OUT OF APPLICATION
+    }
+    if (tokenExpired) {
+      this.setDelegationObservable();
+      return this.request(url, options);
+    }
+    return this.request(url, options);
+  }
+
+  private setTokenHeader(options: RequestOptionsArgs) {
     options = options || new RequestOptions({
       headers: new Headers()
     });
     options.headers = options.headers || new Headers();
-    options.headers.append('Authorization', 'Bearer: ' + this.token);    
-    return super.request(url, options).catch((err) => {
-      if (err.code = 401) {
-        if (!this.delegation) {
-          this.setDelegationObservable();
-        }
-        return this.delegation.flatMap(() => {
-          return super.request(url, options);
-        })
-      }
-      return Observable.throw(err);
-    })
+    options.headers.append('Authorization', 'Bearer: ' + this.token);
+    return options;
   }
   private setDelegationObservable() {
+    if (this.delegation) {
+      return;
+    }
     // the delegation that will refresh the token
     this.delegation = Observable.create((obs: Observer<any>) => {
-      setTimeout(() => {
-        obs.next('test');
-        obs.complete();
-      }, 1000);
-    }).share();
+      // simulate a real request
+      super.request('https://api.github.com/repos/vmg/redcarpet/issues?state=closed',{
+        method: RequestMethod.Get
+      })
+        .subscribe(resp => {
+          obs.next(resp);
+          obs.complete();
+        });
+    }).cache();
 
     this.delegation.subscribe((token) => {
       this.delegation = undefined;
       this.token = token;
-    })
+    }, err => {
+      // TODO : WHEN DELEGATION FAILS, LOGOUT
+    });
   }
-
-  /**
-	 * Performs a request with `get` http method.
-	 */
-  get(url: string, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Get;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `post` http method.
-	 */
-  post(url: string, body: any, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Post;
-    options.body = body;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `put` http method.
-	 */
-  put(url: string, body: any, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Put;
-    options.body = body;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `delete` http method.
-	 */
-  delete(url: string, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Delete;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `patch` http method.
-	 */
-  patch(url: string, body: any, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Patch;
-    options.body = body;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `head` http method.
-	 */
-  head(url: string, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Head;
-    return this.request(url, options);
-  }
-
-	/**
-	 * Performs a request with `options` http method.
-	 */
-  options(url: string, options?: RequestOptions): Observable<Response> {
-    options.method = RequestMethod.Options;
-    return this.request(url, options);
-  }
-
 }
