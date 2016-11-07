@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { publishLast } from 'rxjs/operator/publishLast';
 import { TokenizeResult } from '@angular/compiler/src/ml_parser/lexer';
 import { getHeapStatistics } from 'v8';
@@ -28,9 +29,23 @@ export class AuthHttpService extends Http {
     super(_backend, _defaultOptions);
   }
 
+  private addDomain(url: string | Request) {
+    if (url instanceof Request) {
+      if (!url.url.startsWith('http') && !url.url.startsWith('https') && !url.url.endsWith('svg')) {
+        url.url = `${environment.API_URL}${url.url}`;
+      }
+    } else {
+      if (!url.startsWith('http') && !url.startsWith('https') && !url.endsWith('svg')) {
+        url = `${environment.API_URL}${url}`;
+      }
+    }
+  }
+
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+
     let jwtValid = false;
+    this.addDomain(url);
 
     //if there's a delegation pending, we need to wait for it
 
@@ -86,7 +101,7 @@ export class AuthHttpService extends Http {
     // the delegation that will refresh the token
     this.delegation = Observable.create((obs: Observer<any>) => {
       // simulate a real request
-      super.request('https://api.github.com/repos/vmg/redcarpet/issues?state=closed',{
+      super.request('https://api.github.com/repos/vmg/redcarpet/issues?state=closed', {
         method: RequestMethod.Get
       })
         .subscribe(resp => {
