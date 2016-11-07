@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers';
 import { environment } from '../../../environments/environment';
 import { Paginator, PaginatorFactory } from '../../shared/paginator/paginator.service';
 import { Answer } from '../shared/answer.model';
@@ -23,23 +24,29 @@ export class AnswersViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(`${environment.API_URL}/raspunsuri`, {
+    let get = this.http.get(`${environment.API_URL}/raspunsuri`, {
       body: Object.assign({
         urgent: this.isUrgent
-      },this.paginator.requestData())
+      }, this.paginator.requestData())
     }).map(res => res.json())
       .map(json => json.data)
-      .map(this.paginator.updatePagination)
-      .subscribe(data => {
+      .map(this.paginator.updatePagination);
+    setTimeout(() => {
+      
+      get.subscribe(data => {
         console.log(`Got data`);
         console.log(data);
         this.answers = data.raspunsuri;
 
         // just for debugging purposes
-        if(this.isUrgent){
-          this.answers.splice(-1,1);
+        if (this.isUrgent) {
+          this.answers.splice(-1, 1);
         }
-      })
+      },err=>{
+        console.log('Got error');
+        console.log(err);  
+      });
+    }, 1000);
 
   }
 
