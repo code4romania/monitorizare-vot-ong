@@ -1,3 +1,4 @@
+import { TokenizeResult } from '@angular/compiler/src/ml_parser/lexer';
 import { getHeapStatistics } from 'v8';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { TokenService } from '../token/token.service';
@@ -15,17 +16,10 @@ import {
 } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-enum JWT_HTTP_STATES {
-  NORMAL = 1,
-  IS_REFRESHING
-};
-
 @Injectable()
 export class AuthHttpService extends Http {
 
-  JWT_STATE: JWT_HTTP_STATES = JWT_HTTP_STATES.NORMAL;
-
-  private delegationStream: Observable<any>;
+  private delegation: Observable<any>;
 
   private token: string;
 
@@ -35,17 +29,17 @@ export class AuthHttpService extends Http {
 
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+    let jwtValid = false;
 
-
-
-    if (this.JWT_STATE === JWT_HTTP_STATES.NORMAL) {
-      return this.requestNormal(url, options);
-    } else {
-      return this.doRequest(url, options);
+    if (!jwtValid) {
+      if (!this.delegation) {
+        this.setDelegationObservable();
+      }
+      return this.delegation.flatMap(() => {
+        return this.doRequest(url, options);
+      });
     }
-
-
-
+    return this.doRequest(url, options);
   }
 
   private doRequest(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
@@ -53,53 +47,32 @@ export class AuthHttpService extends Http {
       headers: new Headers()
     });
     options.headers = options.headers || new Headers();
-    options.headers.append('Authorization', 'Bearer: ' + this.token);
-    return super.request(url, options);
-  }
-
-  private requestNormal(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-
-    let jwtExpired = true;
-    if (jwtExpired) {
-      this.setDelegationObservable();
-      // 
-      return this.delegationStream.flatMap(() => {
-        return this.doRequest(url, options);
-      });
-    } else {
-      return this.doRequest(url, options);
-    }
-
+    options.headers.append('Authorization', 'Bearer: ' + this.token);    
+    return super.request(url, options).catch((err) => {
+      if (err.code = 401) {
+        if (!this.delegation) {
+          this.setDelegationObservable();
+        }
+        return this.delegation.flatMap(() => {
+          return super.request(url, options);
+        })
+      }
+      return Observable.throw(err);
+    })
   }
   private setDelegationObservable() {
-    if (this.delegationStream) {
-      return;
-    }
-    this.delegationStream = Observable.create((obs: Observer<any>) => {
-      obs.next('test');
-      obs.complete();
-    }).share();
-  }
-  private requestExpired(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    // start refreshing the jwt
-
-    this.JWT_STATE = JWT_HTTP_STATES.IS_REFRESHING;
-
-    // I need an observable that will wait for the delegation call
-    let delegationObservable = Observable.create(observer => {
+    // the delegation that will refresh the token
+    this.delegation = Observable.create((obs: Observer<any>) => {
       setTimeout(() => {
-        observer.next('10');
-      })
-    })
-      .share();
+        obs.next('test');
+        obs.complete();
+      }, 1000);
+    }).share();
 
-    delegationObservable.subscribe(token => {
-      this.JWT_STATE = JWT_HTTP_STATES.NORMAL;
+    this.delegation.subscribe((token) => {
+      this.delegation = undefined;
       this.token = token;
-    });
-    return delegationObservable.flatMap(() => {
-      return this.doRequest(url, options);
-    }).subscribe();
+    })
   }
 
   /**
