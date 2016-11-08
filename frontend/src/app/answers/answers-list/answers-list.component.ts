@@ -1,5 +1,6 @@
 import { Answer } from '../shared/answer.model';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-answers-list',
@@ -12,11 +13,11 @@ export class AnswersListComponent implements OnInit, OnChanges{
 
   @Input() answers:Answer[];
 
-  ngOnInit() {  
+  ngOnInit() {
   }
   ngOnChanges(changes: SimpleChanges){
   }
 
-  
+
 
 }

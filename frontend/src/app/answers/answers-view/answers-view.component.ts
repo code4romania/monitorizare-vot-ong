@@ -24,7 +24,7 @@ export class AnswersViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    let get = this.http.get(`${environment.API_URL}/raspunsuri`, {
+    let get = this.http.get(`/raspunsuri`, {
       body: Object.assign({
         urgent: this.isUrgent
       }, this.paginator.requestData())
