@@ -47,7 +47,9 @@
     "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
     "Microsoft.Extensions.Configuration": "1.0.0",
     "System.Linq.Parallel": "4.0.1",
-    "MonitorizareVot.Domain.Ong": "1.0.0-*"
+    "MonitorizareVot.Domain.Ong": "1.0.0-*",
+    "Microsoft.IdentityModel.Tokens": "5.0.0",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0"
   },
 
   "tools": {

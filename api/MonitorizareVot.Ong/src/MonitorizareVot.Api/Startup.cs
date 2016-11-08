@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -26,6 +27,10 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using Swashbuckle.Swagger.Model;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using MonitorizareVot.Domain.Ong.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using MonitorizareVot.Ong.Api.Common;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -55,13 +60,26 @@ namespace MonitorizareVot.Ong.Api
 
         public IConfigurationRoot Configuration { get; }
 
+        
+
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+
+
+           
+
 
             services.AddSwaggerGen();
 
