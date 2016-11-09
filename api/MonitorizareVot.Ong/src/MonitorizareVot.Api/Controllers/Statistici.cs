@@ -49,8 +49,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = model.Grupare,
                 Formular = model.Formular,
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -67,8 +67,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -85,8 +85,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -103,8 +103,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -121,8 +121,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -139,8 +139,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "C",
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
 
@@ -157,8 +157,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "C",
-                Page = model.Page == 0 ? 1 : model.Page,
-                PageSize = model.PageSize == 0 ? 5 : model.PageSize
+                Page = model.Page,
+                PageSize = model.PageSize
             });
         }
     }

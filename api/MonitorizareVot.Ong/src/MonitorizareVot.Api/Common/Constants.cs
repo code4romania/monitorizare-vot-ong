@@ -6,5 +6,6 @@
     public static class Constants
     {
         public const int MAX_TAKE = 100;
+        public const int DEFAULT_PAGE_SIZE = 5;
     }
 }

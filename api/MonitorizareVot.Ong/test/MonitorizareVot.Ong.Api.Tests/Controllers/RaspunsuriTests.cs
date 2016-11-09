@@ -26,17 +26,18 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
         public async void GetRaspunsuri_GetSectiiCuObservatori_ReturneazaOK()
         {
             // ARRANGE
-            const int page = 2;
-            const int pageSize = 5;
-            const bool urgent = false;
-
             // ACT
-            var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");
+            var response = await _client.GetAsync($"api/v1/raspunsuri");
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
+            Assert.NotNull(model);
+            Assert.NotNull(model.Data);
+            Assert.Equal(Constants.DEFAULT_PAGE_SIZE, model.Data.Count());
+            Assert.Equal(1, model.Page);
+            Assert.Equal(Constants.DEFAULT_PAGE_SIZE, model.PageSize);
         }
 
         [Theory]
@@ -44,17 +45,19 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
         [InlineData(1, -2, true)]
         [InlineData(-1, -2, true)]
         [InlineData(0, 0, false)]
-        [InlineData(10, Constants.MAX_TAKE + 1, true)]
-        public async void GetRaspunsuri_ArgumenteInvalide_ReturneazaBadRequest(int page, int pageSize, bool urgent)
+        public async void GetRaspunsuri_ArgumenteInvalide_ReturneazaOK(int page, int pageSize, bool urgent)
         {
             // ARRANGE
             // ACT
             var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");
 
             // ASSERT
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            string content = await response.Content.ReadAsStringAsync();
-            Assert.NotNull(content);
+            response.EnsureSuccessStatusCode();
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(model);
+            Assert.NotNull(model.Data);
+            Assert.Equal(1, model.Page);
+            Assert.Equal(Constants.DEFAULT_PAGE_SIZE, model.PageSize);
         }
 
         [Theory]
@@ -84,14 +87,13 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.NotNull(model.Data.Data);
-            Assert.True(pageSize >= model.Data.Data.Count);
-            Assert.Equal(page, model.Data.Page);
-            Assert.Equal(pageSize, model.Data.PageSize);
-            Assert.Equal(countObservatori, model.Data.Total);
+            Assert.True(pageSize >= model.Data.Count);
+            Assert.Equal(page, model.Page);
+            Assert.Equal(pageSize, model.PageSize);
+            Assert.Equal(countObservatori, model.Total);
         }
 
         [Theory]
@@ -128,12 +130,11 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.NotNull(model.Data.Data);
-            var firstModel = model.Data.Data.First();
-            var lastModel = model.Data.Data.Last();
+            var firstModel = model.Data.First();
+            var lastModel = model.Data.Last();
             Assert.Equal(first.IdObservator, firstModel.IdObservator);
             Assert.Equal(first.IdSectie, firstModel.IdSectie);
             Assert.Equal(last.IdObservator, firstModel.IdObservator);
@@ -154,12 +155,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.Equal(page, model.Data.Page);
-            Assert.Equal(pageSize, model.Data.PageSize);
-            Assert.Equal(0, model.Data.Total);
+            Assert.Equal(page, model.Page);
+            Assert.Equal(pageSize, model.PageSize);
+            Assert.Equal(0, model.Total);
         }
 
         [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
@@ -176,12 +177,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
             // ASSERT
             response.EnsureSuccessStatusCode();
-            var model = JsonConvert.DeserializeObject<ApiResponse<ApiListResponse<RaspunsModel>>>(await response.Content.ReadAsStringAsync());
+            var model = JsonConvert.DeserializeObject<ApiListResponse<RaspunsModel>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(model);
             Assert.NotNull(model.Data);
-            Assert.Equal(page, model.Data.Page);
-            Assert.Equal(pageSize, model.Data.PageSize);
-            Assert.Equal(0, model.Data.Total);
+            Assert.Equal(page, model.Page);
+            Assert.Equal(pageSize, model.PageSize);
+            Assert.Equal(0, model.Total);
         }
     }
 }
