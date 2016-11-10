@@ -29,24 +29,24 @@ export class AuthHttpService extends Http {
     super(_backend, _defaultOptions);
   }
 
-  private ensureDomain(url: string | Request) {
-    let reqUrl = url instanceof Request ? url.url : url;
+  // private ensureDomain(url: string | Request) {
+  //   let reqUrl = url instanceof Request ? url.url : url;
 
-    if (reqUrl.startsWith('http') || reqUrl.startsWith('https') || reqUrl.endsWith('svg')) {
-      return url;
-    }
+  //   if (reqUrl.startsWith('http') || reqUrl.startsWith('https') || reqUrl.endsWith('svg')) {
+  //     return url;
+  //   }
 
-    reqUrl = `${environment.API_URL}${reqUrl}`;
-    if (url instanceof Request) {
-      url.url = reqUrl;
-    } else {
-      url = reqUrl;
-    }
-    return url;
-  }
+  //   reqUrl = `${environment.API_URL}${reqUrl}`;
+  //   if (url instanceof Request) {
+  //     url.url = reqUrl;
+  //   } else {
+  //     url = reqUrl;
+  //   }
+  //   return url;
+  // }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    url = this.ensureDomain(url);
+    // url = this.ensureDomain(url);
 
     //if there's a delegation pending, we need to wait for it
     if (this.delegation) {
@@ -55,8 +55,8 @@ export class AuthHttpService extends Http {
 
 
     // if the jwt isn't valid, we start the delegation and call request again
-    let jwtValid = false;
-    if (!false) {
+    let jwtValid = true;
+    if (!true) {
       this.setDelegationObservable();
       return this.request(url, options);
     }

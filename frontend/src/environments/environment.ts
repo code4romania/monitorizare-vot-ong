@@ -4,6 +4,5 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false,
-  API_URL : 'http://mvonguat.azurewebsites.net/api/v1'
+  production: false
 };

@@ -1,8 +1,9 @@
 import { AnswersModule } from './answers/answers.module';
 import { SimpleOutletComponent } from './shared/simple-outlet/simple-outlet.component';
 import { AnswersViewComponent } from './answers/answers-view/answers-view.component';
-import { Routes } from '@angular/router';
-const appRoutes: Routes = [
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
+export let appRoutes = RouterModule.forRoot([
     {
         path: '',
         redirectTo: '/raspunsuri/urgente',
@@ -11,7 +12,13 @@ const appRoutes: Routes = [
     {
         path: 'raspunsuri',
         component: SimpleOutletComponent,
-        loadChildren: () => AnswersModule
+        loadChildren: answersLazyLoad
     }
-];
-export default appRoutes;
+], {
+        enableTracing: false,
+        preloadingStrategy: PreloadAllModules
+    });;
+    
+export function answersLazyLoad(){
+    return AnswersModule;
+}

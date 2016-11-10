@@ -18,9 +18,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   exports: [
   ],
   providers: [
-    TokenService,
-    // {provide: RequestOptions, useClass: BaseRequestOptions},
-    
+    TokenService,   
     {
       provide:Http,
       useClass: AuthHttpService,

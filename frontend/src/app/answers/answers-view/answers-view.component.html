@@ -1,2 +1,7 @@
-<app-answers-list *ngIf="answers.length > 0" [answers]="answers">
-</app-answers-list>
+<p-dataList [value]="answers | async">
+    <template let-answer>
+        <div class="header">Sectie: {{answer.sectie}}</div>
+        Observator: {{answer.observator}}
+        <div class="ui button">Add</div>
+    </template>
+</p-dataList>

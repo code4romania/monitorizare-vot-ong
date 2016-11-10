@@ -1,3 +1,4 @@
+import { MenuItem } from 'primeng/primeng';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -8,24 +9,19 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  menuItems = [
+  menuItems : MenuItem[] = [
     {
-      link: '/raspunsuri/urgente',
+      routerLink: '/raspunsuri/urgente',
       label: 'Urgente',
-      active: false,
-      isUrgent: true
     }, {
-      link: '/raspunsuri',
+      routerLink: '/raspunsuri',
       label: 'Raspunsuri',
-      active: false
     }, {
-      link: '/statistici',
+      routerLink: '/statistici',
       label: 'Statistici',
-      active: false
     }, {
-      link: '/ghidul-observatorului',
-      label: 'Ghidul observatorului',
-      active: false
+      routerLink: '/ghidul-observatorului',
+      label: 'Ghidul observatorului'
     }
   ];
 

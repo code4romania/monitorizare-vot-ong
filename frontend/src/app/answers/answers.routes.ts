@@ -1,8 +1,8 @@
 import { AnswersComponent } from './answers.component';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AnswersViewComponent } from './answers-view/answers-view.component';
 
-const answersRoutes: Routes = [
+export let answersRoutes = RouterModule.forChild([
     {
         path: '',
         component: AnswersViewComponent,
@@ -18,5 +18,4 @@ const answersRoutes: Routes = [
         },
     }
 
-];
-export default answersRoutes;
+]);

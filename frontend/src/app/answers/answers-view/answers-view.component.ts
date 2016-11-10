@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { setTimeout } from 'timers';
 import { environment } from '../../../environments/environment';
 import { Paginator, PaginatorFactory } from '../../shared/paginator/paginator.service';
@@ -13,7 +14,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 })
 export class AnswersViewComponent implements OnInit {
 
-  answers: Answer[] = [];
+  answers: Observable<Answer>;
   isUrgent: boolean;
 
   paginator: Paginator;
@@ -24,32 +25,20 @@ export class AnswersViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    let get = this.http.get(`/raspunsuri`, {
+    let requestOptions = {
       body: Object.assign({
         urgent: this.isUrgent
       }, this.paginator.requestData())
-    }).map(res => res.json())
+    }
+    
+    this.answers = <Observable<Answer>> this.http.get(`/api/raspunsuri`, requestOptions)
+      .map(res => res.json())
       .map(json => json.data)
-      .map(this.paginator.updatePagination);
-    setTimeout(() => {
+      .do(this.paginator.updatePagination)
       
-      get.subscribe(data => {
-        console.log(`Got data`);
-        console.log(data);
-        this.answers = data.raspunsuri;
-
-        // just for debugging purposes
-        if (this.isUrgent) {
-          this.answers.splice(-1, 1);
-        }
-      },err=>{
-        console.log('Got error');
-        console.log(err);  
-      });
-    }, 1000);
-
   }
 
-
-
 }
+
+
+

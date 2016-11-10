@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import routes from './app.routes';
-
+import { appRoutes } from './app.routes';
 
 
 @NgModule({
@@ -21,10 +20,7 @@ import routes from './app.routes';
     AnswersModule,
     BrowserModule,
     SharedModule,
-    RouterModule.forRoot(routes, {
-      enableTracing: false,
-      preloadingStrategy: PreloadAllModules
-    })
+    appRoutes
   ],
   bootstrap: [AppComponent]
 })
