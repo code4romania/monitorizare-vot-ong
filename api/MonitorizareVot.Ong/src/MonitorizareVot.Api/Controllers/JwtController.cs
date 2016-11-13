@@ -15,22 +15,19 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/jwt")]
     public class JwtController : Controller
     {
         private static string SecretKey = "needtogetthisfromenvironment";
         private static SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
-        private JwtIssuerOptions _jwtOptions = new JwtIssuerOptions
-        {
-            Issuer = "MonitorizareONG",
-            SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256),
-            Audience = "http://localhost:5000"
-        };
+        private readonly JwtIssuerOptions _jwtOptions;
+
         private readonly ILogger _logger;
         private readonly JsonSerializerSettings _serializerSettings;
 
-        public JwtController(ILoggerFactory loggerFactory)
+        public JwtController(JwtIssuerOptions jwtOptions, ILoggerFactory loggerFactory)
         {
+            _jwtOptions = jwtOptions;
             ThrowIfInvalidOptions(_jwtOptions);
 
             _logger = loggerFactory.CreateLogger<JwtController>();
@@ -39,6 +36,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 Formatting = Formatting.Indented
             };
+        }
+
+
+        [HttpHead]
+        public async Task<IActionResult> Refresh()
+        {
+            return new OkObjectResult(0);
         }
 
         [HttpPost]
@@ -54,13 +58,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
             var claims = new[]
             {
-        new Claim(JwtRegisteredClaimNames.Sub, applicationUser.UserName),
-        new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-        new Claim(JwtRegisteredClaimNames.Iat,
-                  ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
-                  ClaimValueTypes.Integer64),
-        identity.FindFirst("IdONG")
-      };
+                new Claim(JwtRegisteredClaimNames.Sub, applicationUser.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
+                new Claim(JwtRegisteredClaimNames.Iat,
+                          ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
+                          ClaimValueTypes.Integer64),
+                identity.FindFirst("IdONG")
+            };
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(

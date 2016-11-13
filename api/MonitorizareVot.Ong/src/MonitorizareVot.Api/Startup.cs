@@ -31,12 +31,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MonitorizareVot.Ong.Api.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MonitorizareVot.Ong.Api
 {
     public class Startup
     {
         private readonly Container container = new Container();
+
+        private const string SecretKey = "needtogetthisfromenvironment";
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
         public Startup(IHostingEnvironment env)
         {
@@ -60,7 +64,7 @@ namespace MonitorizareVot.Ong.Api
 
         public IConfigurationRoot Configuration { get; }
 
-        
+
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
@@ -78,7 +82,10 @@ namespace MonitorizareVot.Ong.Api
 
 
 
-           
+
+
+
+
 
 
             services.AddSwaggerGen();
@@ -130,13 +137,39 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            app.Use(async (context, next)=>
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _signingKey,
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+
+            app.Use(async (context, next) =>
             {
                 await next();
-                if(context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api")  && !Path.HasExtension(context.Request.Path.Value)){
+                if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api") && !Path.HasExtension(context.Request.Path.Value))
+                {
                     context.Request.Path = "/index.html";
                     await next();
-                } 
+                }
             });
 
             app.UseStaticFiles();
@@ -171,8 +204,10 @@ namespace MonitorizareVot.Ong.Api
 
             container.Verify();
 
-            app.Use(async (context, next) => {
-                if(context.Request.Path.Value.StartsWith("/api")){
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.Value.StartsWith("/api"))
+                {
                     context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                     context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
                     context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
@@ -182,7 +217,7 @@ namespace MonitorizareVot.Ong.Api
             });
 
             app.UseMvc();
-            
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
@@ -240,6 +275,18 @@ namespace MonitorizareVot.Ong.Api
         private void RegisterServices()
         {
             //exemplu de servicii custom
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            container.Register<JwtIssuerOptions>(() =>
+            {
+                var jwtOptions = new JwtIssuerOptions
+                {
+                    Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+                    Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+                    SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256),
+                };
+                return jwtOptions;
+            }, Lifestyle.Transient);
             //container.Register<ISectieDeVotareService, SectieDevotareDBService>(Lifestyle.Scoped);
         }
 
