@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using MonitorizareVot.Ong.Api.Common;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.IdentityModel.Tokens;
+using Jwt;
+using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
@@ -39,10 +41,32 @@ namespace MonitorizareVot.Ong.Api.Controllers
         }
 
 
-        [HttpHead]
+        [HttpPut]
+        [AllowAnonymous]
+        // this method will only be called the token is expired
         public async Task<IActionResult> Refresh()
         {
-            return new OkObjectResult(0);
+            string token = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return Forbid();
+            }
+            if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            {
+                token = token.Substring("Bearer ".Length).Trim();
+            }
+            if (string.IsNullOrEmpty(token))
+            {
+                return Forbid();
+            }
+
+            var decoded = JsonWebToken.DecodeToObject<Dictionary<string,string>>(token, SecretKey, false);
+            var idOng = Int32.Parse(decoded["IdOng"]);
+            var userName = decoded[JwtRegisteredClaimNames.Sub];
+
+            var json = await generateToken(userName, idOng);
+              
+            return new OkObjectResult(json);
         }
 
         [HttpPost]
@@ -55,15 +79,20 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 _logger.LogInformation($"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
+            var json = await generateToken(applicationUser.UserName);
+            
+            return new OkObjectResult(json);
+        }
 
+        private async Task<string> generateToken(string userName, int idOng = 0) {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, applicationUser.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat,
                           ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                           ClaimValueTypes.Integer64),
-                identity.FindFirst("IdONG")
+                new Claim("IdOng",idOng.ToString())
             };
 
             // Create the JWT security token and encode it.
@@ -85,8 +114,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
             };
 
             var json = JsonConvert.SerializeObject(response, _serializerSettings);
-            return new OkObjectResult(json);
+            return json;
         }
+
 
         private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
         {

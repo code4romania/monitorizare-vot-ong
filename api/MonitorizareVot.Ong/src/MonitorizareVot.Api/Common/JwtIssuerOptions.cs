@@ -67,7 +67,7 @@ namespace MonitorizareVot.Ong.Api.Common
         /// <summary>
         /// Set the timespan the token will be valid for (default is 5 min/300 seconds)
         /// </summary>
-        public TimeSpan ValidFor { get; set; } = TimeSpan.FromDays(1);
+        public TimeSpan ValidFor { get; set; } = TimeSpan.FromHours(1);
 
         /// <summary>
         /// "exp" (Expiration Time) Claim (returns IssuedAt + ValidFor)

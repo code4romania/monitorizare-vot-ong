@@ -32,6 +32,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MonitorizareVot.Ong.Api.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -79,13 +80,6 @@ namespace MonitorizareVot.Ong.Api
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-
-
-
-
-
-
-
 
 
             services.AddSwaggerGen();
@@ -154,12 +148,35 @@ namespace MonitorizareVot.Ong.Api
 
                 ClockSkew = TimeSpan.Zero
             };
+            var events = new JwtBearerEvents();
+            events.OnAuthenticationFailed = (context) =>
+            {
+                if( context.Exception is SecurityTokenExpiredException && 
+                    context.Request.Path.ToString().ToLower() == "/api/v1/jwt" && 
+                    context.Request.Method.ToLower() == "put")
+                {
+                    // skip authentification 
+                    context.SkipToNextMiddleware();
+                }
+
+                return Task.FromResult(0);
+            };
+            events.OnTokenValidated = (context) =>
+            {
+                if(context.Request.Path.ToString().ToLower() == "/api/v1/jwt" && context.Request.Method.ToLower() == "put")
+                {
+                    context.HandleResponse();
+                    throw new SecurityTokenSignatureKeyNotFoundException();
+                }
+                return Task.FromResult(0);
+            };
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
+                TokenValidationParameters = tokenValidationParameters,
+                Events = events
             });
 
             app.Use(async (context, next) =>
