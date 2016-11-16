@@ -1,3 +1,5 @@
+import { AuthGuard } from './authGuard/auth.guard';
+import { AuthentificationService } from './authentification/authentification.service';
 import { AuthHttpService } from './auth-http/auth-http.service';
 import { TokenService } from './token/token.service';
 import { BaseRequestOptions, ConnectionBackend, Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
@@ -18,12 +20,14 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   exports: [
   ],
   providers: [
-    TokenService,   
+    TokenService,
+    AuthentificationService,
     {
-      provide:Http,
+      provide: Http,
       useClass: AuthHttpService,
-      deps:[XHRBackend, RequestOptions]
-    }
+      deps: [XHRBackend, RequestOptions]
+    },
+    AuthGuard
   ],
   declarations: []
 })

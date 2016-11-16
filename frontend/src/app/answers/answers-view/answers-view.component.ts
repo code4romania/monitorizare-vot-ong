@@ -31,7 +31,7 @@ export class AnswersViewComponent implements OnInit {
       }, this.paginator.requestData())
     }
     
-    this.answers = <Observable<Answer>> this.http.get(`/api/raspunsuri`, requestOptions)
+    this.answers = <Observable<Answer>> this.http.get(`api/v1/raspunsuri`, requestOptions)
       .map(res => res.json())
       .map(json => json.data)
       .do(this.paginator.updatePagination)

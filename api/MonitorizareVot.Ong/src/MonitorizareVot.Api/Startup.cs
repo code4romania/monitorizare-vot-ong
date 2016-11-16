@@ -152,7 +152,7 @@ namespace MonitorizareVot.Ong.Api
             events.OnAuthenticationFailed = (context) =>
             {
                 if( context.Exception is SecurityTokenExpiredException && 
-                    context.Request.Path.ToString().ToLower() == "/api/v1/jwt" && 
+                    context.Request.Path.ToString().ToLower() == "/api/v1/auth" && 
                     context.Request.Method.ToLower() == "put")
                 {
                     // skip authentification 
@@ -163,7 +163,7 @@ namespace MonitorizareVot.Ong.Api
             };
             events.OnTokenValidated = (context) =>
             {
-                if(context.Request.Path.ToString().ToLower() == "/api/v1/jwt" && context.Request.Method.ToLower() == "put")
+                if(context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
                 {
                     context.HandleResponse();
                     throw new SecurityTokenSignatureKeyNotFoundException();
@@ -220,18 +220,6 @@ namespace MonitorizareVot.Ong.Api
             BuildMediator();
 
             container.Verify();
-
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path.Value.StartsWith("/api"))
-                {
-                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-                    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-                    context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-                }
-                await next();
-            });
 
             app.UseMvc();
 

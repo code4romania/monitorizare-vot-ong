@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
-    [Route("api/v1/jwt")]
+    [Route("api/v1/auth")]
     public class JwtController : Controller
     {
         private static string SecretKey = "needtogetthisfromenvironment";
@@ -44,7 +44,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpPut]
         [AllowAnonymous]
         // this method will only be called the token is expired
-        public async Task<IActionResult> Refresh()
+        public async Task<IActionResult> RefreshLogin()
         {
             string token = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(token))
@@ -71,7 +71,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Get([FromForm] ApplicationUser applicationUser)
+        public async Task<IActionResult> Login([FromBody] ApplicationUser applicationUser)
         {
             var identity = await GetClaimsIdentity(applicationUser);
             if (identity == null)
@@ -109,7 +109,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // Serialize and return the response
             var response = new
             {
-                access_token = encodedJwt,
+                token = encodedJwt,
                 expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
             };
 

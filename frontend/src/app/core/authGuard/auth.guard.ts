@@ -1,0 +1,35 @@
+import { AuthentificationService } from '../../core/authentification/authentification.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot } from '@angular/router';
+
+@Injectable()
+export class AuthGuard implements CanActivateChild, CanActivate {
+
+    private authObservable : Observable<boolean>;
+
+    constructor(private authService: AuthentificationService) { }
+
+
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        // check if this route
+       return this.checkForLogin();
+    }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        console.log(`Can activate called`);
+        return this.checkForLogin();
+    }
+
+    private checkForLogin() : boolean | Observable<boolean>{
+         if(this.authService.isLoggedIn){
+            return true;
+        } else {
+            if(this.authObservable){ 
+                return this.authObservable;
+            } else {
+                this.authObservable = this.authService.login('admin','admin').mapTo(true).share();
+            }
+             
+        }
+    }
+}
