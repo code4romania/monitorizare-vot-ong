@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivateChild, CanActivate {
         return this.checkForLogin();
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        console.log(`Can activate called`);
         return this.checkForLogin();
     }
 

@@ -20,16 +20,16 @@ export class ApiService {
     if (options.withCredentials === false) {
       return this.http.request(url, options);
     }
-    options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
+    options.headers.append('Authorization', 'Bearer ' + this.tokenService.token);
 
     return new Observable<Response>((obs: Observer<Response>) => this.requestSubscribe(obs, url, options))
       .catch(err => this.handleRequestError(err, url, options));
   }
   private requestSubscribe(observer: Observer<Response>, url: string, options: RequestOptionsArgs) {
-    let tokenValid = this.tokenService.isTokenExpired();
+    let tokenExpired = this.tokenService.isTokenExpired();
 
 
-    if (tokenValid === false) {
+    if (tokenExpired) {
       this.refreshToken();
     }
 
@@ -66,7 +66,7 @@ export class ApiService {
     // the tokenRefreshObservable that will refresh the token
     this.tokenRefreshObservable = this.http.get('/api/v1/auth', {
       headers: new Headers({
-        Authorization: `Bearer ${this.tokenService.token}`
+        Authorization: 'Bearer ' + this.tokenService.token
       })
     }).cache();
 

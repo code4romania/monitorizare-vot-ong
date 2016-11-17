@@ -1,8 +1,6 @@
 import { AnswersModule } from './answers/answers.module';
-import { AnswersComponent } from './answers/answers.component';
 import { AuthGuard } from './core/authGuard/auth.guard';
 import { SimpleOutletComponent } from './shared/simple-outlet/simple-outlet.component';
-import { AnswersViewComponent } from './answers/answers-view/answers-view.component';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 export let appRoutes = RouterModule.forRoot([
@@ -15,7 +13,7 @@ export let appRoutes = RouterModule.forRoot([
     {
         path: 'raspunsuri',
         component: SimpleOutletComponent,
-        loadChildren: lazyLoadAnswers,
+        loadChildren: 'app/answers/answers.module#AnswersModule',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard]
     }

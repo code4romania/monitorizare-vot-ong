@@ -11,17 +11,21 @@ export class MenuComponent implements OnInit {
 
   menuItems : MenuItem[] = [
     {
-      routerLink: '/raspunsuri/urgente',
+      routerLink:['/raspunsuri/urgente'],
       label: 'Urgente',
+      disabled: false,
     }, {
-      routerLink: '/raspunsuri',
+      routerLink:['/raspunsuri'],
       label: 'Raspunsuri',
+      disabled: false,
     }, {
-      routerLink: '/statistici',
+      routerLink:['/statistici'],
       label: 'Statistici',
+      disabled: false,
     }, {
-      routerLink: '/ghidul-observatorului',
-      label: 'Ghidul observatorului'
+      routerLink:['/ghidul-observatorului'],
+      label: 'Ghidul observatorului',
+      disabled: false,
     }
   ];
 
