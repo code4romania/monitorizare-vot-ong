@@ -1,16 +1,15 @@
-import { Observable } from 'rxjs/Rx';
-import { setTimeout } from 'timers';
-import { environment } from '../../../environments/environment';
+import { ApiService } from '../../core/apiService/api.service';
 import { Paginator, PaginatorFactory } from '../../shared/paginator/paginator.service';
 import { Answer } from '../shared/answer.model';
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-answers-view',
   templateUrl: './answers-view.component.html',
-  styleUrls: ['./answers-view.component.scss']
+  styleUrls: ['./answers-view.component.scss'],
+  providers:[Paginator]
 })
 export class AnswersViewComponent implements OnInit {
 
@@ -19,7 +18,7 @@ export class AnswersViewComponent implements OnInit {
 
   paginator: Paginator;
 
-  constructor(private http: Http, route: ActivatedRoute, paginatorFactory: PaginatorFactory) {
+  constructor(private http: ApiService, route: ActivatedRoute, paginatorFactory: PaginatorFactory) {
     this.isUrgent = route.snapshot.data['urgent'] || false;
     this.paginator = paginatorFactory.create();
   }

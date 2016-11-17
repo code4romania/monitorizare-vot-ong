@@ -1,6 +1,6 @@
 import { AnswersModule } from './answers/answers.module';
 import { AnswersComponent } from './answers/answers.component';
-import { AuthGuard } from './shared/authGuard/auth.guard';
+import { AuthGuard } from './core/authGuard/auth.guard';
 import { SimpleOutletComponent } from './shared/simple-outlet/simple-outlet.component';
 import { AnswersViewComponent } from './answers/answers-view/answers-view.component';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';

@@ -1,3 +1,4 @@
+import { ApiService } from '../apiService/api.service';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
@@ -12,7 +13,7 @@ export class AuthentificationService {
         return this._isLoggedIn;
     }
 
-    constructor(private http: Http, private tokenService: TokenService) { }
+    constructor(private http: Http, private apiService: ApiService, private tokenService: TokenService) { }
 
 
     public login(username: string, password: string) {
@@ -22,11 +23,11 @@ export class AuthentificationService {
             password: password
         }
 
-        let loginObservable = this.http.post('api/v1/auth', body)
-            .map((response) => response.json()).share();
+        let loginObservable = this.http.post('/api/v1/auth', body)
+            .map((response) => response.text()).share();
 
-        loginObservable.subscribe(data => {
-            this.tokenService.token = data.token;
+        loginObservable.subscribe(token => {
+            this.tokenService.token = token;
             this._isLoggedIn = true;
         });
 

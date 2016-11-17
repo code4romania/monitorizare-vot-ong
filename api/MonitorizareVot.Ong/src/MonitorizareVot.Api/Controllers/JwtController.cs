@@ -41,7 +41,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         }
 
 
-        [HttpPut]
+        [HttpGet]
         [AllowAnonymous]
         // this method will only be called the token is expired
         public async Task<IActionResult> RefreshLogin()
@@ -107,14 +107,14 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             // Serialize and return the response
-            var response = new
-            {
-                token = encodedJwt,
-                expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
-            };
+            //var response = new
+            //{
+            //    token = encodedJwt,
+            //    expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
+            //};
 
-            var json = JsonConvert.SerializeObject(response, _serializerSettings);
-            return json;
+            //var json = JsonConvert.SerializeObject(response, _serializerSettings);
+            return encodedJwt;
         }
 
 
@@ -151,6 +151,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// </summary>
         private static Task<ClaimsIdentity> GetClaimsIdentity(ApplicationUser user)
         {
+            //TODO Add retrieval of user claims from database
             if (user.UserName == "admin" &&
                 user.Password == "admin")
             {
