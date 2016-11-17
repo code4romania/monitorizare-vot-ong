@@ -8,66 +8,47 @@ import { Observable, Observer } from 'rxjs/Rx';
 @Injectable()
 export class ApiService {
 
-  private delegation: Observable<Response>;
+  private tokenRefreshObservable: Observable<Response>;
 
 
   constructor(private http: Http, private tokenService: TokenService) { }
+
+
+
 
   private request(url: string, options: RequestOptionsArgs): Observable<Response> {
     if (options.withCredentials === false) {
       return this.http.request(url, options);
     }
-    options.headers.append('Authorization',`Bearer ${this.tokenService.token}`);
+    options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
 
-    return new Observable<Response>((obs: Observer<Response>) => this.requestDefer(obs, url, options))
-      .catch(err => this.catchRequestError(err, url, options));
+    return new Observable<Response>((obs: Observer<Response>) => this.requestSubscribe(obs, url, options))
+      .catch(err => this.handleRequestError(err, url, options));
   }
+  private requestSubscribe(observer: Observer<Response>, url: string, options: RequestOptionsArgs) {
+    let tokenValid = this.tokenService.isTokenExpired();
 
-  private delegateToken() {
-    if (this.delegation) {
-      return;
+
+    if (tokenValid === false) {
+      this.refreshToken();
     }
-    // the delegation that will refresh the token
-    this.delegation = this.http.get('/api/v1/auth', {
-      headers: new Headers({
-        Authorization: `Bearer ${this.tokenService.token}`
-      })
-    }).cache();
 
-    this.delegation.map(response=>response.text()).subscribe((token) => {
-      this.delegation = undefined;
-      this.tokenService.token = token;
-    }, err => {
-      // TODO : WHEN DELEGATION FAILS, LOGOUT
-    });
+    if (this.tokenRefreshObservable) {
+      this.tokenRefreshObservable.subscribe(() => {
+        this.http.request(url, options).subscribe(observer.next);
+      });
+    }
   }
-
-  catchRequestError(err: Response, url: string, options: RequestOptionsArgs): Observable<Response> | ErrorObservable {
+  private handleRequestError(err: Response, url: string, options: RequestOptionsArgs): Observable<Response> | ErrorObservable {
     if (err.status !== 401) {
       return Observable.throw(err);
     }
 
     // we consider the jwt expired ( don't treat the invalid case yet )
-    this.delegateToken();
-
+    this.refreshToken();
     return this.request(url, options);
   }
-  requestDefer(observer: Observer<Response>, url: string, options: RequestOptionsArgs) {
-    let tokenValid = this.tokenService.isTokenExpired();
-
-
-    if (tokenValid === false) {
-      this.delegateToken();
-    }
-
-    if (this.delegation) {
-      this.delegation.subscribe(() => {
-        this.http.request(url, options).subscribe(observer.next);
-      });
-    }
-  }
-
-  private adaptRequest(url: string, method: RequestMethod, options?: RequestOptionsArgs, body?: any) {
+  private normalizeRequest(url: string, method: RequestMethod, options?: RequestOptionsArgs, body?: any) {
     options = options || new RequestOptions({
       withCredentials: true
     });
@@ -78,26 +59,44 @@ export class ApiService {
     options.headers = options.headers || new Headers();
     return this.request(url, options);
   }
+  private refreshToken() {
+    if (this.tokenRefreshObservable) {
+      return;
+    }
+    // the tokenRefreshObservable that will refresh the token
+    this.tokenRefreshObservable = this.http.get('/api/v1/auth', {
+      headers: new Headers({
+        Authorization: `Bearer ${this.tokenService.token}`
+      })
+    }).cache();
+
+    this.tokenRefreshObservable.map(response => response.text()).subscribe((token) => {
+      this.tokenRefreshObservable = undefined;
+      this.tokenService.token = token;
+    }, err => {
+      // TODO : WHEN tokenRefreshObservable FAILS, LOGOUT
+    });
+  }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Get, options);
+    return this.normalizeRequest(url, RequestMethod.Get, options);
   }
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Post, options, body);
+    return this.normalizeRequest(url, RequestMethod.Post, options, body);
   }
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Put, options, body);
+    return this.normalizeRequest(url, RequestMethod.Put, options, body);
   }
   delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Delete, options);
+    return this.normalizeRequest(url, RequestMethod.Delete, options);
   }
   patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Patch, options);
+    return this.normalizeRequest(url, RequestMethod.Patch, options);
   }
   head(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Head, options);
+    return this.normalizeRequest(url, RequestMethod.Head, options);
   }
   options(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.adaptRequest(url, RequestMethod.Options, options);
+    return this.normalizeRequest(url, RequestMethod.Options, options);
   }
 }
