@@ -60,11 +60,11 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 return;
 
             context.SectieDeVotare.AddRange(
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 1, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 1}", NumarSectie = idJudet * 10 + 1, LocalitateComponenta = $"Localitate {idJudet * 10 + 1}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 2, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 2}", NumarSectie = idJudet * 10 + 2, LocalitateComponenta = $"Localitate {idJudet * 10 + 2}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 3, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 3}", NumarSectie = idJudet * 10 + 3, LocalitateComponenta = $"Localitate {idJudet * 10 + 3}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 4, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 4}", NumarSectie = idJudet * 10 + 4, LocalitateComponenta = $"Localitate {idJudet * 10 + 4}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 5, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 5}", NumarSectie = idJudet * 10 + 5, LocalitateComponenta = $"Localitate {idJudet * 10 + 5}" }
+                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 1, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 1}", NumarSectie = 1, LocalitateComponenta = $"Localitate {idJudet * 10 + 1}" },
+                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 2, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 2}", NumarSectie = 2, LocalitateComponenta = $"Localitate {idJudet * 10 + 2}" },
+                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 3, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 3}", NumarSectie = 3, LocalitateComponenta = $"Localitate {idJudet * 10 + 3}" },
+                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 4, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 4}", NumarSectie = 4, LocalitateComponenta = $"Localitate {idJudet * 10 + 4}" },
+                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 5, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 5}", NumarSectie = 5, LocalitateComponenta = $"Localitate {idJudet * 10 + 5}" }
              );
 
             context.SaveChanges();

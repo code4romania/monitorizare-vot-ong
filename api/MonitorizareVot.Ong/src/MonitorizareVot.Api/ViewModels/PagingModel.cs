@@ -1,13 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MonitorizareVot.Ong.Api.Common;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
     public class PagingModel
     {
-        [Range(1, int.MaxValue)]
-        public int Page { get; set; }
-        [Range(1, Common.Constants.MAX_TAKE)]
-        public int PageSize { get; set; }
+        private int _page;
+        private int _pageSize;
+
+        public int Page
+        {
+            get { return _page; }
+            set { _page = value < 1 ? 1 : value; }
+        }
+
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set { _pageSize = value < 1 ? Constants.DEFAULT_PAGE_SIZE : value; }
+        }
     }
 
     public class PagingResponseModel : PagingModel
