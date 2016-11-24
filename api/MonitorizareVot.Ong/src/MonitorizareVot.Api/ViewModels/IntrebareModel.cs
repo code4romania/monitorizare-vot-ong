@@ -1,6 +1,4 @@
-﻿using MediatR;
-using MonitorizareVot.Ong.Api.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
@@ -11,12 +9,5 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int IdTipIntrebare { get; set; }
 
         public IList<RaspunsCompletatModel> RaspunsuriDisponibile { get; set; }
-    }
-
-    public class IntrebariQuery : IAsyncRequest<ApiResponse<List<SectiuneModel>>>
-    {
-        public string CodFormular { get; set; }
-        public int IdSectieDeVotare { get; set; }
-        public int IdObservator { get; set; }
     }
 }

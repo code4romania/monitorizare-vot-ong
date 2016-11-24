@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using MediatR;
 using MonitorizareVot.Domain.Ong.Models;
+using MonitorizareVot.Ong.Api.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
@@ -11,6 +12,13 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public string Descriere { get; set; }
 
         public List<IntrebareModel> Intrebari { get; set; }
+    }
+
+    public class IntrebariQuery : IAsyncRequest<ApiResponse<List<SectiuneModel>>>
+    {
+        public string CodFormular { get; set; }
+        public int IdSectieDeVotare { get; set; }
+        public int IdObservator { get; set; }
     }
 
     public class FormularProfile : Profile

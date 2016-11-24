@@ -5,7 +5,6 @@ namespace MonitorizareVot.Ong.Api.ViewModels
 {
     public class SectieModel
     {
-
         public string Sectie { get; set; }
 
         public string Observator { get; set; }
