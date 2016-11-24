@@ -25,7 +25,8 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var sectiiCuObservatori = _context.Raspuns
                 .Where(x => x.IdObservatorNavigation.IdOng == message.IdONG && x.IdRaspunsDisponibilNavigation.RaspunsCuFlag == message.Urgent)
-                .Select(y => new SectieModel {
+                .Select(y => new SectieModel
+                {
                     IdObservator = y.IdObservator,
                     Observator = y.IdObservatorNavigation.NumeIntreg,
                     IdSectie = y.IdSectieDeVotare,
@@ -33,8 +34,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                     CodJudet = y.IdSectieDeVotareNavigation.IdJudetNavigation.CodJudet,
                     Sectie = y.IdSectieDeVotareNavigation.DenumireUat,
                     DataUltimeiModificari = y.DataUltimeiModificari
-                })
-                .Distinct();
+                });
 
             var sectiiCuObservatoriPaginat = await sectiiCuObservatori
                  .OrderByDescending(x => x.DataUltimeiModificari)
