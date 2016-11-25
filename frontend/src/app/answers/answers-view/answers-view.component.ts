@@ -1,3 +1,4 @@
+import { Http } from '@angular/http';
 import { ApiService } from '../../core/apiService/api.service';
 import { Paginator, PaginatorFactory } from '../../shared/paginator/paginator.service';
 import { Answer } from '../shared/answer.model';
@@ -18,7 +19,7 @@ export class AnswersViewComponent implements OnInit {
 
   paginator: Paginator;
 
-  constructor(private http: ApiService, route: ActivatedRoute, paginatorFactory: PaginatorFactory) {
+  constructor(private http: Http, route: ActivatedRoute, paginatorFactory: PaginatorFactory) {
     this.isUrgent = route.snapshot.data['urgent'] || false;
     this.paginator = paginatorFactory.create();
   }
@@ -30,10 +31,10 @@ export class AnswersViewComponent implements OnInit {
       }, this.paginator.requestData())
     }
     
-    this.answers = <Observable<Answer>> this.http.get(`api/v1/raspunsuri`, requestOptions)
-      .map(res => res.json())
-      .map(json => json.data)
-      .do(this.paginator.updatePagination)
+    // this.answers = <Observable<Answer>> this.http.get(`api/v1/raspunsuri`, requestOptions)
+    //   .map(res => res.json())
+    //   .map(json => json.data)
+    //   .do(this.paginator.updatePagination)
       
   }
 

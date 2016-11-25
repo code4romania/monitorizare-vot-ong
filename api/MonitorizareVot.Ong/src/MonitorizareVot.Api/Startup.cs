@@ -75,10 +75,10 @@ namespace MonitorizareVot.Ong.Api
 
             services.AddMvc(config =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
+                //var policy = new AuthorizationPolicyBuilder()
+                //    .RequireAuthenticatedUser()
+                //    .Build();
+                //config.Filters.Add(new AuthorizeFilter(policy));
             });
 
 
@@ -131,53 +131,53 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuer = true,
+            //    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+            //    ValidateAudience = true,
+            //    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = _signingKey,
 
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
+            //    RequireExpirationTime = true,
+            //    ValidateLifetime = true,
 
-                ClockSkew = TimeSpan.Zero
-            };
-            var events = new JwtBearerEvents();
-            events.OnAuthenticationFailed = (context) =>
-            {
-                if( context.Exception is SecurityTokenExpiredException && 
-                    context.Request.Path.ToString().ToLower() == "/api/v1/auth" && 
-                    context.Request.Method.ToLower() == "put")
-                {
-                    // skip authentification 
-                    context.SkipToNextMiddleware();
-                }
+            //    ClockSkew = TimeSpan.Zero
+            //};
+            //var events = new JwtBearerEvents();
+            //events.OnAuthenticationFailed = (context) =>
+            //{
+            //    if (context.Exception is SecurityTokenExpiredException &&
+            //        context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+            //        context.Request.Method.ToLower() == "put")
+            //    {
+            //        // skip authentification 
+            //        context.SkipToNextMiddleware();
+            //    }
 
-                return Task.FromResult(0);
-            };
-            events.OnTokenValidated = (context) =>
-            {
-                if(context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
-                {
-                    context.HandleResponse();
-                    throw new SecurityTokenSignatureKeyNotFoundException();
-                }
-                return Task.FromResult(0);
-            };
+            //    return Task.FromResult(0);
+            //};
+            //events.OnTokenValidated = (context) =>
+            //{
+            //    if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
+            //    {
+            //        context.HandleResponse();
+            //        throw new SecurityTokenSignatureKeyNotFoundException();
+            //    }
+            //    return Task.FromResult(0);
+            //};
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters,
-                Events = events
-            });
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions
+            //{
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true,
+            //    TokenValidationParameters = tokenValidationParameters,
+            //    Events = events
+            //});
 
             app.Use(async (context, next) =>
             {

@@ -10,7 +10,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int Page
         {
             get { return _page; }
-            set { _page = value < 1 ? 1 : value; }
+            set { _page = value < 1 ? Constants.DEFAULT_PAGE : value; }
         }
 
         public int PageSize

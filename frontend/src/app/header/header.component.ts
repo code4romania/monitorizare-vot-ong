@@ -12,4 +12,21 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  menuItems : any[] = [
+    {
+      routerLink:['/raspunsuri/urgente'],
+      label: 'Urgente',
+    }, {
+      routerLink:['/raspunsuri'],
+      label: 'Raspunsuri',
+    }, {
+      routerLink:['/statistici'],
+      label: 'Statistici',
+    }, {
+      routerLink:['/ghidul-observatorului'],
+      label: 'Ghidul observatorului',
+    }
+  ];
+
 }

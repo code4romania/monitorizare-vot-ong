@@ -1,0 +1,13 @@
+
+
+<div *ngFor="let config of topLists; let i = index">
+  <h2>{{config.label}}</h2>
+  <div *ngFor="let topItem of config.dataObservable | async">
+    {{topItem.label}} : {{topItem.value}}
+  </div>
+  <a [routerLink]="['detalii',i]">
+    Vezi mai mult
+  </a>
+</div>
+
+  
