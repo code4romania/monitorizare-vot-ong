@@ -38,4 +38,10 @@ import { AnswerNotesComponent } from './components/answer-notes/answer-notes.com
 
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(service: AnswersService) {
+    service.getAllForms().subscribe(value => {
+      debugger;
+    });
+  }
+ }
