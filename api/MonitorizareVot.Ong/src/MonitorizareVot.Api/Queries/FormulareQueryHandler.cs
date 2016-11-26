@@ -24,14 +24,11 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiResponse<List<SectiuneModel>>> Handle(IntrebariQuery message)
         {
-            // TODO Fix this query
             var intrebari = await _context.Intrebare
                 .Include(i => i.IdSectiuneNavigation)
                 .Include(i => i.RaspunsDisponibil)
-                    .ThenInclude(rd => rd.Raspuns)//.DefaultIfEmpty() // LEFT JOIN
-                .Include(i => i.RaspunsDisponibil)
-                    .ThenInclude(rd => rd.IdOptiuneNavigation)
-                .Where(i => i.CodFormular == message.CodFormular)// && i.RaspunsDisponibil.Any(rd => rd.Raspuns.Any(x => x.IdObservator == message.IdObservator)))
+                    .ThenInclude(i => i.IdOptiuneNavigation)
+                .Where(i => i.CodFormular == message.CodFormular)
                 .ToListAsync();
 
             var sectiuni = intrebari.Select(a => new { a.IdSectiune, a.IdSectiuneNavigation.CodSectiune, a.IdSectiuneNavigation.Descriere }).Distinct();
