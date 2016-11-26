@@ -1,15 +1,14 @@
-import { StatisticsService } from './statistics.service';
+import { StatisticsService } from '../../shared/statistics.service';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+  templateUrl: './statistics-top.component.html',
+  styleUrls: ['./statistics-top.component.scss']
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsTopComponent implements OnInit {
 
   constructor(private http:Http, private statService: StatisticsService) { }
 

@@ -1,0 +1,8 @@
+<div *ngFor="let note of notes | async">
+    <img [src]="note.caleFisierAtasat"/>
+
+    <p>{{note.textNota}}</p>
+
+    <h4>Cod formular: {{note.codFormular}}</h4>
+    <h4>Cod sectiune: {{note.codSectiune}}</h4>
+</div>

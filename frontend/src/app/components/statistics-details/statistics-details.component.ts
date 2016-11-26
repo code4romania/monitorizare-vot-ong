@@ -1,4 +1,4 @@
-import { StatisticsService } from '../statistics.service';
+import { StatisticsService} from '../../shared/statistics.service';
 import { resolve } from 'dns';
 import { Http } from '@angular/http';
 import { Component, OnInit } from '@angular/core';

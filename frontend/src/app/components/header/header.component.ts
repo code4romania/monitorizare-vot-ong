@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   menuItems : any[] = [
     {
-      routerLink:['/raspunsuri/urgente'],
+      routerLink:[''],
       label: 'Urgente',
     }, {
       routerLink:['/raspunsuri'],

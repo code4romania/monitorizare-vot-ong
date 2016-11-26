@@ -24,19 +24,35 @@ namespace MonitorizareVot.Ong.Api.Queries
         }
         public async Task<ApiResponse<List<NotaModel>>> Handle(NotaQuery message)
         {
-            var note = await _context.Nota
-                .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
-                .OrderBy(n => n.IdIntrebareNavigation.CodFormular)
-                .ThenBy(n => n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune)
-                .Select(n => new NotaDetaliiModel
-                {
-                    IdNota = n.IdNota,
-                    CaleFisierAtasat = n.CaleFisierAtasat,
-                    TextNota = n.TextNota,
-                    CodFormular = n.IdIntrebareNavigation.CodFormular,
-                    CodSectiune = n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune
-                })
-                .ToListAsync();
+            // var note = await _context.Nota
+            //     .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
+            //     .OrderBy(n => n.IdIntrebareNavigation.CodFormular)
+            //     .ThenBy(n => n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune)
+            //     .Select(n => new NotaDetaliiModel
+            //     {
+            //         IdNota = n.IdNota,
+            //         CaleFisierAtasat = n.CaleFisierAtasat,
+            //         TextNota = n.TextNota,
+            //         CodFormular = n.IdIntrebareNavigation.CodFormular,
+            //         CodSectiune = n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune
+            //     })
+            //     .ToListAsync();
+            var note = new List<NotaModel>{
+                new NotaModel { 
+                    IdNota = 1,
+                    CaleFisierAtasat = "http://depts.washington.edu/nwcenter/wp-content/uploads/2016/09/maxresdefault.jpg",
+                    TextNota = "Text nota",
+                    CodFormular = "A",
+                    CodSectiune = "1"
+                }, 
+                new NotaModel { 
+                    IdNota = 2,
+                    CaleFisierAtasat = "http://depts.washington.edu/nwcenter/wp-content/uploads/2016/09/maxresdefault.jpg",
+                    TextNota = "Text nota",
+                    CodFormular = "A",
+                    CodSectiune = "2"
+                }
+            };
 
             return new ApiResponse<List<NotaModel>> { Data = note.Select(x => _mapper.Map<NotaModel>(x)).ToList() };
         }

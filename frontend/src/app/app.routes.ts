@@ -1,28 +1,31 @@
-import { StatisticsDetailsComponent } from './statistics/statistics-details/statistics-details.component';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { AnswersModule } from './answers/answers.module';
-import { AuthGuard } from './core/authGuard/auth.guard';
-import { SimpleOutletComponent } from './shared/simple-outlet/simple-outlet.component';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AnswerDetailsComponent } from './components/answer-details/answer-details.component';
+import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
+import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AnswersListComponent } from './components/answers-list/answers-list.component';
+
 
 export let appRoutes = RouterModule.forRoot([
     {
         path: '',
-        canActivate: [],
-        redirectTo: '/raspunsuri/urgente',
-        pathMatch: 'full',
-    },
-    {
+        component: AnswersListComponent,
+        data: { urgent: true},
+    }, {
         path: 'raspunsuri',
-        component: SimpleOutletComponent,
-        loadChildren: 'app/answers/answers.module#AnswersModule',
-        canActivate: [],
-        canActivateChild: []
+        children: [
+            {
+                path: '',
+                component: AnswersListComponent
+            }, {
+                path:'detalii/:idObservator/:idSectie',
+                component: AnswerDetailsComponent
+            }
+        ],
     }, {
         path: 'statistici',
         children: [{
             path: '',
-            component: StatisticsComponent
+            component: StatisticsTopComponent
         }, {
             path: ':index',
             component: StatisticsDetailsComponent
@@ -30,9 +33,4 @@ export let appRoutes = RouterModule.forRoot([
 
     }], {
         enableTracing: false,
-        preloadingStrategy: PreloadAllModules
     });;
-
-function lazyLoadAnswers() {
-    return AnswersModule;
-}
