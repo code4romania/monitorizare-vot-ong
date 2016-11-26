@@ -18,7 +18,6 @@ export class StatisticsDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .map(params => params['index'])
-      .map(parseInt)
       .subscribe(this.getConfig.bind(this));
   }
 

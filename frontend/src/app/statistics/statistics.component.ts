@@ -1,5 +1,5 @@
 import { StatisticsService } from './statistics.service';
-import { resolve } from 'dns';
+import * as _ from 'lodash';
 import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
@@ -13,12 +13,12 @@ export class StatisticsComponent implements OnInit {
 
   constructor(private http:Http, private statService: StatisticsService) { }
 
-  public topLists = undefined;
+  public topListsArray = undefined;
 
   ngOnInit() {
 
-    this.topLists = this.statService.topLists;    
-    this.topLists.forEach(config => {
+    this.topListsArray = _.values(this.statService.topLists);    
+     _.each(this.topListsArray,config => {
       config.dataObservable = 
         this.http.get(`/api/v1/statistici/${config.method}`)
         .map(res => res.json())

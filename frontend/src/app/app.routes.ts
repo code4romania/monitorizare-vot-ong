@@ -24,7 +24,7 @@ export let appRoutes = RouterModule.forRoot([
             path: '',
             component: StatisticsComponent
         }, {
-            path: 'detalii/:index',
+            path: ':index',
             component: StatisticsDetailsComponent
         }]
 

@@ -1,7 +1,7 @@
-<p-dataList [value]="answers | async">
-    <template let-answer>
-        <div class="header">Sectie: {{answer.sectie}}</div>
-        Observator: {{answer.observator}}
-        <div class="ui button">Add</div>
-    </template>
-</p-dataList>
+<div *ngFor="let answer of answers | async">
+    <div class="header">
+        Sectie: {{answers.sectie}}
+        <br/>
+        Observator: {{answers.observator}}
+    </div>
+</div>

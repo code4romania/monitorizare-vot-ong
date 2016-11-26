@@ -8,7 +8,7 @@ using MonitorizareVot.Ong.Api.ViewModels;
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/statistici")]
-    public class Statistici : Controller
+public class Statistici : Controller
     {
         private readonly IMediator _mediator;
 
@@ -90,7 +90,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             });
         }
 
-        /// <summary>
+        /// <summary>   
         /// Returneaza topul judetelor in functie de numarul de sesizari la deschiderea sectiilor
         /// </summary>
         /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
