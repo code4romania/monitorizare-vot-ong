@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using MonitorizareVot.Ong.Api.Filters;
+using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
@@ -28,15 +29,39 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpGet]
         public async Task<ApiListResponse<RaspunsModel>> Get(FiltruRaspunsuriModel model)
         {
+            // Mock data
+            return await Task.FromResult(
+                new ApiListResponse<RaspunsModel>
+                {
+                    Data = new List<RaspunsModel>
+                    {
+                         new RaspunsModel {Observator = "Ionescu Vasile", Sectie = "BU 123", IdSectie = 2},
+                         new RaspunsModel {Observator = "Popescu Ionut", Sectie = "BU 123", IdSectie = 2},
+                         new RaspunsModel {Observator = "Ionescu Maria", Sectie = "CT 13", IdSectie = 76},
+                         new RaspunsModel {Observator = "ALbertin Merisor", Sectie = "IS 13", IdSectie = 67},
+                         new RaspunsModel {Observator = "Vasilian Cristi", Sectie = "IS 123", IdSectie = 66},
+                         new RaspunsModel {Observator = "Zorii Maria", Sectie = "CT 143", IdSectie = 78},
+                         new RaspunsModel {Observator = "Gheorghe Marian", Sectie = "CT 6", IdSectie = 77},
+                         new RaspunsModel {Observator = "Ionescu Vasile", Sectie = "BU 124", IdSectie = 88},
+                         new RaspunsModel {Observator = "Cernica Maria", Sectie = "GR 99", IdSectie = 98},
+                         new RaspunsModel {Observator = "Vlasceanu Ionut", Sectie = "TM 33", IdSectie = 99},
+                    },
+                    Page = 1,
+                    PageSize = 10,
+                    Total = 300
+                });
+
+
             // TODO get the idONG from token
-            var idONG = 1;
-            return await _mediator.SendAsync(new RaspunsuriQuery
-            {
-                IdONG = idONG,
-                Page = model.Page,
-                PageSize = model.PageSize,
-                Urgent = model.Urgent
-            });
+            //var idONG = 1;
+
+            //return await _mediator.SendAsync(new RaspunsuriQuery
+            //{
+            //    IdONG = idONG,
+            //    Page = model.Page,
+            //    PageSize = model.PageSize,
+            //    Urgent = model.Urgent
+            //});
         }
     }
 }
