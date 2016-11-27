@@ -41,7 +41,7 @@ import { AnswerNotesComponent } from './components/answer-notes/answer-notes.com
 export class AppModule {
   constructor(service: AnswersService) {
     service.getAllForms().subscribe(value => {
-      debugger;
+      // debugger;
     });
   }
  }
