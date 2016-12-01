@@ -14,7 +14,6 @@ export const formsReducer: ActionReducer<any> = (state: any, action: Action) => 
                 }
             })
         case FORMS_LOADED:
-        debugger;
             return Object.assign({}, state, {
                 forms: {
                     data: action.payload,
