@@ -1,5 +1,12 @@
 <h2>{{config.label}}</h2>
 
-<div *ngFor="let topItem of config.dataObservable | async">
-    {{topItem.label}} : {{topItem.value}}
+
+<div *ngIf="!loading">
+    <div *ngFor="let topItem of stats[currentPage]">
+        {{topItem.label}} : {{topItem.value}}
+    </div>
 </div>
+<div *ngIf="loading">
+    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+</div>
+<pagination *ngIf="!loading && total > pageSize" [totalItems]="total" [itemsPerPage]="pageSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>

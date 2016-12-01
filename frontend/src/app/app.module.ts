@@ -1,18 +1,20 @@
-import { AnswersService } from './shared/answers.service';
-import { AnswersListComponent } from './components/answers-list/answers-list.component';
-import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
-import { HeaderComponent } from './components/header/header.component';
-import { map } from 'rxjs/operator/map';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
+import { HomeRedirectResolver } from './redirect.resolver';
 import { AppComponent } from './app.component';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { PreloadAllModules, RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
-import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
 import { AnswerDetailsComponent } from './components/answer-details/answer-details.component';
 import { AnswerNotesComponent } from './components/answer-notes/answer-notes.component';
+import { AnswersListComponent } from './components/answers-list/answers-list.component';
+import { HeaderComponent } from './components/header/header.component';
+import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
+import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
+import { CoreModule } from './core/core.module';
+import { AnswersService } from './services/answers.service';
+import { FormsService } from './services/form.service';
+import { SharedModule } from './shared/shared.module';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AnswersContainerComponent } from './components/answers-container/answers-container.component';
+
 
 
 @NgModule({
@@ -22,26 +24,30 @@ import { AnswerNotesComponent } from './components/answer-notes/answer-notes.com
     AnswersListComponent, AnswerDetailsComponent, AnswerNotesComponent,
 
     HeaderComponent,
-    
-    StatisticsTopComponent, StatisticsDetailsComponent,
+
+    StatisticsTopComponent, StatisticsDetailsComponent, AnswersContainerComponent,
   ],
   imports: [
     CoreModule,
     BrowserModule,
     SharedModule,
     appRoutes,
+
+
   ],
 
   providers: [
-    AnswersService
+    AnswersService,
+    FormsService,
+    HomeRedirectResolver
   ],
 
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(service: AnswersService) {
-    service.getAllForms().subscribe(value => {
-      // debugger;
-    });
+  constructor(private service: FormsService) {
+
+    service.fetchForms().subscribe();
+
   }
- }
+}

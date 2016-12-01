@@ -1,7 +1,8 @@
 {
   "/api": {
-    "target": "http://localhost:5000",
+    "target": "http://testtest.azurewebsites.net",
     "secure": false,
+    "changeOrigin": true,
     "logLevel": "debug"
   }
 }

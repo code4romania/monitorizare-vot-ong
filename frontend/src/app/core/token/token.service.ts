@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
