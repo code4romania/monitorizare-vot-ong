@@ -1,6 +1,6 @@
-import { Nota } from '../../models/nota.model';
+import { Note } from '../../models/note.model';
 import { Observable } from 'rxjs/Rx';
-import { AnswersService } from '../../shared/answers.service';
+import { AnswersService } from '../../services/answers.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AnswerNotesComponent implements OnInit {
 
-  notes: Observable<Nota[]>;
+  notes: Observable<Note[]>;
 
 
   @Input() idObservator: number;

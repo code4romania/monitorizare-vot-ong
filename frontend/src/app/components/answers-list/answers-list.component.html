@@ -1,10 +1,15 @@
-<div *ngFor="let answer of answers | async">
-    <div class="header">
-        Sectie: {{answer.sectie}}
-        <br/>
-        Observator: {{answer.observator}}
-        <a [routerLink]="['/raspunsuri','detalii',answer.idObservator,answer.idSectie]">
+<div *ngIf="!loading">
+    <div *ngFor="let answer of answers[currentPage]">
+        <div class="header">
+            Sectie: {{answer.sectie}}
+            <br/> Observator: {{answer.observator}}
+            <a [routerLink]="[{outlets: {'answers': ['detalii',answer.idObservator,answer.idSectie]}}]" [preserveQueryParams]="true">
             Vezi detalii
         </a>
+        </div>
     </div>
 </div>
+<div *ngIf="loading">
+    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+</div>
+<pagination *ngIf="!loading" [totalItems]="totalAnswers" [itemsPerPage]="pageSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
