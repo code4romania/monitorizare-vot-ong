@@ -1,7 +1,7 @@
+import { ApiService } from './api.service';
+import { inject, TestBed } from '@angular/core/testing';
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { ApiService } from './api.service';
 
 describe('Service: AuthHttp', () => {
   beforeEach(() => {

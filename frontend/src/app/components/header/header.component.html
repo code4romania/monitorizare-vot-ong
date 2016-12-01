@@ -1,8 +1,52 @@
-<div class="ui-grid-col-6">
-	<br/>
-	<img style="width:150px;heigth:150px" src="http://calpersloan.com/wp-content/uploads/2016/09/generic-corporate-logo-345a22ad-0600-4d29-bd19-ef0dc9ed5c7e-0.jpg" alt="Generic Company Logo"/>
-	<ul>
-		<li *ngFor="let menuItem of menuItems" >
+<div class="col-md-12 row">
+	<div class="col-md-2">
+		<a [routerLink]="['/']">
+			<svg width="68" height="68" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+				xmlns:figma="http://www.figma.com/figma/ns">
+				<title>logo</title>
+				<desc>Created using Figma</desc>
+				<g id="Canvas" transform="translate(843 -847)" figma:type="canvas">
+					<rect x="-843" y="847" width="68" height="68" fill="#FFFFFF" />
+					<mask id="mask0_alpha" mask-type="alpha">
+						<path d="M -913 817L 367 817L 367 1667L -913 1667L -913 817Z" fill="#FFFFFF" />
+					</mask>
+					<g id="Pagina raspuns flagged" style="mix-blend-mode:normal;" mask="url(#mask0_alpha)" figma:type="frame">
+						<g id="Rectangle" style="mix-blend-mode:normal;" figma:type="vector">
+							<use xlink:href="#path0_fill" transform="translate(-913 817)" fill="#FFFFFF" style="mix-blend-mode:normal;" />
+						</g>
+						<g id="logo" style="mix-blend-mode:normal;" figma:type="frame">
+							<g id="Fill 1" style="mix-blend-mode:normal;" figma:type="vector-operation">
+								<use xlink:href="#path1_fill" transform="translate(-834.748 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
+							</g>
+							<g id="Fill 2" style="mix-blend-mode:normal;" figma:type="vector-operation">
+								<use xlink:href="#path2_fill" transform="translate(-821.961 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
+							</g>
+							<g id="Fill 3" style="mix-blend-mode:normal;" figma:type="vector-operation">
+								<use xlink:href="#path3_fill" transform="translate(-807.355 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
+							</g>
+							<g id="Fill 23" style="mix-blend-mode:normal;" figma:type="vector-operation">
+								<use xlink:href="#path4_fill" transform="translate(-842.65 847.112)" fill="#333333" style="mix-blend-mode:normal;" />
+							</g>
+						</g>
+					</g>
+				</g>
+				<defs>
+					<path id="path0_fill" fill-rule="evenodd" d="M 0 0L 1280 0L 1280 850L 0 850L 0 0Z" />
+					<path id="path1_fill" fill-rule="evenodd" d="M 12.1586 0L 0 20.9644L 24.3172 20.9644L 12.1586 0ZM 12.1586 4.03748L 20.8047 18.9457L 3.51251 18.9457L 12.1586 4.03748Z"
+					/>
+					<path id="path2_fill" fill-rule="evenodd" d="M 0 20.9644L 24.3172 20.9644L 12.1586 0L 0 20.9644ZM 20.8047 18.9457L 3.51251 18.9457L 12.1586 4.03748L 20.8047 18.9457Z"
+					/>
+					<path id="path3_fill" fill-rule="evenodd" d="M 0 0L 12.1586 20.9644L 24.3173 0L 0 0ZM 12.1586 16.9269L 3.51251 2.01874L 20.8047 2.01874L 12.1586 16.9269Z"
+					/>
+					<path id="path4_fill" fill-rule="evenodd" d="M 0 33.6045C 0 52.1337 15.1431 67.209 33.7564 67.209C 52.3698 67.209 67.5128 52.1337 67.5128 33.6045C 67.5128 15.0749 52.3698 0 33.7564 0C 15.1431 0 0 15.0749 0 33.6045ZM 1.97772 33.6045C 1.97772 16.1607 16.2338 1.96881 33.7564 1.96881C 51.2791 1.96881 65.5351 16.1607 65.5351 33.6045C 65.5351 51.0483 51.2791 65.2401 33.7564 65.2401C 16.2338 65.2401 1.97772 51.0483 1.97772 33.6045Z"
+					/>
+				</defs>
+			</svg>
+		</a>
+
+	</div>
+	<ul class="col-md-offset-2 col-md-8">
+		<li *ngFor="let menuItem of menuItems">
 			<a [routerLink]="menuItem.routerLink">
 				{{menuItem.label}}
 			</a>

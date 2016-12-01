@@ -1,13 +1,14 @@
-
-
-<div *ngFor="let config of topListsArray;">
+<div *ngFor="let config of topListsArray;let i = index">
   <h2>{{config.label}}</h2>
-  <div *ngFor="let topItem of config.dataObservable | async">
-    {{topItem.label}} : {{topItem.value}}
-  </div>
-  <a [routerLink]="[config.key]">
+  <div *ngIf="topStats[i].stats">
+    <div *ngFor="let topItem of topStats[i].stats">
+      {{topItem.label}} : {{topItem.value}}
+    </div>
+    <a [routerLink]="[config.key]">
     Vezi mai mult
   </a>
+  </div>
+  <div *ngIf="!topStats[i].stats">
+    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+  </div>
 </div>
-
-  

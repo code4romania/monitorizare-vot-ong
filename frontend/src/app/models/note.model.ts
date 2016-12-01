@@ -1,4 +1,4 @@
-export class Nota {
+export class Note {
     idNota: number;
     caleFisierAtasat: string;
     textNota: string;

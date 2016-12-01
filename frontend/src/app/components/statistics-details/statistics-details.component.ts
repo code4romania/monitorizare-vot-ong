@@ -1,8 +1,8 @@
-import { StatisticsService} from '../../shared/statistics.service';
-import { resolve } from 'dns';
-import { Http } from '@angular/http';
+import { Subscription } from 'rxjs/Rx';
+import { ApiService } from '../../core/apiService/api.service';
+import { StatisticsService } from '../../shared/statistics.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterState } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-statistics-details',
@@ -12,8 +12,20 @@ import { ActivatedRoute, Router, RouterState } from '@angular/router';
 export class StatisticsDetailsComponent implements OnInit {
 
   config: any;
+  stats: any[][] = [];
 
-  constructor(private route: ActivatedRoute, private http: Http, private statService: StatisticsService) { }
+  currentPage = 1;
+  pageSize = 50;
+  total = 0;
+
+  loading = false;
+  error = false;
+
+  subscription: Subscription;
+
+
+
+  constructor(private route: ActivatedRoute, private http: ApiService, private statService: StatisticsService) { }
 
   ngOnInit() {
     this.route.params
@@ -23,13 +35,47 @@ export class StatisticsDetailsComponent implements OnInit {
 
   getConfig(index) {
     this.config = this.statService.topLists[index];
-    this.config.dataObservable = this.http.get(`/api/v1/statistici/${this.config.method}`, {
-      body: {
-        pageSize: 30
-      }
-    })
-      .map(res => res.json())
-      .map(json => json.data);
+
+    this.getStats(1);
   }
+  pageChanged(event) {
+    this.currentPage = event.page;
+
+    let pageLoaded = !!this.stats[this.currentPage];
+
+    if (!pageLoaded) {
+      this.getStats(this.currentPage);
+    }
+
+  }
+  getStats(page: number) {
+    this.loading = true;
+    this.error = false;
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = this.statService.get(this.config.method, {
+      page: page,
+      pageSize: this.pageSize
+    })
+      .subscribe(json => {
+
+        // TODO UPDATE PAGINATION
+        this.currentPage = json.page;
+        this.total = json.total;
+
+        this.stats[this.currentPage] = json.data;
+
+
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+        this.error = true;
+      });
+  }
+
+
 
 }
