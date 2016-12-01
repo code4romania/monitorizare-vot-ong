@@ -26,15 +26,14 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var note = await _context.Nota
                 .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
-                .OrderBy(n => n.IdIntrebareNavigation.CodFormular)
-                .ThenBy(n => n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune)
+                .OrderBy(n => n.DataUltimeiModificari)
                 .Select(n => new NotaDetaliiModel
                 {
                     IdNota = n.IdNota,
                     CaleFisierAtasat = n.CaleFisierAtasat,
                     TextNota = n.TextNota,
                     CodFormular = n.IdIntrebareNavigation.CodFormular,
-                    CodSectiune = n.IdIntrebareNavigation.IdSectiuneNavigation.CodSectiune
+                    CodIntrebare = n.IdIntrebareNavigation.IdIntrebare
                 })
                 .ToListAsync();
 
