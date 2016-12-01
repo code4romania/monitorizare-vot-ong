@@ -6,32 +6,9 @@ namespace MonitorizareVot.Domain.Ong.Models
 {
     public partial class OngContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=.;Initial Catalog=monitorizarevot_uat;Persist Security Info=False;User ID=infrastructure;Password=1nfr@structur3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AccesObservatoriPerDevice>(entity =>
-            {
-                entity.HasKey(e => new { e.IdObservator, e.IdDispozitivMobil })
-                    .HasName("PK_AccesObservatoriPerDevice");
-
-                entity.HasIndex(e => e.IdObservator)
-                    .HasName("IX_AccesObservatoriPerDevice_IdObservator");
-
-                entity.Property(e => e.IdDispozitivMobil).HasColumnType("varchar(500)");
-
-                entity.Property(e => e.DataInregistrariiDispozitivului).HasColumnType("datetime");
-
-                entity.HasOne(d => d.IdObservatorNavigation)
-                    .WithMany(p => p.AccesObservatoriPerDevice)
-                    .HasForeignKey(d => d.IdObservator)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
-
             modelBuilder.Entity<AdminOng>(entity =>
             {
                 entity.HasKey(e => e.IdAdminOng)
@@ -49,31 +26,13 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Parola)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.IdOngNavigation)
                     .WithMany(p => p.AdminOng)
                     .HasForeignKey(d => d.IdOng)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_AdminONG_ONG");
-            });
-
-            modelBuilder.Entity<DispozitivObservator>(entity =>
-            {
-                entity.HasKey(e => e.IdDispozitivObservator)
-                    .HasName("PK_DispozitivObservator");
-
-                entity.HasIndex(e => e.IdObservator)
-                    .HasName("IX_DispozitivObservator_IdObservator");
-
-                entity.Property(e => e.IdentificatorUnic)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.IdObservatorNavigation)
-                    .WithMany(p => p.DispozitivObservator)
-                    .HasForeignKey(d => d.IdObservator)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Intrebare>(entity =>
@@ -160,7 +119,11 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.IdObservator).ValueGeneratedNever();
 
+                entity.Property(e => e.DataInregistrariiDispozitivului).HasColumnType("datetime");
+
                 entity.Property(e => e.EsteDinEchipa).HasDefaultValueSql("0");
+
+                entity.Property(e => e.IdDispozitivMobil).HasColumnType("varchar(500)");
 
                 entity.Property(e => e.NumarTelefon)
                     .IsRequired()
@@ -172,7 +135,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Pin)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.IdOngNavigation)
                     .WithMany(p => p.Observator)
@@ -373,9 +336,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             });
         }
 
-        public virtual DbSet<AccesObservatoriPerDevice> AccesObservatoriPerDevice { get; set; }
         public virtual DbSet<AdminOng> AdminOng { get; set; }
-        public virtual DbSet<DispozitivObservator> DispozitivObservator { get; set; }
         public virtual DbSet<Intrebare> Intrebare { get; set; }
         public virtual DbSet<Judet> Judet { get; set; }
         public virtual DbSet<Nota> Nota { get; set; }
