@@ -1,0 +1,11 @@
+<div class="ui-grid-col-6">
+	<br/>
+	<img style="width:150px;heigth:150px" src="http://calpersloan.com/wp-content/uploads/2016/09/generic-corporate-logo-345a22ad-0600-4d29-bd19-ef0dc9ed5c7e-0.jpg" alt="Generic Company Logo"/>
+	<ul>
+		<li *ngFor="let menuItem of menuItems" >
+			<a [routerLink]="menuItem.routerLink">
+				{{menuItem.label}}
+			</a>
+		</li>
+	</ul>
+</div>

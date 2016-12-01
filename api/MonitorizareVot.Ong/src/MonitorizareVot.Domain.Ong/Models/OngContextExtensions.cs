@@ -210,6 +210,11 @@ namespace MonitorizareVot.Domain.Ong
             context.SaveChanges();
         }
 
+        //private static void SeedAnswers(this OngContext context)
+        //{
+        //    if(contex)
+        //}
+
         private static bool AllMigrationsApplied(this DbContext context)
         {
             var applied = context.GetService<IHistoryRepository>()
@@ -222,5 +227,7 @@ namespace MonitorizareVot.Domain.Ong
 
             return !total.Except(applied).Any();
         }
+
+        
     }
 }

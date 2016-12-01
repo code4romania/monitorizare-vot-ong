@@ -1,7 +1,8 @@
-import { AuthInterceptor } from './auth-interceptor.service';
+import { AuthGuard } from './authGuard/auth.guard';
+import { AuthentificationService } from './authentification/authentification.service';
+import { ApiService } from './apiService/api.service';
 import { TokenService } from './token/token.service';
-import { InterceptorService } from 'ng2-interceptors';
-import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { BaseRequestOptions, ConnectionBackend, Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { SharedModule } from '../shared/shared.module';
 
 // import { AuthentificationService } from './authentification/authentification.service';
@@ -9,8 +10,6 @@ import { SharedModule } from '../shared/shared.module';
 // import { UserService } from './user/user.service';
 
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-
-// import { CustomHttp } from './custom-http/custom-http.service';
 
 
 @NgModule({
@@ -21,18 +20,15 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   exports: [
   ],
   providers: [
-    AuthInterceptor,
-    {
-      provide: Http,
-      useFactory: (xhrBackend: XHRBackend, requestOptions: RequestOptions, authInterceptor : AuthInterceptor) => {
-        debugger;
-        let service = new InterceptorService(xhrBackend, requestOptions);
-        service.addInterceptor(authInterceptor);
-        return service;
-      },
-      deps: [XHRBackend, RequestOptions, AuthInterceptor]
-    },
     TokenService,
+    AuthentificationService,
+    ApiService,
+    // {
+    //   provide: Http,
+    //   useClass: AuthHttpService,
+    //   deps: [XHRBackend, RequestOptions]
+    // },
+    AuthGuard
   ],
   declarations: []
 })

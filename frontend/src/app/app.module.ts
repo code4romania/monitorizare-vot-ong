@@ -1,31 +1,47 @@
+import { AnswersService } from './shared/answers.service';
+import { AnswersListComponent } from './components/answers-list/answers-list.component';
+import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
+import { HeaderComponent } from './components/header/header.component';
 import { map } from 'rxjs/operator/map';
 import { SharedModule } from './shared/shared.module';
-import { AnswersModule } from './answers/answers.module';
-import { HeaderModule } from './header/header.module';
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import routes from './app.routes';
-
+import { appRoutes } from './app.routes';
+import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
+import { AnswerDetailsComponent } from './components/answer-details/answer-details.component';
+import { AnswerNotesComponent } from './components/answer-notes/answer-notes.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
+    AnswersListComponent, AnswerDetailsComponent, AnswerNotesComponent,
+
+    HeaderComponent,
+    
+    StatisticsTopComponent, StatisticsDetailsComponent,
   ],
   imports: [
     CoreModule,
-    HeaderModule,
-    AnswersModule,
     BrowserModule,
     SharedModule,
-    RouterModule.forRoot(routes, {
-      enableTracing: false,
-      preloadingStrategy: PreloadAllModules
-    })
+    appRoutes,
   ],
+
+  providers: [
+    AnswersService
+  ],
+
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(service: AnswersService) {
+    service.getAllForms().subscribe(value => {
+      // debugger;
+    });
+  }
+ }

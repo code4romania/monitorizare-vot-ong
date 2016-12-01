@@ -1,16 +1,13 @@
-import { PaginatorFactory } from './paginator/paginator.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgSemanticModule } from 'ng-semantic';
 import { RouterModule } from '@angular/router';
-import { SimpleOutletComponent } from './simple-outlet/simple-outlet.component';
+import { StatisticsService} from './statistics.service';
 
 @NgModule({
-    imports: [NgSemanticModule, FormsModule, RouterModule, CommonModule],
-    exports: [NgSemanticModule, FormsModule, RouterModule, CommonModule],
-    providers: [PaginatorFactory],
-    declarations: [SimpleOutletComponent]
+    imports: [FormsModule, RouterModule, CommonModule],
+    exports: [FormsModule, RouterModule, CommonModule],
+    providers:[StatisticsService]
 })
 export class SharedModule {
 

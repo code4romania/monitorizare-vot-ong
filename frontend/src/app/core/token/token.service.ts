@@ -5,6 +5,7 @@ import { JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class TokenService {
   public tokenKey: string = 'token-id';
+  private _token:string = undefined
 
   private jwtHelper = new JwtHelper();
   private _isRefreshing: boolean;
@@ -16,9 +17,10 @@ export class TokenService {
   constructor() { }
 
   public get token() {
-    return localStorage.getItem(this.tokenKey);
+    return this._token;
   }
   public set token(value) {
+    this._token = value;
     localStorage.setItem(this.tokenKey, value);
   }
   public isTokenExpired() {

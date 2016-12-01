@@ -24,18 +24,35 @@ namespace MonitorizareVot.Ong.Api.Queries
         }
         public async Task<ApiResponse<List<NotaModel>>> Handle(NotaQuery message)
         {
-            var note = await _context.Nota
-                .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
-                .OrderBy(n => n.DataUltimeiModificari)
-                .Select(n => new NotaDetaliiModel
-                {
-                    IdNota = n.IdNota,
-                    CaleFisierAtasat = n.CaleFisierAtasat,
-                    TextNota = n.TextNota,
-                    CodFormular = n.IdIntrebareNavigation.CodFormular,
-                    CodIntrebare = n.IdIntrebareNavigation.IdIntrebare
-                })
-                .ToListAsync();
+            //var note = await _context.Nota
+            //    .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
+            //    .OrderBy(n => n.DataUltimeiModificari)
+            //    .Select(n => new NotaDetaliiModel
+            //    {
+            //        IdNota = n.IdNota,
+            //        CaleFisierAtasat = n.CaleFisierAtasat,
+            //        TextNota = n.TextNota,
+            //        CodFormular = n.IdIntrebareNavigation.CodFormular,
+            //        CodIntrebare = n.IdIntrebareNavigation.IdIntrebare
+            //    })
+            //    .ToListAsync();
+
+            var note = new List<NotaModel>{
+                new NotaModel {
+                    IdNota = 1,
+                    CaleFisierAtasat = "https://monitorizarevottest.blob.core.windows.net/note/ce334ac7af4a4c9ba6668dc04eb4d439",
+                    TextNota = "Text nota",
+                    CodFormular = "A",
+                    CodIntrebare = 1
+                },
+                new NotaModel {
+                    IdNota = 2,
+                    CaleFisierAtasat = "https://monitorizarevottest.blob.core.windows.net/note/d9471a6cdc954066b37f0ebb09a849d8",
+                    TextNota = "Text nota",
+                    CodFormular = "A",
+                    CodIntrebare = 2
+                }
+            };
 
             return new ApiResponse<List<NotaModel>> { Data = note.Select(x => _mapper.Map<NotaModel>(x)).ToList() };
         }

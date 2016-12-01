@@ -19,11 +19,11 @@
       "mobile": false,
       "styles": [
         "styles.scss",
-        "../node_modules/semantic-ui-css/semantic.min.css"
+        "../node_modules/primeng/resources/themes/omega/theme.css",
+        "../node_modules/primeng/resources/primeng.min.css",
+        "../node_modules/font-awesome/scss/font-awesome.scss"
       ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/semantic-ui-css/semantic.min.js"
+      "scripts": [        
       ],
       "environments": {
         "source": "environments/environment.ts",
