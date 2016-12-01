@@ -257,3 +257,4 @@ paket-files/
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/appsettings.Development.json
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/mvonguat - Web Deploy-publish.ps1
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Domain.Ong/appsettings.development.json
+api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/ongqa - Web Deploy-publish.ps1
