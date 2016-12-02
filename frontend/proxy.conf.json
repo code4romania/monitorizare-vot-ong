@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://testtest.azurewebsites.net",
+    "target": "http://ongqa.azurewebsites.net",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
