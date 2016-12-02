@@ -5,4 +5,4 @@ import { FormsEffects } from './forms/forms.effects';
 export let appEffects = [
     FormsEffects,
     AnswersEffects
-].map(EffectsModule.runAfterBootstrap);
+].map(EffectsModule.run);

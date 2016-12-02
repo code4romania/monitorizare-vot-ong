@@ -9,7 +9,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppState } from './app.state';
 import { NgModule } from '@angular/core';
 import * as _ from 'lodash';
-import { RouterStoreModule } from '@ngrx/router-store';
 
 let optionalModules = [];
 
@@ -18,6 +17,11 @@ if (!environment.production) {
 }
 
 export let storeImports = [appStore,
-    RouterStoreModule.connectRouter()
 ].concat(appEffects, optionalModules)
 
+@NgModule({
+    imports: storeImports
+})
+export class AppStoreModule {
+
+}

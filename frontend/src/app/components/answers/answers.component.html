@@ -4,7 +4,7 @@
     </app-answers-list>
   </div>
   <div class="col-md-9">
-    <router-outlet>
-    </router-outlet>
+    <app-answer-details [answers]="answersDetailState | async">
+    </app-answer-details>
   </div>
 </div>

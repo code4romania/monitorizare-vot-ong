@@ -1,8 +1,7 @@
-import { Subscription } from 'rxjs/Rx';
 import { ApiService } from '../../core/apiService/api.service';
 import { StatisticsService } from '../../shared/statistics.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-statistics-details',
@@ -25,12 +24,18 @@ export class StatisticsDetailsComponent implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute, private http: ApiService, private statService: StatisticsService) { }
+  constructor(private http: ApiService, private statService: StatisticsService) { }
+
+  @Input()
+  set index(value:number){
+    this._index = value;
+    this.getConfig(value);
+  }
+
+  _index:number;
+
 
   ngOnInit() {
-    this.route.params
-      .map(params => params['index'])
-      .subscribe(this.getConfig.bind(this));
   }
 
   getConfig(index) {

@@ -34,7 +34,7 @@ const answerDetailsReducer = (state: AnswersDetailsState, action: Action): Answe
                 items: [],
 
                 observerId: action.payload.observerId,
-                sectionId: action.payload.observerId,
+                sectionId: action.payload.sectionId,
 
                 request: getRequestState(true)
             })

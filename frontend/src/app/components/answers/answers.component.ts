@@ -1,10 +1,8 @@
-import { ANSWERS_DETAIL_LOAD, ANSWERS_LIST_LOAD } from '../../store/answers/answers.actions';
 import { AnswersDetailsState, AnswersListState } from '../../store/answers/answers.state';
 import { AppState } from '../../store/app.state';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     templateUrl: './answers.component.html',
@@ -17,7 +15,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
     urgent = false;
 
-    constructor(private store: Store<AppState>, private route: ActivatedRoute, private router: Router) { }
+    constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
         this.answersListState =

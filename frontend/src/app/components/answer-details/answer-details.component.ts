@@ -1,7 +1,4 @@
 import { AnswersDetailsState } from '../../store/answers/answers.state';
-import { Question } from '../../models/question.model';
-import { Form } from '../../models/form.model';
-import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

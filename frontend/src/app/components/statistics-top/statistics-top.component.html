@@ -4,7 +4,7 @@
     <div *ngFor="let topItem of topStats[i].stats">
       {{topItem.label}} : {{topItem.value}}
     </div>
-    <a [routerLink]="[config.key]">
+  <a uiSref="statistics.details" [uiParams]="{index: config.key}">
     Vezi mai mult
   </a>
   </div>

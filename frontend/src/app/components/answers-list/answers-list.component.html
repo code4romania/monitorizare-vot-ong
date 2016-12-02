@@ -3,7 +3,7 @@
         <div class="header">
             Sectie: {{answer.sectie}}
             <br/> Observator: {{answer.observator}}
-            <a [routerLink]="[routerLinkPrefix,'detalii',answer.idObservator,answer.idSectie]">
+            <a uiSref=".detalii" [uiParams]="{idObservator: answer.idObservator, idSectie: answer.idSectie}">
             Vezi detalii
         </a>
         </div>
