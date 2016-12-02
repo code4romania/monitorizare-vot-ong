@@ -63,5 +63,20 @@ namespace MonitorizareVot.Ong.Api.Controllers
             //    Urgent = model.Urgent
             //});
         }
+
+        /// <summary>
+        /// Returneaza raspunsurile date de un observator pentru o anumita sectie de votare
+        /// </summary>
+        /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
+        /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
+        [HttpGet("RaspunsuriCompletate")]
+        public async Task<ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>> Get(FiltruRaspunsuriCompletateModel model)
+        {
+            return await _mediator.SendAsync(new RaspunsuriCompletateQuery
+            {
+                IdObservator = model.IdObservator,
+                IdSectieDeVotare = model.IdSectieDeVotare
+            });
+        }
     }
 }

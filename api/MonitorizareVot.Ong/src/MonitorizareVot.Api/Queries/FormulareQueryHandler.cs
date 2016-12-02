@@ -37,7 +37,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             {
                 CodSectiune = i.CodSectiune,
                 Descriere = i.Descriere,
-                Intrebari = intrebari.Where(a => a.IdSectiune == i.IdSectiune).Select(a => _mapper.Map<IntrebareModel>(a)).ToList()
+                Intrebari = intrebari.Where(a => a.IdSectiune == i.IdSectiune).Select(a => _mapper.Map<IntrebareModel<RaspunsDisponibilModel>>(a)).ToList()
             }).ToList();
 
             return new ApiResponse<List<SectiuneModel>> { Data = result };
