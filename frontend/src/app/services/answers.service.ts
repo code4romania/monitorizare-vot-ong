@@ -19,15 +19,6 @@ export class AnswersService {
         })
             .map(res => res.json())
     }
-
-    getForm(idFormular?: number) {
-        return this.http.get('/api/v1/formulare', {
-            body: {
-                idFormular: idFormular
-            }
-        })
-            .map(resp => <Form[]>resp.json().data)
-    }
     getNotes(idObservator: number, idSectieDeVotare: number) {
         return this.http.get('/api/v1/note', {
             body: {

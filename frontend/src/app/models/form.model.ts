@@ -1,6 +1,5 @@
-import { Question } from './question.model';
+import { Section } from './section.model';
 export class Form {
-    codSectiune: string;
-    descriere: string;
-    intrebari: Question[];
+    idFormular: string;
+    sectiuni: Section[]
 }

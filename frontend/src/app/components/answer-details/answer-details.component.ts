@@ -1,30 +1,25 @@
+import { AnswersDetailsState } from '../../store/answers/answers.state';
+import { Question } from '../../models/question.model';
+import { Form } from '../../models/form.model';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
+  selector:'app-answer-details',
   templateUrl: './answer-details.component.html',
   styleUrls: ['./answer-details.component.scss']
 })
 export class AnswerDetailsComponent implements OnInit {
 
-  hasNotesParams = false;
 
-  idObservator: number;
-  idSectie: number;
+  // @Input()
+  // forms: Form[];
+  @Input()
+  answers: AnswersDetailsState;
 
-  constructor(private route:ActivatedRoute) { }
+
+  constructor() { }
 
   ngOnInit() {
-    this.route.params.subscribe(this.setParamsData.bind(this));
   }
-
-  setParamsData(data){
-    this.hasNotesParams = !!data['idObservator'] && !!data['idSectie'];
-
-    this.idObservator = parseInt(data['idObservator']);
-    this.idSectie = parseInt(data['idSectie']);
-
-    this.hasNotesParams = this.hasNotesParams && !isNaN(this.idObservator) && !isNaN(this.idSectie);
-  }
-
 }

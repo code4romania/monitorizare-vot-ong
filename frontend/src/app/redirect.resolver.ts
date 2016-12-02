@@ -7,13 +7,7 @@ export class HomeRedirectResolver implements Resolve<any> {
     constructor(private router: Router) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        let extras: NavigationExtras = {
-            queryParams: {
-                urgent: true
-            },
-            replaceUrl : true
-        };
-        this.router.navigate(['/raspunsuri'], extras );
+        this.router.navigate(['/raspunsuri/urgente']);
         return null;
     }
 }

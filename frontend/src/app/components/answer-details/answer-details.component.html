@@ -1,5 +1,9 @@
-<div *ngIf="hasNotesParams">
-  <h3>Note</h3>
-  <app-answer-notes  [idObservator]="idObservator" [idSectie]="idSectie">
-  </app-answer-notes>
+<div *ngIf="answers && answers.items.length > 0">
+  <div *ngFor="let question of answers.items">
+    <app-categorical-question [question]="question">
+    </app-categorical-question>
+  </div>
+</div>
+<div *ngIf="!answers || answers.items.length === 0">
+  Nu ati selectat nimic
 </div>

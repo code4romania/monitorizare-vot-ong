@@ -1,74 +1,63 @@
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { AnswerDetailsComponent } from './components/answer-details/answer-details.component';
-import { AnswerNotesComponent } from './components/answer-notes/answer-notes.component';
-import { AnswersContainerComponent } from './components/answers-container/answers-container.component';
-import { AnswersListComponent } from './components/answers-list/answers-list.component';
-import { HeaderComponent } from './components/header/header.component';
-import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
-import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
+import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './core/core.module';
-import { FormEffects } from './effects/form-effects';
 import { HomeRedirectResolver } from './redirect.resolver';
-import { FORMS_LOAD, formsReducer } from './reducers/forms.reducer';
 import { AnswersService } from './services/answers.service';
 import { SharedModule } from './shared/shared.module';
+import { AppState } from './store/app.state';
+import { FORMS_LOAD } from './store/forms/forms.actions';
+import { storeImports } from './store/store.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { Store } from '@ngrx/store';
+import { AnswerDetailsResolver } from './store/answers/answers-details.resolver';
+
+import { routerActions } from '@ngrx/router-store'
 
 
 
 
 
-
-EffectsModule.run(FormEffects)
 
 @NgModule({
   declarations: [
-    AppComponent,
-
-    AnswersListComponent, AnswerDetailsComponent, AnswerNotesComponent,
-
-    HeaderComponent,
-
-    StatisticsTopComponent, StatisticsDetailsComponent, AnswersContainerComponent,
+    AppComponent
   ],
   imports: [
     CoreModule,
+    ComponentsModule,
     BrowserModule,
     SharedModule,
-    RouterModule.forRoot(appRoutes,{
-      enableTracing: true
-    }) ,
-
-    EffectsModule.run(FormEffects),
-
-    StoreModule.provideStore({ forms: formsReducer }),
-
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+    RouterModule.forRoot(appRoutes, {
+      enableTracing: false
+    }),
 
 
+
+    storeImports
   ],
 
   providers: [
     AnswersService,
     HomeRedirectResolver,
-
-
+    AnswerDetailsResolver
   ],
 
   bootstrap: [AppComponent]
 })
 
-
 export class AppModule {
-  constructor(store: Store<any>) {
+  constructor(store: Store<AppState>) {
     store.dispatch({
       type: FORMS_LOAD
     });
+    store.dispatch({
+      type: routerActions.UPDATE_LOCATION,
+      payload: {
+        path: window.location.pathname + window.location.search
+      }
+    })
   }
 }

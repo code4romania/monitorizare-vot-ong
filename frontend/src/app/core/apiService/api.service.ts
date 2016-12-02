@@ -16,11 +16,7 @@ export class ApiService {
 
 
   private request(url: string, options: RequestOptionsArgs): Observable<Response> {
-    
-    return this.http.request(url,options)
-        .catch(err => this.handleRequestError(err, url, options));
-
-
+    return this.http.request(url, options);
     // if (options.withCredentials === false) {
     //   return this.http.request(url, options);
     // }
