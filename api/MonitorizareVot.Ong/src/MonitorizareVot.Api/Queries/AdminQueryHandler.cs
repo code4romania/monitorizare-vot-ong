@@ -7,12 +7,12 @@ using MonitorizareVot.Ong.Api.ViewModels;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
-    public class ObservatorQueryHandler : IAsyncRequestHandler<ApplicationUser, int?>
+    public class AdminQueryHandler : IAsyncRequestHandler<ApplicationUser, int?>
     {
         private readonly OngContext _context;
         private readonly IHashService _hash;
 
-        public ObservatorQueryHandler(OngContext context, IHashService hash)
+        public AdminQueryHandler(OngContext context, IHashService hash)
         {
             _context = context;
             _hash = hash;

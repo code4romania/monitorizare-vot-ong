@@ -88,7 +88,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
                     $"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
-            var json = await generateToken(applicationUser.UserName);
+            var json = await generateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value));
 
             return new OkObjectResult(json);
         }
@@ -178,7 +178,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             return await Task.FromResult(new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "Token"), new[]
                 {
-                    new Claim("IdONG", userInfo.Value.ToString()),
+                    new Claim("IdOng", userInfo.Value.ToString()),
                 }));
         }
 
