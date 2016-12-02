@@ -12,7 +12,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public string CodSectiune { get; set; }
         public string Descriere { get; set; }
 
-        public List<IntrebareModel> Intrebari { get; set; }
+        public List<IntrebareModel<RaspunsDisponibilModel>> Intrebari { get; set; }
     }
 
     public class IntrebariQuery : IAsyncRequest<ApiResponse<List<SectiuneModel>>>
@@ -24,10 +24,10 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     {
         public FormularProfile()
         {
-            CreateMap<Intrebare, IntrebareModel>()
-                .ForMember(src => src.RaspunsuriDisponibile, c => c.MapFrom(dest => dest.RaspunsDisponibil));
+            CreateMap<Intrebare, IntrebareModel<RaspunsDisponibilModel>>()
+                .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.RaspunsDisponibil));
 
-            CreateMap<RaspunsDisponibil, RaspunsCompletatModel>()
+            CreateMap<RaspunsDisponibil, RaspunsDisponibilModel>()
                 .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))
                 .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptiuneNavigation.SeIntroduceText))
                 .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.IdRaspunsDisponibil));
