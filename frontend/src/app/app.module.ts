@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { HomeRedirectResolver } from './redirect.resolver';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
@@ -31,7 +32,9 @@ import { AnswersContainerComponent } from './components/answers-container/answer
     CoreModule,
     BrowserModule,
     SharedModule,
-    appRoutes,
+    RouterModule.forRoot(appRoutes,{
+      enableTracing: true
+    }) ,
 
 
   ],

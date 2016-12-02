@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.18",
+    "version": "1.0.0-beta.21",
     "name": "monitorizare-vot"
   },
   "apps": [
@@ -20,10 +20,9 @@
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/font-awesome/scss/font-awesome.scss",
-        "styles.scss"
+        "styles.css"
       ],
-      "scripts": [        
-      ],
+      "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

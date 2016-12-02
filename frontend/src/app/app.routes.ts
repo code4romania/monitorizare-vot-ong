@@ -1,17 +1,16 @@
-import { HomeRedirectResolver } from './redirect.resolver';
-import { resolve } from 'dns';
-import { AnswersContainerComponent } from './components/answers-container/answers-container.component';
 import { AnswerDetailsComponent } from './components/answer-details/answer-details.component';
+import { AnswersContainerComponent } from './components/answers-container/answers-container.component';
+import { AnswersListComponent } from './components/answers-list/answers-list.component';
 import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
 import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
-import { Router, RouterModule, Routes } from '@angular/router';
-import { AnswersListComponent } from './components/answers-list/answers-list.component';
+import { HomeRedirectResolver } from './redirect.resolver';
+import { resolve } from 'dns';
 
 
-export let appRoutes = RouterModule.forRoot([
+export let appRoutes = [
     {
         path: '',
-        children:[],
+        children: [],
         resolve: {
             redirect: HomeRedirectResolver
         }
@@ -38,6 +37,4 @@ export let appRoutes = RouterModule.forRoot([
             component: StatisticsDetailsComponent
         }]
 
-    }], {
-        enableTracing: true,
-    });;
+    }];

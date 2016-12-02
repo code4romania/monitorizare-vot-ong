@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { ApiService } from '../core/apiService/api.service';
 import { PaginationData } from './pagination.interface';
 import { Injectable } from '@angular/core';
