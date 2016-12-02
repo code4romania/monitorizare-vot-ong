@@ -33,12 +33,14 @@ using Microsoft.IdentityModel.Tokens;
 using MonitorizareVot.Ong.Api.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using MonitorizareVot.Ong.Api.Models;
 
 namespace MonitorizareVot.Ong.Api
 {
     public class Startup
     {
-        private readonly Container container = new Container();
+        private readonly Container _container = new Container();
 
         private const string SecretKey = "needtogetthisfromenvironment";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
@@ -203,13 +205,15 @@ namespace MonitorizareVot.Ong.Api
                 );
             });
 
-            app.UseSimpleInjectorAspNetRequestScoping(container);
+            app.UseSimpleInjectorAspNetRequestScoping(_container);
 
-            container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
+            _container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
 
             ConfigureCache(env);
 
             RegisterServices();
+
+            ConfigureHash();
 
             InitializeContainer(app);
 
@@ -219,7 +223,7 @@ namespace MonitorizareVot.Ong.Api
 
             BuildMediator();
 
-            container.Verify();
+            _container.Verify();
 
             app.UseMvc();
 
@@ -238,13 +242,13 @@ namespace MonitorizareVot.Ong.Api
 
             if (!enableCache)
             {
-                container.RegisterSingleton<ICacheService>(new NoCacheService());
+                _container.RegisterSingleton<ICacheService>(new NoCacheService());
                 return;
             }
 
             var cacheProvider = Configuration.GetValue<string>("ApplicationCacheOptions:RedisCache");
 
-            container.RegisterSingleton<ICacheService, CacheService>();
+            _container.RegisterSingleton<ICacheService, CacheService>();
 
             switch (cacheProvider)
             {
@@ -263,18 +267,27 @@ namespace MonitorizareVot.Ong.Api
                 default:
                 case "MemoryDistributedCache":
                     {
-                        container.RegisterSingleton<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
+                        _container.RegisterSingleton<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
                         break;
                     }
             }
         }
 
+        private void ConfigureHash()
+        {
+            _container.RegisterSingleton<IOptions<HashOptions>>(new OptionsManager<HashOptions>(new List<IConfigureOptions<HashOptions>>
+                {
+                    new ConfigureFromConfigurationOptions<HashOptions>(
+                        Configuration.GetSection("HashOptions"))
+                }));
+        }
+
         private void ConfigureContainer(IServiceCollection services)
         {
             services.AddSingleton<IControllerActivator>(
-                new SimpleInjectorControllerActivator(container));
+                new SimpleInjectorControllerActivator(_container));
             services.AddSingleton<IViewComponentActivator>(
-                new SimpleInjectorViewComponentActivator(container));
+                new SimpleInjectorViewComponentActivator(_container));
         }
 
         private void RegisterServices()
@@ -282,7 +295,7 @@ namespace MonitorizareVot.Ong.Api
             //exemplu de servicii custom
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            container.Register<JwtIssuerOptions>(() =>
+            _container.Register<JwtIssuerOptions>(() =>
             {
                 var jwtOptions = new JwtIssuerOptions
                 {
@@ -298,16 +311,16 @@ namespace MonitorizareVot.Ong.Api
         private void InitializeContainer(IApplicationBuilder app)
         {
             // Add application presentation components:
-            container.RegisterMvcControllers(app);
-            container.RegisterMvcViewComponents(app);
+            _container.RegisterMvcControllers(app);
+            _container.RegisterMvcViewComponents(app);
 
             // Add application services. For instance:
             //container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
 
 
             // Cross-wire ASP.NET services (if any). For instance:
-            container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
-            container.RegisterConditional(
+            _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+            _container.RegisterConditional(
                 typeof(ILogger),
                 c => typeof(Logger<>).MakeGenericType(c.Consumer.ImplementationType),
                 Lifestyle.Singleton,
@@ -325,29 +338,29 @@ namespace MonitorizareVot.Ong.Api
                 var optionsBuilder = new DbContextOptionsBuilder<TDbContext>();
                 optionsBuilder.UseSqlServer(connectionString);
 
-                container.RegisterSingleton(optionsBuilder.Options);
+                _container.RegisterSingleton(optionsBuilder.Options);
 
-                container.Register<TDbContext>(Lifestyle.Scoped);
+                _container.Register<TDbContext>(Lifestyle.Scoped);
             }
             else
             {
-                container.Register<TDbContext>(Lifestyle.Scoped);
+                _container.Register<TDbContext>(Lifestyle.Scoped);
             }
         }
 
         private IMediator BuildMediator()
         {
             var assemblies = GetAssemblies().ToArray();
-            container.RegisterSingleton<IMediator, Mediator>();
-            container.Register(typeof(IRequestHandler<,>), assemblies);
-            container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
-            container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
-            container.RegisterSingleton(Console.Out);
-            container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
-            container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
+            _container.RegisterSingleton<IMediator, Mediator>();
+            _container.Register(typeof(IRequestHandler<,>), assemblies);
+            _container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
+            _container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
+            _container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
+            _container.RegisterSingleton(Console.Out);
+            _container.RegisterSingleton(new SingleInstanceFactory(_container.GetInstance));
+            _container.RegisterSingleton(new MultiInstanceFactory(_container.GetAllInstances));
 
-            var mediator = container.GetInstance<IMediator>();
+            var mediator = _container.GetInstance<IMediator>();
 
             return mediator;
         }
@@ -360,8 +373,8 @@ namespace MonitorizareVot.Ong.Api
                 cfg.CreateMissingTypeMaps = true;
             });
 
-            container.RegisterSingleton(Mapper.Configuration);
-            container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
+            _container.RegisterSingleton(Mapper.Configuration);
+            _container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
         }
 
         private static IEnumerable<Assembly> GetAssemblies()
