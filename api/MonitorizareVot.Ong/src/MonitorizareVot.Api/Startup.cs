@@ -41,9 +41,7 @@ namespace MonitorizareVot.Ong.Api
     public class Startup
     {
         private readonly Container _container = new Container();
-
-        private const string SecretKey = "needtogetthisfromenvironment";
-        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private SymmetricSecurityKey _key;
 
         public Startup(IHostingEnvironment env)
         {
@@ -72,14 +70,36 @@ namespace MonitorizareVot.Ong.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["SecretKey"]));
+
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AppUser",
+                                  policy => policy.RequireClaim("Organizatie", "Ong"));
+            });
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc(config =>
             {
-                //var policy = new AuthorizationPolicyBuilder()
-                //    .RequireAuthenticatedUser()
-                //    .Build();
+                
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                //TODO: uncomment this to apply [Authorize] attribute on All controller actions and thus enable authorization
                 //config.Filters.Add(new AuthorizeFilter(policy));
             });
 
@@ -133,53 +153,53 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    ValidateIssuer = true,
-            //    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
-            //    ValidateAudience = true,
-            //    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = _signingKey,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _key,
 
-            //    RequireExpirationTime = true,
-            //    ValidateLifetime = true,
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
 
-            //    ClockSkew = TimeSpan.Zero
-            //};
-            //var events = new JwtBearerEvents();
-            //events.OnAuthenticationFailed = (context) =>
-            //{
-            //    if (context.Exception is SecurityTokenExpiredException &&
-            //        context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
-            //        context.Request.Method.ToLower() == "put")
-            //    {
-            //        // skip authentification 
-            //        context.SkipToNextMiddleware();
-            //    }
+                ClockSkew = TimeSpan.Zero
+            };
+            var events = new JwtBearerEvents();
+            events.OnAuthenticationFailed = (context) =>
+            {
+                if (context.Exception is SecurityTokenExpiredException &&
+                    context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+                    context.Request.Method.ToLower() == "put")
+                {
+                    // skip authentification 
+                    context.SkipToNextMiddleware();
+                }
 
-            //    return Task.FromResult(0);
-            //};
-            //events.OnTokenValidated = (context) =>
-            //{
-            //    if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
-            //    {
-            //        context.HandleResponse();
-            //        throw new SecurityTokenSignatureKeyNotFoundException();
-            //    }
-            //    return Task.FromResult(0);
-            //};
+                return Task.FromResult(0);
+            };
+            events.OnTokenValidated = (context) =>
+            {
+                if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
+                {
+                    context.HandleResponse();
+                    throw new SecurityTokenSignatureKeyNotFoundException();
+                }
+                return Task.FromResult(0);
+            };
 
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions
-            //{
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true,
-            //    TokenValidationParameters = tokenValidationParameters,
-            //    Events = events
-            //});
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters,
+                Events = events
+            });
 
             app.Use(async (context, next) =>
             {
@@ -211,7 +231,7 @@ namespace MonitorizareVot.Ong.Api
 
             ConfigureCache(env);
 
-            RegisterServices();
+            RegisterServices(app);
 
             ConfigureHash();
 
@@ -290,21 +310,11 @@ namespace MonitorizareVot.Ong.Api
                 new SimpleInjectorViewComponentActivator(_container));
         }
 
-        private void RegisterServices()
+        private void RegisterServices(IApplicationBuilder app)
         {
             //exemplu de servicii custom
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-
-            _container.Register<JwtIssuerOptions>(() =>
-            {
-                var jwtOptions = new JwtIssuerOptions
-                {
-                    Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-                    Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-                    SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256),
-                };
-                return jwtOptions;
-            }, Lifestyle.Transient);
+            _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<JwtIssuerOptions>>());
+            _container.RegisterSingleton<IHashService, HashService>();
             //container.Register<ISectieDeVotareService, SectieDevotareDBService>(Lifestyle.Scoped);
         }
 
