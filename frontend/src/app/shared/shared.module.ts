@@ -7,8 +7,8 @@ import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 @NgModule({
-    imports: [FormsModule, UIRouterModule, CommonModule, PaginationModule],
-    exports: [FormsModule, UIRouterModule, CommonModule, PaginationModule, CategoricalQuestionComponent],
+    imports: [FormsModule, CommonModule, PaginationModule],
+    exports: [FormsModule, CommonModule, PaginationModule, CategoricalQuestionComponent],
     providers: [StatisticsService],
     declarations: [CategoricalQuestionComponent]
 })

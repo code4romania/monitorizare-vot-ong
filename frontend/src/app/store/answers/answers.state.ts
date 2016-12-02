@@ -24,18 +24,20 @@ export class AnswersDetailsState {
     sectionId: number
 }
 
+export let defaultPaginationState = getPaginationState(1,20);
+export let defaultRequestState = getRequestState();
 export let answersInitialState: AnswersState = {
     answersList: {
         items: [],
 
         urgent: false,
 
-        pagination: getPaginationState(1, 20),
-        request: getRequestState()
+        pagination: defaultPaginationState,
+        request: defaultRequestState
     },
     answersDetails: {
         items: [],
-        request: getRequestState(),
+        request: defaultRequestState,
 
         observerId: undefined,
         sectionId: undefined

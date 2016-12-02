@@ -1,5 +1,5 @@
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.states';
+import { appStates } from './app.states';
 import { uiComponents } from './components/components';
 import { CoreModule } from './core/core.module';
 import { AnswersService } from './services/answers.service';
@@ -11,20 +11,14 @@ import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 
 
-
-// let components = uiComponents.concat([AppComponent]);
-
 @NgModule({
   declarations: uiComponents,
   imports: [
     CoreModule,
     BrowserModule,
     SharedModule,
-    UIRouterModule.forRoot({
-      states: appRoutes,
-      otherwise: '/'
-    }),
-    AppStoreModule
+    AppStoreModule,
+    UIRouterModule.forRoot({ states: appStates })
   ],
 
   providers: [

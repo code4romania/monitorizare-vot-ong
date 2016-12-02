@@ -1,7 +1,6 @@
 import { answersReducer } from './answers/answers.reducer';
-import { initialState } from './app.state';
-import { StoreModule } from '@ngrx/store';
 import { formsReducer } from './forms/forms.reducer';
+import { StoreModule } from '@ngrx/store';
 
 
 
@@ -12,4 +11,4 @@ let appReducers = {
 
 }
 
-export let appStore = StoreModule.provideStore(appReducers, initialState);
+export let appStore = StoreModule.provideStore(appReducers);

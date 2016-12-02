@@ -3,8 +3,7 @@ export class RequestState {
     error: boolean
     reason: any
 }
-
-export const getRequestState = (loading = false, error = false): RequestState => {
+export function getRequestState (loading = false, error = false): RequestState {
 
     let reason = undefined;
 

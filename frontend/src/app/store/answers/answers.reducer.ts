@@ -7,9 +7,9 @@ import {
     ANSWERS_LIST_LOAD,
     ANSWERS_LIST_LOADED
 } from './answers.actions';
-import { AnswersDetailsState, AnswersListState, AnswersState } from './answers.state';
+import { AnswersDetailsState, answersInitialState, AnswersListState, AnswersState } from './answers.state';
 import { Action } from '@ngrx/store';
-export const answersReducer = (state: AnswersState, action: Action): AnswersState => {
+export function answersReducer(state = answersInitialState, action: Action): AnswersState {
     switch (action.type) {
         case ANSWERS_LIST_ERROR:
         case ANSWERS_LIST_LOADED:
@@ -27,7 +27,7 @@ export const answersReducer = (state: AnswersState, action: Action): AnswersStat
     }
 }
 
-const answerDetailsReducer = (state: AnswersDetailsState, action: Action): AnswersDetailsState => {
+export function answerDetailsReducer(state: AnswersDetailsState, action: Action): AnswersDetailsState {
     switch (action.type) {
         case ANSWERS_DETAIL_LOAD:
             return Object.assign({}, state, {
@@ -47,7 +47,7 @@ const answerDetailsReducer = (state: AnswersDetailsState, action: Action): Answe
             return state
     }
 }
-const answersListReducer = (state: AnswersListState, action: Action): AnswersListState => {
+export function answersListReducer(state: AnswersListState, action: Action): AnswersListState {
     switch (action.type) {
         case ANSWERS_LIST_LOAD:
             let urgent = action.payload.urgent || false

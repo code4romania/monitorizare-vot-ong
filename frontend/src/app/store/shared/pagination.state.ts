@@ -4,7 +4,9 @@ export class PaginationState {
     maxPages: number
     maxItems: number
 }
-export const getPaginationState = (page = 1, itemsPerPage = 20, maxItems = undefined): PaginationState => {
+
+
+export function getPaginationState (page = 1, itemsPerPage = 20, maxItems = undefined): PaginationState {
     return {
         currentPage: page,
         itemsPerPage: itemsPerPage,
@@ -14,7 +16,7 @@ export const getPaginationState = (page = 1, itemsPerPage = 20, maxItems = undef
 }
 
 
-function calcMaxPages(itemsPerPage: number, maxItems: number): number {
+export function calcMaxPages(itemsPerPage: number, maxItems: number): number {
     if (maxItems === undefined || !!itemsPerPage) {
         return;
     }

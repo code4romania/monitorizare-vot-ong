@@ -1,10 +1,10 @@
 import { getRequestState } from '../shared/request.state';
 import { FORMS_ERROR, FORMS_LOAD, FORMS_LOADED } from './forms.actions';
-import { FormsState } from './forms.state';
+import { formsInitialState, FormsState } from './forms.state';
 import { Action } from '@ngrx/store';
 
 
-export function formsReducer(state: FormsState, action: Action): FormsState {
+export function formsReducer(state = formsInitialState, action: Action): FormsState {
     switch (action.type) {
         case FORMS_LOAD:
             return {
