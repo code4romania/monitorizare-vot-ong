@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,7 +13,7 @@ namespace MonitorizareVot.Ong.Api.Queries
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiOptiuniQuery, ApiResponse<List<SimpleStatisticsModel>>>
+        IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -25,27 +24,32 @@ namespace MonitorizareVot.Ong.Api.Queries
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<List<SimpleStatisticsModel>>> Handle(StatisticiOptiuniQuery message)
+        public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
         {
             var statistici = await _context.Raspuns
                 .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare &&
                             r.IdObservatorNavigation.IdOng == message.IdONG)
-                .GroupBy(r => r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation)
+                .GroupBy(r => new { r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation, r.IdRaspunsDisponibilNavigation.RaspunsCuFlag })
                 .Select(
                     g => new {
-                        Optiune = g.Key,
+                        Optiune = g.Key.IdOptiuneNavigation,
+                        RaspunsCuFlag = g.Key.RaspunsCuFlag,
                         Count = g.Count()
                     })
                .ToListAsync();
 
-            return new ApiResponse<List<SimpleStatisticsModel>>
+            return new OptiuniModel
             {
-                Data = statistici.Select(s => new SimpleStatisticsModel
+                IdIntrebare = message.IdIntrebare,
+                Optiuni = statistici.Select(s => new OptiuniStatisticsModel
                     {
+                        IdOptiune = s.Optiune.IdOptiune,
                         Label = s.Optiune.TextOptiune,
-                        Value = s.Count.ToString()
+                        Value = s.Count.ToString(),
+                        RaspunsCuFlag = s.RaspunsCuFlag
                     })
-                    .ToList()
+                    .ToList(),
+                Total = statistici.Sum(s => s.Count)
             };
         }
 

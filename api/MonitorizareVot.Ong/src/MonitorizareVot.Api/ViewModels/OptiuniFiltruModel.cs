@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
-    public class OptionStatisticsModel
+    public class OptiuniFiltruModel
     {
         [Required]
         public int IdIntrebare { get; set; }
     }
 
-    public class StatisticiOptiuniQuery : IAsyncRequest<ApiResponse<List<SimpleStatisticsModel>>>
+    public class StatisticiOptiuniQuery : IAsyncRequest<OptiuniModel>
     {
         public int IdIntrebare { get; set; }
         public int IdONG { get; set; }

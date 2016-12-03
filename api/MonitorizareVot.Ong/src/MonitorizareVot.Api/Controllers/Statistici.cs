@@ -171,7 +171,7 @@ public class Statistici : Controller
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariNumarareOptiuni")]
-        public async Task<ApiResponse<List<SimpleStatisticsModel>>> SesizariNumarareOptiuni(OptionStatisticsModel model)
+        public async Task<OptiuniModel> SesizariNumarareOptiuni(OptiuniFiltruModel model)
         {
             // TODO get the idONG from token
             var idONG = 1;
