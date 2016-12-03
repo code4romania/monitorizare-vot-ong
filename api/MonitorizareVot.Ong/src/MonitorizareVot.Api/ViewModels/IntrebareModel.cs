@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using MonitorizareVot.Domain.Ong.Models;
-using MonitorizareVot.Ong.Api.Extensions;
+﻿using MediatR;
 using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
@@ -18,7 +15,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public IList<T> Raspunsuri { get; set; }
     }
 
-    public class RaspunsuriCompletateQuery : IAsyncRequest<ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>>
+    public class RaspunsuriCompletateQuery : IAsyncRequest<List<IntrebareModel<RaspunsCompletatModel>>>
     {
         public int IdSectieDeVotare { get; set; }
         public int IdObservator { get; set; }

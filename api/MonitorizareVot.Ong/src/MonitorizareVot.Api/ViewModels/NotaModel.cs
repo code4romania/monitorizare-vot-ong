@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MonitorizareVot.Ong.Api.Extensions;
 using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
@@ -13,7 +12,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int CodIntrebare { get; set; }
     }
 
-    public class NotaQuery : IAsyncRequest<ApiResponse<List<NotaModel>>>
+    public class NotaQuery : IAsyncRequest<List<NotaModel>>
     {
         public int IdSectieDeVotare { get; set; }
         public int IdObservator { get; set; }

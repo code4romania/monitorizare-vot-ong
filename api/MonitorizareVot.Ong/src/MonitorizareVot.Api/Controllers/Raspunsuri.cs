@@ -70,7 +70,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
         /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
         [HttpGet("RaspunsuriCompletate")]
-        public async Task<ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>> Get(FiltruRaspunsuriCompletateModel model)
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Get(FiltruRaspunsuriCompletateModel model)
         {
             return await _mediator.SendAsync(new RaspunsuriCompletateQuery
             {

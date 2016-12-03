@@ -12,7 +12,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
         IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
-        IAsyncRequestHandler<RaspunsuriCompletateQuery, ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>>
+        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -53,7 +53,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        public async Task<ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>> Handle(RaspunsuriCompletateQuery message)
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message)
         {
             var raspunsuri = await _context.Raspuns
                 .Include(r => r.IdRaspunsDisponibilNavigation)
@@ -67,10 +67,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Select(r => r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation)
                 .ToList();
 
-            return new ApiResponse<List<IntrebareModel<RaspunsCompletatModel>>>
-            {
-                Data = intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList(),
-            };
+            return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();
         }
     }
 }

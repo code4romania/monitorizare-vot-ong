@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MonitorizareVot.Domain.Ong.Models;
-using MonitorizareVot.Ong.Api.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
@@ -15,7 +13,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public List<IntrebareModel<RaspunsDisponibilModel>> Intrebari { get; set; }
     }
 
-    public class IntrebariQuery : IAsyncRequest<ApiResponse<List<SectiuneModel>>>
+    public class IntrebariQuery : IAsyncRequest<List<SectiuneModel>>
     {
         public string CodFormular { get; set; }
     }
