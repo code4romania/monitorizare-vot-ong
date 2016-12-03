@@ -14,22 +14,26 @@ using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.IdentityModel.Tokens;
 using Jwt;
 using System.Collections.Generic;
+using MediatR;
+using System.Linq;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/auth")]
     public class JwtController : Controller
     {
-        private static string SecretKey = "needtogetthisfromenvironment";
-        private static SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private readonly IMediator _mediator;
+        //private static string SecretKey = "needtogetthisfromenvironment";
+        //private static SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         private readonly JwtIssuerOptions _jwtOptions;
 
         private readonly ILogger _logger;
         private readonly JsonSerializerSettings _serializerSettings;
 
-        public JwtController(JwtIssuerOptions jwtOptions, ILoggerFactory loggerFactory)
+        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, IMediator mediator)
         {
-            _jwtOptions = jwtOptions;
+            _mediator = mediator;
+            _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
 
             _logger = loggerFactory.CreateLogger<JwtController>();
@@ -60,12 +64,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 return Forbid();
             }
 
-            var decoded = JsonWebToken.DecodeToObject<Dictionary<string,string>>(token, SecretKey, false);
+            var decoded = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
+                _jwtOptions.SigningCredentials.Kid, false);
             var idOng = Int32.Parse(decoded["IdOng"]);
             var userName = decoded[JwtRegisteredClaimNames.Sub];
 
             var json = await generateToken(userName, idOng);
-              
+
             return new OkObjectResult(json);
         }
 
@@ -73,26 +78,45 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] ApplicationUser applicationUser)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var identity = await GetClaimsIdentity(applicationUser);
             if (identity == null)
             {
-                _logger.LogInformation($"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
+                _logger.LogInformation(
+                    $"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
-            var json = await generateToken(applicationUser.UserName);
-            
+            var json = await generateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value));
+
             return new OkObjectResult(json);
         }
 
-        private async Task<string> generateToken(string userName, int idOng = 0) {
+
+        [Authorize]
+        [HttpPost("test")]
+        public async Task<object> Test()
+        {
+            var claims = User.Claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+
+            return await Task.FromResult(claims);
+        }
+
+        private async Task<string> generateToken(string userName, int idOng = 0)
+        {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat,
-                          ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
-                          ClaimValueTypes.Integer64),
-                new Claim("IdOng",idOng.ToString())
+                    ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
+                    ClaimValueTypes.Integer64),
+                new Claim("IdOng", idOng.ToString())
             };
 
             // Create the JWT security token and encode it.
@@ -140,30 +164,24 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)
-          => (long)Math.Round((date.ToUniversalTime() -
-                               new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
-                              .TotalSeconds);
+            => (long) Math.Round((date.ToUniversalTime() -
+                                  new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
+                .TotalSeconds);
 
-        /// <summary>
-        /// IMAGINE BIG RED WARNING SIGNS HERE!
-        /// You'd want to retrieve claims through your claims provider
-        /// in whatever way suits you, the below is purely for demo purposes!
-        /// </summary>
-        private static Task<ClaimsIdentity> GetClaimsIdentity(ApplicationUser user)
+        private async Task<ClaimsIdentity> GetClaimsIdentity(ApplicationUser user)
         {
-            //TODO Add retrieval of user claims from database
-            if (user.UserName == "admin" &&
-                user.Password == "admin")
-            {
-                return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(user.UserName, "Token"),new []
-                  {
-                      new Claim("IdONG","0"), 
-                  }));
-            }
+            var userInfo = await _mediator.SendAsync(user);
 
-            // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
+            if (!userInfo.HasValue)
+                return await Task.FromResult<ClaimsIdentity>(null);
+
+            return await Task.FromResult(new ClaimsIdentity(
+                new GenericIdentity(user.UserName, "Token"), new[]
+                {
+                    new Claim("IdOng", userInfo.Value.ToString()),
+                }));
         }
+
     }
 }
+

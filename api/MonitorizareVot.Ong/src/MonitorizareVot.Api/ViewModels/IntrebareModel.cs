@@ -12,6 +12,8 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int IdIntrebare { get; set; }
         public string TextIntrebare { get; set; }
         public int IdTipIntrebare { get; set; }
+        public string CodIntrebare { get; set; }
+        public string CodFormular { get; set; }
 
         public IList<T> Raspunsuri { get; set; }
     }
