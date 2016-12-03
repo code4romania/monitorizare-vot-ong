@@ -13,7 +13,8 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>
+        IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IAsyncRequestHandler<StatisticiOptiuniQuery, ApiResponse<List<SimpleStatisticsModel>>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -22,6 +23,30 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public async Task<ApiResponse<List<SimpleStatisticsModel>>> Handle(StatisticiOptiuniQuery message)
+        {
+            var statistici = await _context.Raspuns
+                .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare &&
+                            r.IdObservatorNavigation.IdOng == message.IdONG)
+                .GroupBy(r => r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation)
+                .Select(
+                    g => new {
+                        Optiune = g.Key,
+                        Count = g.Count()
+                    })
+               .ToListAsync();
+
+            return new ApiResponse<List<SimpleStatisticsModel>>
+            {
+                Data = statistici.Select(s => new SimpleStatisticsModel
+                    {
+                        Label = s.Optiune.TextOptiune,
+                        Value = s.Count.ToString()
+                    })
+                    .ToList()
+            };
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)

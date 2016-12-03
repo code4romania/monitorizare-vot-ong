@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.Filters;
 using MonitorizareVot.Ong.Api.ViewModels;
+using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
@@ -159,6 +160,26 @@ public class Statistici : Controller
                 Formular = "C",
                 Page = model.Page,
                 PageSize = model.PageSize
+            });
+        }
+
+        /// <summary>
+        /// Returneaza numarul raspunsurilor date de observatorii unui anumit ONG
+        /// grupate pe optiuni pentru o anumita intrebare
+        /// </summary>
+        /// <param name="model">IdIntrebare - id-ul intrebarei pentru care sa se returneze statisticile</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("SesizariNumarareOptiuni")]
+        public async Task<ApiResponse<List<SimpleStatisticsModel>>> SesizariNumarareOptiuni(OptionStatisticsModel model)
+        {
+            // TODO get the idONG from token
+            var idONG = 1;
+
+            return await _mediator.SendAsync(new StatisticiOptiuniQuery
+            {
+                IdIntrebare = model.IdIntrebare,
+                IdONG = idONG
             });
         }
     }
