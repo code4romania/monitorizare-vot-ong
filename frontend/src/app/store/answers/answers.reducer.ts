@@ -9,44 +9,7 @@ import {
 } from './answers.actions';
 import { AnswersDetailsState, answersInitialState, AnswersListState, AnswersState } from './answers.state';
 import { Action } from '@ngrx/store';
-export function answersReducer(state = answersInitialState, action: Action): AnswersState {
-    switch (action.type) {
-        case ANSWERS_LIST_ERROR:
-        case ANSWERS_LIST_LOADED:
-        case ANSWERS_LIST_LOAD:
-            return Object.assign({}, state, {
-                answersList: answersListReducer(state.answersList, action)
-            })
-        case ANSWERS_DETAIL_LOAD:
-        case ANSWERS_DETAIL_LOADED:
-            return Object.assign({}, state, {
-                answersDetails: answerDetailsReducer(state.answersDetails, action)
-            })
-        default:
-            return state
-    }
-}
 
-export function answerDetailsReducer(state: AnswersDetailsState, action: Action): AnswersDetailsState {
-    switch (action.type) {
-        case ANSWERS_DETAIL_LOAD:
-            return Object.assign({}, state, {
-                items: [],
-
-                observerId: action.payload.observerId,
-                sectionId: action.payload.sectionId,
-
-                request: getRequestState(true)
-            })
-        case ANSWERS_DETAIL_LOADED:
-            return Object.assign({}, state, {
-                items: action.payload,
-                request: getRequestState()
-            })
-        default:
-            return state
-    }
-}
 export function answersListReducer(state: AnswersListState, action: Action): AnswersListState {
     switch (action.type) {
         case ANSWERS_LIST_LOAD:
@@ -67,5 +30,25 @@ export function answersListReducer(state: AnswersListState, action: Action): Ans
         default:
             return state
 
+    }
+}
+export function answerDetailsReducer(state: AnswersDetailsState, action: Action): AnswersDetailsState {
+    switch (action.type) {
+        case ANSWERS_DETAIL_LOAD:
+            return Object.assign({}, state, {
+                items: [],
+
+                observerId: action.payload.observerId,
+                sectionId: action.payload.sectionId,
+
+                request: getRequestState(true)
+            })
+        case ANSWERS_DETAIL_LOADED:
+            return Object.assign({}, state, {
+                items: action.payload,
+                request: getRequestState()
+            })
+        default:
+            return state
     }
 }
