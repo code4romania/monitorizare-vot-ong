@@ -164,7 +164,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)
-            => (long) Math.Round((date.ToUniversalTime() -
+            => (long)Math.Round((date.ToUniversalTime() -
                                   new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                 .TotalSeconds);
 
@@ -172,13 +172,14 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var userInfo = await _mediator.SendAsync(user);
 
-            if (!userInfo.HasValue)
+            if (userInfo == null)
                 return await Task.FromResult<ClaimsIdentity>(null);
 
             return await Task.FromResult(new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "Token"), new[]
                 {
-                    new Claim("IdOng", userInfo.Value.ToString()),
+                    new Claim("IdOng", userInfo.IdOng.ToString()),
+                    new Claim("Organizator", userInfo.Organizator.ToString(), typeof(bool).ToString())
                 }));
         }
 
