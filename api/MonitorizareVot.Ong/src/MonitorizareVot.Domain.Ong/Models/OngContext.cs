@@ -6,6 +6,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 {
     public partial class OngContext : DbContext
     {
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminOng>(entity =>
@@ -25,7 +26,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Parola)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.IdOngNavigation)
                     .WithMany(p => p.AdminOng)

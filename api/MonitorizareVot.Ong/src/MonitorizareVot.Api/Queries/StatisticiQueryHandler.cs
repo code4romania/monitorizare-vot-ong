@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,7 +12,8 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>
+        IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -22,6 +22,35 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
+        {
+            var statistici = await _context.Raspuns
+                .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare &&
+                            r.IdObservatorNavigation.IdOng == message.IdONG)
+                .GroupBy(r => new { r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation, r.IdRaspunsDisponibilNavigation.RaspunsCuFlag })
+                .Select(
+                    g => new {
+                        Optiune = g.Key.IdOptiuneNavigation,
+                        RaspunsCuFlag = g.Key.RaspunsCuFlag,
+                        Count = g.Count()
+                    })
+               .ToListAsync();
+
+            return new OptiuniModel
+            {
+                IdIntrebare = message.IdIntrebare,
+                Optiuni = statistici.Select(s => new OptiuniStatisticsModel
+                    {
+                        IdOptiune = s.Optiune.IdOptiune,
+                        Label = s.Optiune.TextOptiune,
+                        Value = s.Count.ToString(),
+                        RaspunsCuFlag = s.RaspunsCuFlag
+                    })
+                    .ToList(),
+                Total = statistici.Sum(s => s.Count)
+            };
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)

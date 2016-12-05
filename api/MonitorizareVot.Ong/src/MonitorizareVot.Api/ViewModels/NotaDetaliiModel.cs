@@ -7,6 +7,6 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public string CaleFisierAtasat { get; set; }
         public string TextNota { get; set; }
         public string CodFormular { get; set; }
-        public string CodSectiune { get; set; }
+        public int CodIntrebare { get; set; }
     }
 }

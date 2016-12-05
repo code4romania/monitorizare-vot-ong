@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="idFormular">Id-ul formularului pentru care trebuie preluata definitia</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse<List<SectiuneModel>>> Get(FiltruFormulareModel model)
+        public async Task<List<SectiuneModel>> Get(FiltruFormulareModel model)
         {
             return await _mediator.SendAsync(new IntrebariQuery { CodFormular = model.IdFormular });
         }

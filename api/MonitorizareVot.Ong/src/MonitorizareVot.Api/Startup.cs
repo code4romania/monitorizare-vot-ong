@@ -33,15 +33,15 @@ using Microsoft.IdentityModel.Tokens;
 using MonitorizareVot.Ong.Api.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using MonitorizareVot.Ong.Api.Models;
 
 namespace MonitorizareVot.Ong.Api
 {
     public class Startup
     {
-        private readonly Container container = new Container();
-
-        private const string SecretKey = "needtogetthisfromenvironment";
-        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private readonly Container _container = new Container();
+        private SymmetricSecurityKey _key;
 
         public Startup(IHostingEnvironment env)
         {
@@ -70,14 +70,36 @@ namespace MonitorizareVot.Ong.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["SecretKey"]));
+
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AppUser",
+                                  policy => policy.RequireClaim("Organizatie", "Ong"));
+            });
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc(config =>
             {
-                //var policy = new AuthorizationPolicyBuilder()
-                //    .RequireAuthenticatedUser()
-                //    .Build();
+                
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                //TODO: uncomment this to apply [Authorize] attribute on All controller actions and thus enable authorization
                 //config.Filters.Add(new AuthorizeFilter(policy));
             });
 
@@ -131,53 +153,53 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    ValidateIssuer = true,
-            //    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
-            //    ValidateAudience = true,
-            //    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = _signingKey,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _key,
 
-            //    RequireExpirationTime = true,
-            //    ValidateLifetime = true,
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
 
-            //    ClockSkew = TimeSpan.Zero
-            //};
-            //var events = new JwtBearerEvents();
-            //events.OnAuthenticationFailed = (context) =>
-            //{
-            //    if (context.Exception is SecurityTokenExpiredException &&
-            //        context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
-            //        context.Request.Method.ToLower() == "put")
-            //    {
-            //        // skip authentification 
-            //        context.SkipToNextMiddleware();
-            //    }
+                ClockSkew = TimeSpan.Zero
+            };
+            var events = new JwtBearerEvents();
+            events.OnAuthenticationFailed = (context) =>
+            {
+                if (context.Exception is SecurityTokenExpiredException &&
+                    context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+                    context.Request.Method.ToLower() == "put")
+                {
+                    // skip authentification 
+                    context.SkipToNextMiddleware();
+                }
 
-            //    return Task.FromResult(0);
-            //};
-            //events.OnTokenValidated = (context) =>
-            //{
-            //    if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
-            //    {
-            //        context.HandleResponse();
-            //        throw new SecurityTokenSignatureKeyNotFoundException();
-            //    }
-            //    return Task.FromResult(0);
-            //};
+                return Task.FromResult(0);
+            };
+            events.OnTokenValidated = (context) =>
+            {
+                if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
+                {
+                    context.HandleResponse();
+                    throw new SecurityTokenSignatureKeyNotFoundException();
+                }
+                return Task.FromResult(0);
+            };
 
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions
-            //{
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true,
-            //    TokenValidationParameters = tokenValidationParameters,
-            //    Events = events
-            //});
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters,
+                Events = events
+            });
 
             app.Use(async (context, next) =>
             {
@@ -203,13 +225,15 @@ namespace MonitorizareVot.Ong.Api
                 );
             });
 
-            app.UseSimpleInjectorAspNetRequestScoping(container);
+            app.UseSimpleInjectorAspNetRequestScoping(_container);
 
-            container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
+            _container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
 
             ConfigureCache(env);
 
-            RegisterServices();
+            RegisterServices(app);
+
+            ConfigureHash();
 
             InitializeContainer(app);
 
@@ -219,7 +243,7 @@ namespace MonitorizareVot.Ong.Api
 
             BuildMediator();
 
-            container.Verify();
+            _container.Verify();
 
             app.UseMvc();
 
@@ -238,13 +262,13 @@ namespace MonitorizareVot.Ong.Api
 
             if (!enableCache)
             {
-                container.RegisterSingleton<ICacheService>(new NoCacheService());
+                _container.RegisterSingleton<ICacheService>(new NoCacheService());
                 return;
             }
 
             var cacheProvider = Configuration.GetValue<string>("ApplicationCacheOptions:RedisCache");
 
-            container.RegisterSingleton<ICacheService, CacheService>();
+            _container.RegisterSingleton<ICacheService, CacheService>();
 
             switch (cacheProvider)
             {
@@ -263,51 +287,50 @@ namespace MonitorizareVot.Ong.Api
                 default:
                 case "MemoryDistributedCache":
                     {
-                        container.RegisterSingleton<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
+                        _container.RegisterSingleton<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
                         break;
                     }
             }
         }
 
+        private void ConfigureHash()
+        {
+            _container.RegisterSingleton<IOptions<HashOptions>>(new OptionsManager<HashOptions>(new List<IConfigureOptions<HashOptions>>
+                {
+                    new ConfigureFromConfigurationOptions<HashOptions>(
+                        Configuration.GetSection("HashOptions"))
+                }));
+        }
+
         private void ConfigureContainer(IServiceCollection services)
         {
             services.AddSingleton<IControllerActivator>(
-                new SimpleInjectorControllerActivator(container));
+                new SimpleInjectorControllerActivator(_container));
             services.AddSingleton<IViewComponentActivator>(
-                new SimpleInjectorViewComponentActivator(container));
+                new SimpleInjectorViewComponentActivator(_container));
         }
 
-        private void RegisterServices()
+        private void RegisterServices(IApplicationBuilder app)
         {
             //exemplu de servicii custom
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-
-            container.Register<JwtIssuerOptions>(() =>
-            {
-                var jwtOptions = new JwtIssuerOptions
-                {
-                    Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-                    Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-                    SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256),
-                };
-                return jwtOptions;
-            }, Lifestyle.Transient);
+            _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<JwtIssuerOptions>>());
+            _container.RegisterSingleton<IHashService, HashService>();
             //container.Register<ISectieDeVotareService, SectieDevotareDBService>(Lifestyle.Scoped);
         }
 
         private void InitializeContainer(IApplicationBuilder app)
         {
             // Add application presentation components:
-            container.RegisterMvcControllers(app);
-            container.RegisterMvcViewComponents(app);
+            _container.RegisterMvcControllers(app);
+            _container.RegisterMvcViewComponents(app);
 
             // Add application services. For instance:
             //container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
 
 
             // Cross-wire ASP.NET services (if any). For instance:
-            container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
-            container.RegisterConditional(
+            _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+            _container.RegisterConditional(
                 typeof(ILogger),
                 c => typeof(Logger<>).MakeGenericType(c.Consumer.ImplementationType),
                 Lifestyle.Singleton,
@@ -325,29 +348,29 @@ namespace MonitorizareVot.Ong.Api
                 var optionsBuilder = new DbContextOptionsBuilder<TDbContext>();
                 optionsBuilder.UseSqlServer(connectionString);
 
-                container.RegisterSingleton(optionsBuilder.Options);
+                _container.RegisterSingleton(optionsBuilder.Options);
 
-                container.Register<TDbContext>(Lifestyle.Scoped);
+                _container.Register<TDbContext>(Lifestyle.Scoped);
             }
             else
             {
-                container.Register<TDbContext>(Lifestyle.Scoped);
+                _container.Register<TDbContext>(Lifestyle.Scoped);
             }
         }
 
         private IMediator BuildMediator()
         {
             var assemblies = GetAssemblies().ToArray();
-            container.RegisterSingleton<IMediator, Mediator>();
-            container.Register(typeof(IRequestHandler<,>), assemblies);
-            container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
-            container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
-            container.RegisterSingleton(Console.Out);
-            container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
-            container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
+            _container.RegisterSingleton<IMediator, Mediator>();
+            _container.Register(typeof(IRequestHandler<,>), assemblies);
+            _container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
+            _container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
+            _container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
+            _container.RegisterSingleton(Console.Out);
+            _container.RegisterSingleton(new SingleInstanceFactory(_container.GetInstance));
+            _container.RegisterSingleton(new MultiInstanceFactory(_container.GetAllInstances));
 
-            var mediator = container.GetInstance<IMediator>();
+            var mediator = _container.GetInstance<IMediator>();
 
             return mediator;
         }
@@ -360,8 +383,8 @@ namespace MonitorizareVot.Ong.Api
                 cfg.CreateMissingTypeMaps = true;
             });
 
-            container.RegisterSingleton(Mapper.Configuration);
-            container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
+            _container.RegisterSingleton(Mapper.Configuration);
+            _container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
         }
 
         private static IEnumerable<Assembly> GetAssemblies()

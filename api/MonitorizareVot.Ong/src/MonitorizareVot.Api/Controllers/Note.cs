@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="idObservator">Id-ul observatorului care a completat formularul</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse<List<NotaModel>>> Get(FiltruNoteModel model)
+        public async Task<List<NotaModel>> Get(FiltruNoteModel model)
         {
             return await _mediator.SendAsync(new NotaQuery
             {

@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
-        IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>
+        IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
+        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -49,6 +51,23 @@ namespace MonitorizareVot.Ong.Api.Queries
                 PageSize = message.PageSize,
                 TotalItems = await sectiiCuObservatori.CountAsync()
             };
+        }
+
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message)
+        {
+            var raspunsuri = await _context.Raspuns
+                .Include(r => r.IdRaspunsDisponibilNavigation)
+                    .ThenInclude(rd => rd.IdIntrebareNavigation)
+                .Include(r => r.IdRaspunsDisponibilNavigation)
+                    .ThenInclude(rd => rd.IdOptiuneNavigation)
+                .Where(r => r.IdObservator == message.IdObservator && r.IdSectieDeVotare == message.IdSectieDeVotare)
+                .ToListAsync();
+
+            var intrebari = raspunsuri
+                .Select(r => r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation)
+                .ToList();
+
+            return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();
         }
     }
 }
