@@ -122,9 +122,9 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var unPagedList = _context.Judet
               .Select(
-                  j => new
+                  j => new JudetStatisticsModel
                   {
-                      Judet = j,
+                      Nume = j.Nume,
                       Count = j.SectieDeVotare.SelectMany(s => s.Raspuns)
                                .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
                                && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
@@ -137,11 +137,9 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Take(message.PageSize)
                 .ToListAsync();
 
-            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Judet.Nume, Value = p.Count.ToString() }).ToList();
-
             return new ApiListResponse<SimpleStatisticsModel>
             {
-                Data = map,
+                Data = pagedList.Select(x => _mapper.Map<SimpleStatisticsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
                 TotalItems = await unPagedList.CountAsync()
@@ -152,9 +150,9 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var unPagedList = _context.SectieDeVotare
              .Select(
-                 s => new
+                 s => new SectieStatisticsModel
                  {
-                     SectieDeVotare = s,
+                     NumarSectie = s.NumarSectie,
                      CodJudet = s.IdJudetNavigation.CodJudet,
                      Count = s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
                               && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
@@ -167,16 +165,9 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Take(message.PageSize)
                 .ToListAsync();
 
-            var map = pagedList.Select(p => new SimpleStatisticsModel
-            {
-                Label = $"Sectia {p.CodJudet} {p.SectieDeVotare.NumarSectie}",
-                Value = p.Count.ToString()
-            })
-            .ToList();
-
             return new ApiListResponse<SimpleStatisticsModel>
             {
-                Data = map,
+                Data = pagedList.Select(x => _mapper.Map<SimpleStatisticsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
                 TotalItems = await unPagedList.CountAsync()
