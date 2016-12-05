@@ -1,10 +1,17 @@
-<div class="row">
-  <div class="col-md-3">
-    <app-answer-list [answerState]="answerState | async" (pageChanged)="pageChanged">
+<div class="frow">
+
+  <div class="list-header col-md-1-1">
+      <h3>{{(answerState | async)?.urgent ? urgentHeader : notUrgentHeader}}</h3>
+      <h5>{{(answerState | async)?.urgent ? urgentSubHeader : notUrgentSubHeader}}</h5>
+  </div>
+  <div class="col-md-2-12">
+    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()" (pageChanged)="pageChanged">
     </app-answer-list>
   </div>
-  <div class="col-md-9">
-    <app-answer-details [answerState]="answerState | async" [formState]="formState | async">
+  <div class="col-md-1-12">
+  </div>
+  <div class="col-md-9-12">
+    <app-answer-details [answerState]="answerState | async" (reload)="redoAnswerDetailsAction()" [formState]="formState | async">
     </app-answer-details>
   </div>
 </div>
