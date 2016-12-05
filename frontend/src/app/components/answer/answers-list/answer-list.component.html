@@ -1,18 +1,18 @@
 <div *ngIf="!answerState.threadsError">
     <div *ngIf="!answerState.threadsLoading">
-        <div *ngFor="let answer of answerState.threads">
-            <div class="header">
-                Sectie: {{answer.sectie}}
-                <br/> Observator: {{answer.observator}}
-                <a uiSref=".detalii" [uiParams]="{idObservator: answer.idObservator, idSectie: answer.idSectie}">
-            Vezi detalii
-        </a>
-            </div>
+        <div *ngFor="let answer of answerState.threads" class="card">
+            <a uiSref=".detalii" [uiParams]="{idObservator: answer.idObservator, idSectie: answer.idSectie}">
+
+                <h4>Sectia: {{answer.sectie}}</h4>
+                <h6>{{answer.observator}}</h6>
+                <hr class="list-break" />
+
+            </a>
         </div>
         <pagination [totalItems]="answerState.totalItems" [itemsPerPage]="answerState.pageSize" [ngModel]="answerState.page" (pageChanged)="pageChanged.emit($event)"></pagination>
     </div>
-    <div *ngIf="answerState.threadsLoading">
-        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+    <div class="col-md-offset-5 col-md-1">
+        <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
     </div>
 </div>
 <div *ngIf="answerState.threadsError" (click)="retry()">

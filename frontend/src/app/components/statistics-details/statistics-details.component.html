@@ -6,7 +6,7 @@
         {{topItem.label}} : {{topItem.value}}
     </div>
 </div>
-<div *ngIf="loading">
-    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+<div *ngIf="loading" class="center-block">
+    <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
 </div>
 <pagination *ngIf="!loading && total > pageSize" [totalItems]="total" [itemsPerPage]="pageSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>

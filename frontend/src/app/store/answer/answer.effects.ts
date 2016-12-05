@@ -86,7 +86,7 @@ export class AnswerEffects {
     loadDetails = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
         .switchMap((action: LoadAnswerDetailsAction) => {
-            return Observable.from([mockBase]).delay(1000);
+            return Observable.from([mockBase]);
             // return this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
             //     body: {
             //         idSectieDeVotare: action.payload.sectionId,

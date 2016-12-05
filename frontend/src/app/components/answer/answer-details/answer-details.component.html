@@ -4,7 +4,7 @@
 </div>
 <div *ngIf="!answerState?.selectedError">
   <div *ngIf="answerState?.selectedLoading">
-    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+    <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
   </div>
   <div *ngIf="!answerState?.selectedLoading">
     <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
