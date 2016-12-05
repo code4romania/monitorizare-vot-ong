@@ -30,7 +30,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
             set  { _totalItems = value; } 
         }
         public int TotalPages { 
-            get { return System.Math.Ceiling((float)(_totalItems / _pageSize);}
+            get { return _totalItems / _pageSize; }
         }
     }
 }
