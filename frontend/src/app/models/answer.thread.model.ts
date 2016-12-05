@@ -1,4 +1,4 @@
-export class Answer{
+export class AnswerThread{
     public sectie: String;
     public observator: String;
     public idSectie: number;

@@ -1,5 +1,5 @@
+import 'rxjs/Rx';
 import { Component } from '@angular/core';
-import 'rxjs/Rx'; 
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,4 @@ import 'rxjs/Rx';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {
-
-  }
 }

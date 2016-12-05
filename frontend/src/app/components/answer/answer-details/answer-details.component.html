@@ -1,0 +1,21 @@
+<!--<div *ngIf="answerState?.selectedAnswer?.length">
+  <div *ngFor="let question of answerState.selectedAnswer">
+    <app-categorical-question [question]="question">
+    </app-categorical-question>
+  </div>
+</div>
+<div *ngIf="!answerState?.selectedAnswer?.length">
+  Nu ati selectat nimic
+</div>-->
+<div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
+  <tabset>
+    <tab *ngFor="let form of formState.items">
+      <template tabHeading>Formular {{form.idFormular}}</template>
+      <app-answer-form-list [form]="form" [completedQuestions]="formAnswers(form.idFormular)">
+      </app-answer-form-list>
+    </tab>
+  </tabset>
+</div>
+<div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
+    Nu ati selectat nimic
+</div>

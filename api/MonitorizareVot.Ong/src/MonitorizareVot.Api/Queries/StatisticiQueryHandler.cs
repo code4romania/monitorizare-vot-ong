@@ -72,7 +72,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 Data = map.ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
-                Total = await unPagedList.CountAsync()
+                TotalItems = await unPagedList.CountAsync()
             };
         }
 
@@ -100,7 +100,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 },
                 Page = message.Page,
                 PageSize = message.PageSize,
-                Total = 2
+                TotalItems = 2
             };
         }
     }

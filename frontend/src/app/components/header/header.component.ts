@@ -15,16 +15,17 @@ export class HeaderComponent implements OnInit {
 
   menuItems : any[] = [
     {
-      routerLink:[''],
+      state: 'home',
+      params: { urgente: true},
       label: 'Urgente',
     }, {
-      routerLink:['/raspunsuri'],
+      state: 'raspunsuri',
       label: 'Raspunsuri',
     }, {
-      routerLink:['/statistici'],
+      state: 'statistics',
       label: 'Statistici',
     }, {
-      routerLink:['/ghidul-observatorului'],
+      state: 'ghidul-observatorului',
       label: 'Ghidul observatorului',
     }
   ];

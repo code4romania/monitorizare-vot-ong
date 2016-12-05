@@ -1,11 +1,12 @@
 ﻿using MonitorizareVot.Ong.Api.Common;
+using System;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
     public class PagingModel
     {
-        private int _page;
-        private int _pageSize;
+        protected int _page;
+        protected int _pageSize;
 
         public int Page
         {
@@ -22,6 +23,14 @@ namespace MonitorizareVot.Ong.Api.ViewModels
 
     public class PagingResponseModel : PagingModel
     {
-        public int Total { get; set; }
+        protected int _totalItems;
+        public int TotalItems 
+        {
+            get  { return _totalItems; } 
+            set  { _totalItems = value; } 
+        }
+        public int TotalPages { 
+            get { return _totalItems / _pageSize; }
+        }
     }
 }

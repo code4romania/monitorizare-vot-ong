@@ -48,7 +48,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
                     },
                     Page = 1,
                     PageSize = 10,
-                    Total = 300
+                    TotalItems = 300
                 });
 
 

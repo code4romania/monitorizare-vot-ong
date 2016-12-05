@@ -1,7 +1,8 @@
-import { Nota } from '../../models/nota.model';
-import { Observable } from 'rxjs/Rx';
-import { AnswersService } from '../../shared/answers.service';
+import { AnswersService } from '../../../services/answers.service';
+import { Note } from '../../../models/note.model';
+
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-answer-notes',
@@ -10,7 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AnswerNotesComponent implements OnInit {
 
-  notes: Observable<Nota[]>;
+  notes: Observable<Note[]>;
 
 
   @Input() idObservator: number;

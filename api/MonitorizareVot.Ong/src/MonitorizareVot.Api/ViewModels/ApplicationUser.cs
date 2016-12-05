@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using MonitorizareVot.Ong.Api.Models;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
-    public class ApplicationUser : IAsyncRequest<int?>
+    public class ApplicationUser : IAsyncRequest<UserInfo>
     {
         [Required(AllowEmptyStrings = false)]
         public string UserName { get; set; }

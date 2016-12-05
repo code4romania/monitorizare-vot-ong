@@ -1,0 +1,10 @@
+<div *ngIf="question">
+  <h2>{{question.textIntrebare}}</h2>
+  <div *ngFor="let answer of question.raspunsuri">
+      {{answer.textOptiune}}
+      <input [type]="isSingle ? 'radio' : 'checkbox'" [checked]="isChecked(answer)" disabled/>
+      <textarea readonly *ngIf="isTextAnswer(answer)">
+        {{answerTextValue(answer)}}
+      </textarea>
+  </div>
+</div>
