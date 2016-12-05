@@ -13,7 +13,7 @@ export class FormEffects {
     loadFormAction = this.actions
         .ofType(FormActionTypes.LOAD)
         .map((action: FormLoadAction) => action.payload)
-        .mergeMap(ids => Observable.from(ids))
+        .switchMap(ids => Observable.from(ids))
         .mergeMap(id => this.getForm(id))
         .map(form => new FormLoadCompletedAction([form]));
 
@@ -23,7 +23,7 @@ export class FormEffects {
             .map(json => {
                 return <Form>{
                     idFormular: id,
-                    sectiuni: json.data
+                    sectiuni: json
                 }
             })
     }
