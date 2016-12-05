@@ -27,7 +27,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public TipGrupareStatistici Grupare { get; set; }
     }
 
-    public class StatisticiTopSesizariJudeteQuery : StatisticiTopSesizariQuery
+    public class StatisticiTopSesizariMockQuery : StatisticiTopSesizariQuery
     {
     }
 }

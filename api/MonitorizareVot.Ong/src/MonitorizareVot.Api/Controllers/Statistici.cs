@@ -51,7 +51,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
             {
                 IdONG = idONG,
                 Grupare = model.Grupare,
@@ -73,7 +73,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
@@ -95,7 +95,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
@@ -121,7 +121,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
-                Formular = null,
+                Formular = "A",
                 Page = model.Page,
                 PageSize = model.PageSize
             });
@@ -143,7 +143,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
-                Formular = null,
+                Formular = "A",
                 Page = model.Page,
                 PageSize = model.PageSize
             });
@@ -161,7 +161,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariJudeteQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
