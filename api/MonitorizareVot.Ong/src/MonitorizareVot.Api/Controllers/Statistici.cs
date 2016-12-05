@@ -27,8 +27,12 @@ public class Statistici : Controller
         [Route("NumarObservatori")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatori(PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+            
             return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
             {
+                IdONG = idONG,
                 PageSize = model.PageSize,
                 Page = model.Page
             });
@@ -170,8 +174,8 @@ public class Statistici : Controller
         /// <param name="model">IdIntrebare - id-ul intrebarei pentru care sa se returneze statisticile</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("SesizariNumarareOptiuni")]
-        public async Task<OptiuniModel> SesizariNumarareOptiuni(OptiuniFiltruModel model)
+        [Route("RaspunsuriNumarareOptiuni")]
+        public async Task<OptiuniModel> RaspunsuriNumarareOptiuni(OptiuniFiltruModel model)
         {
             // TODO get the idONG from token
             var idONG = 1;

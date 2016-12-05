@@ -7,6 +7,7 @@ using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using MonitorizareVot.Ong.Api.Services;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
@@ -16,27 +17,27 @@ namespace MonitorizareVot.Ong.Api.Queries
         IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
+        private readonly ICacheService _cacheService;
         private readonly IMapper _mapper;
 
-        public StatisticiQueryHandler(OngContext context, IMapper mapper)
+        public StatisticiQueryHandler(OngContext context, IMapper mapper, ICacheService cacheService)
         {
             _context = context;
             _mapper = mapper;
+            _cacheService = cacheService;
         }
 
         public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
         {
-            var statistici = await _context.Raspuns
-                .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare &&
-                            r.IdObservatorNavigation.IdOng == message.IdONG)
-                .GroupBy(r => new { r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation, r.IdRaspunsDisponibilNavigation.RaspunsCuFlag })
-                .Select(
-                    g => new {
-                        Optiune = g.Key.IdOptiuneNavigation,
-                        RaspunsCuFlag = g.Key.RaspunsCuFlag,
-                        Count = g.Count()
-                    })
-               .ToListAsync();
+            var statistici = await _context.RaspunsDisponibil
+                .Where(rd => rd.IdIntrebare == message.IdIntrebare)
+                .Select(rd => new {
+                    Optiune = rd.IdOptiuneNavigation,
+                    RaspunsCuFlag = rd.RaspunsCuFlag,
+                    Count = rd.Raspuns.Where(r => r.IdObservatorNavigation.IdOng == message.IdONG).Count()
+                })
+                .OrderByDescending(a => a.Count)
+                .ToListAsync();
 
             return new OptiuniModel
             {
@@ -56,9 +57,9 @@ namespace MonitorizareVot.Ong.Api.Queries
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
             var unPagedList = _context.Judet.Select(
-                    j => new {Judet = j, Count = j.SectieDeVotare.SelectMany(s => s.Raspuns).Count()})
+                    j => new { Judet = j, Count = j.SectieDeVotare.SelectMany(s => s.Raspuns).Count() })
                 .OrderByDescending(p => p.Count);
-            
+
             var pagedList = await unPagedList
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)

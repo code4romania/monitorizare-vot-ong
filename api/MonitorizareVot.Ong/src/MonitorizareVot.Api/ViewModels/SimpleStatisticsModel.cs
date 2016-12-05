@@ -11,7 +11,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
 
     public class StatisticiNumarObservatoriQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
     {
-           
+        public int IdONG { get; set; }
     }
 
     public enum TipGrupareStatistici
