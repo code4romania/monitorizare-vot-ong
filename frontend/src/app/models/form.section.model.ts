@@ -4,5 +4,4 @@ export class FormSection {
     codSectiune: string;
     descriere: string;
     intrebari: FormQuestion[];
-
 }

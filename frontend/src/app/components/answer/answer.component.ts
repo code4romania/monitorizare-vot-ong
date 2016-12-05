@@ -12,14 +12,12 @@ import { Observable } from 'rxjs/Rx';
 export class AnswerComponent implements OnInit {
 
     answerState: Observable<AnswerState>;
-    formsState: Observable<FormState>;
+    formState: Observable<FormState>;
 
     constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
-        // make sure we have the forms
-
-        this.formsState = this.store.select(state => state.form).distinctUntilChanged();
+        this.formState = this.store.select(state => state.form).distinctUntilChanged();
         this.answerState = this.store.select(state => state.answer).distinctUntilChanged();
 
     }

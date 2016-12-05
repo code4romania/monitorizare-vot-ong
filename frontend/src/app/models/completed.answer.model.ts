@@ -1,7 +1,7 @@
 
 import { BaseAnswer } from './base.answer.model';
 export class CompletedAnswer extends BaseAnswer {
-    value?: string
-    raspunsCuFlag: true
+    value: string = undefined;
+    raspunsCuFlag = false
 }
 

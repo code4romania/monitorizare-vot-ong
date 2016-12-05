@@ -9,7 +9,7 @@ export class FormState {
 let formsInitialState: FormState = {
     items: []    
 }
-export function formReducer(state: FormState, $action: FormActions) {
+export function formReducer(state = formsInitialState, $action: FormActions) {
     switch ($action.type) {
         case FormActionTypes.LOAD_COMPLETE:
             return {

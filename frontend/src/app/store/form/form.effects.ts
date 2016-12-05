@@ -13,10 +13,9 @@ export class FormEffects {
     loadFormAction = this.actions
         .ofType(FormActionTypes.LOAD)
         .map((action: FormLoadAction) => action.payload)
-        .switchMap(ids => Observable.from(ids))
-        .switchMap(id => this.getForm(id))
-        .reduce((forms: Form[], form: Form) => forms.concat(form),[])
-        .map(forms => new FormLoadCompletedAction(forms));
+        .mergeMap(ids => Observable.from(ids))
+        .mergeMap(id => this.getForm(id))
+        .map(form => new FormLoadCompletedAction([form]));
 
     private getForm(id: string): Observable<Form> {
         return this.http.get('/api/v1/formulare', { body: { idFormular: id } })

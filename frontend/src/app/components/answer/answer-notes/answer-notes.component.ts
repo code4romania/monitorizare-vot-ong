@@ -1,7 +1,8 @@
-import { Note } from '../../models/note.model';
-import { Observable } from 'rxjs/Rx';
-import { AnswersService } from '../../services/answers.service';
+import { AnswersService } from '../../../services/answers.service';
+import { Note } from '../../../models/note.model';
+
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-answer-notes',

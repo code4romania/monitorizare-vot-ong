@@ -1,5 +1,5 @@
 <div>
-    <div *ngFor="let answer of state.threads">
+    <div *ngFor="let answer of answerState.threads">
         <div class="header">
             Sectie: {{answer.sectie}}
             <br/> Observator: {{answer.observator}}
@@ -12,4 +12,4 @@
 <!--<div>
     <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
 </div>-->
-<pagination [totalItems]="state.totalItems" [itemsPerPage]="state.pageSize" [ngModel]="state.page" (pageChanged)="pageChanged.emit($event)"></pagination>
+<pagination [totalItems]="answerState.totalItems" [itemsPerPage]="answerState.pageSize" [ngModel]="answerState.page" (pageChanged)="pageChanged.emit($event)"></pagination>

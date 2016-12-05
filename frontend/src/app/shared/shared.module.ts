@@ -1,3 +1,4 @@
+import { TabsModule } from 'ng2-bootstrap';
 import { CategoricalQuestionComponent } from './categorical-question/categorical-question.component';
 import { StatisticsService } from './statistics.service';
 import { CommonModule } from '@angular/common';
@@ -7,8 +8,8 @@ import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 @NgModule({
-    imports: [FormsModule, CommonModule, PaginationModule],
-    exports: [FormsModule, CommonModule, PaginationModule, CategoricalQuestionComponent],
+    imports: [FormsModule, CommonModule, PaginationModule, TabsModule],
+    exports: [FormsModule, CommonModule, PaginationModule, TabsModule, CategoricalQuestionComponent],
     providers: [StatisticsService],
     declarations: [CategoricalQuestionComponent]
 })

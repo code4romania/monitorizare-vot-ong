@@ -1,4 +1,4 @@
-import { LoadAnswerPreviewAction } from './store/answer/answer.actions';
+import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from './store/answer/answer.actions';
 import { AppState } from './store/store.module';
 import { AnswerComponent } from './components/answer/answer.component';
 import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
@@ -10,7 +10,7 @@ import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 export let detaliiStoreResolve = {
     provide: 'dispatchDetails',
-    // useFactory: dispatchForDetails,
+    useFactory: dispatchForDetails,
     deps: [Store, Transition]
 }
 export let answersListResolve = {
@@ -31,7 +31,7 @@ export let appStates = [
     }, {
         name: 'raspunsuri.detalii',
         url: '/detalii/:idObservator/:idSectie',
-        // resolve: [detaliiStoreResolve]
+        resolve: [detaliiStoreResolve]
     }, {
         name: 'statistics',
         url: '/statistici',
@@ -65,16 +65,9 @@ export function getIndexParam(trans: Transition) {
     return trans.params()['index'];
 }
 export function dispatchForList(store: Store<AppState>, trans: Transition) {
-    store.dispatch(new LoadAnswerPreviewAction(new Boolean(trans.params()['urgent']).valueOf(),1,20));
+    store.dispatch(new LoadAnswerPreviewAction(new Boolean(trans.params()['urgente']).valueOf(), 1, 10, true));
 }
-// export function dispatchForDetails(store: Store<AppState>, trans: Transition) {
-//     let params = trans.params();
-//     store.dispatch(
-//         {
-//         type: ANSWERS_DETAIL_LOAD,
-//         payload: {
-//             observerId: params['idObservator'],
-//             sectionId: params['idSectie']
-//         }
-//     })
-// }
+export function dispatchForDetails(store: Store<AppState>, trans: Transition) {
+    let params = trans.params();
+    store.dispatch(new LoadAnswerDetailsAction(params['idObservator'], params['idSectie']));
+}

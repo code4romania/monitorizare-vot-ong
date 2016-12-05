@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class AnswerListComponent implements OnInit {
 
-  @Input("answers")
-  state: AnswerState;
+  @Input()
+  answerState: AnswerState;
 
   @Output()
   pageChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -17,12 +17,11 @@ export class AnswerListComponent implements OnInit {
   ngOnInit() {
   }
 
+
   get answers() {
-    let start = this.state.page * this.state.pageSize,
-      end = start + this.state.pageSize
-    return this.state.threads.slice(start, end);
+    let start = this.answerState.page * this.answerState.pageSize,
+      end = start + this.answerState.pageSize
+    return this.answerState.threads.slice(start, end);
   }
 }
-
-
 
