@@ -22,7 +22,12 @@ namespace MonitorizareVot.Ong.Api.ViewModels
 
     public class StatisticiTopSesizariQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
     {
+        public int IdONG { get; set; }
         public string Formular { get; set; }
         public TipGrupareStatistici Grupare { get; set; }
+    }
+
+    public class StatisticiTopSesizariJudeteQuery : StatisticiTopSesizariQuery
+    {
     }
 }

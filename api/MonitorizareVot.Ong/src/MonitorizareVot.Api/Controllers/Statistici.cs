@@ -2,14 +2,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
-using MonitorizareVot.Ong.Api.Filters;
 using MonitorizareVot.Ong.Api.ViewModels;
-using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/statistici")]
-public class Statistici : Controller
+    public class Statistici : Controller
     {
         private readonly IMediator _mediator;
 
@@ -50,8 +48,12 @@ public class Statistici : Controller
         [Route("Sesizari")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> Sesizari(FiltruStatisticiSimple model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = model.Grupare,
                 Formular = model.Formular,
                 Page = model.Page,
@@ -68,8 +70,12 @@ public class Statistici : Controller
         [Route("SesizariJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariJudete(PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
                 Page = model.Page,
@@ -86,8 +92,12 @@ public class Statistici : Controller
         [Route("SesizariSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii([FromForm] PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
                 Page = model.Page,
@@ -104,8 +114,12 @@ public class Statistici : Controller
         [Route("SesizariDeschidereJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereJudete(PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
                 Page = model.Page,
@@ -122,8 +136,12 @@ public class Statistici : Controller
         [Route("SesizariDeschidereSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereSectii(PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
                 Page = model.Page,
@@ -140,8 +158,12 @@ public class Statistici : Controller
         [Route("SesizariNumarareJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareJudete(PagingModel model)
         {
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            // TODO get the idONG from token
+            var idONG = 1;
+
+            return await _mediator.SendAsync(new StatisticiTopSesizariJudeteQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "C",
                 Page = model.Page,
@@ -158,8 +180,12 @@ public class Statistici : Controller
         [Route("SesizariNumarareSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareSectii(PagingModel model)
         {
+            // TODO get the idONG from token
+            var idONG = 1;
+
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
+                IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "C",
                 Page = model.Page,

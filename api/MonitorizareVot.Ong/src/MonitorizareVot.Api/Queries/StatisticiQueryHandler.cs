@@ -14,6 +14,7 @@ namespace MonitorizareVot.Ong.Api.Queries
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IAsyncRequestHandler<StatisticiTopSesizariJudeteQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
@@ -108,6 +109,38 @@ namespace MonitorizareVot.Ong.Api.Queries
                 Page = message.Page,
                 PageSize = message.PageSize,
                 TotalItems = 2
+            };
+        }
+
+        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariJudeteQuery message)
+        {
+            var unPagedList = _context.Judet
+               .Skip((message.Page - 1) * message.PageSize)
+               .Take(message.PageSize)
+               .Select(
+                   j => new
+                   {
+                       Judet = j,
+                       Count = j.SectieDeVotare.SelectMany(s => s.Raspuns)
+                                .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+                                && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+                                && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                   })
+               .OrderByDescending(p => p.Count);
+
+            var pagedList = await unPagedList // this query is executed in memory
+                .Skip((message.Page - 1) * message.PageSize)
+                .Take(message.PageSize)
+                .ToListAsync();
+
+            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Judet.Nume, Value = p.Count.ToString() }).ToList();
+
+            return new ApiListResponse<SimpleStatisticsModel>
+            {
+                Data = map,
+                Page = message.Page,
+                PageSize = message.PageSize,
+                TotalItems = await unPagedList.CountAsync()
             };
         }
     }
