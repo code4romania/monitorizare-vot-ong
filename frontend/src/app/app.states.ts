@@ -1,8 +1,8 @@
-import { AnswersComponent } from './components/answers/answers.component';
+import { LoadAnswerPreviewAction } from './store/answer/answer.actions';
+import { AppState } from './store/store.module';
+import { AnswerComponent } from './components/answer/answer.component';
 import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
 import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
-import { ANSWERS_DETAIL_LOAD, ANSWERS_LIST_LOAD } from './store/answers/answers.actions';
-import { AppState } from './store/app.state';
 import { Store } from '@ngrx/store';
 import { Transition } from 'ui-router-ng2';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
@@ -10,7 +10,7 @@ import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 export let detaliiStoreResolve = {
     provide: 'dispatchDetails',
-    useFactory: dispatchForDetails,
+    // useFactory: dispatchForDetails,
     deps: [Store, Transition]
 }
 export let answersListResolve = {
@@ -27,11 +27,11 @@ export let appStates = [
         name: 'raspunsuri',
         url: '/raspunsuri?urgente',
         resolve: [answersListResolve],
-        component: AnswersComponent,
+        component: AnswerComponent,
     }, {
         name: 'raspunsuri.detalii',
         url: '/detalii/:idObservator/:idSectie',
-        resolve: [detaliiStoreResolve]
+        // resolve: [detaliiStoreResolve]
     }, {
         name: 'statistics',
         url: '/statistici',
@@ -65,20 +65,16 @@ export function getIndexParam(trans: Transition) {
     return trans.params()['index'];
 }
 export function dispatchForList(store: Store<AppState>, trans: Transition) {
-    store.dispatch({
-        type: ANSWERS_LIST_LOAD,
-        payload: {
-            urgent: new Boolean(trans.params()['urgent']).valueOf()
-        }
-    })
+    store.dispatch(new LoadAnswerPreviewAction(new Boolean(trans.params()['urgent']).valueOf(),1,20));
 }
-export function dispatchForDetails(store: Store<AppState>, trans: Transition) {
-    let params = trans.params();
-    store.dispatch({
-        type: ANSWERS_DETAIL_LOAD,
-        payload: {
-            observerId: params['idObservator'],
-            sectionId: params['idSectie']
-        }
-    })
-}
+// export function dispatchForDetails(store: Store<AppState>, trans: Transition) {
+//     let params = trans.params();
+//     store.dispatch(
+//         {
+//         type: ANSWERS_DETAIL_LOAD,
+//         payload: {
+//             observerId: params['idObservator'],
+//             sectionId: params['idSectie']
+//         }
+//     })
+// }

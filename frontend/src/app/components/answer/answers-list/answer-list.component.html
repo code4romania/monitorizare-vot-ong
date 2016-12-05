@@ -1,5 +1,5 @@
-<div *ngIf="!state.request.loading">
-    <div *ngFor="let answer of state.items">
+<div>
+    <div *ngFor="let answer of state.threads">
         <div class="header">
             Sectie: {{answer.sectie}}
             <br/> Observator: {{answer.observator}}
@@ -9,8 +9,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="state.request.loading">
+<!--<div>
     <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
-</div>
-<pagination *ngIf="!state.request.loading" [totalItems]="state.pagination.maxItems" [itemsPerPage]="state.pagination.itemsPerPage"
-    [ngModel]="state.pagination.currentPage" (pageChanged)="pageChanged.emit($event)"></pagination>
+</div>-->
+<pagination [totalItems]="state.totalItems" [itemsPerPage]="state.pageSize" [ngModel]="state.page" (pageChanged)="pageChanged.emit($event)"></pagination>

@@ -1,4 +1,4 @@
-export class AvailableAnswers {
+export class BaseAnswer {
     idOptiune: number;
     textOptiune: string;
     seIntroduceText: boolean;

@@ -47,7 +47,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 Data = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
-                Total = await sectiiCuObservatori.CountAsync()
+                TotalItems = await sectiiCuObservatori.CountAsync()
             };
         }
     }

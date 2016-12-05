@@ -1,6 +1,6 @@
+import { components } from './components/components.module';
 import { AppComponent } from './app.component';
 import { appStates } from './app.states';
-import { uiComponents } from './components/components';
 import { CoreModule } from './core/core.module';
 import { AnswersService } from './services/answers.service';
 import { SharedModule } from './shared/shared.module';
@@ -10,15 +10,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 
-
 @NgModule({
-  declarations: uiComponents,
+  declarations: components,
   imports: [
     CoreModule,
     BrowserModule,
     SharedModule,
     AppStoreModule,
-    UIRouterModule.forRoot({ states: appStates })
+    UIRouterModule.forRoot({ states: appStates }),
   ],
 
   providers: [

@@ -1,24 +1,28 @@
-import { AnswersEffects } from './answers/answers.effects';
-import { FormsEffects } from './forms/forms.effects';
-import { FORMS_LOAD } from './forms/forms.actions';
-import { Store } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../../environments/environment';
-import { appStore } from './app.reducers';
-import { EffectsTestingModule } from '@ngrx/effects/testing';
-import { EffectsModule } from '@ngrx/effects';
-import { AppState } from './app.state';
+import { AnswerEffects } from './answer/answer.effects';
+import { answerReducer, AnswerState } from './answer/answer.reducer';
+import { FormLoadAction } from './form/form.actions';
+import { FormEffects } from './form/form.effects';
+import { formReducer, FormState } from './form/form.reducer';
 import { NgModule } from '@angular/core';
-import * as _ from 'lodash';
+import { EffectsModule } from '@ngrx/effects';
+import { Store, StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+export class AppState {
+    form: FormState
+    answer: AnswerState
+}
 
 @NgModule({
     imports: [
-        appStore,
+        StoreModule.provideStore({ form: formReducer, answer: answerReducer }),
         StoreDevtoolsModule.instrumentOnlyWithExtension(),
-        EffectsModule.run(FormsEffects),
-        EffectsModule.run(AnswersEffects)
+        EffectsModule.run(FormEffects),
+        EffectsModule.run(AnswerEffects)
     ]
 })
 export class AppStoreModule {
-
+    constructor(store: Store<AppState>) {
+        store.dispatch(new FormLoadAction(['A', 'B']));
+    }
 }

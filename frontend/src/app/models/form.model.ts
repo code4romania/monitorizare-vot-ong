@@ -1,5 +1,5 @@
-import { Section } from './section.model';
+import { FormSection } from './form.section.model';
 export class Form {
     idFormular: string;
-    sectiuni: Section[]
+    sectiuni: FormSection[]
 }

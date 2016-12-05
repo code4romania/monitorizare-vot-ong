@@ -69,7 +69,7 @@ export class StatisticsDetailsComponent implements OnInit {
 
         // TODO UPDATE PAGINATION
         this.currentPage = json.page;
-        this.total = json.total;
+        this.total = json.totalItems;
 
         this.stats[this.currentPage] = json.data;
 

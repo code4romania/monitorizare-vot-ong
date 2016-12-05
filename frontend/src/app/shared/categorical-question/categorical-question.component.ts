@@ -1,4 +1,5 @@
-import { Question } from '../../models/question.model';
+import { FormQuestion } from '../../models/form.question.model';
+
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CategoricalQuestionComponent implements OnInit {
 
-  @Input() question: Question;
+  @Input() question: FormQuestion;
 
   @Input('questionAnswers')
   set inputQuestionAnswers(value) {
@@ -18,10 +19,10 @@ export class CategoricalQuestionComponent implements OnInit {
   questionAnswers: any;
   isMultiple = false;
 
-  hasTextarea(question: Question) {
+  hasTextarea(question: FormQuestion) {
     return question.idTipIntrebare === 2 || question.idTipIntrebare === 3;
   }
-  isSingle(question: Question) {
+  isSingle(question: FormQuestion) {
     return question.idTipIntrebare === 0 || question.idTipIntrebare === 4;
   }
 
