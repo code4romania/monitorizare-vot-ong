@@ -34,7 +34,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Select(rd => new {
                     Optiune = rd.IdOptiuneNavigation,
                     RaspunsCuFlag = rd.RaspunsCuFlag,
-                    Count = rd.Raspuns.Where(r => r.IdObservatorNavigation.IdOng == message.IdONG).Count()
+                    Count = rd.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG)
                 })
                 .OrderByDescending(a => a.Count)
                 .ToListAsync();
@@ -56,11 +56,18 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
-            var unPagedList = _context.Judet.Select(
-                    j => new { Judet = j, Count = j.SectieDeVotare.SelectMany(s => s.Raspuns).Count() })
+            var unPagedList = _context.Judet
+                .Skip((message.Page - 1) * message.PageSize)
+                .Take(message.PageSize)
+                .Select(
+                    j => new
+                    {
+                        Judet = j,
+                        Count = j.SectieDeVotare.SelectMany(s => s.Raspuns).Count(r => r.IdObservatorNavigation.IdOng == message.IdONG)
+                    })
                 .OrderByDescending(p => p.Count);
 
-            var pagedList = await unPagedList
+            var pagedList = await unPagedList // this query is executed in memory
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)
                 .ToListAsync();
