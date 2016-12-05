@@ -1,3 +1,4 @@
+import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
@@ -19,6 +20,21 @@ export class AnswerComponent implements OnInit {
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
         this.answerState = this.store.select(state => state.answer).distinctUntilChanged();
+    }
 
+    redoAnswerListAction() {
+        // take the current state of the answerState, and do a reloaded
+        this.store.select(state => state.answer).take(1).subscribe((answer: AnswerState) => {
+            this.store.dispatch(
+                new LoadAnswerPreviewAction(answer.urgent, answer.page, answer.pageSize));
+        })
+    }
+    redoAnswerDetailsAction() {
+        // take the current state of the answerState, and do a reloaded
+        this.store.select(state => state.answer).take(1).subscribe((answer:AnswerState)=>{
+            this.store.dispatch(
+                new LoadAnswerDetailsAction(answer.observerId, answer.sectionId)
+            )
+        })
     }
 }

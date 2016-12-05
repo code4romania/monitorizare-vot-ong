@@ -23,6 +23,7 @@ export class CategoricalQuestionComponent implements OnInit {
   }
   completedAnswers: _.Dictionary<CompletedAnswer>;
 
+
   get isTextQuestion(){
     return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3
   }

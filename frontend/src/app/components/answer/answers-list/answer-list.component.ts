@@ -14,9 +14,15 @@ export class AnswerListComponent implements OnInit {
   @Output()
   pageChanged: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  reload: EventEmitter<{}> = new EventEmitter();
+
   ngOnInit() {
   }
 
+  retry() {
+    this.reload.emit();
+  }
 
   get answers() {
     let start = this.answerState.page * this.answerState.pageSize,

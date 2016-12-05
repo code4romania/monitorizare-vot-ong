@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-md-3">
-    <app-answer-list [answerState]="answerState | async" (pageChanged)="pageChanged">
+    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()" (pageChanged)="pageChanged">
     </app-answer-list>
   </div>
   <div class="col-md-9">
-    <app-answer-details [answerState]="answerState | async" [formState]="formState | async">
+    <app-answer-details [answerState]="answerState | async" (reload)="redoAnswerDetailsAction()" [formState]="formState | async">
     </app-answer-details>
   </div>
 </div>

@@ -6,8 +6,10 @@ import {
     AnswerActionTypes,
     LoadAnswerDetailsAction,
     LoadAnswerDetailsDoneAction,
+    LoadAnswerDetailsErrorAction,
     LoadAnswerPreviewAction,
-    LoadAnswerPreviewDoneAction
+    LoadAnswerPreviewDoneAction,
+    LoadAnswerPreviewErorrAction
 } from './answer.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -64,6 +66,7 @@ let mockBase = <CompletedQuestion[]>[{
         }]
 }]
 
+let failed = false;
 
 @Injectable()
 export class AnswerEffects {
@@ -72,16 +75,18 @@ export class AnswerEffects {
     @Effect()
     loadThreads = this.actions
         .ofType(AnswerActionTypes.LOAD_PREVIEW)
-        .switchMap((action: LoadAnswerPreviewAction) => this.http.get('/api/v1/raspunsuri', {
-            body: action.payload
-        }).map(res => res.json())
-            .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages)));
+        .switchMap((action: LoadAnswerPreviewAction) => {
+            return this.http.get('/api/v1/raspunsuri', { body: action.payload })
+                .map(res => res.json())
+                .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
+                .catch((err, caught) => Observable.of(new LoadAnswerPreviewErorrAction()));
+        })
 
     @Effect()
     loadDetails = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
         .switchMap((action: LoadAnswerDetailsAction) => {
-            return Observable.from([mockBase]);
+            return Observable.from([mockBase]).delay(1000);
             // return this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
             //     body: {
             //         idSectieDeVotare: action.payload.sectionId,
@@ -90,4 +95,6 @@ export class AnswerEffects {
             // }).map(res => <CompletedQuestion[]>res.json().data)
         })
         .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
+        .catch((err, caught) => Observable.from([new LoadAnswerDetailsErrorAction()]))
+
 }

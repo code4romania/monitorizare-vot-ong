@@ -1,21 +1,23 @@
-<!--<div *ngIf="answerState?.selectedAnswer?.length">
-  <div *ngFor="let question of answerState.selectedAnswer">
-    <app-categorical-question [question]="question">
-    </app-categorical-question>
+<div *ngIf="answerState?.selectedError" (click)="retry()">
+  <p>This failed</p>
+  Try again
+</div>
+<div *ngIf="!answerState?.selectedError">
+  <div *ngIf="answerState?.selectedLoading">
+    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
   </div>
-</div>
-<div *ngIf="!answerState?.selectedAnswer?.length">
-  Nu ati selectat nimic
-</div>-->
-<div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
-  <tabset>
-    <tab *ngFor="let form of formState.items">
-      <template tabHeading>Formular {{form.idFormular}}</template>
-      <app-answer-form-list [form]="form" [completedQuestions]="formAnswers(form.idFormular)">
-      </app-answer-form-list>
-    </tab>
-  </tabset>
-</div>
-<div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
-    Nu ati selectat nimic
+  <div *ngIf="!answerState?.selectedLoading">
+    <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
+      <tabset>
+        <tab *ngFor="let form of formState.items">
+          <template tabHeading>Formular {{form.idFormular}}</template>
+          <app-answer-form-list [form]="form" [completedQuestions]="formAnswers(form.idFormular)">
+          </app-answer-form-list>
+        </tab>
+      </tabset>
+    </div>
+    <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
+      Nu ati selectat nimic
+    </div>
+  </div>
 </div>

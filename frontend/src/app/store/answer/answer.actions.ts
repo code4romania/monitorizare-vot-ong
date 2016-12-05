@@ -28,6 +28,9 @@ export class LoadAnswerPreviewAction implements Action {
         }
     }
 }
+export class LoadAnswerPreviewErorrAction implements Action {
+    type = AnswerActionTypes.LOAD_PREVIEW_ERROR;
+}
 export class LoadAnswerPreviewDoneAction implements Action {
     type = AnswerActionTypes.LOAD_PREVIEW_DONE;
     payload: {
@@ -58,6 +61,9 @@ export class LoadAnswerDetailsAction implements Action {
         }
     }
 }
+export class LoadAnswerDetailsErrorAction implements Action {
+    type = AnswerActionTypes.LOAD_DETAILS_ERROR;
+}
 export class LoadAnswerDetailsDoneAction implements Action {
     type = AnswerActionTypes.LOAD_DETAILS_DONE
 
@@ -67,4 +73,10 @@ export class LoadAnswerDetailsDoneAction implements Action {
         this.payload = payload;
     }
 }
-export type AnswerActionTypes = LoadAnswerPreviewAction | LoadAnswerPreviewDoneAction | LoadAnswerDetailsAction | LoadAnswerDetailsDoneAction;
+export type AnswerActions =
+    LoadAnswerPreviewAction |
+    LoadAnswerPreviewErorrAction |
+    LoadAnswerPreviewDoneAction |
+    LoadAnswerDetailsAction |
+    LoadAnswerDetailsErrorAction |
+    LoadAnswerDetailsDoneAction;

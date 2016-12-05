@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { Form } from '../../../models/form.model';
 import { FormState } from '../../../store/form/form.reducer';
 import { AnswerState } from '../../../store/answer/answer.reducer';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
 @Component({
   selector: 'app-answer-details',
@@ -18,8 +18,11 @@ export class AnswerDetailsComponent implements OnInit {
   @Input()
   formState: FormState
 
+  @Output()
+  reload: EventEmitter<{}> = new EventEmitter();
+
   formAnswers(formId: string) {
-    if(!this.answerState || !this.answerState.selectedAnswer) {
+    if (!this.answerState || !this.answerState.selectedAnswer) {
       return {}
     }
     return this.answerState.selectedAnswer.filter(value => value.codFormular);
@@ -29,5 +32,9 @@ export class AnswerDetailsComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+  
+  retry() {
+    this.reload.emit();
   }
 }
