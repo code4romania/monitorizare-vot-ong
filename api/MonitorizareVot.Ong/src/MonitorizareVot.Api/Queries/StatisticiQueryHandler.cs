@@ -8,13 +8,14 @@ using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using MonitorizareVot.Ong.Api.Services;
+using System;
+using System.Linq.Expressions;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiTopSesizariMockQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
@@ -83,34 +84,6 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        /// <summary>
-        /// Mocked for now. 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariMockQuery message)
-        {
-            return new ApiListResponse<SimpleStatisticsModel>
-            {
-                Data = new List<SimpleStatisticsModel>
-                {
-                    new SimpleStatisticsModel
-                    {
-                        Label = "TestJudet",
-                        Value = "123"
-                    },
-                    new SimpleStatisticsModel
-                    {
-                        Label = "TestJudet2",
-                        Value = "568"
-                    }
-                },
-                Page = message.Page,
-                PageSize = message.PageSize,
-                TotalItems = 2
-            };
-        }
-
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariQuery message)
         {
             return message.Grupare == TipGrupareStatistici.Judet
@@ -125,10 +98,17 @@ namespace MonitorizareVot.Ong.Api.Queries
                   j => new JudetStatisticsModel
                   {
                       Nume = j.Nume,
-                      Count = j.SectieDeVotare.SelectMany(s => s.Raspuns)
-                               .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                               && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                               && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                      // TODO: use a predicate instead of a ternary operator
+                      Count = !string.IsNullOrEmpty(message.Formular) 
+                              ? j.SectieDeVotare
+                                 .SelectMany(s => s.Raspuns)
+                                 .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+                                    && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                              :j.SectieDeVotare
+                                .SelectMany(s => s.Raspuns)
+                                .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
                   })
               .OrderByDescending(p => p.Count);
 
@@ -154,9 +134,13 @@ namespace MonitorizareVot.Ong.Api.Queries
                  {
                      NumarSectie = s.NumarSectie,
                      CodJudet = s.IdJudetNavigation.CodJudet,
-                     Count = s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                              && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                              && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                     // TODO: use a predicate instead of a ternary operator
+                     Count = !string.IsNullOrEmpty(message.Formular)  
+                             ? s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+                                    && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                             : s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
                  })
              .OrderByDescending(p => p.Count);
 
@@ -172,6 +156,36 @@ namespace MonitorizareVot.Ong.Api.Queries
                 PageSize = message.PageSize,
                 TotalItems = await unPagedList.CountAsync()
             };
+        }
+
+        /// <summary>
+        /// Predicate to filter Response by idOng, RaspunsCuFlag and CodFormular
+        /// </summary>
+        /// <param name="idOng"></param>
+        /// <param name="formular">if formular is empty or null, the filter by CodFormular is ignored</param>
+        private Func<Raspuns, bool> MakeFilterPredicate(int idOng, string formular)
+        {
+            if (!string.IsNullOrEmpty(formular))
+                return r => r.IdObservatorNavigation.IdOng == idOng
+                            && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+                            && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == formular;
+
+            return r => r.IdObservatorNavigation.IdOng == idOng
+                            && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true;
+        }
+    }
+    
+    public static class RaspunsFilters
+    {
+        public static int FilterAndCount(this IEnumerable<Raspuns> raspunsuri, int idOng, string formular)
+        {
+            if (!string.IsNullOrEmpty(formular))
+                return raspunsuri.Count(r => r.IdObservatorNavigation.IdOng == idOng
+                                && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+                                && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == formular);
+
+            return raspunsuri.Count(r => r.IdObservatorNavigation.IdOng == idOng
+                           && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MonitorizareVot.Ong.Api.ViewModels
+﻿namespace MonitorizareVot.Ong.Api.ViewModels
 {
     public class FiltruStatisticiSimple : PagingModel
     {

@@ -51,7 +51,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = model.Grupare,
@@ -73,7 +73,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
@@ -95,7 +95,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             // TODO get the idONG from token
             var idONG = 1;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
