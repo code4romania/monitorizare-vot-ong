@@ -105,7 +105,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                                  .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
                                     && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
                                     && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
-                              :j.SectieDeVotare
+                              : j.SectieDeVotare
                                 .SelectMany(s => s.Raspuns)
                                 .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
                                     && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
