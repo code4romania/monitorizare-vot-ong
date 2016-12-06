@@ -4,6 +4,12 @@ import { PaginationData } from './pagination.interface';
 import { Injectable } from '@angular/core';
 import * as _ from "lodash";
 
+export interface StatsConfig {
+  key: string
+  method: string
+  header?:string
+  subHeader?:string
+}
 
 @Injectable()
 export class StatisticsService {
@@ -11,48 +17,59 @@ export class StatisticsService {
   constructor(private http: ApiService) {}
 
   public get topLists() {
-    return Object.assign(this._topLists);
+    return  <{string:StatsConfig}>Object.assign(this._topLists);
   }
 
   private _topLists = _.keyBy([
     {
       key: 'numar-observatori',
       method: "numarObservatori",
-      label: "Topul judetelor cu cele mai multe sesizari",
+      header: 'Topul judetelor',
+      subHeader: "cu cele mai multe sesizari",
     }, {
-      key: 'sesizari',
-      method: "sesizari",
-      label: "Topul sectiilor cu cele mai multe sesizari",
-    }, {
+    //   key: 'sesizari',
+    //   method: "sesizari",
+    //   header: "Topul sectiilor",
+    //   subHeader: "cu cele mai multe sesizari"
+    // }, {
       key: 'sesizari-judete',
       method: "sesizariJudete",
-      label: "Topul judetelor cu cele mai multe nereguli la deschiderea sectiei de votare",
+      header: "Topul judetelor",
+      subHeader: "cu cele mai multe nereguli la deschiderea sectiei de votare"
     }, {
       key: 'sesizari-sectii',
       method: "sesizariSectii",
-      label: "Topul judetelor cu cele mai multe nereguli la numararea voturilor",
+      header: "Topul judetelor",
+      subHeader: "cu cele mai multe nereguli la numararea voturilor"
     }, {
       key: 'sesizari-deschidere-judete',
       method: "sesizariDeschidereJudete",
-      label: "Topul judetelor cu cei mai multi observatori",
+      header: "Topul judetelor",
+      subHeader: "cu cei mai multi observatori"
     }, {
       key: 'sesizari-deschidere-sectii',
       method: "sesizariDeschidereSectii",
-      label: "Topul judetelor cu cele mai multe sesizari",
+      header: "Topul judetelor",
+      subHeader: "cu cele mai multe sesizari"
     }, {
       key: 'sesizari-numarare-judete',
       method: "sesizariNumarareJudete",
-      label: "Topul judetelor cu cele mai multe sesizari",
+      header: "Topul judetelor",
+      subHeader: "cu cele mai multe sesizari"
     }, {
       key: 'sesizari-numarare-sectii',
       method: "sesizariNumarareSectii",
-      label: "Topul judetelor cu cele mai multe sesizari",
+      header: "Topul judetelor",
+      subHeader: "cu cele mai multe sesizari"
     }
   ], value => value.key);
 
-  get(method: string, paginationData?: PaginationData){
+  get(method: string, page = 1, pageSize = 5){
     return this.http.get(`/api/v1/statistici/${method}`,{
-      body: paginationData
+      body: {
+        page,
+        pageSize
+      }
     }).map(res => res.json())
   }
 

@@ -1,5 +1,5 @@
-import { ApiService } from '../../core/apiService/api.service';
-import { StatisticsService } from '../../shared/statistics.service';
+import { ApiService } from '../../../core/apiService/api.service';
+import { StatisticsService } from '../../../shared/statistics.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
@@ -61,10 +61,7 @@ export class StatisticsDetailsComponent implements OnInit {
       this.subscription.unsubscribe();
     }
 
-    this.subscription = this.statService.get(this.config.method, {
-      page: page,
-      pageSize: this.pageSize
-    })
+    this.subscription = this.statService.get(this.config.method,page, 20)
       .subscribe(json => {
 
         // TODO UPDATE PAGINATION

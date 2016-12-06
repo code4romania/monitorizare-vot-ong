@@ -1,0 +1,12 @@
+<div class="frow row-start">
+    <div class="col-md-1-3" *ngFor="let statTop of topData | async">
+        <h3 *ngIf="listConfig[statTop.key]?.header" style="margin-bottom:0">
+            {{listConfig[statTop.key].header}}
+        </h3>
+        <h5 *ngIf="listConfig[statTop.key]?.subHeader" style="margin-top:0">
+            {{listConfig[statTop.key].subHeader}}
+        </h5>
+        <app-statistics-card [statistics]="statTop.data | async">
+        </app-statistics-card>
+    </div>
+</div>

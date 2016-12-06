@@ -11,7 +11,7 @@
         </div>
         <pagination [totalItems]="answerState.totalItems" [itemsPerPage]="answerState.pageSize" [ngModel]="answerState.page" (pageChanged)="pageChanged.emit($event)"></pagination>
     </div>
-    <div class="col-md-offset-5 col-md-1">
+    <div *ngIf="answerState.threadsLoading" class="col-md-offset-5 col-md-1">
         <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
     </div>
 </div>

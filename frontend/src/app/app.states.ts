@@ -1,8 +1,8 @@
+import { StatisticsDetailsComponent } from './components/statistics/statistics-details/statistics-details.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from './store/answer/answer.actions';
 import { AppState } from './store/store.module';
 import { AnswerComponent } from './components/answer/answer.component';
-import { StatisticsDetailsComponent } from './components/statistics-details/statistics-details.component';
-import { StatisticsTopComponent } from './components/statistics-top/statistics-top.component';
 import { Store } from '@ngrx/store';
 import { Transition } from 'ui-router-ng2';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
@@ -35,26 +35,28 @@ export let appStates = [
     }, {
         name: 'statistics',
         url: '/statistici',
-        component: StatisticsTopComponent
-    }, {
-        name: 'statistics.details',
-        url: '/:index',
-        views: {
-            '@': {
-                component: StatisticsDetailsComponent,
-                bindings: {
-                    'index': 'index'
-                },
-            }
-        },
-        resolve: [{
-            provide: 'index',
-            useFactory: getIndexParam,
-            deps: [Transition]
-        }]
+        component: StatisticsComponent
+    }, 
+    // {
+    //     name: 'statistics.details',
+    //     url: '/:index',
+    //     views: {
+    //         '@': {
+    //             component: StatisticsDetailsComponent,
+    //             bindings: {
+    //                 'index': 'index'
+    //             },
+    //         }
+    //     },
+    //     resolve: [{
+    //         provide: 'index',
+    //         useFactory: getIndexParam,
+    //         deps: [Transition]
+    //     }]
 
 
-    }]
+    // }
+    ]
 
 export function rootStates(states) {
     return UIRouterModule.forRoot({

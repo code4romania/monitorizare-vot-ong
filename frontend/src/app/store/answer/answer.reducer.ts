@@ -27,7 +27,6 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 threads: newList ? [] : state.threads,
                 threadsLoading: true,
                 threadsError: false
-
             })
             // if we're loading a new list, deselect any selected answer
             if (newList) {
