@@ -259,3 +259,5 @@ paket-files/
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Domain.Ong/appsettings.development.json
 api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/ongqa - Web Deploy-publish.ps1
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/LocalIIS-publish.ps1
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/wwwroot
+/frontend/wwwroot

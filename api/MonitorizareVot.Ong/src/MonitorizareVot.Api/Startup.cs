@@ -336,8 +336,7 @@ namespace MonitorizareVot.Ong.Api
                 Lifestyle.Singleton,
                 c => true);
 
-            // NOTE: Prevent cross-wired instances as much as possible.
-            // See: https://simpleinjector.org/blog/2016/07/
+            _container.RegisterSingleton<IConfigurationRoot>(Configuration);
         }
 
         private void RegisterDbContext<TDbContext>(string connectionString = null)
