@@ -93,7 +93,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.True(pageSize >= model.Data.Count);
             Assert.Equal(page, model.Page);
             Assert.Equal(pageSize, model.PageSize);
-            Assert.Equal(countObservatori, model.Total);
+            Assert.Equal(countObservatori, model.TotalPages);
         }
 
         [Theory]
@@ -160,7 +160,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.NotNull(model.Data);
             Assert.Equal(page, model.Page);
             Assert.Equal(pageSize, model.PageSize);
-            Assert.Equal(0, model.Total);
+            Assert.Equal(0, model.TotalPages);
         }
 
         [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
@@ -182,7 +182,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.NotNull(model.Data);
             Assert.Equal(page, model.Page);
             Assert.Equal(pageSize, model.PageSize);
-            Assert.Equal(0, model.Total);
+            Assert.Equal(0, model.TotalPages);
         }
     }
 }
