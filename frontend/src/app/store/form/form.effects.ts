@@ -14,7 +14,7 @@ export class FormEffects {
         .ofType(FormActionTypes.LOAD)
         .map((action: FormLoadAction) => action.payload)
         .switchMap(ids => Observable.from(ids))
-        .mergeMap(id => this.getForm(id))
+        .concatMap(id => this.getForm(id))
         .map(form => new FormLoadCompletedAction([form]));
 
     private getForm(id: string): Observable<Form> {

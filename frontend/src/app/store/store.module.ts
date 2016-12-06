@@ -23,6 +23,6 @@ export class AppState {
 })
 export class AppStoreModule {
     constructor(store: Store<AppState>) {
-        store.dispatch(new FormLoadAction(['A', 'B']));
+        store.dispatch(new FormLoadAction(['A', 'B', 'C']));
     }
 }

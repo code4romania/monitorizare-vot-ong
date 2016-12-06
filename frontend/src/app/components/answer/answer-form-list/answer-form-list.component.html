@@ -1,8 +1,11 @@
 <div *ngFor="let section of form.sectiuni">
     <h2>{{section.descriere}}</h2>
-    <div *ngFor="let question of section.intrebari">
-      
-        <app-categorical-question [question]="question" [completedAnswers]="answersForQuestion(question)?.raspunsuri">
-        </app-categorical-question>
+    <div class="questions frow gutters column-center">
+        <div *ngFor="let question of section.intrebari">
+
+            <app-categorical-question [question]="question" [completedAnswers]="answersForQuestion(question)?.raspunsuri">
+            </app-categorical-question>
+        </div>
     </div>
+
 </div>

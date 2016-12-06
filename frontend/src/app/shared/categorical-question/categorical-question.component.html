@@ -1,10 +1,15 @@
 <div *ngIf="question">
-  <h2>{{question.textIntrebare}}</h2>
-  <div *ngFor="let answer of question.raspunsuri">
-      {{answer.textOptiune}}
+  <p font-size="22px">{{question.textIntrebare}}</p>
+
+  <div class="frow row-start gutters" *ngFor="let answer of question.raspunsuri">
+    <span class="col-md-1-3">{{answer.textOptiune}}</span>
+    <div class="col-md-1-3">
       <input [type]="isSingle ? 'radio' : 'checkbox'" [checked]="isChecked(answer)" disabled/>
+    </div>
+    <div class="col-md-1-3">
       <textarea readonly *ngIf="isTextAnswer(answer)">
         {{answerTextValue(answer)}}
       </textarea>
+    </div>
   </div>
 </div>
