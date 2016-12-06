@@ -1,6 +1,6 @@
 <div class="frow">
 	<div class="col-md-1-3">
-		<a uiSref="home">
+		<a [routerLink]="['/']">
 			<svg width="68" height="68" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 				xmlns:figma="http://www.figma.com/figma/ns">
 				<title>logo</title>
@@ -47,7 +47,7 @@
 	</div>
 	<ul class="col-md-2-3">
 		<li *ngFor="let menuItem of menuItems">
-			<a [uiSref]="menuItem.state" [uiParams]="menuItem.params || {}" [uiOptions]="{inherit: false}">
+			<a [routerLink]="menuItem.state">
 				{{menuItem.label}}
 			</a>
 		</li>

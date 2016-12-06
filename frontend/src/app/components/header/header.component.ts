@@ -15,17 +15,16 @@ export class HeaderComponent implements OnInit {
 
   menuItems : any[] = [
     {
-      state: 'home',
-      params: { urgente: true},
+      state: ['/'],
       label: 'Urgente',
     }, {
-      state: 'raspunsuri',
+      state: ['/raspunsuri'],
       label: 'Raspunsuri',
     }, {
-      state: 'statistics',
+      state: ['/statistici'],
       label: 'Statistici',
     }, {
-      state: 'ghidul-observatorului',
+      state: ['/ghidul-observatorului'],
       label: 'Ghidul observatorului',
     }
   ];

@@ -23,10 +23,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.store.select(state => state.statistics).take(1).subscribe(state => {
-      _.each(state, stateItem => this.store.dispatch(new LoadStatisticAction(stateItem.key, 1, 5, true)))
-    })
-
     this.stateSubscription =
       this.store
         .select(state => state.statistics)
@@ -36,7 +32,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
           this.anyStatistics = this.statisticsState.filter(value => !value.error && !value.loading).length > 0
         });
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.stateSubscription.unsubscribe();
   }
 

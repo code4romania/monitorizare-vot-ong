@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './routing/app.routing.module';
 import { components } from './components/components.module';
 
 import { AppComponent } from './app.component';
@@ -9,7 +10,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { UIRouterModule } from 'ui-router-ng2/ng2';
 
-
 @NgModule({
   declarations: components,
   imports: [
@@ -17,7 +17,7 @@ import { UIRouterModule } from 'ui-router-ng2/ng2';
     BrowserModule,
     SharedModule,
     AppStoreModule,
-    UIRouterModule.forChild({ states: [] }),
+    AppRoutingModule
   ],
 
   providers: [
