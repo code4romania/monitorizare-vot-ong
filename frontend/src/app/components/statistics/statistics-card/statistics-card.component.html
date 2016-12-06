@@ -1,5 +1,4 @@
-{{item | json}}
-<!--<h3 *ngIf="item.header" style="margin-bottom:0">
+<h3 *ngIf="item.header" style="margin-bottom:0">
   {{item.header}}
 </h3>
 <h5 *ngIf="item.subHeader" style="margin-top:0">
@@ -14,9 +13,9 @@
     Loading
   </div>
   <div *ngIf="!item.loading">
-    <div *ngFor="let labelValue of values">
+    <div *ngFor="let labelValue of item.values">
       {{labelValue.label}}: {{labelValue.value}}
     </div>
   </div>
 
-</div>-->
+</div>

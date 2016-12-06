@@ -1,7 +1,7 @@
-import { CompletedAnswer } from '../../models/completed.answer.model';
-import { BaseAnswer } from '../../models/base.answer.model';
-import { CompletedQuestion } from '../../models/completed.question.model';
-import { FormQuestion } from '../../models/form.question.model';
+import { BaseAnswer } from '../../../models/base.answer.model';
+import { CompletedAnswer } from '../../../models/completed.answer.model';
+import { FormQuestion } from '../../../models/form.question.model';
+
 import * as _ from 'lodash';
 import { Component, Input, OnInit } from '@angular/core';
 

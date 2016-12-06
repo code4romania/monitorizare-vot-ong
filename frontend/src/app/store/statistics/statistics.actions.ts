@@ -27,6 +27,17 @@ export class LoadStatisticAction implements Action {
 
     }
 }
+export class LoadStatisticsErrorAction implements Action {
+    type = StatisticsActions.ERROR
+    payload: {
+        key: string
+    }
+    constructor(key: string){
+        this.payload = {
+            key
+        }
+    }
+}
 export class LoadStatisticsCompleteAction implements Action {
     type = StatisticsActions.LOADED
     payload: {
@@ -46,4 +57,4 @@ export class LoadStatisticsCompleteAction implements Action {
         }
     }
 }
-export type StatisticsActionTypes = LoadStatisticAction | LoadStatisticsCompleteAction;
+export type StatisticsActionTypes = LoadStatisticAction | LoadStatisticsCompleteAction | LoadStatisticsErrorAction;

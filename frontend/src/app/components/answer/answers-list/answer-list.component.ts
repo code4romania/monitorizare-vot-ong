@@ -1,6 +1,6 @@
+import { AnswerThread } from '../../../models/answer.thread.model';
 import { AnswerState } from '../../../store/answer/answer.reducer';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
 @Component({
   selector: 'app-answer-list',
   templateUrl: './answer-list.component.html',

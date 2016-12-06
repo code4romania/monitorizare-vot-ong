@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { statisticsConfig } from './statistics.config';
 import { LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions } from './statistics.actions';
 import { ApiService } from '../../core/apiService/api.service';
@@ -14,7 +15,7 @@ export class StatisticsEffects {
     @Effect()
     loadStats = this.actions
         .ofType(StatisticsActions.LOAD)
-        .concatMap((action: LoadStatisticAction) =>
+        .flatMap((action: LoadStatisticAction) => 
             this.http.get(`/api/v1/statistici/${statisticsConfig.find(value => value.key === action.payload.key).method}`, {
                 body: {
                     page: action.payload.page,

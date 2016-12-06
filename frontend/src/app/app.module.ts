@@ -1,6 +1,6 @@
 import { components } from './components/components.module';
+
 import { AppComponent } from './app.component';
-import { appStates } from './app.states';
 import { CoreModule } from './core/core.module';
 import { AnswersService } from './services/answers.service';
 import { SharedModule } from './shared/shared.module';
@@ -17,7 +17,7 @@ import { UIRouterModule } from 'ui-router-ng2/ng2';
     BrowserModule,
     SharedModule,
     AppStoreModule,
-    UIRouterModule.forRoot({ states: appStates }),
+    UIRouterModule.forChild({ states: [] }),
   ],
 
   providers: [

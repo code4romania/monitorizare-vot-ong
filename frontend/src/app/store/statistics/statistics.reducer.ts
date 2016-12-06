@@ -1,3 +1,4 @@
+import { LabelValueModel } from '../../models/labelValue.model';
 import { actionType } from '../util';
 import { StatisticsActions, StatisticsActionTypes } from './statistics.actions';
 import { statisticsInitialState, StatisticsState, StatisticsStateItem } from './statistics.state';
@@ -38,6 +39,11 @@ export function statisticsItemReducer(state: StatisticsStateItem, action: Statis
                 values: state.values.concat(action.payload.items),
                 totalPages: action.payload.totalPages,
                 totalItems: action.payload.totalItems
+            })
+        case StatisticsActions.ERROR:
+            return Object.assign({}, state, {
+                error: true,
+                loading: false
             })
         default:
             return state;

@@ -1,3 +1,4 @@
+import { CategoricalQuestionComponent } from './answer/categorical-question/categorical-question.component';
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
@@ -14,6 +15,7 @@ export let components = [
     AnswerComponent, AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
+    CategoricalQuestionComponent,
     //  AnswerNotesComponent,
 
     HeaderComponent,
