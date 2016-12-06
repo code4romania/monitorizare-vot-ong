@@ -1,5 +1,4 @@
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
-import { StatisticsDetailsComponent } from './statistics/statistics-details/statistics-details.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
 import { AppComponent } from '../app.component';

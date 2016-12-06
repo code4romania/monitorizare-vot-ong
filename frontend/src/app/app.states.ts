@@ -1,4 +1,4 @@
-import { StatisticsDetailsComponent } from './components/statistics/statistics-details/statistics-details.component';
+
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from './store/answer/answer.actions';
 import { AppState } from './store/store.module';

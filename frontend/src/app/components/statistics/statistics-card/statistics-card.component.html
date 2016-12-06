@@ -1,4 +1,22 @@
-<div *ngFor="let stat of statistics">
-  {{stat.label}}
-  {{stat.value}}
+{{item | json}}
+<!--<h3 *ngIf="item.header" style="margin-bottom:0">
+  {{item.header}}
+</h3>
+<h5 *ngIf="item.subHeader" style="margin-top:0">
+  {{item.subHeader}}
+</h5>
+
+<div *ngIf="item.error">
+  Error
 </div>
+<div *ngIf="!item.error">
+  <div *ngIf="item.loading">
+    Loading
+  </div>
+  <div *ngIf="!item.loading">
+    <div *ngFor="let labelValue of values">
+      {{labelValue.label}}: {{labelValue.value}}
+    </div>
+  </div>
+
+</div>-->

@@ -1,3 +1,5 @@
+import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
+import { Observable } from 'rxjs/Rx';
 import { LabelValueModel } from '../../../models/labelValue.model';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -9,11 +11,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StatisticsCardComponent implements OnInit {
 
   @Input()
-  statistics:LabelValueModel[];
+  item: StatisticsStateItem
+
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

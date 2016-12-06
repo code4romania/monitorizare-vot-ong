@@ -1,5 +1,5 @@
 import { ApiService } from '../../../core/apiService/api.service';
-import { StatisticsService } from '../../../shared/statistics.service';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
@@ -10,73 +10,73 @@ import { Subscription } from 'rxjs/Rx';
 })
 export class StatisticsDetailsComponent implements OnInit {
 
-  config: any;
-  stats: any[][] = [];
+  // config: any;
+  // stats: any[][] = [];
 
-  currentPage = 1;
-  pageSize = 50;
-  total = 0;
+  // currentPage = 1;
+  // pageSize = 50;
+  // total = 0;
 
-  loading = false;
-  error = false;
+  // loading = false;
+  // error = false;
 
-  subscription: Subscription;
+  // subscription: Subscription;
 
 
 
-  constructor(private http: ApiService, private statService: StatisticsService) { }
+  // constructor(private http: ApiService, private statService: StatisticsService) { }
 
-  @Input()
-  set index(value:number){
-    this._index = value;
-    this.getConfig(value);
-  }
+  // @Input()
+  // set index(value:number){
+  //   this._index = value;
+  //   this.getConfig(value);
+  // }
 
-  _index:number;
+  // _index:number;
 
 
   ngOnInit() {
   }
 
-  getConfig(index) {
-    this.config = this.statService.topLists[index];
+  // getConfig(index) {
+  //   this.config = this.statService.topLists[index];
 
-    this.getStats(1);
-  }
-  pageChanged(event) {
-    this.currentPage = event.page;
+  //   this.getStats(1);
+  // }
+  // pageChanged(event) {
+  //   this.currentPage = event.page;
 
-    let pageLoaded = !!this.stats[this.currentPage];
+  //   let pageLoaded = !!this.stats[this.currentPage];
 
-    if (!pageLoaded) {
-      this.getStats(this.currentPage);
-    }
+  //   if (!pageLoaded) {
+  //     this.getStats(this.currentPage);
+  //   }
 
-  }
-  getStats(page: number) {
-    this.loading = true;
-    this.error = false;
+  // }
+  // getStats(page: number) {
+  //   this.loading = true;
+  //   this.error = false;
 
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  //   if (this.subscription) {
+  //     this.subscription.unsubscribe();
+  //   }
 
-    this.subscription = this.statService.get(this.config.method,page, 20)
-      .subscribe(json => {
+  //   this.subscription = this.statService.get(this.config.method,page, 20)
+  //     .subscribe(json => {
 
-        // TODO UPDATE PAGINATION
-        this.currentPage = json.page;
-        this.total = json.totalItems;
+  //       // TODO UPDATE PAGINATION
+  //       this.currentPage = json.page;
+  //       this.total = json.totalItems;
 
-        this.stats[this.currentPage] = json.data;
+  //       this.stats[this.currentPage] = json.data;
 
 
-        this.loading = false;
-      }, () => {
-        this.loading = false;
-        this.error = true;
-      });
-  }
+  //       this.loading = false;
+  //     }, () => {
+  //       this.loading = false;
+  //       this.error = true;
+  //     });
+  // }
 
 
 
