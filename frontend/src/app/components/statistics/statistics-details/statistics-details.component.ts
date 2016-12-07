@@ -1,10 +1,10 @@
+import { LabelValueModel } from '../../../models/labelValue.model';
 import { LoadStatisticAction } from '../../../store/statistics/statistics.actions';
-import { __router_private__, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/store.module';
 import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
 import { ApiService } from '../../../core/apiService/api.service';
-
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
