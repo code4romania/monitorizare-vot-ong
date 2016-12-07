@@ -14,19 +14,8 @@
   </div>
   <div *ngIf="!item.loading">
     <div *ngFor="let labelValue of item.values;let i = index" class="frow" style="margin-top:10px">
-      <div class="col-md-1-2 frow row-start">
-        <p style="margin-right:10px">
-          <strong>{{i + 1}}</strong>
-        </p>
-        <p>
-          <strong>
-            {{labelValue.label}}
-          </strong>
-        </p>
-      </div>
-      <p class="col-md-1-2">
-        {{labelValue.value}}
-      </p>
+      <app-statistics-value [index]="i+1" [label]="labelValue.label" [value]="labelValue.value">
+      </app-statistics-value>
     </div>
 
     <div class="frow row-start" [routerLink]="['/statistici',item.key]">

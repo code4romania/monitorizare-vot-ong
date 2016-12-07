@@ -19,28 +19,6 @@ export class StatisticsDetailsComponent implements OnInit, OnDestroy {
 
   subs: Subscription[];
 
-  values(firstHalf) {
-    let startPage = this.state.page - 1,
-      pageSize = this.state.pageSize,
-      startIndex = startPage * pageSize,
-      endIndex = startIndex + pageSize
-
-    let values = this.state.values.slice(startIndex, endIndex)
-    
-    if(firstHalf){
-      return values.slice(0,values.length /2);
-    } 
-    return values.slice(values.length /2, values.length);
-     
-  }
-  indexTransform(index, isSecondHalf){
-    if(isSecondHalf){
-        let values = this.values(false);
-        return ((this.state.page -1) * this.state.pageSize) + values.length  + index + 1;
-    }
-    return ((this.state.page -1) * this.state.pageSize) + index + 1;
-  }
-
   retry() {
     this.store.dispatch(new LoadStatisticAction(this.state.key, this.state.page, this.state.pageSize, true));
   }
