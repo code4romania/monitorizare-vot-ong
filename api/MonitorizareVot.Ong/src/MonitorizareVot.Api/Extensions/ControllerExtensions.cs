@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -15,6 +12,14 @@ namespace MonitorizareVot.Ong.Api.Extensions
             return int.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "IdOng")?.Value, out result) 
                 ? result 
                 : defaultIdOng;
+        }
+
+        public static bool GetOrganizatorOrDefault(this Controller controller, bool defaultOrganizator)
+        {
+            bool result;
+            return bool.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "Organizator")?.Value, out result)
+                ? result
+                : defaultOrganizator;
         }
     }
 }

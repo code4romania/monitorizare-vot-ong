@@ -19,8 +19,11 @@ export let components = [
     AnswerComponent, AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
-    CategoricalQuestionComponent,
     AnswerNotesComponent,
+    CategoricalQuestionComponent,
+
+    AnswerNotesComponent,
+
 
     HeaderComponent,
 
