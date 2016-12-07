@@ -1,12 +1,41 @@
-<h2>{{config.label}}</h2>
-
-
-<div *ngIf="!loading">
-    <div *ngFor="let topItem of stats[currentPage]">
-        {{topItem.label}} : {{topItem.value}}
+<div class="frow">
+    <div class="col-md-1-2">
+        <h3>{{state.header}}</h3>
+        <h5>{{state.subHeader}}</h5>
+    </div>
+    <div class="col-md-1-2">
+        <br/>
+        <app-pagination *ngIf="!state.error && !state.loading" class="col-md-1-2" [page]="state.page" [pageSize]="state.pageSize"
+            [totalItems]="state.totalItems" [nextEnabled]="!state.loading" (pageChanged)="pageChanged($event)">
+        </app-pagination>
     </div>
 </div>
-<div *ngIf="loading" class="center-block">
-    <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+<div>
+    <div *ngIf="state.error">
+        <app-error-indicator (retry)="retry">
+        </app-error-indicator>
+
+    </div>
+    <div *ngIf="!state.error">
+        <div *ngIf="!state.loading">
+            <div *ngFor="let labelValue of state.values;let i=index" class="frow row-start" style="margin-top:10px">
+                <div class="col-md-1-2 frow">
+                    <p style="font-size:24px" class="col-md-1-3">
+                        {{i}}
+                    </p>
+                    <p class="col-md-1-3">
+                        <strong>
+                {{labelValue.label}}
+                </strong>
+                    </p>
+                    <p class="col-md-1-3">
+                        {{labelValue.value}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="state.loading" class="center-block">
+            <app-loading-indicator></app-loading-indicator>
+        </div>
+    </div>
 </div>
-<pagination *ngIf="!loading && total > pageSize" [totalItems]="total" [itemsPerPage]="pageSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>

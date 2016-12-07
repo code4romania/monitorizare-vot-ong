@@ -2,7 +2,7 @@ import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import { AnswerActions, AnswerActionTypes } from './answer.actions';
 export class AnswerState {
-    threads: AnswerThread[]
+    threads: AnswerThread[] = []
     urgent: boolean = undefined
     page = 1
     pageSize = 10
@@ -22,11 +22,15 @@ export let initialAnswerState: AnswerState = new AnswerState()
 export function answerReducer(state = initialAnswerState, action: AnswerActions) {
     switch (action.type) {
         case AnswerActionTypes.LOAD_PREVIEW:
-            let newList = action.payload.refresh || (action.payload.urgent !== state.urgent);
-            let newState = Object.assign({}, state, action.payload, {
+            let newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
+                shouldLoadList = shouldLoad(action.payload.page,action.payload.pageSize,state.threads.length);
+            let newState = Object.assign({}, state, {
+                page: action.payload.page,
+                pageSize: action.payload.pageSize,
                 threads: newList ? [] : state.threads,
-                threadsLoading: true,
-                threadsError: false
+                threadsLoading: shouldLoadList,
+                threadsError: false,
+                urgent: action.payload.urgent
             })
             // if we're loading a new list, deselect any selected answer
             if (newList) {
@@ -75,3 +79,10 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
     }
 }
 
+export function shouldLoad(page: number, pageSize: number, arrayLen) {
+    if (page === undefined || pageSize === undefined) {
+        return true;
+    }
+
+    return page * pageSize > arrayLen;
+}

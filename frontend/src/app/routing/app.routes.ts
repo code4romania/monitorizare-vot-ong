@@ -1,3 +1,6 @@
+import { StatisticsDetailsComponent } from '../components/statistics/statistics-details/statistics-details.component';
+import { AnswerDetailsComponent } from '../components/answer/answer-details/answer-details.component';
+import { AnswerListComponent } from '../components/answer/answers-list/answer-list.component';
 import { LoadStatisticsGuard } from './guards/load-statistics.guard';
 import { AnswerDetailsGuard } from './guards/load-anwer-details.guard';
 import { AnswerListGuard } from './guards/load-answer-list.guard';
@@ -13,24 +16,45 @@ export let appRoutes: Routes = [
     {
         // name: 'home',
         path: '',
-        pathMatch:'full',
+        pathMatch: 'full',
         canActivate: [HomeGuard],
-        redirectTo:'/raspunsuri'
-
+        redirectTo: '/raspunsuri/urgente'
     }, {
-
         path: 'raspunsuri',
         component: AnswerComponent,
         canActivate: [AnswerListGuard],
         children: [{
             path: 'detalii/:idObservator/:idSectie',
+            component: AnswerDetailsComponent,
             canActivate: [AnswerDetailsGuard]
+        }, {
+            path: '',
+            component: AnswerDetailsComponent
+        }]
+    },
+    {
+        path: 'raspunsuri/urgente',
+        component: AnswerComponent,
+        canActivate: [AnswerListGuard],
+        data:{
+            urgent: true
+        },
+        children: [{
+            path: 'detalii/:idObservator/:idSectie',
+            component: AnswerDetailsComponent,
+            canActivate: [AnswerDetailsGuard]
+        }, {
+            path: '',
+            component: AnswerDetailsComponent
         }]
     },
     {
         path: 'statistici',
-        pathMatch:'full',
         component: StatisticsComponent,
+        canActivate: [LoadStatisticsGuard]
+    }, {
+        path: 'statistici/:key',
+        component: StatisticsDetailsComponent,
         canActivate: [LoadStatisticsGuard]
     }
 ]

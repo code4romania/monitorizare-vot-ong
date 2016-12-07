@@ -1,6 +1,11 @@
+import { LoadStatisticAction } from '../../../store/statistics/statistics.actions';
+import { __router_private__, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/store.module';
+import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
 import { ApiService } from '../../../core/apiService/api.service';
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 @Component({
@@ -8,76 +13,30 @@ import { Subscription } from 'rxjs/Rx';
   templateUrl: './statistics-details.component.html',
   styleUrls: ['./statistics-details.component.scss']
 })
-export class StatisticsDetailsComponent implements OnInit {
+export class StatisticsDetailsComponent implements OnInit, OnDestroy {
 
-  // config: any;
-  // stats: any[][] = [];
+  state: StatisticsStateItem;
 
-  // currentPage = 1;
-  // pageSize = 50;
-  // total = 0;
+  subs: Subscription[];
 
-  // loading = false;
-  // error = false;
-
-  // subscription: Subscription;
-
-
-
-  // constructor(private http: ApiService, private statService: StatisticsService) { }
-
-  // @Input()
-  // set index(value:number){
-  //   this._index = value;
-  //   this.getConfig(value);
-  // }
-
-  // _index:number;
-
-
-  ngOnInit() {
+  retry() {
+    this.store.dispatch(new LoadStatisticAction(this.state.key, this.state.page, this.state.pageSize, true));
   }
 
-  // getConfig(index) {
-  //   this.config = this.statService.topLists[index];
+  pageChanged(event){
+    this.store.dispatch(new LoadStatisticAction(this.state.key,event.page, event.pageSize));
+  }
 
-  //   this.getStats(1);
-  // }
-  // pageChanged(event) {
-  //   this.currentPage = event.page;
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
 
-  //   let pageLoaded = !!this.stats[this.currentPage];
+  ngOnInit() {
+    this.subs = [this.route.params
+      .map(p => p['key'])
+      .mergeMap(key => this.store.select(s => s.statistics).map(s => s[key]))
+      .subscribe(s => this.state = s)]
 
-  //   if (!pageLoaded) {
-  //     this.getStats(this.currentPage);
-  //   }
-
-  // }
-  // getStats(page: number) {
-  //   this.loading = true;
-  //   this.error = false;
-
-  //   if (this.subscription) {
-  //     this.subscription.unsubscribe();
-  //   }
-
-  //   this.subscription = this.statService.get(this.config.method,page, 20)
-  //     .subscribe(json => {
-
-  //       // TODO UPDATE PAGINATION
-  //       this.currentPage = json.page;
-  //       this.total = json.totalItems;
-
-  //       this.stats[this.currentPage] = json.data;
-
-
-  //       this.loading = false;
-  //     }, () => {
-  //       this.loading = false;
-  //       this.error = true;
-  //     });
-  // }
-
-
-
+  }
+  ngOnDestroy() {
+    this.subs.map(sub => sub.unsubscribe());
+  }
 }

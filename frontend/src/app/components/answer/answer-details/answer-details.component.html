@@ -1,10 +1,10 @@
-<div *ngIf="answerState?.selectedError" (click)="retry()">
-  <p>This failed</p>
-  Try again
+<div *ngIf="answerState?.selectedError">
+  <app-error-indicator (retry)="retry()">
+  </app-error-indicator>
 </div>
 <div *ngIf="!answerState?.selectedError">
   <div *ngIf="answerState?.selectedLoading">
-    <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+    <app-loading-indicator></app-loading-indicator>
   </div>
   <div *ngIf="!answerState?.selectedLoading">
     <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">

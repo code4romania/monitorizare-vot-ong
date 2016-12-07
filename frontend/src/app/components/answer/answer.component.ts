@@ -28,18 +28,24 @@ export class AnswerComponent implements OnInit {
     }
     redoAnswerListAction() {
         // take the current state of the answerState, and do a reloaded
-        this.store.select(state => state.answer).take(1).subscribe((answer: AnswerState) => {
-            this.store.dispatch(
-                new LoadAnswerPreviewAction(answer.urgent, answer.page, answer.pageSize));
-        })
+        this.store.select(state => state.answer).take(1)
+            .map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize))
+            .map(a => this.store.dispatch(a))
+            .subscribe()
     }
     redoAnswerDetailsAction() {
         // take the current state of the answerState, and do a reloaded
-        this.store.select(state => state.answer).take(1).subscribe((answer:AnswerState)=>{
-            this.store.dispatch(
-                new LoadAnswerDetailsAction(answer.observerId, answer.sectionId)
-            )
-        })
+        this.store.select(state => state.answer).take(1)
+            .map(s => new LoadAnswerDetailsAction(s.observerId, s.sectionId))
+            .map(a => this.store.dispatch(a))
+            .subscribe();
+    }
+
+    pageChanged(event) {
+        this.store.select(s => s.answer).take(1)
+            .map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize))
+            .map(a => this.store.dispatch(a))
+            .subscribe();
     }
 
 }

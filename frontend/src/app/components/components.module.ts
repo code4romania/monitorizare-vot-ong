@@ -1,3 +1,4 @@
+import { StatisticsDetailsComponent } from './statistics/statistics-details/statistics-details.component';
 import { CategoricalQuestionComponent } from './answer/categorical-question/categorical-question.component';
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -21,8 +22,8 @@ export let components = [
     HeaderComponent,
 
     StatisticsComponent, 
-    StatisticsCardComponent
-    // StatisticsDetailsComponent
+    StatisticsCardComponent,
+    StatisticsDetailsComponent
 
 
 ] 

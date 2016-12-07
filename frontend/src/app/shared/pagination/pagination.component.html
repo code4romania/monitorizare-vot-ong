@@ -1,0 +1,19 @@
+<div class="frow" style="font-size:12px">
+  <div class="col-md-1-2">
+    <span>{{startingindex}}-{{endingIndex}}</span> <span *ngIf="totalItems !== undefined">din {{totalItems}}</span> 
+  </div>
+  <div class="col-md-1-2 frow" >
+    <div class="col-md-1-2" (click)="prevPage()" [class.disabled]="!canPrevPage()">
+      <i  class="fa fa-arrow-left" aria-hidden="true"></i>
+      <span >
+        Newer
+      </span>
+    </div>
+    <div class="col-md-1-2" [class.disabled]="!canNextPage()" (click)="nextPage()">
+      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <span>
+        Older
+      </span>
+    </div>
+  </div>
+</div>

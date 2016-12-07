@@ -1,10 +1,9 @@
-{{anyStatistics}}
-<div *ngIf="!anyStatistics" class="frow row-start">
-    <div class="col-md-1-3" *ngFor="let item of statisticsState">
+<div *ngIf="anyStatistics" class="frow row-start">
+    <div class="col-md-1-2" *ngFor="let item of statisticsState">
         <app-statistics-card *ngIf="item && !item.error && !item.loading" [item]="item">
         </app-statistics-card>
     </div>
 </div>
-<div class="frow row-center" *ngIf="anyStatistics">
-    Loading
+<div class="frow row-center" *ngIf="!anyStatistics">
+    <app-loading-indicator></app-loading-indicator>
 </div>

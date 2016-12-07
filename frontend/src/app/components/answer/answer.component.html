@@ -4,14 +4,14 @@
       <h3>{{(answerState | async)?.urgent ? urgentHeader : notUrgentHeader}}</h3>
       <h5>{{(answerState | async)?.urgent ? urgentSubHeader : notUrgentSubHeader}}</h5>
   </div>
-  <div class="col-md-2-12">
-    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()" (pageChanged)="pageChanged">
+  <div class="col-md-3-12">
+    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()" (pageChanged)="pageChanged($event)">
     </app-answer-list>
   </div>
   <div class="col-md-1-12">
   </div>
-  <div class="col-md-9-12">
-    <app-answer-details [answerState]="answerState | async" (reload)="redoAnswerDetailsAction()" [formState]="formState | async">
-    </app-answer-details>
+  <div class="col-md-8-12">
+    <router-outlet>
+    </router-outlet>
   </div>
 </div>

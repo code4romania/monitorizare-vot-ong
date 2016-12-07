@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class AnswerListGuard implements CanActivate {
     constructor(private store: Store<AppState>) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.store.dispatch(new LoadAnswerPreviewAction(route.queryParams['urgent'],1,5,true));
+        this.store.dispatch(new LoadAnswerPreviewAction(route.data['urgent'],1,5,true));
         return true;
     }
 }

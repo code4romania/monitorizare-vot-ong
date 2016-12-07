@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class AnswerListComponent implements OnInit {
 
-  @Input()
-  answerState: AnswerState;
+  @Input('answerState')
+  state: AnswerState;
 
   @Output()
   pageChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -23,11 +23,26 @@ export class AnswerListComponent implements OnInit {
   retry() {
     this.reload.emit();
   }
-
+  answerLinkPrefix(){
+    return this.state.urgent ? '/raspunsuri/urgente/detalii' : '/raspunsuri/detalii'
+  }
   get answers() {
-    let start = this.answerState.page * this.answerState.pageSize,
-      end = start + this.answerState.pageSize
-    return this.answerState.threads.slice(start, end);
+    let start = this.state.page * this.state.pageSize,
+      end = start + this.state.pageSize
+    return this.state.threads.slice(start, end);
+  }
+
+  answerList(){
+    let startPage = this.state.page - 1,
+      pageSize = this.state.pageSize,
+      startIndex = startPage * pageSize,
+      endIndex = startIndex + pageSize
+
+    return this.state.threads.slice(startIndex, endIndex)
+  }
+
+  pageChangedEvent(event){
+    this.pageChanged.emit(event)
   }
 }
 

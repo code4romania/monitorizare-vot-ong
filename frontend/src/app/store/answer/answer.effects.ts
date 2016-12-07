@@ -1,3 +1,6 @@
+import { AnswerState } from './answer.reducer';
+import { AppState } from '../store.module';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { ApiService } from '../../core/apiService/api.service';
 import { CompletedAnswer } from '../../models/completed.answer.model';
@@ -14,85 +17,49 @@ import {
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 
-
-
-
-let mockBase = <CompletedQuestion[]>[{
-    idIntrebare: 1,
-    textIntrebare: "Aţi observat lipsa materialelor electorale ",
-    idTipIntrebare: 1,
-    codIntrebare: "B1",
-    codFormular: "A",
-    raspunsuri: <CompletedAnswer[]>[{
-        "idOptiune": 1,
-        "textOptiune": "Da",
-        "seIntroduceText": false,
-        raspunsCuFlag: true
-    }]
-}, {
-    "idIntrebare": 2,
-    "textIntrebare": "Daca ati observat lipsa materialelor electorale, ce materiale electorale lipsesc",
-    "idTipIntrebare": 3,
-    "codIntrebare": "B1.1",
-    "codFormular": "A",
-    "raspunsuri": <CompletedAnswer[]>[
-        {
-            "idOptiune": 4,
-            "textOptiune": "Urne staţionare",
-            "seIntroduceText": false
-
-        }, {
-            "idOptiune": 5,
-            "textOptiune": "Urna mobilă",
-            "seIntroduceText": false
-        }, {
-            "idOptiune": 14,
-            "textOptiune": "Altele",
-            "seIntroduceText": true,
-            value: "Alte lucruri - TEST"
-        }]
-}, {
-    "idIntrebare": 12,
-    "textIntrebare": "Câţi membri are BESV ",
-    "idTipIntrebare": 2,
-    "codIntrebare": "C1",
-    "codFormular": "A",
-    "raspunsuri": <CompletedAnswer[]>[
-        {
-            "idOptiune": 43,
-            "textOptiune": "Membri BESV",
-            "seIntroduceText": true,
-            value: "Valoare de test text"
-        }]
-}]
-
-let failed = false;
-
 @Injectable()
 export class AnswerEffects {
-    constructor(private http: ApiService, private actions: Actions) { }
+
+    state: AnswerState
+    constructor(private http: ApiService, private actions: Actions, store: Store<AppState>) {
+        store.select(s => s.answer).subscribe(s => this.state = s)
+    }
 
     @Effect()
     loadThreads = this.actions
         .ofType(AnswerActionTypes.LOAD_PREVIEW)
+        .filter((a: LoadAnswerPreviewAction) => this.shouldLoad(a.payload.page, a.payload.pageSize, this.state.threads.length))
         .switchMap((action: LoadAnswerPreviewAction) => {
-            return this.http.get('/api/v1/raspunsuri', { body: action.payload })
+            return this.http.get('/api/v1/raspunsuri', {
+                body: {
+                    page: action.payload.page,
+                    pageSize: action.payload.pageSize,
+                    urgent: action.payload.urgent
+                }
+            })
                 .map(res => res.json())
                 .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
                 .catch((err, caught) => Observable.of(new LoadAnswerPreviewErorrAction()));
         })
 
+    shouldLoad(page: number, pageSize: number, arrayLen) {
+        if(page === undefined || pageSize === undefined){
+            return true;
+        }
+
+        return page * pageSize > arrayLen;
+    }
+
     @Effect()
     loadDetails = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
         .switchMap((action: LoadAnswerDetailsAction) => {
-            return Observable.from([mockBase]);
-            // return this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
-            //     body: {
-            //         idSectieDeVotare: action.payload.sectionId,
-            //         idObservator: action.payload.observerId
-            //     }
-            // }).map(res => <CompletedQuestion[]>res.json().data)
+            return this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
+                body: {
+                    idSectieDeVotare: action.payload.sectionId,
+                    idObservator: action.payload.observerId
+                }
+            }).map(res => <CompletedQuestion[]>res.json().data)
         })
         .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
         .catch((err, caught) => Observable.from([new LoadAnswerDetailsErrorAction()]))

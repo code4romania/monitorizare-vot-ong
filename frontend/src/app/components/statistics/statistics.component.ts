@@ -28,8 +28,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         .select(state => state.statistics)
         .map(state => _.values(state))
         .subscribe(state => {
-          this.statisticsState = state
-          this.anyStatistics = this.statisticsState.filter(value => !value.error && !value.loading).length > 0
+          this.statisticsState = state.filter(value => !value.error && !value.loading)
+          this.anyStatistics = !!state.filter(item => !item.error && !item.loading && item.values && item.values.length).length
         });
   }
   ngOnDestroy() {

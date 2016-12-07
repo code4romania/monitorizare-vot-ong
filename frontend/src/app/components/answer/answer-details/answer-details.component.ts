@@ -1,25 +1,25 @@
-import { Observable } from 'rxjs/Rx';
+import { LoadAnswerDetailsAction } from '../../../store/answer/answer.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/store.module';
+import { Observable, Subscriber, Subscription } from 'rxjs/Rx';
 import { Form } from '../../../models/form.model';
 import { FormState } from '../../../store/form/form.reducer';
 import { AnswerState } from '../../../store/answer/answer.reducer';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
 @Component({
   selector: 'app-answer-details',
   templateUrl: './answer-details.component.html',
   styleUrls: ['./answer-details.component.scss']
 })
-export class AnswerDetailsComponent implements OnInit {
+export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
 
-  @Input()
-  answerState: AnswerState;
 
-  @Input()
+  answerState: AnswerState
   formState: FormState
 
-  @Output()
-  reload: EventEmitter<{}> = new EventEmitter();
+  subs: Subscription[] = [];
 
   formAnswers(formId: string) {
     if (!this.answerState || !this.answerState.selectedAnswer) {
@@ -28,13 +28,21 @@ export class AnswerDetailsComponent implements OnInit {
     return this.answerState.selectedAnswer.filter(value => value.codFormular);
   }
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
 
+    this.subs = [
+      this.store.select(s => s.answer).subscribe(s => this.answerState = s),
+      this.store.select(s => s.form).subscribe(s => this.formState = s),
+
+    ]
   }
-  
+  ngOnDestroy() {
+    _.map(this.subs, sub => sub.unsubscribe());
+  }
+
   retry() {
-    this.reload.emit();
+    this.store.dispatch(new LoadAnswerDetailsAction(this.answerState.observerId, this.answerState.sectionId));
   }
 }

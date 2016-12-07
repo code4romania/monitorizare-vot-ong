@@ -1,7 +1,7 @@
-<div *ngIf="!answerState.threadsError">
-    <div *ngIf="!answerState.threadsLoading">
-        <div *ngFor="let answer of answerState.threads" class="card">
-            <a [routerLink]="['/raspunsuri/detalii',answer.idObservator, answer.idSectie]">
+<div *ngIf="!state.threadsError">
+    <div *ngIf="!state.threadsLoading">
+        <div *ngFor="let answer of answerList()" class="card">
+            <a [routerLink]="[answerLinkPrefix(),answer.idObservator, answer.idSectie]">
 
                 <h4>Sectia: {{answer.sectie}}</h4>
                 <h6>{{answer.observator}}</h6>
@@ -9,13 +9,13 @@
 
             </a>
         </div>
-        <pagination [totalItems]="answerState.totalItems" [itemsPerPage]="answerState.pageSize" [ngModel]="answerState.page" (pageChanged)="pageChanged.emit($event)"></pagination>
+        <app-pagination [page]="state.page" [pageSize]="state.pageSize" [totalItems]="state.totalItems" [nextEnabled]="!state.threadsLoading"
+            (pageChanged)="pageChangedEvent($event)"></app-pagination>
     </div>
-    <div *ngIf="answerState.threadsLoading" class="col-md-offset-5 col-md-1">
-        <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+    <div *ngIf="state.threadsLoading" class="col-md-offset-5 col-md-1">
+        <app-loading-indicator></app-loading-indicator>
     </div>
 </div>
-<div *ngIf="answerState.threadsError" (click)="retry()">
-    <p>This failed</p>
-    Try again
+<div *ngIf="state.threadsError">
+    <app-error-indicator (retry)="retry()"></app-error-indicator>
 </div>
