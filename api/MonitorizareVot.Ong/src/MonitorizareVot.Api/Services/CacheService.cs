@@ -17,27 +17,27 @@ namespace MonitorizareVot.Ong.Api.Services
             _logger = logger;
         }
 
-        public async Task<T> GetOrSaveDataInCacheAsync<T>(CacheObjectsName name, Func<Task<T>> source, DistributedCacheEntryOptions options = null)
+        public async Task<T> GetOrSaveDataInCacheAsync<T>(string key, Func<Task<T>> source, DistributedCacheEntryOptions options = null)
         {
-            var obj = await GetObjectSafeAsync<T>(name);
+            var obj = await GetObjectSafeAsync<T>(key);
 
             if (obj != null)
                 return obj;
 
             var result = await source();
 
-            await SaveObjectSafeAsync(name, result, options);
+            await SaveObjectSafeAsync(key, result, options);
 
             return result;
         }
 
-        public async Task<T> GetObjectSafeAsync<T>(CacheObjectsName name)
+        public async Task<T> GetObjectSafeAsync<T>(string key)
         {
             var result = default(T);
 
             try
             {
-                var cache = await _cache.GetAsync(name.ToString());
+                var cache = await _cache.GetAsync(key);
 
                 if (cache == null)
                     return default(T);
@@ -55,16 +55,16 @@ namespace MonitorizareVot.Ong.Api.Services
             return result;
         }
 
-        public async Task SaveObjectSafeAsync(CacheObjectsName name, object value, DistributedCacheEntryOptions options = null)
+        public async Task SaveObjectSafeAsync(string key, object value, DistributedCacheEntryOptions options = null)
         {
             try
             {
                 var obj = JsonConvert.SerializeObject(value);
 
                 if (options != null)
-                    await _cache.SetAsync(name.ToString(), GetBytes(obj), options);
+                    await _cache.SetAsync(key, GetBytes(obj), options);
                 else
-                    await _cache.SetAsync(name.ToString(), GetBytes(obj));
+                    await _cache.SetAsync(key, GetBytes(obj));
 
             }
             catch (Exception exception)
@@ -85,11 +85,5 @@ namespace MonitorizareVot.Ong.Api.Services
             System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
-
-    }
-
-    public enum CacheObjectsName
-    {
-        Formular
     }
 }

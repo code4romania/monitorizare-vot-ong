@@ -6,9 +6,8 @@ namespace MonitorizareVot.Ong.Api.Services
 {
     public interface ICacheService
     {
-        Task<T> GetOrSaveDataInCacheAsync<T>(CacheObjectsName name, Func<Task<T>> source, DistributedCacheEntryOptions options = null);
-        Task<T> GetObjectSafeAsync<T>(CacheObjectsName name);
-        Task SaveObjectSafeAsync(CacheObjectsName name, object value, DistributedCacheEntryOptions options = null);
-
+        Task<T> GetOrSaveDataInCacheAsync<T>(string key, Func<Task<T>> source, DistributedCacheEntryOptions options = null);
+        Task<T> GetObjectSafeAsync<T>(string key);
+        Task SaveObjectSafeAsync(string key, object value, DistributedCacheEntryOptions options = null);
     }
 }
