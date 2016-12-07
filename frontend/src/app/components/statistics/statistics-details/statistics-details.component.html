@@ -19,42 +19,10 @@
     <div *ngIf="!state.error">
         <div *ngIf="!state.loading">
             <div class="frow">
-                <div class="col-md-1-2">
-                    <div *ngFor="let labelValue of values(true);let i=index" class="frow row-start" style="margin-top:10px">
-                        <div class="col-md-1-1 frow">
-                            <div class="col-md-1-2 frow row-start">
-                                <p style="margin-right:10px">
-                                    <strong>{{indexTransform(i)}}</strong>
-                                </p>
-                                <p>
-                                    <strong>
-                                    {{labelValue.label}}
-                                </strong>
-                                </p>
-                            </div>
-                            <p class="col-md-1-2">
-                                {{labelValue.value}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-1-2">
-                    <div *ngFor="let labelValue of values(false);let i=index" class="frow row-start" style="margin-top:10px">
-                        <div class="col-md-1-1 frow">
-                            <div class="col-md-1-2 frow row-start">
-                                <p style="margin-right:10px">
-                                    <strong>{{indexTransform(i, true)}}</strong>
-                                </p>
-                                <p>
-                                    <strong>
-                                    {{labelValue.label}}
-                                </strong>
-                                </p>
-                            </div>
-                            <p class="col-md-1-2">
-                                {{labelValue.value}}
-                            </p>
-                        </div>
+                <div *ngFor="let list of splitList();let listIndex=index" class="col-md-1-2">
+                    <div *ngFor="let model of list;let i=index" class="frow row-start" style="margin-top:10px">
+                        <app-statistics-value class="col-md-1-1" [index]="rowIndex(i, listIndex)" [label]="model.label" [value]="model.value">
+                        </app-statistics-value>
                     </div>
                 </div>
             </div>
