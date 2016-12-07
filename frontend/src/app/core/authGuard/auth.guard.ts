@@ -1,34 +1,29 @@
-// import { AuthentificationService } from '../../core/authentification/authentification.service';
-// import { Injectable } from '@angular/core';
-// import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot } from '@angular/router';
-// import { Observable } from 'rxjs/Rx';
+import { TokenService } from '../token/token.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
-// @Injectable()
-// export class AuthGuard implements CanActivateChild, CanActivate {
+@Injectable()
+export class AuthGuard implements CanActivateChild, CanActivate {
 
-//     private static authObservable: Observable<boolean>;
+    private static authObservable: Observable<boolean>;
 
-//     constructor(private authService: AuthentificationService) { }
-
-
-//     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-//         // check if this route
-//         return this.checkForLogin();
-//     }
-//     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-//         return this.checkForLogin();
-//     }
-
-//     private checkForLogin(): boolean | Observable<boolean> {
-//         if (this.authService.isLoggedIn) {
-//             return true;
-//         }
-        
-//         if (!AuthGuard.authObservable) {
-//             AuthGuard.authObservable = this.authService.login('admin', 'admin').mapTo(true).share();
-//         }
-//         return AuthGuard.authObservable;
+    constructor(private tokenService: TokenService, private router:Router) { }
 
 
-//     }
-// }
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        // check if this route
+        return this.checkForLogin();
+    }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.checkForLogin();
+    }
+
+    private checkForLogin(): Promise<boolean> | boolean {
+        if (this.tokenService.token) {
+            return true;
+        }
+        this.router.navigate(['/login'])
+        return false;
+    }
+}

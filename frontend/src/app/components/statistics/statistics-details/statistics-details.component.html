@@ -18,19 +18,12 @@
     </div>
     <div *ngIf="!state.error">
         <div *ngIf="!state.loading">
-            <div *ngFor="let labelValue of state.values;let i=index" class="frow row-start" style="margin-top:10px">
-                <div class="col-md-1-2 frow">
-                    <p style="font-size:24px" class="col-md-1-3">
-                        {{i}}
-                    </p>
-                    <p class="col-md-1-3">
-                        <strong>
-                {{labelValue.label}}
-                </strong>
-                    </p>
-                    <p class="col-md-1-3">
-                        {{labelValue.value}}
-                    </p>
+            <div class="frow">
+                <div *ngFor="let list of splitList();let listIndex=index" class="col-md-1-2">
+                    <div *ngFor="let model of list;let i=index" class="frow row-start" style="margin-top:10px">
+                        <app-statistics-value class="col-md-1-1" [index]="rowIndex(i, listIndex)" [label]="model.label" [value]="model.value">
+                        </app-statistics-value>
+                    </div>
                 </div>
             </div>
         </div>

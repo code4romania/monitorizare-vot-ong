@@ -13,22 +13,15 @@
     Loading
   </div>
   <div *ngIf="!item.loading">
-    <div *ngFor="let labelValue of item.values;let i = index" class="frow" style="margin-top:10px">
-      <p style="font-size:24px" class="col-md-1-3">
-        {{i}}
-      </p>
-      <p class="col-md-1-3">
-        <strong>
-        {{labelValue.label}}
-        </strong>
-      </p>
-      <p class="col-md-1-3">
-        {{labelValue.value}}
-      </p>
+    <div *ngFor="let labelValue of item.values;let i = index" class="frow row-start" style="margin-top:10px">
+      <app-statistics-value class="col-md-1-1" [index]="i+1" [label]="labelValue.label" [value]="labelValue.value">
+      </app-statistics-value>
     </div>
 
-    <div class="frow" [routerLink]="['/statistici',item.key]">
-      Vezi topul complet
+    <div class="frow row-start" [routerLink]="['/statistici',item.key]">
+      <strong class="col-md-1-2 frow row-center">
+        <p>Vezi topul complet</p>
+    </strong>
     </div>
   </div>
 

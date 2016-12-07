@@ -1,3 +1,4 @@
+import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerState } from './answer.reducer';
 import { AppState } from '../store.module';
 import { Store } from '@ngrx/store';
@@ -28,7 +29,7 @@ export class AnswerEffects {
     @Effect()
     loadThreads = this.actions
         .ofType(AnswerActionTypes.LOAD_PREVIEW)
-        .filter((a: LoadAnswerPreviewAction) => this.shouldLoad(a.payload.page, a.payload.pageSize, this.state.threads.length))
+        .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
         .switchMap((action: LoadAnswerPreviewAction) => {
             return this.http.get('/api/v1/raspunsuri', {
                 body: {

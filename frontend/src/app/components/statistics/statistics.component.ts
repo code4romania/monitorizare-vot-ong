@@ -16,24 +16,29 @@ import * as _ from 'lodash';
 export class StatisticsComponent implements OnInit, OnDestroy {
 
   statisticsState: StatisticsStateItem[];
-  stateSubscription: Subscription;
+  sub: Subscription;
+
   anyStatistics = false;
 
   constructor(private http: ApiService, private store: Store<AppState>) { }
 
+  
+  canShowItem(item: StatisticsStateItem){
+    return item && !item.error && !item.loading && item.values && item.values.length;
+  }
 
   ngOnInit() {
-    this.stateSubscription =
-      this.store
+      this.sub = this.store
         .select(state => state.statistics)
         .map(state => _.values(state))
-        .subscribe(state => {
-          this.statisticsState = state.filter(value => !value.error && !value.loading)
-          this.anyStatistics = !!state.filter(item => !item.error && !item.loading && item.values && item.values.length).length
-        });
+        .map(s => s.filter(v => !v.error && !v.loading))
+        .subscribe(s=> {
+          this.statisticsState = s;
+          this.anyStatistics = !!s.length
+        })
   }
   ngOnDestroy() {
-    this.stateSubscription.unsubscribe();
+    this.sub.unsubscribe();
   }
 
 }

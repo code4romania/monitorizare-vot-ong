@@ -1,3 +1,4 @@
+import { locale } from 'moment';
 import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 
@@ -13,7 +14,9 @@ export class TokenService {
     return this._isRefreshing;
   }
 
-  constructor() { }
+  constructor() {
+    this._token = localStorage.getItem(this.tokenKey);
+   }
 
   public get token() {
     return this._token;

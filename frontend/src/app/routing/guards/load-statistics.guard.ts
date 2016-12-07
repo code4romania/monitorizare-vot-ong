@@ -17,7 +17,7 @@ export class LoadStatisticsGuard implements CanActivate {
             return this.store
                 .select(s => s.statistics[route.params['key']])
                 .take(1)
-                .map(s => new LoadStatisticAction(s.key, 1, 30, true))
+                .map(s => new LoadStatisticAction(s.key, 1, 20, true))
                 .map(a => this.store.dispatch(a))
                 .mapTo(true)
         } else {
