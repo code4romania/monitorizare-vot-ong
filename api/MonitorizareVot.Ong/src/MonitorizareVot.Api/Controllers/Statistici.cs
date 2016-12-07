@@ -90,7 +90,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariSectii")]
-        public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii([FromForm] PagingModel model)
+        public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 

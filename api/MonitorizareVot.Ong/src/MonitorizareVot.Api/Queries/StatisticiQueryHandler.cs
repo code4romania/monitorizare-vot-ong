@@ -93,24 +93,36 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariJudete(StatisticiTopSesizariQuery message)
         {
-            var unPagedList = _context.Judet
-              .Select(
-                  j => new JudetStatisticsModel
-                  {
-                      Nume = j.Nume,
-                      // TODO: use a predicate instead of a ternary operator
-                      Count = !string.IsNullOrEmpty(message.Formular) 
-                              ? j.SectieDeVotare
-                                 .SelectMany(s => s.Raspuns)
-                                 .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                                    && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
-                              : j.SectieDeVotare
-                                .SelectMany(s => s.Raspuns)
-                                .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
-                  })
-              .OrderByDescending(p => p.Count);
+            //var unPagedList = _context.Judet
+            //  .Select(
+            //      j => new JudetStatisticsModel
+            //      {
+            //          Nume = j.Nume,
+            //          // TODO: use a predicate instead of a ternary operator
+            //          Count = !string.IsNullOrEmpty(message.Formular) 
+            //                  ? j.SectieDeVotare
+            //                     .SelectMany(s => s.Raspuns)
+            //                     .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+            //                        && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+            //                        && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+            //                  : j.SectieDeVotare
+            //                    .SelectMany(s => s.Raspuns)
+            //                    .Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+            //                        && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
+            //      })
+            //  .OrderByDescending(p => p.Count);
+
+            var unPagedList = _context.Raspuns
+                .Where(a => a.IdRaspunsDisponibilNavigation.RaspunsCuFlag)
+                .Where(a => a.IdObservatorNavigation.IdOng == message.IdONG)
+                .Where(a => string.IsNullOrEmpty(message.Formular) || a.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                .GroupBy(a => a.CodJudet)
+                .Select(r => new JudetStatisticsModel
+                {
+                    Nume = r.Key,
+                    Count = r.Count()
+                })
+                 .OrderByDescending(a => a.Count);
 
             var pagedList = await unPagedList // this query is executed in memory
                 .Skip((message.Page - 1) * message.PageSize)
@@ -128,23 +140,40 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariSectii(StatisticiTopSesizariQuery message)
         {
-            var unPagedList = _context.SectieDeVotare
-             .Select(
-                 s => new SectieStatisticsModel
-                 {
-                     NumarSectie = s.NumarSectie,
-                     CodJudet = s.IdJudetNavigation.CodJudet,
-                     // TODO: use a predicate instead of a ternary operator
-                     Count = !string.IsNullOrEmpty(message.Formular)  
-                             ? s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                                    && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
-                             : s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
-                                    && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
-                 })
-             .OrderByDescending(p => p.Count);
+            //var unPagedList = _context.SectieDeVotare
+            //  .Include(a => a.IdJudetNavigation)
+            //  .Include(a => a.Raspuns)
+            //  .ThenInclude(a => a.IdRaspunsDisponibilNavigation)
+            //  .ThenInclude(a => a.IdIntrebareNavigation)
+            // .Select(
+            //     s => new SectieStatisticsModel
+            //     {
+            //         NumarSectie = s.NumarSectie,
+            //         CodJudet = s.IdJudetNavigation.CodJudet,
+            //         // TODO: use a predicate instead of a ternary operator
+            //         Count = !string.IsNullOrEmpty(message.Formular)
+            //                 ? s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+            //                        && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
+            //                        && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+            //                 : s.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG
+            //                        && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true)
+            //     })
+            // .OrderByDescending(p => p.Count);
 
-            var pagedList = await unPagedList // this query is executed in memory
+            var unPagedList = _context.Raspuns
+                .Where(a => a.IdRaspunsDisponibilNavigation.RaspunsCuFlag)
+                .Where(a => a.IdObservatorNavigation.IdOng == message.IdONG)
+                .Where(a => string.IsNullOrEmpty(message.Formular) || a.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
+                .GroupBy(a => new { a.NumarSectie, a.CodJudet })
+                .Select(r => new SectieStatisticsModel
+                {
+                    CodJudet = r.Key.CodJudet,
+                    NumarSectie = r.Key.NumarSectie,
+                    Count = r.Count()
+                })
+                 .OrderByDescending(a => a.Count);
+
+            var pagedList = await unPagedList //TODO this query is executed in memory
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)
                 .ToListAsync();
