@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://ongqa.azurewebsites.net",
+    "target": "Http://localhost:5000",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
