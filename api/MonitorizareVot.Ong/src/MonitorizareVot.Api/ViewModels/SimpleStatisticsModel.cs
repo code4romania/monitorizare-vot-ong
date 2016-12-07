@@ -12,6 +12,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     public class StatisticiNumarObservatoriQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
     {
         public int IdONG { get; set; }
+        public bool Organizator { get; set; }
     }
 
     public enum TipGrupareStatistici
@@ -23,6 +24,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     public class StatisticiTopSesizariQuery : PagingModel, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
     {
         public int IdONG { get; set; }
+        public bool Organizator { get; set; }
         public string Formular { get; set; }
         public TipGrupareStatistici Grupare { get; set; }
     }

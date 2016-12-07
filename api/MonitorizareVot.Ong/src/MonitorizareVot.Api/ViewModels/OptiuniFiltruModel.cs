@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using MonitorizareVot.Ong.Api.Extensions;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
@@ -15,5 +13,6 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     {
         public int IdIntrebare { get; set; }
         public int IdONG { get; set; }
+        public bool Organizator { get; set; }
     }
 }

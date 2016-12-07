@@ -31,15 +31,17 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
         {
-            var statistici = await _context.RaspunsDisponibil
-                .Where(rd => rd.IdIntrebare == message.IdIntrebare)
-                .Select(rd => new
+            var statistici = await _context.Raspuns
+                .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare)
+                .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
+                .GroupBy(r => new { r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation, r.IdRaspunsDisponibilNavigation.RaspunsCuFlag })
+                .Select(g => new
                 {
-                    Optiune = rd.IdOptiuneNavigation,
-                    RaspunsCuFlag = rd.RaspunsCuFlag,
-                    Count = rd.Raspuns.Count(r => r.IdObservatorNavigation.IdOng == message.IdONG)
+                    Optiune = g.Key.IdOptiuneNavigation,
+                    RaspunsCuFlag = g.Key.RaspunsCuFlag,
+                    Count = g.Count()
                 })
-                .OrderByDescending(a => a.Count)
+                .OrderBy(a => a.Count)
                 .ToListAsync();
 
             return new OptiuniModel
@@ -52,35 +54,36 @@ namespace MonitorizareVot.Ong.Api.Queries
                     Value = s.Count.ToString(),
                     RaspunsCuFlag = s.RaspunsCuFlag
                 })
-                    .ToList(),
+                .ToList(),
                 Total = statistici.Sum(s => s.Count)
             };
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
-            var unPagedList = _context.Judet
-                .Select(
-                    j => new
-                    {
-                        Judet = j,
-                        Count = j.SectieDeVotare.SelectMany(s => s.Raspuns).Count(r => r.IdObservatorNavigation.IdOng == message.IdONG)
-                    })
-                .OrderByDescending(p => p.Count);
+            var unPagedList = _context.Raspuns
+               .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
+               .GroupBy(r => r.IdSectieDeVotareNavigation.IdJudetNavigation)
+               .Select(g => new 
+               {
+                   Nume = g.Key,
+                   Count = g.Count()
+               })
+               .OrderByDescending(g => g.Count);
 
             var pagedList = await unPagedList // this query is executed in memory
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)
                 .ToListAsync();
 
-            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Judet.Nume, Value = p.Count.ToString() });
+            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Nume.Nume, Value = p.Count.ToString() });
 
             return new ApiListResponse<SimpleStatisticsModel>
             {
                 Data = map.ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
-                TotalItems = await unPagedList.CountAsync()
+                TotalItems = await unPagedList.CountAsync() // this query triggers a select in the db, count is executed in memory 
             };
         }
 
@@ -114,7 +117,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             var unPagedList = _context.Raspuns
                 .Where(a => a.IdRaspunsDisponibilNavigation.RaspunsCuFlag)
-                .Where(a => a.IdObservatorNavigation.IdOng == message.IdONG)
+                .Where(a => message.Organizator || a.IdObservatorNavigation.IdOng == message.IdONG)
                 .Where(a => string.IsNullOrEmpty(message.Formular) || a.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
                 .GroupBy(a => a.CodJudet)
                 .Select(r => new JudetStatisticsModel
@@ -162,7 +165,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             var unPagedList = _context.Raspuns
                 .Where(a => a.IdRaspunsDisponibilNavigation.RaspunsCuFlag)
-                .Where(a => a.IdObservatorNavigation.IdOng == message.IdONG)
+                .Where(a => message.Organizator || a.IdObservatorNavigation.IdOng == message.IdONG)
                 .Where(a => string.IsNullOrEmpty(message.Formular) || a.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
                 .GroupBy(a => new { a.NumarSectie, a.CodJudet })
                 .Select(r => new SectieStatisticsModel

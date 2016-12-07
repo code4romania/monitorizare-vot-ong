@@ -28,11 +28,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("NumarObservatori")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatori(PagingModel model)
         {
-            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng")); 
-            
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+
             return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 PageSize = model.PageSize,
                 Page = model.Page
             });
@@ -51,10 +53,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> Sesizari(FiltruStatisticiSimple model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = model.Grupare,
                 Formular = model.Formular,
                 Page = model.Page,
@@ -72,10 +76,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariJudete(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
                 Page = model.Page,
@@ -93,10 +99,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
                 Page = model.Page,
@@ -114,10 +122,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereJudete(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "A",
                 Page = model.Page,
@@ -135,10 +145,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereSectii(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "A",
                 Page = model.Page,
@@ -156,10 +168,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareJudete(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "C",
                 Page = model.Page,
@@ -177,10 +191,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareSectii(PagingModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
+                Organizator = organizator,
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "C",
                 Page = model.Page,
@@ -199,10 +215,12 @@ namespace MonitorizareVot.Ong.Api.Controllers
         public async Task<OptiuniModel> RaspunsuriNumarareOptiuni(OptiuniFiltruModel model)
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
             return await _mediator.SendAsync(new StatisticiOptiuniQuery
             {
                 IdIntrebare = model.IdIntrebare,
+                Organizator = organizator,
                 IdONG = idONG
             });
         }
