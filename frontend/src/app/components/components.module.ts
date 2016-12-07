@@ -27,7 +27,7 @@ export let components = [
 
     HeaderComponent,
 
-    StatisticsComponent, 
+    StatisticsComponent,
     StatisticsCardComponent,
     StatisticsDetailsComponent,
     StatisticsValueComponent,

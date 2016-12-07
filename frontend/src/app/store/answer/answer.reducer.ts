@@ -29,7 +29,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 page: action.payload.page,
                 pageSize: action.payload.pageSize,
                 threads: newList ? [] : state.threads,
-                threadsLoading: shouldLoadList,
+                threadsLoading: shouldLoadList || newList,
                 threadsError: false,
                 urgent: action.payload.urgent
             })
