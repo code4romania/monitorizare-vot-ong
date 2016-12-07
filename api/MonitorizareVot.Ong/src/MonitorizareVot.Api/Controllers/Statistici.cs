@@ -3,17 +3,20 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
+using Microsoft.Extensions.Configuration;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/statistici")]
     public class Statistici : Controller
     {
+        private readonly IConfigurationRoot _configuration;
         private readonly IMediator _mediator;
 
-        public Statistici(IMediator mediator)
+        public Statistici(IMediator mediator, IConfigurationRoot configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -25,8 +28,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("NumarObservatori")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatori(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng")); 
             
             return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
             {
@@ -48,10 +50,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("Sesizari")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> Sesizari(FiltruStatisticiSimple model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = model.Grupare,
@@ -70,10 +71,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariJudete(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Judet,
@@ -92,10 +92,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariSectii([FromForm] PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariMockQuery
+            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Grupare = TipGrupareStatistici.Sectie,
@@ -114,8 +113,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariDeschidereJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereJudete(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -136,8 +134,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariDeschidereSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariDeschidereSectii(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -158,8 +155,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariNumarareJudete")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareJudete(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -180,8 +176,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("SesizariNumarareSectii")]
         public async Task<ApiListResponse<SimpleStatisticsModel>> SesizariNumarareSectii(PagingModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -203,8 +198,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [Route("RaspunsuriNumarareOptiuni")]
         public async Task<OptiuniModel> RaspunsuriNumarareOptiuni(OptiuniFiltruModel model)
         {
-            // TODO get the idONG from token
-            var idONG = 1;
+            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new StatisticiOptiuniQuery
             {
