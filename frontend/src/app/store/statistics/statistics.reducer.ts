@@ -1,3 +1,4 @@
+import { shouldLoadPage } from '../../shared/pagination.service';
 import { LabelValueModel } from '../../models/labelValue.model';
 import { actionType } from '../util';
 import { StatisticsActions, StatisticsActionTypes } from './statistics.actions';
@@ -25,12 +26,14 @@ export function statisticsReducer(state = statisticsInitialState, action: Statis
 export function statisticsItemReducer(state: StatisticsStateItem, action: StatisticsActionTypes) {
     switch (action.type) {
         case StatisticsActions.LOAD:
+                let newList = action.payload.refresh,
+                shouldLoadList = shouldLoadPage(action.payload.page,action.payload.pageSize,state.values.length);
             return Object.assign({}, state, {
-                loading: true,
+                loading: shouldLoadList,
                 error: false,
                 page: action.payload.page,
                 pageSize: action.payload.pageSize,
-                values: action.payload.refresh ? [] : state.values
+                values: newList ? [] : state.values
             })
         case StatisticsActions.LOADED:
             return Object.assign({}, state, {

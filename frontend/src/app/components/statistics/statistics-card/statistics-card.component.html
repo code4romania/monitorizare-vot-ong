@@ -14,21 +14,25 @@
   </div>
   <div *ngIf="!item.loading">
     <div *ngFor="let labelValue of item.values;let i = index" class="frow" style="margin-top:10px">
-      <p style="font-size:24px" class="col-md-1-3">
-        {{i}}
-      </p>
-      <p class="col-md-1-3">
-        <strong>
-        {{labelValue.label}}
-        </strong>
-      </p>
-      <p class="col-md-1-3">
+      <div class="col-md-1-2 frow row-start">
+        <p style="margin-right:10px">
+          <strong>{{i + 1}}</strong>
+        </p>
+        <p>
+          <strong>
+            {{labelValue.label}}
+          </strong>
+        </p>
+      </div>
+      <p class="col-md-1-2">
         {{labelValue.value}}
       </p>
     </div>
 
-    <div class="frow" [routerLink]="['/statistici',item.key]">
-      Vezi topul complet
+    <div class="frow row-start" [routerLink]="['/statistici',item.key]">
+      <strong class="col-md-1-2 frow row-center">
+        <p>Vezi topul complet</p>
+    </strong>
     </div>
   </div>
 

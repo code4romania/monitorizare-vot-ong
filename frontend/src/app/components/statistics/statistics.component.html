@@ -1,6 +1,6 @@
 <div *ngIf="anyStatistics" class="frow row-start">
-    <div class="col-md-1-2" *ngFor="let item of statisticsState">
-        <app-statistics-card *ngIf="item && !item.error && !item.loading" [item]="item">
+    <div class="col-md-1-2" style="margin-top:20px" [class.hidden]="!(item && !item.error && !item.loading && item.values && item.values.length)" *ngFor="let item of statisticsState">
+        <app-statistics-card *ngIf="item && !item.error && !item.loading && item.values && item.values.length" [item]="item">
         </app-statistics-card>
     </div>
 </div>
