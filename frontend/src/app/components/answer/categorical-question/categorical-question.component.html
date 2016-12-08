@@ -1,9 +1,9 @@
-<div *ngIf="question" class="form-group">
+<div *ngIf="question" class="form-group" [ngClass]="{'flagged-question':isFlagged}">
   <div class="frow row-start">
-    <p class="col-md-1-1" font-size="24px"><strong>{{question.textIntrebare}}</strong></p>
+    <p class="col-md-1-1" class="question-title" font-size="24px"><strong>{{question.textIntrebare}} ?</strong></p>
   </div>
-  <div class="frow row-start" *ngFor="let answer of question.raspunsuri" style="margin-left:10px; margin-top:3px">
-    <div>
+  <div class="frow row-start" *ngFor="let answer of question.raspunsuri" style="margin-left:10px; margin-top:3px" [ngClass]="{'flagged-answer':isFlaggedAnswer(answer)}">
+    <div class="question-answer">
       {{answer.textOptiune}}
     </div>
     <div style="margin-left:10px">
