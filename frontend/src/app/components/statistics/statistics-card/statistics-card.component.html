@@ -13,8 +13,8 @@
     Loading
   </div>
   <div *ngIf="!item.loading">
-    <div *ngFor="let labelValue of item.values;let i = index" class="frow" style="margin-top:10px">
-      <app-statistics-value [index]="i+1" [label]="labelValue.label" [value]="labelValue.value">
+    <div *ngFor="let labelValue of item.values;let i = index" class="frow row-start" style="margin-top:10px">
+      <app-statistics-value class="col-md-1-1" [index]="i+1" [label]="labelValue.label" [value]="labelValue.value">
       </app-statistics-value>
     </div>
 

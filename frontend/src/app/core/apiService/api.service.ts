@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { TokenService } from '../token/token.service';
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestMethod, RequestOptions, Response, URLSearchParams } from '@angular/http';
@@ -12,17 +13,26 @@ export class ApiService {
   private tokenRefreshObservable: Observable<Response>;
 
 
-  constructor(private http: Http, private tokenService: TokenService) { }
+  constructor(private http: Http, private tokenService: TokenService, private router: Router) { }
 
 
   private request(url: string, options: RequestOptionsArgs): Observable<Response> {
-    return this.http.request(url, options);
-    // if (options.withCredentials === false) {
-    //   return this.http.request(url, options);
-    // }
-    // options.headers.append('Authorization', 'Bearer ' + this.tokenService.token);
 
-    // return new Observable<Response>((obs: Observer<Response>) => this.requestSubscribe(obs, url, options))
+    if (options.withCredentials === false) {
+      return this.http.request(url, options);
+    }
+    options.headers.append('Authorization', 'Bearer ' + this.tokenService.token);
+
+    return this.http.request(url, options).catch((err: Response, res) => {
+
+      if (err.status === 401) {
+        this.tokenService.token = undefined;
+        this.router.navigateByUrl('/login');
+      }
+
+      return Observable.throw(err);
+    });
+    // return  new Observable<Response>((obs: Observer<Response>) => this.requestSubscribe(obs, url, options))
     //   .catch(err => this.handleRequestError(err, url, options));
   }
   private requestSubscribe(observer: Observer<Response>, url: string, options: RequestOptionsArgs) {
@@ -82,10 +92,10 @@ export class ApiService {
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    if(options && options.body && !options.search){
+    if (options && options.body && !options.search) {
       let search = new URLSearchParams();
       _.each(options.body, (value, key) => {
-        search.set(key,value);
+        search.set(key, value);
       });
       options.search = search;
     }

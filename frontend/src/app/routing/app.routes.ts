@@ -1,3 +1,6 @@
+import { AnonGuard } from '../core/anon.guard';
+import { LoginComponent } from '../components/login/login.component';
+import { AuthGuard } from '../core/authGuard/auth.guard';
 import { StatisticsDetailsComponent } from '../components/statistics/statistics-details/statistics-details.component';
 import { AnswerDetailsComponent } from '../components/answer/answer-details/answer-details.component';
 import { AnswerListComponent } from '../components/answer/answers-list/answer-list.component';
@@ -22,27 +25,28 @@ export let appRoutes: Routes = [
     }, {
         path: 'raspunsuri',
         component: AnswerComponent,
-        canActivate: [AnswerListGuard],
+        canActivate: [AnswerListGuard, AuthGuard],
         children: [{
             path: 'detalii/:idObservator/:idSectie',
             component: AnswerDetailsComponent,
-            canActivate: [AnswerDetailsGuard]
+            canActivate: [AnswerDetailsGuard, AuthGuard]
         }, {
             path: '',
+            canActivate: [AuthGuard],
             component: AnswerDetailsComponent
         }]
     },
     {
         path: 'raspunsuri/urgente',
         component: AnswerComponent,
-        canActivate: [AnswerListGuard],
-        data:{
+        canActivate: [AnswerListGuard, AuthGuard],
+        data: {
             urgent: true
         },
         children: [{
             path: 'detalii/:idObservator/:idSectie',
             component: AnswerDetailsComponent,
-            canActivate: [AnswerDetailsGuard]
+            canActivate: [AnswerDetailsGuard, AuthGuard]
         }, {
             path: '',
             component: AnswerDetailsComponent
@@ -51,10 +55,14 @@ export let appRoutes: Routes = [
     {
         path: 'statistici',
         component: StatisticsComponent,
-        canActivate: [LoadStatisticsGuard]
+        canActivate: [LoadStatisticsGuard, AuthGuard]
     }, {
         path: 'statistici/:key',
         component: StatisticsDetailsComponent,
-        canActivate: [LoadStatisticsGuard]
+        canActivate: [LoadStatisticsGuard, AuthGuard]
+    }, {
+        path: 'login',
+        canActivate: [AnonGuard],
+        component: LoginComponent
     }
 ]

@@ -54,15 +54,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
             //        TotalItems = 300
             //    });
 
-
-            // TODO get the idONG from token
-            //var idONG = 1;
-
-            var iDOng = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+            var idOng = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
             return await _mediator.SendAsync(new RaspunsuriQuery
             {
-                IdONG = iDOng,
+                IdONG = idOng,
+                Organizator = organizator,
                 Page = model.Page,
                 PageSize = model.PageSize,
                 Urgent = model.Urgent

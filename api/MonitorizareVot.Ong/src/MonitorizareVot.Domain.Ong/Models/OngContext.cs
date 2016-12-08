@@ -198,6 +198,10 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Value).HasMaxLength(1000);
 
+                entity.Property(e => e.NumarSectie);
+
+                entity.Property(e => e.CodJudet).HasMaxLength(2);
+
                 entity.HasOne(d => d.IdObservatorNavigation)
                     .WithMany(p => p.Raspuns)
                     .HasForeignKey(d => d.IdObservator)

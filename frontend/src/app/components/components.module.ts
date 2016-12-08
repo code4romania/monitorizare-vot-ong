@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { StatisticsValueComponent } from './statistics/statistics-value/statistics-value.component';
 import { AnswerNotesComponent } from './answer/answer-notes/answer-notes.component';
 import { StatisticsDetailsComponent } from './statistics/statistics-details/statistics-details.component';
@@ -18,15 +19,20 @@ export let components = [
     AnswerComponent, AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
-    CategoricalQuestionComponent,
     AnswerNotesComponent,
+    CategoricalQuestionComponent,
+
+    AnswerNotesComponent,
+
 
     HeaderComponent,
 
-    StatisticsComponent, 
+    StatisticsComponent,
     StatisticsCardComponent,
     StatisticsDetailsComponent,
-    StatisticsValueComponent
+    StatisticsValueComponent,
+
+    LoginComponent
 
 
 ] 

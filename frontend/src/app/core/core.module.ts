@@ -1,13 +1,10 @@
+import { AnonGuard } from './anon.guard';
+import { AuthGuard } from './authGuard/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 import { ApiService } from './apiService/api.service';
-import { AuthentificationService } from './authentification/authentification.service';
 import { TokenService } from './token/token.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
-
-// import { AuthentificationService } from './authentification/authentification.service';
-// import { TokenService } from './token/token.service';
-// import { UserService } from './user/user.service';
 
 
 
@@ -20,14 +17,9 @@ import { HttpModule } from '@angular/http';
   ],
   providers: [
     TokenService,
-    AuthentificationService,
     ApiService,
-    // {
-    //   provide: Http,
-    //   useClass: AuthHttpService,
-    //   deps: [XHRBackend, RequestOptions]
-    // },
-    // AuthGuard
+    AuthGuard,
+    AnonGuard
   ],
   declarations: []
 })

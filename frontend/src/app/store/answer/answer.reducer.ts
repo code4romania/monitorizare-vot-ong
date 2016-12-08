@@ -1,3 +1,4 @@
+import { Note } from '../../models/note.model';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
@@ -17,6 +18,10 @@ export class AnswerState {
     selectedError = false
     observerId: number
     sectionId: number
+
+    notes: Note[]
+    notesLoading: boolean
+    notesError: boolean
 }
 export let initialAnswerState: AnswerState = new AnswerState()
 
@@ -29,7 +34,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 page: action.payload.page,
                 pageSize: action.payload.pageSize,
                 threads: newList ? [] : state.threads,
-                threadsLoading: shouldLoadList,
+                threadsLoading: shouldLoadList || newList,
                 threadsError: false,
                 urgent: action.payload.urgent
             })

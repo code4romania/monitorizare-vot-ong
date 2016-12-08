@@ -1,3 +1,5 @@
+import { NoteEffects } from './note/note.effects';
+import { noteReducer, NoteState } from './note/note.reducer';
 import { StatisticsState } from './statistics/statistics.state';
 import { StatisticsEffects } from './statistics/statistics.effects';
 import { statisticsReducer } from './statistics/statistics.reducer';
@@ -15,15 +17,17 @@ export class AppState {
     form: FormState
     answer: AnswerState
     statistics: StatisticsState
+    note: NoteState
 }
 
 @NgModule({
     imports: [
-        StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer }),
+        StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
         StoreDevtoolsModule.instrumentOnlyWithExtension(),
         EffectsModule.run(FormEffects),
         EffectsModule.run(AnswerEffects),
-        EffectsModule.run(StatisticsEffects)
+        EffectsModule.run(StatisticsEffects),
+        EffectsModule.run(NoteEffects)
     ]
 })
 export class AppStoreModule {

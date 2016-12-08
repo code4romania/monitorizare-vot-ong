@@ -25,8 +25,9 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message)
         {
-            var sectiiCuObservatori = _context.Raspuns
-                .Where(x => x.IdObservatorNavigation.IdOng == message.IdONG && x.IdRaspunsDisponibilNavigation.RaspunsCuFlag == message.Urgent)
+            IQueryable<SectieModel> sectiiCuObservatori = _context.Raspuns
+                .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
+                .Where(r => r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == message.Urgent)
                 .Select(y => new SectieModel
                 {
                     IdObservator = y.IdObservator,
@@ -39,7 +40,8 @@ namespace MonitorizareVot.Ong.Api.Queries
                 });
 
             var sectiiCuObservatoriPaginat = await sectiiCuObservatori
-                 .OrderByDescending(x => x.DataUltimeiModificari)
+                 .OrderByDescending(s => s.DataUltimeiModificari)
+                 .Distinct()
                  .Skip((message.Page - 1) * message.PageSize)
                  .Take(message.PageSize)
                  .ToListAsync();

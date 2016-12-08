@@ -100,7 +100,7 @@ namespace MonitorizareVot.Ong.Api
                     .Build();
 
                 //TODO: uncomment this to apply [Authorize] attribute on All controller actions and thus enable authorization
-                //config.Filters.Add(new AuthorizeFilter(policy));
+                config.Filters.Add(new AuthorizeFilter(policy));
             });
 
 
