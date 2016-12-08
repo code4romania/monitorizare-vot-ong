@@ -26,13 +26,7 @@ export class CategoricalQuestionComponent implements OnInit {
   completedAnswers: _.Dictionary<CompletedAnswer>;
 
   @Input()
-  notes: Note[];
-
-  showNotes = false
-
-  toggleShowNotes() {
-    this.showNotes = !this.showNotes;
-  }
+  note: Note
 
   get isTextQuestion() {
     return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3

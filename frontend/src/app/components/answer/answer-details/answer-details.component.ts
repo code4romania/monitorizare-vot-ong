@@ -26,10 +26,10 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
 
   hasError() {
-    return !this.answerState && (this.answerState.selectedError || this.noteState.error)
+    return !this.answerState || !this.noteState || this.answerState.selectedError || this.noteState.error
   }
   isLoading() {
-    return !this.answerState && (this.answerState.selectedLoading || this.noteState.loading)
+    return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading
   }
 
   formNotes(formId: string) {

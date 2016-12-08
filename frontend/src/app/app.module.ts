@@ -8,7 +8,6 @@ import { SharedModule } from './shared/shared.module';
 import { AppStoreModule } from './store/store.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { UIRouterModule } from 'ui-router-ng2/ng2';
 
 @NgModule({
   declarations: components,

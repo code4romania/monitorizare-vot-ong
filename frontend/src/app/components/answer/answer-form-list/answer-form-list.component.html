@@ -2,7 +2,7 @@
     <h2>{{section.descriere}}</h2>
     <div class="questions frow gutters column-start" style="margin-left:5px">
         <div *ngFor="let question of section.intrebari" style="margin-top:15px;width:100%">
-            <app-categorical-question [notes]="notesForQuestion(question)" [question]="question" [completedAnswers]="answersForQuestion(question)?.raspunsuri">
+            <app-categorical-question [note]="noteForQuestion(question)" [question]="question" [completedAnswers]="answersForQuestion(question)?.raspunsuri">
             </app-categorical-question>
         </div>
     </div>
