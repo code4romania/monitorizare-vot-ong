@@ -1,14 +1,6 @@
 <div *ngIf="question" class="form-group">
   <div class="frow row-start">
-    <p class="col-md-1-2" font-size="24px"><strong>{{question.textIntrebare}}</strong></p>
-    <div class="col-md-1-2 frow" *ngIf="notes && notes.length">
-      <button style="font-size:12px; height:30px" type="button" class="btn btn-primary" (click)="toggleShowNotes()">Note</button>
-    </div>
-  </div>
-  <div [collapse]="!showNotes" class="card card-block card-header">
-    <div *ngFor="let note of notes" clas="frow column-start">
-      <a [href]="note.caleFisierAtasat">{{note.textNota}}</a>
-    </div>
+    <p class="col-md-1-1" font-size="24px"><strong>{{question.textIntrebare}}</strong></p>
   </div>
   <div class="frow row-start" *ngFor="let answer of question.raspunsuri" style="margin-left:10px; margin-top:3px">
     <div>
