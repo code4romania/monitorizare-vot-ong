@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using MonitorizareVot.Ong.Api.Services;
 using System;
 using System.Linq.Expressions;
+using Microsoft.Extensions.Caching.Distributed;
+using MonitorizareVot.Ong.Api.Common;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
@@ -61,30 +63,38 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
-            var unPagedList = _context.Raspuns
-               .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
-               .GroupBy(r => r.IdSectieDeVotareNavigation.IdJudetNavigation)
-               .Select(g => new 
-               {
-                   Nume = g.Key,
-                   Count = g.Count()
-               })
-               .OrderByDescending(g => g.Count);
+            return await _cacheService.GetOrSaveDataInCacheAsync($"StatisticiObservatori-{message.IdONG}-{message.Organizator}",
+             async () =>
+             {
+                 var unPagedList = _context.Raspuns
+                   .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
+                   .GroupBy(r => r.IdSectieDeVotareNavigation.IdJudetNavigation)
+                   .Select(g => new
+                   {
+                       Nume = g.Key,
+                       Count = g.Count()
+                   })
+                   .OrderByDescending(g => g.Count);
 
-            var pagedList = await unPagedList // this query is executed in memory
-                .Skip((message.Page - 1) * message.PageSize)
-                .Take(message.PageSize)
-                .ToListAsync();
+                 var pagedList = await unPagedList // this query is executed in memory
+                     .Skip((message.Page - 1) * message.PageSize)
+                     .Take(message.PageSize)
+                     .ToListAsync();
 
-            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Nume.Nume, Value = p.Count.ToString() });
+                 var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Nume.Nume, Value = p.Count.ToString() });
 
-            return new ApiListResponse<SimpleStatisticsModel>
-            {
-                Data = map.ToList(),
-                Page = message.Page,
-                PageSize = message.PageSize,
-                TotalItems = await unPagedList.CountAsync() // this query triggers a select in the db, count is executed in memory 
-            };
+                 return new ApiListResponse<SimpleStatisticsModel>
+                 {
+                     Data = map.ToList(),
+                     Page = message.Page,
+                     PageSize = message.PageSize,
+                     TotalItems = await unPagedList.CountAsync() // this query triggers a select in the db, count is executed in memory 
+                 };
+             },
+             new DistributedCacheEntryOptions
+             {
+                 AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+             });
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariQuery message)
@@ -188,36 +198,6 @@ namespace MonitorizareVot.Ong.Api.Queries
                 PageSize = message.PageSize,
                 TotalItems = await unPagedList.CountAsync()
             };
-        }
-
-        /// <summary>
-        /// Predicate to filter Response by idOng, RaspunsCuFlag and CodFormular
-        /// </summary>
-        /// <param name="idOng"></param>
-        /// <param name="formular">if formular is empty or null, the filter by CodFormular is ignored</param>
-        private Func<Raspuns, bool> MakeFilterPredicate(int idOng, string formular)
-        {
-            if (!string.IsNullOrEmpty(formular))
-                return r => r.IdObservatorNavigation.IdOng == idOng
-                            && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                            && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == formular;
-
-            return r => r.IdObservatorNavigation.IdOng == idOng
-                            && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true;
-        }
-    }
-    
-    public static class RaspunsFilters
-    {
-        public static int FilterAndCount(this IEnumerable<Raspuns> raspunsuri, int idOng, string formular)
-        {
-            if (!string.IsNullOrEmpty(formular))
-                return raspunsuri.Count(r => r.IdObservatorNavigation.IdOng == idOng
-                                && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true
-                                && r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == formular);
-
-            return raspunsuri.Count(r => r.IdObservatorNavigation.IdOng == idOng
-                           && r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == true);
         }
     }
 }
