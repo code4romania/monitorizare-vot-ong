@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using MonitorizareVot.Ong.Api.Models;
+using Microsoft.Extensions.Caching.Redis;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -266,23 +267,24 @@ namespace MonitorizareVot.Ong.Api
                 return;
             }
 
-            var cacheProvider = Configuration.GetValue<string>("ApplicationCacheOptions:RedisCache");
+            var cacheProvider = Configuration.GetValue<string>("ApplicationCacheOptions:Implementation");
 
             _container.RegisterSingleton<ICacheService, CacheService>();
 
             switch (cacheProvider)
             {
                 case "RedisCache":
-                //    {
-                //        container.RegisterSingleton<IOptions<RedisCacheOptions>>(
-                //          new OptionsManager<RedisCacheOptions>(new List<IConfigureOptions<RedisCacheOptions>>
-                //          {
-                //                new ConfigureFromConfigurationOptions<RedisCacheOptions>(
-                //                    Configuration.GetSection("RedisCacheOptions"))
-                //          }));
-
-                //        break;
-                //    }
+                    {
+                        _container.RegisterSingleton<IDistributedCache>(
+                          new RedisCache(
+                              new OptionsManager<RedisCacheOptions>(new List<IConfigureOptions<RedisCacheOptions>>
+                              {
+                                new ConfigureFromConfigurationOptions<RedisCacheOptions>(
+                                    Configuration.GetSection("RedisCacheOptions"))
+                               })
+                          ));
+                        break;
+                    }
 
                 default:
                 case "MemoryDistributedCache":
