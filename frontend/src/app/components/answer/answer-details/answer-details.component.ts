@@ -1,3 +1,5 @@
+import { Note } from '../../../models/note.model';
+import { NoteState } from '../../../store/note/note.reducer';
 import { LoadAnswerDetailsAction } from '../../../store/answer/answer.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/store.module';
@@ -18,8 +20,24 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
   answerState: AnswerState
   formState: FormState
+  noteState: NoteState
 
   subs: Subscription[] = [];
+
+
+  hasError() {
+    return !this.answerState && (this.answerState.selectedError || this.noteState.error)
+  }
+  isLoading() {
+    return !this.answerState && (this.answerState.selectedLoading || this.noteState.loading)
+  }
+
+  formNotes(formId: string) {
+    if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
+      return []
+    }
+    return this.noteState.notes.filter(note => note.codFormular === formId)
+  }
 
   formAnswers(formId: string) {
     if (!this.answerState || !this.answerState.selectedAnswer) {
@@ -35,7 +53,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
     this.subs = [
       this.store.select(s => s.answer).subscribe(s => this.answerState = s),
       this.store.select(s => s.form).subscribe(s => this.formState = s),
-
+      this.store.select(s => s.note).subscribe(s => this.noteState = s)
     ]
   }
   ngOnDestroy() {

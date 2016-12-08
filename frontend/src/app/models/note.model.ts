@@ -3,5 +3,5 @@ export class Note {
     caleFisierAtasat: string;
     textNota: string;
     codFormular: string;
-    codSectiune: string;
+    codIntrebare: number;
 }

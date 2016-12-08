@@ -5,12 +5,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TabsModule } from 'ng2-bootstrap';
-import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
-
+import { TabsModule, CollapseModule } from 'ng2-bootstrap';
 @NgModule({
-    imports: [FormsModule, CommonModule, PaginationModule, TabsModule, RouterModule],
-    exports: [FormsModule, CommonModule, PaginationModule, TabsModule, RouterModule, PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
+    imports: [FormsModule, CommonModule, CollapseModule, TabsModule, RouterModule],
+    exports: [FormsModule, CommonModule, CollapseModule, TabsModule, RouterModule, PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
     declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
     providers: []
 })

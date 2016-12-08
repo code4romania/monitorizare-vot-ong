@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Rx';
 import { TokenService } from '../../core/token/token.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/apiService/api.service';
@@ -15,8 +16,13 @@ export class LoginComponent implements OnInit {
 
     invalid: boolean;
 
+    loginSubscription: Subscription;
+
     tryLogin() {
-        this.http.post('/api/v1/auth', {
+        if (this.loginSubscription) {
+            this.loginSubscription.unsubscribe();
+        }
+        this.loginSubscription = this.http.post('/api/v1/auth', {
             userName: this.userName,
             password: this.password
         })

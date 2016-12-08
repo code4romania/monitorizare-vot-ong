@@ -1,3 +1,4 @@
+import { Note } from '../../../models/note.model';
 import { AnswerThread } from '../../../models/answer.thread.model';
 import { BaseQuestion } from '../../../models/base.question.model';
 import { CompletedQuestion } from '../../../models/completed.question.model';
@@ -18,8 +19,17 @@ export class AnswerFormListComponent implements OnInit {
   @Input()
   completedQuestions: CompletedQuestion[];
 
+  @Input()
+  notes: Note[]
+
   answersForQuestion(question: BaseQuestion) {
     return _.find(this.completedQuestions, value => value.idIntrebare === question.idIntrebare);
+  }
+  notesForQuestion(question: BaseQuestion) {
+    if(!this.notes || !this.notes.length){
+      return [];
+    }
+    return this.notes.filter(note => note.codIntrebare === question.idIntrebare)
   }
 
   constructor() { }
