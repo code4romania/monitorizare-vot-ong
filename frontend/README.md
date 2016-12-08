@@ -35,5 +35,5 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 Run 
 - `npm install angular-cli -g`
 - `npm install`
-- `ng build --prod`
+- `ng run build --prod`
 - enjoy
