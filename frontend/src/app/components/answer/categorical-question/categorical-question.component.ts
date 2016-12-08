@@ -1,3 +1,4 @@
+import { answerReducer } from '../../../store/answer/answer.reducer';
 import { environment } from '../../../../environments/environment';
 import { Note } from '../../../models/note.model';
 import { BaseAnswer } from '../../../models/base.answer.model';
@@ -18,23 +19,39 @@ export class CategoricalQuestionComponent implements OnInit {
 
   @Input('completedAnswers') set inputCompletedAnswers(value: CompletedAnswer[]) {
     if (value && value.length) {
-      if(this.isSingle && value && value.length > 1 && !environment.production){
-        try{
-          console.log(`Multiple answers on question with id ${this.question.idIntrebare}`)
-        } catch(ex){}
+      if (!environment.production) {
+        this.validateSingleQuestion(value);
+        this.validateTextQuestion(value);
       }
       this.completedAnswers = _.keyBy(value, value => value.idOptiune)
     } else {
       this.completedAnswers = undefined;
     }
-  }  
+  }
   completedAnswers: _.Dictionary<CompletedAnswer> = {};
 
   @Input()
   note: Note
 
-  get isFlagged(){
-    return _.some(_.values(this.completedAnswers),a => a.raspunsCuFlag);
+  validateSingleQuestion(answers: CompletedAnswer[]) {
+    try {
+      if (this.isSingle && answers && answers.length > 1) {
+        console.log(`Multiple answers on question with id ${this.question.idIntrebare}`)
+      }
+    }
+    catch (ex) { }
+  }
+  validateTextQuestion(answers: CompletedAnswer[]) {
+    try {
+      if (this.isTextQuestion && answers && _.reject(answers, a => a.seIntroduceText || !!a.value).length > 1) {
+        console.log(`Multiple text answers on question with id ${this.question.idIntrebare}`);
+      }
+    } catch (ex) { }
+
+  }
+
+  get isFlagged() {
+    return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag);
   }
 
   get isTextQuestion() {
@@ -51,8 +68,8 @@ export class CategoricalQuestionComponent implements OnInit {
     return this.isTextQuestion && answer.seIntroduceText;
   }
 
-  isFlaggedAnswer(answer: BaseAnswer){
-    return _.some(_.values(this.completedAnswers),a => a.raspunsCuFlag && a.idOptiune === answer.idOptiune);
+  isFlaggedAnswer(answer: BaseAnswer) {
+    return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag && a.idOptiune === answer.idOptiune);
   }
 
   answerTextValue(answer: BaseAnswer) {
