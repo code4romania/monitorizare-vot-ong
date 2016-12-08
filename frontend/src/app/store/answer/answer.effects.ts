@@ -1,3 +1,4 @@
+import { LoadNotesAction } from '../note/note.actions';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerState } from './answer.reducer';
 import { AppState } from '../store.module';
@@ -7,6 +8,7 @@ import { ApiService } from '../../core/apiService/api.service';
 import { CompletedAnswer } from '../../models/completed.answer.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import {
+    AnswerActions,
     AnswerActionTypes,
     LoadAnswerDetailsAction,
     LoadAnswerDetailsDoneAction,
@@ -60,9 +62,14 @@ export class AnswerEffects {
                     idSectieDeVotare: action.payload.sectionId,
                     idObservator: action.payload.observerId
                 }
-            }).map(res => <CompletedQuestion[]>res.json().data)
+            }).map(res => <CompletedQuestion[]>res.json())
         })
         .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
         .catch((err, caught) => Observable.from([new LoadAnswerDetailsErrorAction()]))
+
+    @Effect()
+    loadNotes = this.actions
+        .ofType(AnswerActionTypes.LOAD_DETAILS)
+        .map((a:LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId,a.payload.observerId))
 
 }

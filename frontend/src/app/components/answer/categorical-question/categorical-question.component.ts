@@ -1,3 +1,4 @@
+import { Note } from '../../../models/note.model';
 import { BaseAnswer } from '../../../models/base.answer.model';
 import { CompletedAnswer } from '../../../models/completed.answer.model';
 import { FormQuestion } from '../../../models/form.question.model';
@@ -13,31 +14,40 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CategoricalQuestionComponent implements OnInit {
 
   @Input() question: FormQuestion;
-  
-  @Input('completedAnswers') set inputCompletedAnswers(value:CompletedAnswer[]){
-    if(value && value.length){
-      this.completedAnswers = _.keyBy(value, value=>value.idOptiune);
+
+  @Input('completedAnswers') set inputCompletedAnswers(value: CompletedAnswer[]) {
+    if (value && value.length) {
+      this.completedAnswers = _.keyBy(value, value => value.idOptiune);
     } else {
       this.completedAnswers = undefined;
     }
   }
+
   completedAnswers: _.Dictionary<CompletedAnswer>;
 
+  @Input()
+  notes: Note[];
 
-  get isTextQuestion(){
+  showNotes = false
+
+  toggleShowNotes() {
+    this.showNotes = !this.showNotes;
+  }
+
+  get isTextQuestion() {
     return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3
   }
-  get isSingle(){
+  get isSingle() {
     return this.question.idTipIntrebare === 0 || this.question.idTipIntrebare === 4;
   }
-  isChecked(answer: BaseAnswer){
+  isChecked(answer: BaseAnswer) {
     return this.completedAnswers && this.completedAnswers[answer.idOptiune];
   }
-  isTextAnswer(answer:BaseAnswer){
+  isTextAnswer(answer: BaseAnswer) {
     return this.isTextQuestion && answer.seIntroduceText;
   }
-  answerTextValue(answer:BaseAnswer){
-    return this.completedAnswers && this.completedAnswers[answer.idOptiune].value;
+  answerTextValue(answer: BaseAnswer) {
+    return this.completedAnswers && this.completedAnswers[answer.idOptiune] && this.completedAnswers[answer.idOptiune].value;
   }
 
 
