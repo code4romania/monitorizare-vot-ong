@@ -31,7 +31,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['page'] || changes['pageSize'] || changes['totalItems']) {
       this.startingindex = (this.page - 1) * this.pageSize + 1;
-      this.endingIndex = this.startingindex + this.pageSize
+      this.endingIndex = this.startingindex + this.pageSize - 1
 
       if(this.endingIndex > this.totalItems){
         this.endingIndex = this.totalItems;
