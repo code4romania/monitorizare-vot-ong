@@ -15,6 +15,10 @@ export function formReducer(state = formsInitialState, $action: FormActions) {
             return {
                 items: state.items.concat($action.payload)
             };
+        case FormActionTypes.CLEAR:
+            return {
+                items: []
+            }
         default:
             return state;
     }

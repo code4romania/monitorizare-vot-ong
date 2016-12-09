@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,24 +10,10 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  get observerGuideUrl(){
+    return environment.observerGuide;
   }
 
-
-  menuItems : any[] = [
-    {
-      state: ['/'],
-      label: 'Urgente',
-    }, {
-      state: ['/raspunsuri'],
-      label: 'Raspunsuri',
-    }, {
-      state: ['/statistici'],
-      label: 'Statistici',
-    }, {
-      state: ['/ghidul-observatorului'],
-      label: 'Ghidul observatorului',
-    }
-  ];
-
+  ngOnInit() {
+  }
 }

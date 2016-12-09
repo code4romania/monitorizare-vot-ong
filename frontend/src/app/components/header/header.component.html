@@ -46,9 +46,24 @@
 
 	</div>
 	<ul class="col-md-2-3">
-		<li *ngFor="let menuItem of menuItems">
-			<a [routerLink]="menuItem.state">
-				{{menuItem.label}}
+		<li>
+			<a [routerLink]="['/']">
+				Urgente
+			</a>
+		</li>
+		<li>
+			<a [routerLink]="['/raspunsuri']">
+				Raspunsuri
+			</a>
+		</li>
+		<li>
+			<a [routerLink]="['/statistici']">
+				Statistici
+			</a>
+		</li>
+		<li>
+			<a [href]="observerGuideUrl" target="_blank">
+				Ghidul observatorului
 			</a>
 		</li>
 	</ul>

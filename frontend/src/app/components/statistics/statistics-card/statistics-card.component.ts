@@ -14,6 +14,14 @@ export class StatisticsCardComponent implements OnInit {
   item: StatisticsStateItem
 
 
+  get itemValues(){
+    if(!this.item.values){
+      return []
+    }
+    return this.item.values.slice(0,5)
+  }
+
+
   constructor() { }
 
   ngOnInit() {
