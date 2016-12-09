@@ -64,28 +64,45 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriRawQuery message)
         {
+            string cacheKey;
+
             var queryUnPaged = @"SELECT J.IdJudet AS Id, J.Nume AS Label, COUNT(*) as Value
                   FROM Judet J
                   INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
                   INNER JOIN [Raspuns] AS R ON R.IdSectieDeVotare = SV.IdSectieDeVotarre
                   INNER JOIN Observator O ON O.IdObservator = R.IdObservator";
 
-            if(!message.Organizator) // don't add the where clause if the ong is admin
-                queryUnPaged = $"{queryUnPaged} WHERE O.IdOng = {1}";
+            if (!message.Organizator) // don't add the where clause if the ong is admin
+            { 
+                queryUnPaged = $"{queryUnPaged} WHERE O.IdOng = {message.IdONG}";
+                cacheKey = $"StatisticiObservatori-{message.IdONG}";
+            }
+            else
+                cacheKey = $"StatisticiObservatori-Organizator";
 
-            queryUnPaged = $"{queryUnPaged} GROUP BY J.IdJudet, J.Nume";
+            queryUnPaged = $"{queryUnPaged} GROUP BY J.IdJudet, J.Nume ORDER BY Value DESC";
 
-            var queryPaged = @" ORDER BY Value DESC
-                  OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY";
+            // get or save all records in cache
+            var records = await _cacheService.GetOrSaveDataInCacheAsync(cacheKey,
+                async () =>
+                {
+                    return await _context.Statistici
+                    .FromSql(queryUnPaged)
+                    .ToListAsync();
+                },
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                }
+            );
+            
+            // perform count and pagination on the records retrieved from the cache 
+            var pagedList = records
+                .Skip((message.Page - 1) * message.PageSize)
+                .Take(message.PageSize)
+                .ToList();
 
-            var pagedList = await _context.Statistici
-                .FromSql($"{queryUnPaged} {queryPaged}", // build sql query with Skip and Take
-                 message.Organizator, message.IdONG, (message.Page - 1) * message.PageSize, message.PageSize)
-                .ToListAsync();
-
-            var count = await _context.Statistici
-                .FromSql(queryUnPaged, message.Organizator, message.IdONG)
-                .CountAsync();
+            var count = records.Count();
 
             var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Label, Value = p.Value.ToString() });
 
