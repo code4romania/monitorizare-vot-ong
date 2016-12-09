@@ -17,6 +17,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IAsyncRequestHandler<StatisticiNumarObservatoriRawQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
@@ -58,6 +59,42 @@ namespace MonitorizareVot.Ong.Api.Queries
                 })
                 .ToList(),
                 Total = statistici.Sum(s => s.Count)
+            };
+        }
+
+        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriRawQuery message)
+        {
+            var queryUnPaged = @"SELECT J.IdJudet AS Id, J.Nume AS Label, COUNT(*) as Value
+                  FROM Judet J
+                  INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
+                  INNER JOIN [Raspuns] AS R ON R.IdSectieDeVotare = SV.IdSectieDeVotarre
+                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator";
+
+            if(!message.Organizator) // don't add the where clause if the ong is admin
+                queryUnPaged = $"{queryUnPaged} WHERE O.IdOng = {1}";
+
+            queryUnPaged = $"{queryUnPaged} GROUP BY J.IdJudet, J.Nume";
+
+            var queryPaged = @" ORDER BY Value DESC
+                  OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY";
+
+            var pagedList = await _context.Statistici
+                .FromSql($"{queryUnPaged} {queryPaged}", // build sql query with Skip and Take
+                 message.Organizator, message.IdONG, (message.Page - 1) * message.PageSize, message.PageSize)
+                .ToListAsync();
+
+            var count = await _context.Statistici
+                .FromSql(queryUnPaged, message.Organizator, message.IdONG)
+                .CountAsync();
+
+            var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Label, Value = p.Value.ToString() });
+
+            return new ApiListResponse<SimpleStatisticsModel>
+            {
+                Data = map.ToList(),
+                Page = message.Page,
+                PageSize = message.PageSize,
+                TotalItems = count
             };
         }
 
@@ -134,10 +171,10 @@ namespace MonitorizareVot.Ong.Api.Queries
                 {
                     Nume = r.Key,
                     Count = r.Count()
-                })
-                 .OrderByDescending(a => a.Count);
+                });
 
             var pagedList = await unPagedList // this query is executed in memory
+                .OrderByDescending(a => a.Count)
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)
                 .ToListAsync();
@@ -183,10 +220,10 @@ namespace MonitorizareVot.Ong.Api.Queries
                     CodJudet = r.Key.CodJudet,
                     NumarSectie = r.Key.NumarSectie,
                     Count = r.Count()
-                })
-                 .OrderByDescending(a => a.Count);
+                });
 
             var pagedList = await unPagedList //TODO this query is executed in memory
+                .OrderByDescending(a => a.Count)
                 .Skip((message.Page - 1) * message.PageSize)
                 .Take(message.PageSize)
                 .ToListAsync();

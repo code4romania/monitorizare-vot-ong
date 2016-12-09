@@ -338,6 +338,13 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.CodFormular).HasMaxLength(2);
             });
+
+
+            modelBuilder.Entity<Statistici>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("PK_Statistici");
+            });
         }
 
         public virtual DbSet<AdminOng> AdminOng { get; set; }
@@ -353,5 +360,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
         public virtual DbSet<Sectiune> Sectiune { get; set; }
         public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
+        public virtual DbSet<Statistici> Statistici { get; set; }
     }
 }
