@@ -31,7 +31,7 @@ export class CategoricalQuestionComponent implements OnInit {
   completedAnswers: _.Dictionary<CompletedAnswer> = {};
 
   @Input()
-  note: Note
+  notes: Note[]
 
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
@@ -50,6 +50,9 @@ export class CategoricalQuestionComponent implements OnInit {
 
   }
 
+  get hasNotes() {
+    return this.notes && this.notes.length;
+  }
   get isFlagged() {
     return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag);
   }
