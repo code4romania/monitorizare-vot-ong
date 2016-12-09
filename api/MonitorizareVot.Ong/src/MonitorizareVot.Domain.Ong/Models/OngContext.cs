@@ -340,10 +340,16 @@ namespace MonitorizareVot.Domain.Ong.Models
             });
 
 
-            modelBuilder.Entity<Statistici>(entity =>
+            modelBuilder.Entity<StatisticiSimple>(entity =>
             {
-                entity.HasKey(e => e.Id)
+                entity.HasKey(e => e.Label)
                     .HasName("PK_Statistici");
+            });
+
+            modelBuilder.Entity<StatisticiCompuse>(entity =>
+            {
+                entity.HasKey(e => new { e.Label, e.Cod })
+                    .HasName("PK_StatisticiCompuse");
             });
         }
 
@@ -360,6 +366,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
         public virtual DbSet<Sectiune> Sectiune { get; set; }
         public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
-        public virtual DbSet<Statistici> Statistici { get; set; }
+        public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }
+        public virtual DbSet<StatisticiCompuse> StatisticiCompuse { get; set; }
     }
 }
