@@ -41,27 +41,6 @@ namespace MonitorizareVot.Ong.Api.Controllers
         }
 
         /// <summary>
-        /// Exemplu pentru Raw Sql
-        /// </summary>
-        /// <param name="model">Detaliile de paginare</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("NumarObservatoriTest")]
-        public async Task<ApiListResponse<SimpleStatisticsModel>> NumarObservatoriTest(PagingModel model)
-        {
-            var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
-            var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
-
-            return await _mediator.SendAsync(new StatisticiNumarObservatoriRawQuery
-            {
-                IdONG = idONG,
-                Organizator = organizator,
-                PageSize = model.PageSize,
-                Page = model.Page
-            });
-        }
-
-        /// <summary>
         /// Returneaza topul judetelor sau sectiilor in functie de numarul de sesizari
         /// </summary>
         /// <param name="model">  Detaliile de paginare (default Page=1, PageSize=5)

@@ -15,7 +15,6 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
         IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiNumarObservatoriRawQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
         IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
@@ -60,7 +59,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriRawQuery message)
+        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
@@ -99,42 +98,6 @@ namespace MonitorizareVot.Ong.Api.Queries
                 PageSize = message.PageSize,
                 TotalItems = records.Count()
             };
-        }
-
-        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
-        {
-            return await _cacheService.GetOrSaveDataInCacheAsync($"StatisticiObservatori-{message.IdONG}-{message.Organizator}-{message.Page}",
-             async () =>
-             {
-                 var unPagedList = _context.Raspuns
-                   .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
-                   .GroupBy(r => r.IdSectieDeVotareNavigation.IdJudetNavigation)
-                   .Select(g => new
-                   {
-                       Nume = g.Key,
-                       Count = g.Count()
-                   })
-                   .OrderByDescending(g => g.Count);
-
-                 var pagedList = await unPagedList // this query is executed in memory
-                     .Skip((message.Page - 1) * message.PageSize)
-                     .Take(message.PageSize)
-                     .ToListAsync();
-
-                 var map = pagedList.Select(p => new SimpleStatisticsModel { Label = p.Nume.Nume, Value = p.Count.ToString() });
-
-                 return new ApiListResponse<SimpleStatisticsModel>
-                 {
-                     Data = map.ToList(),
-                     Page = message.Page,
-                     PageSize = message.PageSize,
-                     TotalItems = await unPagedList.CountAsync() // this query triggers a select in the db, count is executed in memory 
-                 };
-             },
-             new DistributedCacheEntryOptions
-             {
-                 AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
-             });
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariQuery message)

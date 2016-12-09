@@ -15,9 +15,6 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public bool Organizator { get; set; }
     }
 
-    // TODO [LN] Remove this after refactoring for cache implementation 
-    public class StatisticiNumarObservatoriRawQuery : StatisticiNumarObservatoriQuery { }
-
     public enum TipGrupareStatistici
     {
         Judet,
