@@ -31,32 +31,46 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
         {
-            var statistici = await _context.Raspuns
-                .Where(r => r.IdRaspunsDisponibilNavigation.IdIntrebare == message.IdIntrebare)
-                .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
-                .GroupBy(r => new { r.IdRaspunsDisponibilNavigation.IdOptiuneNavigation, r.IdRaspunsDisponibilNavigation.RaspunsCuFlag })
-                .Select(g => new
-                {
-                    Optiune = g.Key.IdOptiuneNavigation,
-                    RaspunsCuFlag = g.Key.RaspunsCuFlag,
-                    Count = g.Count()
-                })
-                .OrderBy(a => a.Count)
-                .ToListAsync();
-
-            return new OptiuniModel
+            StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
-                IdIntrebare = message.IdIntrebare,
-                Optiuni = statistici.Select(s => new OptiuniStatisticsModel
-                {
-                    IdOptiune = s.Optiune.IdOptiune,
-                    Label = s.Optiune.TextOptiune,
-                    Value = s.Count.ToString(),
-                    RaspunsCuFlag = s.RaspunsCuFlag
-                })
-                .ToList(),
-                Total = statistici.Sum(s => s.Count)
+                Query = $@"SELECT OB.TextOptiune AS Label, OB.IdOptiune AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
+                  FROM Raspuns AS R 
+                  INNER JOIN RaspunsDisponibil AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                  INNER JOIN Optiune AS OB ON OB.IdOptiune = RD.IdOptiune
+                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator
+                  WHERE RD.IdIntrebare = {message.IdIntrebare}",
+                CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
+
+            queryBuilder.AndOngFilter(message.Organizator, message.IdONG);
+            queryBuilder.Append("GROUP BY OB.TextOptiune, OB.IdOptiune, RD.RaspunsCuFlag");
+
+            return await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
+                async () =>
+                {
+                    var records = await _context.StatisticiOptiuni
+                        .FromSql(queryBuilder.Query)
+                        .ToListAsync();
+
+                    return new OptiuniModel
+                    {
+                        IdIntrebare = message.IdIntrebare,
+                        Optiuni = records.Select(s => new OptiuniStatisticsModel
+                        {
+                            IdOptiune = s.Cod,
+                            Label = s.Label,
+                            Value = s.Value.ToString(),
+                            RaspunsCuFlag = s.RaspunsCuFlag
+                        })
+                        .ToList(),
+                        Total = records.Sum(s => s.Value)
+                    };
+                },
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                }
+            );
         }
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
@@ -188,33 +202,6 @@ namespace MonitorizareVot.Ong.Api.Queries
                     AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
                 }
             );
-
-
-            //var unPagedList = _context.Raspuns
-            //    .Where(a => a.IdRaspunsDisponibilNavigation.RaspunsCuFlag)
-            //    .Where(a => message.Organizator || a.IdObservatorNavigation.IdOng == message.IdONG)
-            //    .Where(a => string.IsNullOrEmpty(message.Formular) || a.IdRaspunsDisponibilNavigation.IdIntrebareNavigation.CodFormular == message.Formular)
-            //    .GroupBy(a => new { a.NumarSectie, a.CodJudet })
-            // .Select(r => new SectieStatisticsModel
-            //    {
-            //        CodJudet = r.Key.CodJudet,
-            //        NumarSectie = r.Key.NumarSectie,
-            //        Count = r.Count()
-            //    });
-
-            //var pagedList = await unPagedList //TODO this query is executed in memory
-            //    .OrderByDescending(a => a.Count)
-            //    .Skip((message.Page - 1) * message.PageSize)
-            //    .Take(message.PageSize)
-            //    .ToListAsync();
-
-            //return new ApiListResponse<SimpleStatisticsModel>
-            //{
-            //    Data = pagedList.Select(x => _mapper.Map<SimpleStatisticsModel>(x)).ToList(),
-            //    Page = message.Page,
-            //    PageSize = message.PageSize,
-            //    TotalItems = await unPagedList.CountAsync()
-            //};
         }
     }
 }

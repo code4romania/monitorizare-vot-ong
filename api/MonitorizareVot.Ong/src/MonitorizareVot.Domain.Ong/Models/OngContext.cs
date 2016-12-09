@@ -351,6 +351,13 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.HasKey(e => new { e.Label, e.Cod })
                     .HasName("PK_StatisticiCompuse");
             });
+
+            modelBuilder.Entity<StatisticiOptiuni>(entity =>
+            {
+                entity.HasKey(e => e.Label)
+                    .HasName("PK_StatisticiOptiuni");
+            });
+
         }
 
         public virtual DbSet<AdminOng> AdminOng { get; set; }
@@ -368,5 +375,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
         public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }
         public virtual DbSet<StatisticiCompuse> StatisticiCompuse { get; set; }
+        public virtual DbSet<StatisticiOptiuni> StatisticiOptiuni { get; set; }
     }
 }
