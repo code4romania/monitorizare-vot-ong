@@ -37,11 +37,11 @@ namespace MonitorizareVot.Ong.Api.Queries
                     CodJudet = y.IdSectieDeVotareNavigation.IdJudetNavigation.CodJudet,
                     Sectie = y.IdSectieDeVotareNavigation.DenumireUat,
                     DataUltimeiModificari = y.DataUltimeiModificari
-                });
+                })
+                 .OrderByDescending(s => s.DataUltimeiModificari)
+                 .Distinct();
 
             var sectiiCuObservatoriPaginat = await sectiiCuObservatori
-                 .OrderByDescending(s => s.DataUltimeiModificari)
-                 .Distinct()
                  .Skip((message.Page - 1) * message.PageSize)
                  .Take(message.PageSize)
                  .ToListAsync();
