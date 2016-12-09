@@ -1,3 +1,4 @@
+import { TokenService } from '../core/token/token.service';
 import { NoteEffects } from './note/note.effects';
 import { noteReducer, NoteState } from './note/note.reducer';
 import { StatisticsState } from './statistics/statistics.state';
@@ -5,7 +6,7 @@ import { StatisticsEffects } from './statistics/statistics.effects';
 import { statisticsReducer } from './statistics/statistics.reducer';
 import { AnswerEffects } from './answer/answer.effects';
 import { answerReducer, AnswerState } from './answer/answer.reducer';
-import { FormLoadAction } from './form/form.actions';
+import { FormClearAll, FormLoadAction } from './form/form.actions';
 import { FormEffects } from './form/form.effects';
 import { formReducer, FormState } from './form/form.reducer';
 import { NgModule } from '@angular/core';
@@ -31,7 +32,17 @@ export class AppState {
     ]
 })
 export class AppStoreModule {
-    constructor(store: Store<AppState>) {
-        store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+    constructor(store: Store<AppState>, tokenService: TokenService) {
+        tokenService.tokenStream.subscribe((token) => {
+            let clearForms = !token;
+            store.select(s => s.form).take(1).subscribe(s => {
+                if (clearForms || s.items.length > 0) {
+                    store.dispatch(new FormClearAll());
+                }
+                if (!clearForms) {
+                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+                }
+            })
+        });
     }
 }

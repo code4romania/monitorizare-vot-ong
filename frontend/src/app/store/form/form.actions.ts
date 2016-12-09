@@ -3,7 +3,8 @@ import { Form } from '../../models/form.model';
 import { Action } from '@ngrx/store';
 export const FormActionTypes = {
     LOAD: actionType('[Form] LOAD'),
-    LOAD_COMPLETE: actionType('[Form] LOAD_COMPLETE')
+    LOAD_COMPLETE: actionType('[Form] LOAD_COMPLETE'),
+    CLEAR: actionType('form/clear all')
 }
 export class FormLoadAction implements Action {
     type = FormActionTypes.LOAD
@@ -21,4 +22,7 @@ export class FormLoadCompletedAction implements Action {
         this.payload = forms;
     }
 }
-export type FormActions = FormLoadAction | FormLoadCompletedAction;
+export class FormClearAll implements Action {
+    type = FormActionTypes.CLEAR
+}
+export type FormActions = FormLoadAction | FormLoadCompletedAction | FormClearAll;
