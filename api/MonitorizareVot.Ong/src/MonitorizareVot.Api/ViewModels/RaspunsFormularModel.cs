@@ -13,7 +13,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public bool? PresedinteBesvesteFemeie { get; set; }
     }
 
-    public class RaspunsuriFormularQuery : IAsyncRequest<List<RaspunsFormularModel>>
+    public class RaspunsuriFormularQuery : IAsyncRequest<RaspunsFormularModel>
     {
         public int IdSectieDeVotare { get; set; }
         public int IdObservator { get; set; }
