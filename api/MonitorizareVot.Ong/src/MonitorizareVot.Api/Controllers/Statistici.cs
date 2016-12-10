@@ -12,11 +12,17 @@ namespace MonitorizareVot.Ong.Api.Controllers
     {
         private readonly IConfigurationRoot _configuration;
         private readonly IMediator _mediator;
+        private int _cacheHours;
+        private int _cacheMinutes;
+        private int _cacheSeconds;
 
         public Statistici(IMediator mediator, IConfigurationRoot configuration)
         {
             _mediator = mediator;
             _configuration = configuration;
+            _cacheHours = _configuration.GetValue<int>("DefaultCacheHours");
+            _cacheMinutes = _configuration.GetValue<int>("DefaultCacheMinutes");
+            _cacheSeconds = _configuration.GetValue<int>("DefaultCacheSeconds");
         }
 
         /// <summary>
@@ -36,7 +42,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 IdONG = idONG,
                 Organizator = organizator,
                 PageSize = model.PageSize,
-                Page = model.Page
+                Page = model.Page,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -64,7 +73,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = model.Grupare,
                 Formular = model.Formular,
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -87,7 +99,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = null,
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -111,7 +126,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = null,
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -134,7 +152,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "A",
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -158,7 +179,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "A",
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -181,7 +205,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Judet,
                 Formular = "C",
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -205,7 +232,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Grupare = TipGrupareStatistici.Sectie,
                 Formular = "C",
                 Page = model.Page,
-                PageSize = model.PageSize
+                PageSize = model.PageSize,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
 
@@ -226,7 +256,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
             {
                 IdIntrebare = model.IdIntrebare,
                 Organizator = organizator,
-                IdONG = idONG
+                IdONG = idONG,
+                CacheHours = _cacheHours,
+                CacheMinutes = _cacheMinutes,
+                CacheSeconds = _cacheSeconds
             });
         }
     }
