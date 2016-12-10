@@ -3,14 +3,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
-using MonitorizareVot.Ong.Api.Filters;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/raspunsuri")]
-    //[ValidateModelState]
     public class Raspunsuri : Controller
     {
         private readonly IMediator _mediator;
@@ -30,7 +28,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Urgent (valoarea campului RaspunsFlag)
         /// </param>
         [HttpGet]
-        public async Task<ApiListResponse<RaspunsModel>> Get(FiltruRaspunsuriModel model)
+        public async Task<ApiListResponse<RaspunsModel>> Get(FiltruRaspunsuriSectiiModel model)
         {
             // Mock data
             //return await Task.FromResult(
@@ -73,9 +71,24 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
         /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
         [HttpGet("RaspunsuriCompletate")]
-        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Get(FiltruRaspunsuriCompletateModel model)
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Get(FiltruRaspunsuriModel model)
         {
             return await _mediator.SendAsync(new RaspunsuriCompletateQuery
+            {
+                IdObservator = model.IdObservator,
+                IdSectieDeVotare = model.IdSectieDeVotare
+            });
+        }
+
+        /// <summary>
+        /// Returneaza raspunsurile formular date de un observator pentru o anumita sectie de votare
+        /// </summary>
+        /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
+        /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
+        [HttpGet("RaspunsuriFormular")]
+        public async Task<List<RaspunsFormularModel>> GetRaspunsuriFormular(FiltruRaspunsuriModel model)
+        {
+            return await _mediator.SendAsync(new RaspunsuriFormularQuery
             {
                 IdObservator = model.IdObservator,
                 IdSectieDeVotare = model.IdSectieDeVotare

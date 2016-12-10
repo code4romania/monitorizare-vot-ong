@@ -12,7 +12,8 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
         IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
-        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>
+        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
+        IAsyncRequestHandler<RaspunsuriFormularQuery, List<RaspunsFormularModel>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -70,6 +71,15 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .ToList();
 
             return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();
+        }
+
+        public async Task<List<RaspunsFormularModel>> Handle(RaspunsuriFormularQuery message)
+        {
+            var raspunsuriFormular = await _context.RaspunsFormular
+                .Where(rd => rd.IdObservator == message.IdObservator && rd.IdSectieDeVotare == message.IdSectieDeVotare)
+                .ToListAsync();
+
+            return raspunsuriFormular.Select(rf => _mapper.Map<RaspunsFormularModel>(rf)).ToList();
         }
     }
 }
