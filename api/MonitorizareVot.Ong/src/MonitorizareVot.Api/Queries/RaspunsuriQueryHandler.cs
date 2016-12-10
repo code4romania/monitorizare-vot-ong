@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,33 +27,32 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message)
         {
-            IQueryable<SectieModel> sectiiCuObservatori = _context.Raspuns
-                .Where(r => message.Organizator || r.IdObservatorNavigation.IdOng == message.IdONG)
-                .Where(r => r.IdRaspunsDisponibilNavigation.RaspunsCuFlag == message.Urgent)
-                .Select(y => new SectieModel
-                {
-                    IdObservator = y.IdObservator,
-                    Observator = y.IdObservatorNavigation.NumeIntreg,
-                    IdSectie = y.IdSectieDeVotare,
-                    NumarSectie = y.IdSectieDeVotareNavigation.NumarSectie,
-                    CodJudet = y.IdSectieDeVotareNavigation.IdJudetNavigation.CodJudet,
-                    Sectie = y.IdSectieDeVotareNavigation.DenumireUat,
-                    DataUltimeiModificari = y.DataUltimeiModificari
-                })
-                 .OrderByDescending(s => s.DataUltimeiModificari)
-                 .Distinct();
+            string queryUnPaged = $@"SELECT IdSectieDeVotare AS IdSectie, R.IdObservator AS IdObservator, O.NumeIntreg AS Observator, CONCAT(CodJudet, ' ', NumarSectie) AS Sectie, MAX(DataUltimeiModificari) AS DataUltimeiModificari
+                FROM Raspuns R
+                INNER JOIN OBSERVATOR O ON O.IdObservator = R.IdObservator
+                INNER JOIN RaspunsDisponibil RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
 
-            var sectiiCuObservatoriPaginat = await sectiiCuObservatori
-                 .Skip((message.Page - 1) * message.PageSize)
-                 .Take(message.PageSize)
-                 .ToListAsync();
+            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdOng = {message.IdONG}";
+
+            queryUnPaged = $"{queryUnPaged} GROUP BY IdSectieDeVotare, CodJudet, NumarSectie, R.IdObservator, O.NumeIntreg, CodJudet";
+
+            var queryPaged = $@"{queryUnPaged} ORDER BY DataUltimeiModificari DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+
+            var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
+                .FromSql(queryPaged)
+                .ToListAsync();
+
+            var count = await _context.RaspunsSectie
+                .FromSql(queryUnPaged)
+                .CountAsync();
 
             return new ApiListResponse<RaspunsModel>
             {
                 Data = sectiiCuObservatoriPaginat.Select(x => _mapper.Map<RaspunsModel>(x)).ToList(),
                 Page = message.Page,
                 PageSize = message.PageSize,
-                TotalItems = await sectiiCuObservatori.CountAsync()
+                TotalItems = count
             };
         }
 

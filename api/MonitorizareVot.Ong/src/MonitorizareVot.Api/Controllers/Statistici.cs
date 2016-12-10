@@ -43,7 +43,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul judetelor sau sectiilor in functie de numarul de sesizari
         /// </summary>
-        /// <param name="model">  Detaliile de paginare (default Page=1, PageSize=5)
+        /// <param name="model">  Detaliile de paginare (default Page=1, PageSize=20)
         /// Grupare (0 - Judet | 1 - Sectie)
         /// Formular (codul formularulu care va fi luat in calcul pentru statistci - "" (string.Empty) inseamna toate)
         /// </param>
@@ -54,6 +54,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+
+            if (model.Grupare == TipGrupareStatistici.Sectie) model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -69,7 +71,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul judetelor in functie de numarul de sesizari
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariJudete")]
@@ -92,7 +94,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul Sectiilor in functie de numarul de sesizari
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariSectii")]
@@ -100,6 +102,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+            model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -115,7 +118,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>   
         /// Returneaza topul judetelor in functie de numarul de sesizari la deschiderea sectiilor
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariDeschidereJudete")]
@@ -138,7 +141,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul Sectiilor in functie de numarul de sesizari la deschiderea sectiilor
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariDeschidereSectii")]
@@ -146,6 +149,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+            model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {
@@ -161,7 +165,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul judetelor in functie de numarul de sesizari la numararea voturilor
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariNumarareJudete")]
@@ -184,7 +188,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza topul Sectiilor in functie de numarul de sesizari la numararea voturilor
         /// </summary>
-        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=5)</param>
+        /// <param name="model">Detaliile de paginare (default Page=1, PageSize=20)</param>
         /// <returns></returns>
         [HttpGet]
         [Route("SesizariNumarareSectii")]
@@ -192,6 +196,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+            model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
             return await _mediator.SendAsync(new StatisticiTopSesizariQuery
             {

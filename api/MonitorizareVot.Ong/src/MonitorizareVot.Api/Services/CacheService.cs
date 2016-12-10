@@ -40,7 +40,10 @@ namespace MonitorizareVot.Ong.Api.Services
                 var cache = await _cache.GetAsync(key);
 
                 if (cache == null)
+                {
+                    _logger.LogInformation($"Cache missed for {key}");
                     return default(T);
+                }
 
                 var obj = JsonConvert.DeserializeObject<T>(GetString(cache));
 
