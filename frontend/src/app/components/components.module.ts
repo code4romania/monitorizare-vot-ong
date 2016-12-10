@@ -1,6 +1,6 @@
 import { LoginComponent } from './login/login.component';
 import { StatisticsValueComponent } from './statistics/statistics-value/statistics-value.component';
-import { AnswerNotesComponent } from './answer/answer-notes/answer-notes.component';
+import { AnswerNoteComponent } from './answer/answer-note/answer-note.component';
 import { StatisticsDetailsComponent } from './statistics/statistics-details/statistics-details.component';
 import { CategoricalQuestionComponent } from './answer/categorical-question/categorical-question.component';
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
@@ -19,10 +19,10 @@ export let components = [
     AnswerComponent, AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
-    AnswerNotesComponent,
+    AnswerNoteComponent,
     CategoricalQuestionComponent,
 
-    AnswerNotesComponent,
+    AnswerNoteComponent,
 
 
     HeaderComponent,

@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         })
             .subscribe(res => {
                 this.tokenService.token = res.text();
-                this.router.navigate(['/raspunsuri/urgente']);
+                this.router.navigate(['/urgente']);
             }, res => {
                 this.invalid = true;
             })

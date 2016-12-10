@@ -29,7 +29,7 @@ export class AnswerFormListComponent implements OnInit {
     if(!this.notes || !this.notes.length){
       return undefined;
     }
-    return this.notes.filter(note => note.codIntrebare !== question.idIntrebare)
+    return this.notes.filter(note => note.codIntrebare === question.idIntrebare)
   }
 
   constructor() { }
