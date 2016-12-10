@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { TokenService } from '../core/token/token.service';
 import { NoteEffects } from './note/note.effects';
 import { noteReducer, NoteState } from './note/note.reducer';
@@ -21,15 +22,19 @@ export class AppState {
     note: NoteState
 }
 
+let moduleImports = [
+    StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
+    EffectsModule.run(FormEffects),
+    EffectsModule.run(AnswerEffects),
+    EffectsModule.run(StatisticsEffects),
+    EffectsModule.run(NoteEffects)
+]
+if (!environment.production) {
+    moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
+}
+
 @NgModule({
-    imports: [
-        StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
-        StoreDevtoolsModule.instrumentOnlyWithExtension(),
-        EffectsModule.run(FormEffects),
-        EffectsModule.run(AnswerEffects),
-        EffectsModule.run(StatisticsEffects),
-        EffectsModule.run(NoteEffects)
-    ]
+    imports: moduleImports
 })
 export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {

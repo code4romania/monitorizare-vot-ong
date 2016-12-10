@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { appRoutes } from './app.routes';
 import { RouterModule } from '@angular/router';
 import { LoadStatisticsGuard } from './guards/load-statistics.guard';
@@ -8,7 +9,7 @@ import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
         RouterModule.forRoot(appRoutes,{
-            enableTracing: true
+            enableTracing: !environment.production
         })
     ],
     providers: [HomeGuard, AnswerListGuard, AnswerDetailsGuard, LoadStatisticsGuard]
