@@ -4,17 +4,12 @@ import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSt
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-export class AuthGuard implements CanActivateChild, CanActivate {
+export class AuthGuard implements CanActivate {
 
     private static authObservable: Observable<boolean>;
 
     constructor(private tokenService: TokenService, private router:Router) { }
 
-
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        // check if this route
-        return this.checkForLogin();
-    }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.checkForLogin();
     }

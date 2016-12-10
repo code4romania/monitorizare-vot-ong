@@ -1,3 +1,4 @@
+import { AnswerExtraQuestionsComponent } from './answer/answer-extra-questions/answer-extra-questions.component';
 import { LoginComponent } from './login/login.component';
 import { StatisticsValueComponent } from './statistics/statistics-value/statistics-value.component';
 import { AnswerNoteComponent } from './answer/answer-note/answer-note.component';
@@ -21,7 +22,7 @@ export let components = [
     AnswerFormListComponent,
     AnswerNoteComponent,
     CategoricalQuestionComponent,
-
+    AnswerExtraQuestionsComponent,
     AnswerNoteComponent,
 
 

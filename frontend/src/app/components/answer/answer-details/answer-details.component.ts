@@ -1,3 +1,4 @@
+import { AnswerExtra } from '../../../models/answer.extra.model';
 import { Note } from '../../../models/note.model';
 import { NoteState } from '../../../store/note/note.reducer';
 import { LoadAnswerDetailsAction } from '../../../store/answer/answer.actions';
@@ -24,12 +25,22 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
+  // exampleExtra: AnswerExtra = {
+  //   dataUltimeiModificari: new Date(),
+  //   esteZonaUrbana: false,
+  //   oraSosirii: new Date(),
+  //   oraPlecarii: new Date(),
+  //   presedinteBesvesteFemeie: false
+  // }
+
 
   hasError() {
     return !this.answerState || !this.noteState || this.answerState.selectedError || this.noteState.error
+    // || this.answerState.answerExtraError
   }
   isLoading() {
     return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading
+    // || this.answerState.answerExtraLoading
   }
 
   formNotes(formId: string) {
