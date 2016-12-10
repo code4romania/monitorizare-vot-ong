@@ -64,7 +64,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
         /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
         [HttpGet("RaspunsuriFormular")]
-        public async Task<List<RaspunsFormularModel>> GetRaspunsuriFormular(FiltruRaspunsuriModel model)
+        public async Task<RaspunsFormularModel> GetRaspunsuriFormular(FiltruRaspunsuriModel model)
         {
             return await _mediator.SendAsync(new RaspunsuriFormularQuery
             {
