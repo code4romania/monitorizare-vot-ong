@@ -25,9 +25,11 @@ export class LoadStatisticsGuard implements CanActivate {
                 .select(s => s.statistics)
                 .take(1)
                 .map(s => values(s))
+                // .do(console.log)
                 .mergeMap(s => Observable.from(s))
-                .reduce((acc, i: StatisticsStateItem) => this.store.dispatch(new LoadStatisticAction(i.key,1,5,true)),[])
-                .mapTo(true);
+                // .do(console.log)
+                .map((i: StatisticsStateItem) => this.store.dispatch(new LoadStatisticAction(i.key,1,5,true)),[])
+                .mapTo(true)
         }
 
     }
