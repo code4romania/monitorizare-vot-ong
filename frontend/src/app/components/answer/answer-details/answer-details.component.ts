@@ -35,7 +35,8 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
 
   hasError() {
-    return !this.answerState || !this.noteState || this.answerState.selectedError || this.noteState.error
+    return !this.answerState ||  this.answerState.selectedError 
+    // || !this.noteState || this.noteState.error
     // || this.answerState.answerExtraError
   }
   isLoading() {
