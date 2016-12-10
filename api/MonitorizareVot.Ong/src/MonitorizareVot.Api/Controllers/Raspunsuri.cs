@@ -61,15 +61,15 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza raspunsurile formular date de un observator pentru o anumita sectie de votare
         /// </summary>
-        /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-au completat raspunsurile</param>
-        /// <param name="IdObservator">Id-ul observatorului care a dat raspunsurile</param>
+        /// <param name="SectionId">Id-ul sectiei unde s-au completat raspunsurile</param>
+        /// <param name="ObserverId">Id-ul observatorului care a dat raspunsurile</param>
         [HttpGet("RaspunsuriFormular")]
-        public async Task<List<RaspunsFormularModel>> GetRaspunsuriFormular(FiltruRaspunsuriModel model)
+        public async Task<List<RaspunsFormularModel>> GetRaspunsuriFormular(FiltruRaspunsuriFormularModel model)
         {
             return await _mediator.SendAsync(new RaspunsuriFormularQuery
             {
-                IdObservator = model.IdObservator,
-                IdSectieDeVotare = model.IdSectieDeVotare
+                IdObservator = model.ObserverId,
+                IdSectieDeVotare = model.SectionId
             });
         }
     }
