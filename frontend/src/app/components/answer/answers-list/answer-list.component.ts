@@ -24,7 +24,7 @@ export class AnswerListComponent implements OnInit {
     this.reload.emit();
   }
   answerLinkPrefix(){
-    return this.state.urgent ? '/raspunsuri/urgente/detalii' : '/raspunsuri/detalii'
+    return this.state.urgent ? '/urgente/detalii' : '/raspunsuri/detalii'
   }
   get answers() {
     let start = this.state.page * this.state.pageSize,

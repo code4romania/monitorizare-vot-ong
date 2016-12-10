@@ -6,5 +6,16 @@ ul {
         float:left;
         margin-left:35px;
         font-size:26px;
+
+        a{
+            &hover{
+                text-decoration: none;
+            }
+            &.active{
+                text-decoration: underline;
+                -moz-text-decoration-color: yellow;
+            }
+        }     
     }
 }
+

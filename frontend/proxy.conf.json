@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://ongqa.azurewebsites.net",
+    "target": "http://mvonguat.azurewebsites.net/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

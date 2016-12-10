@@ -39,7 +39,11 @@ export class TokenService {
   }
   public set token(value) {
     this._token = value;
-    localStorage.setItem(this.tokenKey, value);
+    if(value !== undefined){
+      localStorage.setItem(this.tokenKey, value);
+    } else {
+      localStorage.removeItem(this.tokenKey);
+    }
     this.observers.forEach(obs => obs.next(value));
   }
   public isTokenExpired() {
