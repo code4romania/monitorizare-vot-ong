@@ -1,3 +1,4 @@
+import { AnswerExtra } from '../../models/answer.extra.model';
 import { LoadNotesAction } from '../note/note.actions';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerState } from './answer.reducer';
@@ -13,6 +14,9 @@ import {
     LoadAnswerDetailsAction,
     LoadAnswerDetailsDoneAction,
     LoadAnswerDetailsErrorAction,
+    LoadAnswerExtraAction,
+    LoadAnswerExtraDoneAction,
+    LoadAnswerExtraErrorAction,
     LoadAnswerPreviewAction,
     LoadAnswerPreviewDoneAction,
     LoadAnswerPreviewErorrAction
@@ -41,12 +45,13 @@ export class AnswerEffects {
                 }
             })
                 .map(res => res.json())
-                .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
-                .catch((err, caught) => Observable.of(new LoadAnswerPreviewErorrAction()));
         })
+        .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
+        .catch((err, caught) => Observable.of(new LoadAnswerPreviewErorrAction()));
+
 
     shouldLoad(page: number, pageSize: number, arrayLen) {
-        if(page === undefined || pageSize === undefined){
+        if (page === undefined || pageSize === undefined) {
             return true;
         }
 
@@ -56,20 +61,40 @@ export class AnswerEffects {
     @Effect()
     loadDetails = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .switchMap((action: LoadAnswerDetailsAction) => {
-            return this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
+        .switchMap((action: LoadAnswerDetailsAction) => 
+            this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
                 body: {
                     idSectieDeVotare: action.payload.sectionId,
                     idObservator: action.payload.observerId
                 }
-            }).map(res => <CompletedQuestion[]>res.json())
-        })
+            })
+        )
+        .map(res =>  <CompletedQuestion[]>res.json())
         .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
-        .catch((err, caught) => Observable.from([new LoadAnswerDetailsErrorAction()]))
+        .catch((err, caught) => Observable.of(new LoadAnswerDetailsErrorAction()))
 
     @Effect()
     loadNotes = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .map((a:LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId,a.payload.observerId))
+        .map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId))
+
+    @Effect()
+    loadExtraFromAnswer = this.actions
+        .ofType(AnswerActionTypes.LOAD_DETAILS)
+        .map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId));
+
+    @Effect()
+    loadExtra = this.actions
+        .ofType(AnswerActionTypes.LOAD_EXTRA)
+        .map((a: LoadAnswerExtraAction) => a.payload)
+        .switchMap(p =>
+            this.http.get('/api/v1/raspunsuri/RaspunsuriFormular', {
+                body: p
+            })
+        )
+        .map(res => new AnswerExtra(res.json()))
+        .map(extra => new LoadAnswerExtraDoneAction(extra))
+        .catch((err, c)=> Observable.of(new LoadAnswerExtraErrorAction()));
+
 
 }
