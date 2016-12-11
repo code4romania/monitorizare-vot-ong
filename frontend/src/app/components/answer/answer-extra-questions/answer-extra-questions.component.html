@@ -1,11 +1,11 @@
 <div class="frow row-center comp-container">
     <div *ngIf="answerExtra" class="col-md-3-3">
         <div class="frow">
-            <div *ngIf="answerExtra.oraSosirii" class="col-md-1-2 frow">
+            <div *ngIf="answerExtra.oraSosirii" class="col-md-1-2">
                 Ora sosirii: {{answerExtra.oraSosirii | date:'shortTime'}}
             </div>
-            <div *ngIf="answerExtra.oraPlecarii" class="col-md-1-2 frow">
-                Ora sosirii: {{answerExtra.oraPlecarii | date:'shortTime'}}
+            <div *ngIf="answerExtra.oraPlecarii" class="col-md-1-2">
+                Ora plecarii: {{answerExtra.oraPlecarii | date:'shortTime'}}
             </div>
         </div>
         <div class="frow">

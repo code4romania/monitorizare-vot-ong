@@ -1,3 +1,4 @@
+import { Response } from '@angular/http';
 import { AnswerExtra } from '../../models/answer.extra.model';
 import { LoadNotesAction } from '../note/note.actions';
 import { shouldLoadPage } from '../../shared/pagination.service';
@@ -61,7 +62,7 @@ export class AnswerEffects {
     @Effect()
     loadDetails = this.actions
         .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .switchMap((action: LoadAnswerDetailsAction) => 
+        .switchMap((action: LoadAnswerDetailsAction) =>
             this.http.get('/api/v1/raspunsuri/RaspunsuriCompletate', {
                 body: {
                     idSectieDeVotare: action.payload.sectionId,
@@ -69,7 +70,7 @@ export class AnswerEffects {
                 }
             })
         )
-        .map(res =>  <CompletedQuestion[]>res.json())
+        .map(res => <CompletedQuestion[]>res.json())
         .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
         .catch((err, caught) => Observable.of(new LoadAnswerDetailsErrorAction()))
 
@@ -89,12 +90,16 @@ export class AnswerEffects {
         .map((a: LoadAnswerExtraAction) => a.payload)
         .switchMap(p =>
             this.http.get('/api/v1/raspunsuri/RaspunsuriFormular', {
-                body: p
+                body: {
+                    idObservator: p.observerId,
+                    idSectieDeVotare: p.sectionId
+                }
             })
         )
-        .map(res => new AnswerExtra(res.json()))
+        .map(res => res.json())
+        .map(json => json ? new AnswerExtra(json) : undefined)
         .map(extra => new LoadAnswerExtraDoneAction(extra))
-        .catch((err, c)=> Observable.of(new LoadAnswerExtraErrorAction()));
+        .catch((err: Response, c) => Observable.of(new LoadAnswerExtraErrorAction()));
 
 
 }
