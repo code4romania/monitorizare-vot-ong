@@ -261,3 +261,4 @@ api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/ongqa
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/LocalIIS-publish.ps1
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/wwwroot
 /frontend/wwwroot
+api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/monitorizarevotong - Web Deploy-publish.ps1
