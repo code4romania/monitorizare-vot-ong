@@ -1,0 +1,22 @@
+<div class="frow row-center comp-container">
+    <div *ngIf="answerExtra" class="col-md-3-3">
+        <div class="frow">
+            <div *ngIf="answerExtra.oraSosirii" class="col-md-1-2">
+                Ora sosirii: {{answerExtra.oraSosirii | date:'shortTime'}}
+            </div>
+            <div *ngIf="answerExtra.oraPlecarii" class="col-md-1-2">
+                Ora plecarii: {{answerExtra.oraPlecarii | date:'shortTime'}}
+            </div>
+        </div>
+        <div class="frow">
+            <div class="col-md-1-2">
+                Este zona urbana:
+                <i class="fa" [ngClass]="{'fa-square': !answerExtra.esteZonaUrbana, 'fa-check-square': answerExtra.esteZonaUrbana}" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-1-2">
+                Presedintele BESV este femeie:
+                <i class="fa" [ngClass]="{'fa-square': !answerExtra.presedinteBesvesteFemeie, 'fa-check-square': answerExtra.presedinteBesvesteFemeie}" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</div>

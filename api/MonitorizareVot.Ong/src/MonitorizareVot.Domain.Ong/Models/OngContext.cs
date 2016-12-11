@@ -358,6 +358,11 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasName("PK_StatisticiOptiuni");
             });
 
+            modelBuilder.Entity<RaspunsSectie>(entity =>
+            {
+                entity.HasKey(e => new { e.IdObservator, e.IdSectie })
+                    .HasName("PK_RaspunsSectie");
+            });
         }
 
         public virtual DbSet<AdminOng> AdminOng { get; set; }
@@ -373,8 +378,11 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
         public virtual DbSet<Sectiune> Sectiune { get; set; }
         public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
+
+        // Entities used for GROUP BY results
         public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }
         public virtual DbSet<StatisticiCompuse> StatisticiCompuse { get; set; }
         public virtual DbSet<StatisticiOptiuni> StatisticiOptiuni { get; set; }
+        public virtual DbSet<RaspunsSectie> RaspunsSectie { get; set; }
     }
 }

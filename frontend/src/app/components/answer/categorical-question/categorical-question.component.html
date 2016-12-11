@@ -20,7 +20,7 @@
 
   <div class="frow row-end">
     <button *ngIf="notes && notes.length" (click)="showNotes = !showNotes">
-      {{showNotes ? 'Hide': 'Show'}} notes
+      {{showNotes ? 'Ascunde': 'Vezi'}} {{notes.length === 1 ? 'nota' : 'note'}}
     </button>
   </div>
 

@@ -68,7 +68,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 },
                 new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(message.CacheHours, message.CacheMinutes, message.CacheMinutes)
                 }
             );
         }
@@ -98,7 +98,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 },
                 new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(message.CacheHours, message.CacheMinutes, message.CacheMinutes)
                 }
             );
             
@@ -148,7 +148,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 },
                 new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(message.CacheHours, message.CacheMinutes, message.CacheMinutes)
                 }
             );
 
@@ -199,7 +199,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 },
                 new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = new TimeSpan(Constants.DEFAULT_CACHE_HOURS, Constants.DEFAULT_CACHE_MINUTES, Constants.DEFAULT_CACHE_SECONDS)
+                    AbsoluteExpirationRelativeToNow = new TimeSpan(message.CacheHours, message.CacheMinutes, message.CacheMinutes)
                 }
             );
         }

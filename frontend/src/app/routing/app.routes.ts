@@ -55,11 +55,11 @@ export let appRoutes: Routes = [
     {
         path: 'statistici',
         component: StatisticsComponent,
-        canActivate: [LoadStatisticsGuard, AuthGuard]
+        canActivate: [AuthGuard, LoadStatisticsGuard]
     }, {
         path: 'statistici/:key',
         component: StatisticsDetailsComponent,
-        canActivate: [LoadStatisticsGuard, AuthGuard]
+        canActivate: [AuthGuard, LoadStatisticsGuard]
     }, {
         path: 'login',
         canActivate: [AnonGuard],

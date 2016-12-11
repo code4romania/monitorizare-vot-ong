@@ -1,3 +1,4 @@
+import { AnswerExtra } from '../../models/answer.extra.model';
 import { Note } from '../../models/note.model';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
@@ -22,6 +23,10 @@ export class AnswerState {
     notes: Note[]
     notesLoading: boolean
     notesError: boolean
+
+    answerExtra: AnswerExtra
+    answerExtraLoading = false
+    answerExtraError = false
 }
 export let initialAnswerState: AnswerState = new AnswerState()
 
@@ -29,7 +34,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
     switch (action.type) {
         case AnswerActionTypes.LOAD_PREVIEW:
             let newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
-                shouldLoadList = shouldLoadPage(action.payload.page,action.payload.pageSize,state.threads.length);
+                shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.threads.length);
             let newState = Object.assign({}, state, {
                 page: action.payload.page,
                 pageSize: action.payload.pageSize,
@@ -45,7 +50,10 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                     selectedLoading: false,
                     selectedError: false,
                     observerId: undefined,
-                    sectionId: undefined
+                    sectionId: undefined,
+                    answerExtra: undefined,
+                    answerExtraLoading: false,
+                    answerExtraError: false
                 })
             }
             return newState;
@@ -79,6 +87,22 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 selectedAnswer: action.payload,
                 selectedLoading: false,
                 selectedError: false
+            })
+        case AnswerActionTypes.LOAD_EXTRA:
+            return Object.assign({}, state, {
+                answerExtraLoading: false,
+                answerExtraError: false
+            })
+        case AnswerActionTypes.LOAD_EXTRA_DONE:
+            return Object.assign({}, state, {
+                answerExtra: action.payload,
+                answerExtraLoading: false,
+                selectedError: false
+            })
+        case AnswerActionTypes.LOAD_EXTRA_ERROR:
+            return Object.assign({}, state, {
+                answerExtraLoading: false,
+                selectedError: true
             })
         default:
             return state
