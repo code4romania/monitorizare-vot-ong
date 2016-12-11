@@ -19,7 +19,7 @@ export class AnswerExtra {
         }
         checkForPropValue(formInfo.dataUltimeiModificari, val => this.dataUltimeiModificari = val);
         checkForPropValue(formInfo.oraSosirii, val => this.oraSosirii = val)
-        checkForPropValue(formInfo.oraSosirii, val => this.oraSosirii = val)
+        checkForPropValue(formInfo.oraPlecarii, val => this.oraPlecarii = val)
         this.esteZonaUrbana = formInfo.esteZonaUrbana
         this.presedinteBesvesteFemeie = formInfo.presedinteBesvesteFemeie
 
