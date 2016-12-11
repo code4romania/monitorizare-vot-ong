@@ -75,18 +75,26 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
         {
-            StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
+            //var queryBuilder = new StatisticiQueryBuilder
+            //{
+            //    Query = @"SELECT J.Nume AS Label, COUNT(*) as Value
+            //      FROM Judet J
+            //      INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
+            //      INNER JOIN [Raspuns] AS R ON R.IdSectieDeVotare = SV.IdSectieDeVotarre
+            //      INNER JOIN Observator O ON O.IdObservator = R.IdObservator",
+            //    CacheKey = "StatisticiObservatori"
+            //};
+
+            var queryBuilder = new StatisticiQueryBuilder
             {
-                Query = @"SELECT J.Nume AS Label, COUNT(*) as Value
-                  FROM Judet J
-                  INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
-                  INNER JOIN [Raspuns] AS R ON R.IdSectieDeVotare = SV.IdSectieDeVotarre
-                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator",
+                Query = @"select count(distinct r.idobservator) as [Value], codjudet as Label
+                          from raspuns r (nolock) inner join observator o on r.idobservator = o.idobservator ",
                 CacheKey = "StatisticiObservatori"
             };
-
+            
             queryBuilder.WhereOngFilter(message.Organizator, message.IdONG);
-            queryBuilder.Append("GROUP BY J.Nume ORDER BY Value DESC");
+            //queryBuilder.Append("GROUP BY J.Nume ORDER BY Value DESC");            
+            queryBuilder.Append("group by codjudet order by [Value] desc");
 
             // get or save all records in cache
             var records = await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
