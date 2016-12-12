@@ -315,7 +315,7 @@ namespace MonitorizareVot.Ong.Api
         private void RegisterServices(IApplicationBuilder app)
         {
             //exemplu de servicii custom
-            _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<JwtIssuerOptions>>());
+            _container.Register(() => app.ApplicationServices.GetService<IOptions<JwtIssuerOptions>>(), Lifestyle.Transient);
             _container.RegisterSingleton<IHashService, HashService>();
             //container.Register<ISectieDeVotareService, SectieDevotareDBService>(Lifestyle.Scoped);
         }
