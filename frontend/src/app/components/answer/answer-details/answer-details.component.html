@@ -8,6 +8,8 @@
   </div>
   <div *ngIf="!isLoading()">
     <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
+      <app-answer-extra-questions *ngIf="!answerState.answerExtraError" [answerExtra]="answerState?.answerExtra">
+      </app-answer-extra-questions>
       <tabset>
         <tab *ngFor="let form of formState.items">
           <template tabHeading>Formular {{form.idFormular}}</template>

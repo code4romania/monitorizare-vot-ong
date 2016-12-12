@@ -27,8 +27,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             return await _mediator.SendAsync(new NotaQuery
             {
-                IdObservator = model.IdObservator,
-                IdSectieDeVotare = model.IdSectieDeVotare
+                IdObservator = model.ObserverId,
+                IdSectieDeVotare = model.SectionId
             });
         }
     }

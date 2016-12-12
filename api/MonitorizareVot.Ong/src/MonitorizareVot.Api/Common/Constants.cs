@@ -7,10 +7,5 @@
     {
         public const int DEFAULT_PAGE_SIZE = 20;
         public const int DEFAULT_PAGE = 1;
-
-        // CACHE KEY VALABILITY
-        public const int DEFAULT_CACHE_HOURS = 0;
-        public const int DEFAULT_CACHE_MINUTES = 30;
-        public const int DEFAULT_CACHE_SECONDS = 0;
     }
 }

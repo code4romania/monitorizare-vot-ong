@@ -1,3 +1,6 @@
+import { ViewContainer } from '@angular/compiler/src/private_import_core';
+import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AnswerNoteComponent } from '../answer-note/answer-note.component';
 import { answerReducer } from '../../../store/answer/answer.reducer';
 import { environment } from '../../../../environments/environment';
 import { Note } from '../../../models/note.model';
@@ -6,7 +9,16 @@ import { CompletedAnswer } from '../../../models/completed.answer.model';
 import { FormQuestion } from '../../../models/form.question.model';
 
 import * as _ from 'lodash';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    HostListener,
+    Input,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    ViewContainerRef
+} from '@angular/core';
 
 @Component({
   selector: 'app-categorical-question',
@@ -17,7 +29,8 @@ export class CategoricalQuestionComponent implements OnInit {
 
   @Input() question: FormQuestion;
 
-  @Input('completedAnswers') set inputCompletedAnswers(value: CompletedAnswer[]) {
+  @Input('completedAnswers') 
+  set inputCompletedAnswers(value: CompletedAnswer[]) {
     if (value && value.length) {
       if (!environment.production) {
         this.validateSingleQuestion(value);
@@ -32,6 +45,17 @@ export class CategoricalQuestionComponent implements OnInit {
 
   @Input()
   notes: Note[]
+
+  showNotes = false;
+
+  constructor() { }
+
+  ngOnInit() {
+
+  }
+
+
+
 
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
@@ -49,7 +73,6 @@ export class CategoricalQuestionComponent implements OnInit {
     } catch (ex) { }
 
   }
-
   get hasNotes() {
     return this.notes && this.notes.length;
   }
@@ -82,10 +105,6 @@ export class CategoricalQuestionComponent implements OnInit {
 
 
 
-  constructor() { }
 
-  ngOnInit() {
-
-  }
 
 }

@@ -67,9 +67,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var decoded = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
                 _jwtOptions.SigningCredentials.Kid, false);
             var idOng = Int32.Parse(decoded["IdOng"]);
+            var organizator = bool.Parse(decoded["Organizator"]);
             var userName = decoded[JwtRegisteredClaimNames.Sub];
 
-            var json = await generateToken(userName, idOng);
+            var json = await generateToken(userName, idOng, organizator);
 
             return new OkObjectResult(json);
         }
@@ -88,7 +89,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
                     $"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
-            var json = await generateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value));
+            var json = await generateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value),
+                 bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == "Organizator")?.Value));
 
             return new OkObjectResult(json);
         }
@@ -107,7 +109,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             return await Task.FromResult(claims);
         }
 
-        private async Task<string> generateToken(string userName, int idOng = 0)
+        private async Task<string> generateToken(string userName, int idOng = 0, bool organizator = false)
         {
             var claims = new[]
             {
@@ -116,7 +118,8 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 new Claim(JwtRegisteredClaimNames.Iat,
                     ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
-                new Claim("IdOng", idOng.ToString())
+                new Claim("IdOng", idOng.ToString()),
+                new Claim("Organizator", organizator.ToString())
             };
 
             // Create the JWT security token and encode it.

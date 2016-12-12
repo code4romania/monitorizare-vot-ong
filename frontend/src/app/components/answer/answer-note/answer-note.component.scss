@@ -1,0 +1,14 @@
+.clear {
+    clear:both;
+}
+.content-container{
+    .note-image{
+        max-width:300px;
+        margin:10px;
+        float:right;
+    }
+    .note-text{
+        clear:right;
+        float:left
+    }
+}

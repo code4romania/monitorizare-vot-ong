@@ -6,6 +6,7 @@ using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.Models;
 using MonitorizareVot.Ong.Api.Services;
 using MonitorizareVot.Ong.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
@@ -25,6 +26,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             var hashValue = _hash.GetHash(message.Password);
 
             var userinfo = _context.AdminOng
+                .Include(a => a.IdOngNavigation)
                 .Where(a => a.Parola == hashValue &&
                                      a.Cont == message.UserName)
                                      .Select(Mapper.Map<UserInfo>)

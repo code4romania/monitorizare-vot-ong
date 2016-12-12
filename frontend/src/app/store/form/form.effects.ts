@@ -1,7 +1,7 @@
 import { sep } from 'path';
 import { Form } from '../../models/form.model';
 import { Observable } from 'rxjs/Rx';
-import { FormActionTypes, FormLoadAction, FormLoadCompletedAction } from './form.actions';
+import { FormActionTypes, FormErrorAction, FormLoadAction, FormLoadCompletedAction } from './form.actions';
 import { Actions, Effect } from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
 import { Injectable } from '@angular/core';
@@ -15,7 +15,8 @@ export class FormEffects {
         .map((action: FormLoadAction) => action.payload)
         .switchMap(ids => Observable.from(ids))
         .concatMap(id => this.getForm(id))
-        .map(form => new FormLoadCompletedAction([form]));
+        .map(form => new FormLoadCompletedAction([form]))
+        .catch((err, cought) =>  Observable.of(new FormErrorAction()))
 
     private getForm(id: string): Observable<Form> {
         return this.http.get('/api/v1/formulare', { body: { idFormular: id } })

@@ -20,16 +20,16 @@ export let appRoutes: Routes = [
         // name: 'home',
         path: '',
         pathMatch: 'full',
-        canActivate: [HomeGuard],
-        redirectTo: '/raspunsuri/urgente'
+        canActivate: [AuthGuard, HomeGuard],
+        redirectTo: '/urgente'
     }, {
         path: 'raspunsuri',
         component: AnswerComponent,
-        canActivate: [AnswerListGuard, AuthGuard],
+        canActivate: [AuthGuard, AnswerListGuard ],
         children: [{
             path: 'detalii/:idObservator/:idSectie',
             component: AnswerDetailsComponent,
-            canActivate: [AnswerDetailsGuard, AuthGuard]
+            canActivate: [AuthGuard, AnswerDetailsGuard]
         }, {
             path: '',
             canActivate: [AuthGuard],
@@ -37,16 +37,16 @@ export let appRoutes: Routes = [
         }]
     },
     {
-        path: 'raspunsuri/urgente',
+        path: 'urgente',
         component: AnswerComponent,
-        canActivate: [AnswerListGuard, AuthGuard],
+        canActivate: [AuthGuard, AnswerListGuard ],
         data: {
             urgent: true
         },
         children: [{
             path: 'detalii/:idObservator/:idSectie',
             component: AnswerDetailsComponent,
-            canActivate: [AnswerDetailsGuard, AuthGuard]
+            canActivate: [AuthGuard, AnswerDetailsGuard]
         }, {
             path: '',
             component: AnswerDetailsComponent
@@ -55,11 +55,11 @@ export let appRoutes: Routes = [
     {
         path: 'statistici',
         component: StatisticsComponent,
-        canActivate: [LoadStatisticsGuard, AuthGuard]
+        canActivate: [AuthGuard, LoadStatisticsGuard]
     }, {
         path: 'statistici/:key',
         component: StatisticsDetailsComponent,
-        canActivate: [LoadStatisticsGuard, AuthGuard]
+        canActivate: [AuthGuard, LoadStatisticsGuard]
     }, {
         path: 'login',
         canActivate: [AnonGuard],

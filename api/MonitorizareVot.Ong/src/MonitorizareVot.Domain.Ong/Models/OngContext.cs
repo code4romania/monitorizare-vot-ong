@@ -340,10 +340,28 @@ namespace MonitorizareVot.Domain.Ong.Models
             });
 
 
-            modelBuilder.Entity<Statistici>(entity =>
+            modelBuilder.Entity<StatisticiSimple>(entity =>
             {
-                entity.HasKey(e => e.Id)
+                entity.HasKey(e => e.Label)
                     .HasName("PK_Statistici");
+            });
+
+            modelBuilder.Entity<StatisticiCompuse>(entity =>
+            {
+                entity.HasKey(e => new { e.Label, e.Cod })
+                    .HasName("PK_StatisticiCompuse");
+            });
+
+            modelBuilder.Entity<StatisticiOptiuni>(entity =>
+            {
+                entity.HasKey(e => e.Label)
+                    .HasName("PK_StatisticiOptiuni");
+            });
+
+            modelBuilder.Entity<RaspunsSectie>(entity =>
+            {
+                entity.HasKey(e => new { e.IdObservator, e.IdSectie })
+                    .HasName("PK_RaspunsSectie");
             });
         }
 
@@ -360,6 +378,11 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
         public virtual DbSet<Sectiune> Sectiune { get; set; }
         public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
-        public virtual DbSet<Statistici> Statistici { get; set; }
+
+        // Entities used for GROUP BY results
+        public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }
+        public virtual DbSet<StatisticiCompuse> StatisticiCompuse { get; set; }
+        public virtual DbSet<StatisticiOptiuni> StatisticiOptiuni { get; set; }
+        public virtual DbSet<RaspunsSectie> RaspunsSectie { get; set; }
     }
 }
