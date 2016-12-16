@@ -1,14 +1,14 @@
 import { actionType } from '../util'
 import { Form } from '../../models/form.model'
 import { Action } from '@ngrx/store'
-export const FormActionTypes = {
-    LOAD: actionType('[Form] LOAD'),
-    LOAD_COMPLETE: actionType('[Form] LOAD_COMPLETE'),
-    ERROR: actionType('form/error'),
-    CLEAR: actionType('form/clear all')
+export class FormActionTypes{
+    static readonly LOAD = actionType('[Form] LOAD')
+    static  readonly LOAD_COMPLETE = actionType('[Form] LOAD_COMPLETE')
+    static  readonly ERROR = actionType('form/error')
+    static  readonly CLEAR = actionType('form/clear all')
 }
 export class FormLoadAction implements Action {
-    type = FormActionTypes.LOAD
+    readonly type = FormActionTypes.LOAD
     payload: string[]
 
     constructor(formIds: string[]) {
@@ -16,10 +16,10 @@ export class FormLoadAction implements Action {
     }
 }
 export class FormErrorAction implements Action {
-    type = FormActionTypes.ERROR
+    readonly type = FormActionTypes.ERROR
 }
 export class FormLoadCompletedAction implements Action {
-    type = FormActionTypes.LOAD_COMPLETE
+    readonly type = FormActionTypes.LOAD_COMPLETE
     payload: Form[]
 
     constructor(forms: Form[]) {
@@ -27,6 +27,6 @@ export class FormLoadCompletedAction implements Action {
     }
 }
 export class FormClearAll implements Action {
-    type = FormActionTypes.CLEAR
+    readonly type = FormActionTypes.CLEAR
 }
 export type FormActions = FormLoadAction | FormLoadCompletedAction | FormClearAll

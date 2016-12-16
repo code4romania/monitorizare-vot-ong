@@ -1,14 +1,14 @@
 import { LabelValueModel } from '../../models/labelValue.model';
 import { Action } from '@ngrx/store';
 import { actionType } from '../util';
-export const StatisticsActions = {
-    LOAD: actionType('[Stat] Load'),
-    LOADED: actionType('[Stat] Loaded'),
-    ERROR: actionType('[Stat] LoadedError')
+export class  StatisticsActions {
+    static  LOAD =  actionType('[Stat] Load')
+    static  LOADED =  actionType('[Stat] Loaded')
+    static  ERROR =  actionType('[Stat] LoadedError')
 }
 
 export class LoadStatisticAction implements Action {
-    type = StatisticsActions.LOAD
+    readonly type = StatisticsActions.LOAD
 
     payload: {
         key: string,
@@ -28,7 +28,7 @@ export class LoadStatisticAction implements Action {
     }
 }
 export class LoadStatisticsErrorAction implements Action {
-    type = StatisticsActions.ERROR
+    readonly type = StatisticsActions.ERROR
     payload: {
         key: string
     }
@@ -39,7 +39,7 @@ export class LoadStatisticsErrorAction implements Action {
     }
 }
 export class LoadStatisticsCompleteAction implements Action {
-    type = StatisticsActions.LOADED
+    readonly type = StatisticsActions.LOADED
     payload: {
         key: string
         totalItems: number

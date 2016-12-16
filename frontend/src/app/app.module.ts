@@ -1,5 +1,5 @@
 import { AppRoutingModule } from './routing/app.routing.module';
-import { components } from './components/components.module';
+import { components, ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -10,13 +10,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: components,
+  declarations:[AppComponent],
   imports: [
     CoreModule,
     BrowserModule,
     SharedModule,
     AppStoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ComponentsModule,
   ],
 
   providers: [

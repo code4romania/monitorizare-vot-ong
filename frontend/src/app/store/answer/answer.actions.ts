@@ -3,19 +3,19 @@ import { AnswerThread } from '../../models/answer.thread.model'
 import { CompletedQuestion } from '../../models/completed.question.model'
 import { actionType } from '../util'
 import { Action } from '@ngrx/store'
-export const AnswerActionTypes = {
-    LOAD_PREVIEW: actionType('[Answer] Load preview'),
-    LOAD_PREVIEW_ERROR: actionType('[Answer] Load preview error'),
-    LOAD_PREVIEW_DONE: actionType('[Answer] Load preview done'),
-    LOAD_DETAILS: actionType('[Answer] Load details'),
-    LOAD_DETAILS_DONE: actionType('[Answer] Load details done'),
-    LOAD_DETAILS_ERROR: actionType('[Answer] Load details error'),
-    LOAD_EXTRA: actionType('answer/load extra'),
-    LOAD_EXTRA_DONE: actionType('answer/load extra done'),
-    LOAD_EXTRA_ERROR: actionType('answer/load extra error'),
+export class AnswerActionTypes {
+    static readonly LOAD_PREVIEW = actionType('[Answer] Load preview')
+    static readonly LOAD_PREVIEW_ERROR = actionType('[Answer] Load preview error')
+    static readonly LOAD_PREVIEW_DONE = actionType('[Answer] Load preview done')
+    static readonly LOAD_DETAILS = actionType('[Answer] Load details')
+    static readonly LOAD_DETAILS_DONE = actionType('[Answer] Load details done')
+    static readonly LOAD_DETAILS_ERROR = actionType('[Answer] Load details error')
+    static readonly LOAD_EXTRA = actionType('answer/load extra')
+    static readonly LOAD_EXTRA_DONE = actionType('answer/load extra done')
+    static readonly LOAD_EXTRA_ERROR = actionType('answer/load extra error')
 }
 export class LoadAnswerPreviewAction implements Action {
-    type = AnswerActionTypes.LOAD_PREVIEW
+    readonly type = AnswerActionTypes.LOAD_PREVIEW
 
     payload: {
         page: number,
@@ -33,10 +33,10 @@ export class LoadAnswerPreviewAction implements Action {
     }
 }
 export class LoadAnswerPreviewErorrAction implements Action {
-    type = AnswerActionTypes.LOAD_PREVIEW_ERROR
+    readonly type = AnswerActionTypes.LOAD_PREVIEW_ERROR
 }
 export class LoadAnswerPreviewDoneAction implements Action {
-    type = AnswerActionTypes.LOAD_PREVIEW_DONE
+    readonly type = AnswerActionTypes.LOAD_PREVIEW_DONE
     payload: {
         threads: AnswerThread[]
         totalItems: number
@@ -52,7 +52,7 @@ export class LoadAnswerPreviewDoneAction implements Action {
     }
 }
 export class LoadAnswerDetailsAction implements Action {
-    type = AnswerActionTypes.LOAD_DETAILS
+    readonly type = AnswerActionTypes.LOAD_DETAILS
 
     payload: {
         observerId: number
@@ -66,10 +66,10 @@ export class LoadAnswerDetailsAction implements Action {
     }
 }
 export class LoadAnswerDetailsErrorAction implements Action {
-    type = AnswerActionTypes.LOAD_DETAILS_ERROR
+    readonly type = AnswerActionTypes.LOAD_DETAILS_ERROR
 }
 export class LoadAnswerDetailsDoneAction implements Action {
-    type = AnswerActionTypes.LOAD_DETAILS_DONE
+    readonly type = AnswerActionTypes.LOAD_DETAILS_DONE
 
     payload: CompletedQuestion[]
 
@@ -78,7 +78,7 @@ export class LoadAnswerDetailsDoneAction implements Action {
     }
 }
 export class LoadAnswerExtraAction implements Action {
-    type = AnswerActionTypes.LOAD_EXTRA
+    readonly type = AnswerActionTypes.LOAD_EXTRA
 
     payload: {
         observerId: number
@@ -92,11 +92,11 @@ export class LoadAnswerExtraAction implements Action {
     }
 }
 export class LoadAnswerExtraDoneAction implements Action {
-    type = AnswerActionTypes.LOAD_EXTRA_DONE
+    readonly type = AnswerActionTypes.LOAD_EXTRA_DONE
     constructor(public payload: AnswerExtra) {}
 }
 export class LoadAnswerExtraErrorAction implements Action {
-    type = AnswerActionTypes.LOAD_EXTRA_ERROR
+    readonly type = AnswerActionTypes.LOAD_EXTRA_ERROR
 }
 export type AnswerActions =
     LoadAnswerPreviewAction |

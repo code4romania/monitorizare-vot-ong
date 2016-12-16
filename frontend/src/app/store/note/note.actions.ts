@@ -1,12 +1,12 @@
 import { Note } from '../../models/note.model';
 import { Action } from '@ngrx/store';
 import { actionType } from '../util';
-export const NoteActionTypes = {
-    LOAD: actionType('[Note] Load'),
-    LOAD_DONE: actionType('[Note] Load done')
+export class NoteActionTypes {
+    static readonly LOAD = actionType('[Note] Load')
+    static readonly LOAD_DONE = actionType('[Note] Load done')
 }
 export class LoadNotesAction implements Action {
-    type = NoteActionTypes.LOAD
+    readonly type = NoteActionTypes.LOAD
 
     payload: {
         sectionId: number
@@ -20,7 +20,7 @@ export class LoadNotesAction implements Action {
     }
 }
 export class LoadNotesDoneAction implements Action {
-    type = NoteActionTypes.LOAD_DONE
+    readonly type = NoteActionTypes.LOAD_DONE
     payload: Note[]
     constructor(note: Note[]) {
         this.payload = note;

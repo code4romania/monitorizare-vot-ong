@@ -1,3 +1,5 @@
+import { SharedModule } from '../shared/shared.module';
+import { NgModule } from '@angular/core';
 import { AnswerExtraQuestionsComponent } from './answer/answer-extra-questions/answer-extra-questions.component';
 import { LoginComponent } from './login/login.component';
 import { StatisticsValueComponent } from './statistics/statistics-value/statistics-value.component';
@@ -13,10 +15,7 @@ import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
 
-
 export let components = [
-    AppComponent,
-
     AnswerComponent, AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
@@ -37,3 +36,13 @@ export let components = [
 
 
 ] 
+
+@NgModule({
+    declarations:components,
+    exports: components,
+    imports:[SharedModule]
+})
+export  class ComponentsModule {
+    
+}
+
