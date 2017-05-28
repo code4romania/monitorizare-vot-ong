@@ -173,7 +173,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(ApplicationUser user)
         {
-            var userInfo = await _mediator.SendAsync(user);
+            var userInfo = await _mediator.Send(user);
 
             if (userInfo == null)
                 return await Task.FromResult<ClaimsIdentity>(null);

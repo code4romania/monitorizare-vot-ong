@@ -9,7 +9,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public string Value { get; set; }
     }
 
-    public class StatisticiNumarObservatoriQuery : StatisticiPaginatedQuery, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
+    public class StatisticiNumarObservatoriQuery : StatisticiPaginatedQuery, IRequest<ApiListResponse<SimpleStatisticsModel>>
     {
     }
 
@@ -19,7 +19,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         Sectie
     }
 
-    public class StatisticiTopSesizariQuery : StatisticiPaginatedQuery, IAsyncRequest<ApiListResponse<SimpleStatisticsModel>>
+    public class StatisticiTopSesizariQuery : StatisticiPaginatedQuery, IRequest<ApiListResponse<SimpleStatisticsModel>>
     {
         public string Formular { get; set; }
         public TipGrupareStatistici Grupare { get; set; }

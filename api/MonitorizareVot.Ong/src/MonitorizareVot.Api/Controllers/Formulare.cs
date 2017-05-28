@@ -26,7 +26,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpGet]
         public async Task<List<SectiuneModel>> Get(FiltruFormulareModel model)
         {
-            return await _mediator.SendAsync(new IntrebariQuery { CodFormular = model.IdFormular });
+            return await _mediator.Send(new IntrebariQuery { CodFormular = model.IdFormular });
         }
     }
 }

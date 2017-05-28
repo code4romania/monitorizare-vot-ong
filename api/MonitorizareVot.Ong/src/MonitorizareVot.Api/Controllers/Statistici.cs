@@ -37,7 +37,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
-            return await _mediator.SendAsync(new StatisticiNumarObservatoriQuery
+            return await _mediator.Send(new StatisticiNumarObservatoriQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -66,7 +66,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
 
             if (model.Grupare == TipGrupareStatistici.Sectie) model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -92,7 +92,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -119,7 +119,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
             model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -145,7 +145,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -172,7 +172,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
             model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -198,7 +198,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -225,7 +225,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
             model.PageSize = Common.Constants.DEFAULT_PAGE_SIZE;
 
-            return await _mediator.SendAsync(new StatisticiTopSesizariQuery
+            return await _mediator.Send(new StatisticiTopSesizariQuery
             {
                 IdONG = idONG,
                 Organizator = organizator,
@@ -252,7 +252,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var idONG = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
-            return await _mediator.SendAsync(new StatisticiOptiuniQuery
+            return await _mediator.Send(new StatisticiOptiuniQuery
             {
                 IdIntrebare = model.IdIntrebare,
                 Organizator = organizator,

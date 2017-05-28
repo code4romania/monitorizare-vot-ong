@@ -8,7 +8,7 @@ using MonitorizareVot.Ong.Api.Models;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
-    public class ApplicationUser : IAsyncRequest<UserInfo>
+    public class ApplicationUser : IRequest<UserInfo>
     {
         [Required(AllowEmptyStrings = false)]
         public string UserName { get; set; }

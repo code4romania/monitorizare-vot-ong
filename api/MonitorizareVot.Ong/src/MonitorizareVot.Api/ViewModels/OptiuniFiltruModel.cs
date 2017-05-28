@@ -9,7 +9,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int IdIntrebare { get; set; }
     }
 
-    public class StatisticiOptiuniQuery : StatisticiQuery, IAsyncRequest<OptiuniModel>
+    public class StatisticiOptiuniQuery : StatisticiQuery, IRequest<OptiuniModel>
     {
         public int IdIntrebare { get; set; }
     }

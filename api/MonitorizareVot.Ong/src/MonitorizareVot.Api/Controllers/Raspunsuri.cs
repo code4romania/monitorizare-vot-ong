@@ -33,7 +33,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             var organizator = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
             var idOng = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
 
-            return await _mediator.SendAsync(new RaspunsuriQuery
+            return await _mediator.Send(new RaspunsuriQuery
             {
                 IdONG = idOng,
                 Organizator = organizator,
@@ -51,7 +51,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpGet("RaspunsuriCompletate")]
         public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Get(FiltruRaspunsuriModel model)
         {
-            return await _mediator.SendAsync(new RaspunsuriCompletateQuery
+            return await _mediator.Send(new RaspunsuriCompletateQuery
             {
                 IdObservator = model.IdObservator,
                 IdSectieDeVotare = model.IdSectieDeVotare
@@ -66,7 +66,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpGet("RaspunsuriFormular")]
         public async Task<RaspunsFormularModel> GetRaspunsuriFormular(FiltruRaspunsuriModel model)
         {
-            return await _mediator.SendAsync(new RaspunsuriFormularQuery
+            return await _mediator.Send(new RaspunsuriFormularQuery
             {
                 IdObservator = model.IdObservator,
                 IdSectieDeVotare = model.IdSectieDeVotare

@@ -12,7 +12,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int? CodIntrebare { get; set; }
     }
 
-    public class NotaQuery : IAsyncRequest<List<NotaModel>>
+    public class NotaQuery : IRequest<List<NotaModel>>
     {
         public int IdSectieDeVotare { get; set; }
         public int IdObservator { get; set; }

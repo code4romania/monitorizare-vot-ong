@@ -15,7 +15,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public IList<T> Raspunsuri { get; set; }
     }
 
-    public class RaspunsuriCompletateQuery : IAsyncRequest<List<IntrebareModel<RaspunsCompletatModel>>>
+    public class RaspunsuriCompletateQuery : IRequest<List<IntrebareModel<RaspunsCompletatModel>>>
     {
         public int IdSectieDeVotare { get; set; }
         public int IdObservator { get; set; }

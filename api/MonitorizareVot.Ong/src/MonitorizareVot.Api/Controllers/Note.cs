@@ -25,7 +25,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         [HttpGet]
         public async Task<List<NotaModel>> Get(FiltruNoteModel model)
         {
-            return await _mediator.SendAsync(new NotaQuery
+            return await _mediator.Send(new NotaQuery
             {
                 IdObservator = model.ObserverId,
                 IdSectieDeVotare = model.SectionId

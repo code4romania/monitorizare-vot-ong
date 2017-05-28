@@ -13,7 +13,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public List<IntrebareModel<RaspunsDisponibilModel>> Intrebari { get; set; }
     }
 
-    public class IntrebariQuery : IAsyncRequest<List<SectiuneModel>>
+    public class IntrebariQuery : IRequest<List<SectiuneModel>>
     {
         public string CodFormular { get; set; }
     }

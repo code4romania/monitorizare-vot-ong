@@ -1,22 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A77D74C-3CB5-4C26-943E-51DEEB0ACB2C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0CFB5F5F-3419-4D47-BEC0-C99FD1006380}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MonitorizareVot.Ong.Api", "src\MonitorizareVot.Api\MonitorizareVot.Ong.Api.xproj", "{18837128-04C4-4671-9DB8-F79342959FB8}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MonitorizareVot.Domain.Ong", "src\MonitorizareVot.Domain.Ong\MonitorizareVot.Domain.Ong.xproj", "{FBA151EE-CAB0-4ED1-9D61-53AD2CBD17DF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{84C42A14-6C8A-41D6-BF9B-87627681A7E9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MonitorizareVot.Ong.Api.Tests", "test\MonitorizareVot.Ong.Api.Tests\MonitorizareVot.Ong.Api.Tests.xproj", "{4AA73F60-D780-4007-B304-9305AD8E096E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitorizareVot.Api", "src\MonitorizareVot.Api\MonitorizareVot.Api.csproj", "{18837128-04C4-4671-9DB8-F79342959FB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitorizareVot.Domain.Ong", "src\MonitorizareVot.Domain.Ong\MonitorizareVot.Domain.Ong.csproj", "{FBA151EE-CAB0-4ED1-9D61-53AD2CBD17DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitorizareVot.Ong.Api.Tests", "test\MonitorizareVot.Ong.Api.Tests\MonitorizareVot.Ong.Api.Tests.csproj", "{4AA73F60-D780-4007-B304-9305AD8E096E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{18837128-04C4-4671-9DB8-F79342959FB8} = {18837128-04C4-4671-9DB8-F79342959FB8}
 	EndProjectSection
