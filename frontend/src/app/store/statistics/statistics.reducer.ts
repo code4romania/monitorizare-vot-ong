@@ -23,7 +23,7 @@ export function statisticsReducer(state = statisticsInitialState, action: Statis
 
 }
 
-export function statisticsItemReducer(state: StatisticsStateItem, action: StatisticsActionTypes) {
+export function statisticsItemReducer(state: StatisticsStateItem, action: any) {
     switch (action.type) {
         case StatisticsActions.LOAD:
                 let newList = action.payload.refresh,

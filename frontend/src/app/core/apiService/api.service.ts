@@ -81,7 +81,7 @@ export class ApiService {
       headers: new Headers({
         Authorization: 'Bearer ' + this.tokenService.token
       })
-    }).cache();
+    });
 
     this.tokenRefreshObservable.map(response => response.text()).subscribe((token) => {
       this.tokenRefreshObservable = undefined;
