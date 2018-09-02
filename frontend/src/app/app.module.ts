@@ -8,6 +8,14 @@ import { SharedModule } from './shared/shared.module';
 import { AppStoreModule } from './store/store.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Http } from '@angular/http';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
+
+export function HttpLoaderFactory(http: Http) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations:[AppComponent],
@@ -18,10 +26,16 @@ import { BrowserModule } from '@angular/platform-browser';
     AppStoreModule,
     AppRoutingModule,
     ComponentsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [Http]
+      }
+    })
   ],
-
   providers: [
-    AnswersService
+    AnswersService,
   ],
 
   bootstrap: [AppComponent]

@@ -6,9 +6,27 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TabsModule, CollapseModule } from 'ng2-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-    imports: [FormsModule, CommonModule, CollapseModule, TabsModule, RouterModule],
-    exports: [FormsModule, CommonModule, CollapseModule, TabsModule, RouterModule, PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
+    imports: [
+      FormsModule,
+      CommonModule,
+      CollapseModule,
+      TabsModule,
+      RouterModule,
+      TranslateModule
+    ],
+    exports: [
+      FormsModule,
+      CommonModule,
+      CollapseModule,
+      TabsModule,
+      RouterModule,
+      PaginationComponent,
+      LoadingIndicatorComponent,
+      ErrorIndicatorComponent,
+      TranslateModule
+    ],
     declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
     providers: []
 })

@@ -27,6 +27,8 @@
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "^2.2.1",
     "@ngrx/store-devtools": "^3.2.2",
+    "@ngx-translate/core": "^7.2.2",
+    "@ngx-translate/http-loader": "<1.0.0",
     "@types/lodash": "^4.14.50",
     "angular2-jwt": "^0.1.25",
     "bootstrap": "^3.3.7",
@@ -57,6 +59,7 @@
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
     "typescript": "^2.4.0",
-    "webdriver-manager": "10.2.5"
+    "webdriver-manager": "10.2.5",
+    "webpack": "^4.17.1"
   }
 }
