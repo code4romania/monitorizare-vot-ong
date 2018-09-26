@@ -1,4 +1,6 @@
+@import '~variables.scss';
 .nav-tabs > li > a.active {
-  color: #5e288d !important;
+  color: $color-secondary !important;
   font-weight: bold;
 }
+
