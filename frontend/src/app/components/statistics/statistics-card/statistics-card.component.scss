@@ -1,5 +1,6 @@
+@import '~variables.scss';
 .card-header {
-  background: #ddd2e7;
+  background: $color-light-gray;
   padding: 10px 25px;
   height: 100px;
   display: flex;
@@ -9,7 +10,7 @@
 }
 .card-row {
   &:nth-child(2n) {
-    background: #ddd2e7;
+    background: $color-light-gray;
   }
 }
 .card-footer {

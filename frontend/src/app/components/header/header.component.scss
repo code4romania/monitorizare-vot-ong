@@ -1,26 +1,6 @@
-//ul {
-//    margin-top:25px;
-//    list-style: none;
-//    display:inline-block;
-//    li {
-//        float:left;
-//        margin-left:35px;
-//        font-size:26px;
-//
-//        a{
-//            &hover{
-//                text-decoration: none;
-//            }
-//            &.active{
-//                text-decoration: underline;
-//                -moz-text-decoration-color: yellow;
-//            }
-//        }
-//    }
-//}
-
+@import '~variables.scss';
 .navbar.navbar-default {
-  background: #fbd844;
+  background: $color-primary;
 
   .navbar-brand {
     padding: 2px 40px 2px 25px;
@@ -38,12 +18,13 @@
       text-align: center;
     }
     li > a.active {
-      background: #5e288d;
-      color: white;
+      //background: #5e288d;
+      background: $color-secondary;
+      color: $color-white;
     }
     li:hover > a {
-      background: #5e288d;
-      color: white;
+      background: $color-secondary;
+      color: $color-white;
     }
   }
 }
