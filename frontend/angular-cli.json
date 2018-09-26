@@ -18,12 +18,15 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/font-awesome/scss/font-awesome.scss",
-        "../node_modules/frow/css/frow.css",
-        "styles.css"
+        "styles/bootstrap.min.css",
+        "styles/bootstrap-theme.min.css",
+        "styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

@@ -6,20 +6,23 @@
   <div *ngIf="isLoading()">
     <app-loading-indicator></app-loading-indicator>
   </div>
-  <div *ngIf="!isLoading()">
-    <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
-      <app-answer-extra-questions *ngIf="!answerState.answerExtraError" [answerExtra]="answerState?.answerExtra">
-      </app-answer-extra-questions>
-      <tabset>
-        <tab *ngFor="let form of formState.items">
-          <template tabHeading>Formular {{form.idFormular}}</template>
-          <app-answer-form-list [notes]="formNotes(form.idFormular)" [form]="form" [completedQuestions]="formAnswers(form.idFormular)">
-          </app-answer-form-list>
-        </tab>
-      </tabset>
-    </div>
-    <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
-      Nu ati selectat nimic
+  <div *ngIf="!isLoading()" class="panel panel-default">
+    <div class="panel-body">
+      <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
+        <app-answer-extra-questions *ngIf="!answerState.answerExtraError" [answerExtra]="answerState?.answerExtra">
+        </app-answer-extra-questions>
+        <tabset>
+          <tab *ngFor="let form of formState.items">
+            <template tabHeading>{{'FORM' | translate}} {{form.idFormular}}</template>
+            <app-answer-form-list [notes]="formNotes(form.idFormular)" [form]="form"
+                                  [completedQuestions]="formAnswers(form.idFormular)">
+            </app-answer-form-list>
+          </tab>
+        </tabset>
+      </div>
+      <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
+        {{'NOTHING_SELECTED' | translate}}
+      </div>
     </div>
   </div>
 </div>

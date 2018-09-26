@@ -1,16 +1,14 @@
-<div class="frow">
+<div class="container-fluid">
 
-  <div class="list-header col-md-1-1">
-      <h3>{{(answerState | async)?.urgent ? urgentHeader : notUrgentHeader}}</h3>
-      <h5>{{(answerState | async)?.urgent ? urgentSubHeader : notUrgentSubHeader}}</h5>
+  <div class="list-header col-md-12">
+      <h3>{{((answerState | async)?.urgent ? 'URGENT_HEADER' : 'NOT_URGENT_HEADER') | translate}}</h3>
+      <h5>{{((answerState | async)?.urgent ? 'URGENT_SUBHEADER' : 'NOT_URGENT_SUBHEADER') | translate}}</h5>
   </div>
-  <div class="col-md-3-12">
+  <div class="col-md-3">
     <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()" (pageChanged)="pageChanged($event)">
     </app-answer-list>
   </div>
-  <div class="col-md-1-12">
-  </div>
-  <div class="col-md-8-12">
+  <div class="col-md-8">
     <router-outlet>
     </router-outlet>
   </div>

@@ -1,10 +1,4 @@
-a{
-    color:black;
-    &:link, &:visited, &:active, &:hover{
-        color:black;
-        text-decoration: none;
-    }
-    &:hover{
-        font-weight: bold;
-    }
+.nav-tabs > li > a.active {
+  color: #5e288d !important;
+  font-weight: bold;
 }

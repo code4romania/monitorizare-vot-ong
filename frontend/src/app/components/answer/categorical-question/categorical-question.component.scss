@@ -1,5 +1,19 @@
+.question-answer {
+  display: inline;
+}
+.question-checkbox {
+  margin: 0 5px 0 10px;
+  display: inline;
+}
+.question-wrapper {
+  padding: 10px;
+  margin-bottom: 0;
+  &.flagged-question {
+     border: 1px solid red;
+  }
+}
 .flagged-question{
-    .question-title { 
+    .question-title {
             color:red
     }
 }
@@ -7,4 +21,7 @@
     .question-answer {
             color:red
     }
+}
+.show-note-button-wrapper {
+  text-align: right;
 }
