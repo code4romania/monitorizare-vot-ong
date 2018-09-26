@@ -1,70 +1,45 @@
-<div class="frow">
-	<div class="col-md-1-3">
-		<a [routerLink]="['/']">
-			<svg width="68" height="68" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-				xmlns:figma="http://www.figma.com/figma/ns">
-				<title>logo</title>
-				<desc>Created using Figma</desc>
-				<g id="Canvas" transform="translate(843 -847)" figma:type="canvas">
-					<rect x="-843" y="847" width="68" height="68" fill="#FFFFFF" />
-					<mask id="mask0_alpha" mask-type="alpha">
-						<path d="M -913 817L 367 817L 367 1667L -913 1667L -913 817Z" fill="#FFFFFF" />
-					</mask>
-					<g id="Pagina raspuns flagged" style="mix-blend-mode:normal;" mask="url(#mask0_alpha)" figma:type="frame">
-						<g id="Rectangle" style="mix-blend-mode:normal;" figma:type="vector">
-							<use xlink:href="#path0_fill" transform="translate(-913 817)" fill="#FFFFFF" style="mix-blend-mode:normal;" />
-						</g>
-						<g id="logo" style="mix-blend-mode:normal;" figma:type="frame">
-							<g id="Fill 1" style="mix-blend-mode:normal;" figma:type="vector-operation">
-								<use xlink:href="#path1_fill" transform="translate(-834.748 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
-							</g>
-							<g id="Fill 2" style="mix-blend-mode:normal;" figma:type="vector-operation">
-								<use xlink:href="#path2_fill" transform="translate(-821.961 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
-							</g>
-							<g id="Fill 3" style="mix-blend-mode:normal;" figma:type="vector-operation">
-								<use xlink:href="#path3_fill" transform="translate(-807.355 870.234)" fill="#333333" style="mix-blend-mode:normal;" />
-							</g>
-							<g id="Fill 23" style="mix-blend-mode:normal;" figma:type="vector-operation">
-								<use xlink:href="#path4_fill" transform="translate(-842.65 847.112)" fill="#333333" style="mix-blend-mode:normal;" />
-							</g>
-						</g>
-					</g>
-				</g>
-				<defs>
-					<path id="path0_fill" fill-rule="evenodd" d="M 0 0L 1280 0L 1280 850L 0 850L 0 0Z" />
-					<path id="path1_fill" fill-rule="evenodd" d="M 12.1586 0L 0 20.9644L 24.3172 20.9644L 12.1586 0ZM 12.1586 4.03748L 20.8047 18.9457L 3.51251 18.9457L 12.1586 4.03748Z"
-					/>
-					<path id="path2_fill" fill-rule="evenodd" d="M 0 20.9644L 24.3172 20.9644L 12.1586 0L 0 20.9644ZM 20.8047 18.9457L 3.51251 18.9457L 12.1586 4.03748L 20.8047 18.9457Z"
-					/>
-					<path id="path3_fill" fill-rule="evenodd" d="M 0 0L 12.1586 20.9644L 24.3173 0L 0 0ZM 12.1586 16.9269L 3.51251 2.01874L 20.8047 2.01874L 12.1586 16.9269Z"
-					/>
-					<path id="path4_fill" fill-rule="evenodd" d="M 0 33.6045C 0 52.1337 15.1431 67.209 33.7564 67.209C 52.3698 67.209 67.5128 52.1337 67.5128 33.6045C 67.5128 15.0749 52.3698 0 33.7564 0C 15.1431 0 0 15.0749 0 33.6045ZM 1.97772 33.6045C 1.97772 16.1607 16.2338 1.96881 33.7564 1.96881C 51.2791 1.96881 65.5351 16.1607 65.5351 33.6045C 65.5351 51.0483 51.2791 65.2401 33.7564 65.2401C 16.2338 65.2401 1.97772 51.0483 1.97772 33.6045Z"
-					/>
-				</defs>
-			</svg>
-		</a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" [routerLink]="['/']">
+        <img src="../../../assets/vote_monitor.png" class="brand-logo" alt="">
+      </a>
+    </div>
 
-	</div>
-	<ul class="col-md-2-3">
-		<li>
-			<a [routerLink]="['/urgente']" routerLinkActive="active">
-				Urgente
-			</a>
-		</li>
-		<li>
-			<a [routerLink]="['/raspunsuri']" routerLinkActive="active">
-				Raspunsuri
-			</a>
-		</li>
-		<li>
-			<a [routerLink]="['/statistici']" routerLinkActive="active">
-				Statistici
-			</a>
-		</li>
-		<li>
-			<a [href]="observerGuideUrl" target="_blank">
-				Ghidul observatorului
-			</a>
-		</li>
-	</ul>
-</div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <a [routerLink]="['/urgente']" routerLinkActive="active">
+            {{'EMERGENCIES' | translate}}
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/raspunsuri']" routerLinkActive="active">
+            {{'ANSWERS' | translate}}
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/statistici']" routerLinkActive="active">
+            {{'STATISTICS' | translate}}
+          </a>
+        </li>
+        <li>
+          <a [href]="observerGuideUrl" target="_blank">
+            {{'OBSERVER_GUIDE' | translate}}
+          </a>
+        </li>
+      </ul>
+      <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li><a href="#">Link</a></li>-->
+      <!--</ul>-->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

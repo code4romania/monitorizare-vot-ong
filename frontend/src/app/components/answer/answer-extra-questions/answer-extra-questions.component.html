@@ -1,20 +1,20 @@
-<div class="frow row-center comp-container">
+<div class="comp-container">
     <div *ngIf="answerExtra" class="col-md-3-3">
-        <div class="frow">
+        <div class="">
             <div *ngIf="answerExtra.oraSosirii" class="col-md-1-2">
-                Ora sosirii: {{answerExtra.oraSosirii | date:'shortTime'}}
+                {{'ARRIVAL_TIME' | translate}}: {{answerExtra.oraSosirii | date:'shortTime'}}
             </div>
             <div *ngIf="answerExtra.oraPlecarii" class="col-md-1-2">
-                Ora plecarii: {{answerExtra.oraPlecarii | date:'shortTime'}}
+                {{'DEPARTURE_TIME' | translate}}: {{answerExtra.oraPlecarii | date:'shortTime'}}
             </div>
         </div>
         <div class="frow">
             <div class="col-md-1-2">
-                Este zona urbana:
+                  {{'IS_URBAN_AREA' | translate}}:
                 <i class="fa" [ngClass]="{'fa-square': !answerExtra.esteZonaUrbana, 'fa-check-square': answerExtra.esteZonaUrbana}" aria-hidden="true"></i>
             </div>
             <div class="col-md-1-2">
-                Presedintele BESV este femeie:
+                {{'IS_PRESIDENT_WOMAN' | translate}}:
                 <i class="fa" [ngClass]="{'fa-square': !answerExtra.presedinteBesvesteFemeie, 'fa-check-square': answerExtra.presedinteBesvesteFemeie}" aria-hidden="true"></i>
             </div>
         </div>

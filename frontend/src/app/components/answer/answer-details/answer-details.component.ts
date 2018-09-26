@@ -16,12 +16,9 @@ import * as _ from 'lodash';
   styleUrls: ['./answer-details.component.scss']
 })
 export class AnswerDetailsComponent implements OnInit, OnDestroy {
-
-
-
-  answerState: AnswerState
-  formState: FormState
-  noteState: NoteState
+  answerState: AnswerState;
+  formState: FormState;
+  noteState: NoteState;
 
   subs: Subscription[] = [];
 
@@ -35,7 +32,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
 
   hasError() {
-    return !this.answerState ||  this.answerState.selectedError 
+    return !this.answerState ||  this.answerState.selectedError
     // || !this.noteState || this.noteState.error
     // || this.answerState.answerExtraError
   }

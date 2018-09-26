@@ -1,14 +1,17 @@
 <div *ngIf="!state.threadsError">
     <div *ngIf="!state.threadsLoading">
-        <div *ngFor="let answer of answerList()" class="card">
-            <a [routerLink]="[answerLinkPrefix(),answer.idObservator, answer.idSectie]">
+        <div *ngFor="let answer of answerList()" class="panel panel-default">
+          <div class="panel-body">
+            <a [routerLink]="[answerLinkPrefix(),answer.idObservator, answer.idSectie]"
+               routerLinkActive="active">
 
-                <h4>Sectia: {{answer.sectie}}</h4>
+                <h4>{{'STATION' | translate}}: {{answer.sectie}}</h4>
                 <h6>{{answer.observator}}</h6>
-                <hr class="list-break" />
 
             </a>
+          </div>
         </div>
+
         <app-pagination [page]="state.page" [pageSize]="state.pageSize" [totalItems]="state.totalItems" [nextEnabled]="!state.threadsLoading"
             (pageChanged)="pageChangedEvent($event)"></app-pagination>
     </div>

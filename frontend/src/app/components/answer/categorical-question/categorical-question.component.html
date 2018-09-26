@@ -1,15 +1,19 @@
-<div *ngIf="question" class="form-group" [ngClass]="{'flagged-question':isFlagged}">
+<div *ngIf="question" class="form-group question-wrapper" [ngClass]="{'flagged-question':isFlagged}">
   <div class="frow row-start">
-    <p class="col-md-1-1" class="question-title" font-size="24px"><strong>{{question.textIntrebare}} ?</strong></p>
+    <p class="col-md-1-1" class="question-title" font-size="24px">
+      <strong>
+        {{question.codIntrebare}}:
+        {{question.textIntrebare}} ?
+      </strong></p>
   </div>
   <div class="question-answers">
     <div class="frow row-start" *ngFor="let answer of question.raspunsuri" style="margin-left:10px; margin-top:3px" [ngClass]="{'flagged-answer':isFlaggedAnswer(answer)}">
-      <div class="question-answer">
-        {{answer.textOptiune}}
-      </div>
-      <div style="margin-left:10px">
+      <div class="question-checkbox">
         <i class="fa" style="font-size:16px" [ngClass]="{'fa-square': !isChecked(answer), 'fa-check-square': isChecked(answer)}"
           aria-hidden="true"></i>
+      </div>
+      <div class="question-answer">
+        {{answer.textOptiune}}
       </div>
       <div style="margin-left:10px">
         <input style="display:inline-block" type="text" readonly *ngIf="isTextAnswer(answer) && isChecked(answer)" [value]="answerTextValue(answer)"
@@ -17,10 +21,12 @@
       </div>
     </div>
   </div>
-
-  <div class="frow row-end">
-    <button *ngIf="notes && notes.length" (click)="showNotes = !showNotes">
-      {{showNotes ? 'Ascunde': 'Vezi'}} {{notes.length === 1 ? 'nota' : 'note'}}
+  <div class="show-note-button-wrapper">
+    <button *ngIf="notes && notes.length" (click)="showNotes = !showNotes"
+            class="show-note-button btn"
+            [ngClass]="{'btn-success': !isFlagged, 'btn-danger': isFlagged}"
+    >
+      {{(showNotes ? 'HIDE': 'SHOW') | translate}} {{(notes.length === 1 ? 'NOTE' : 'NOTES') | translate}}
     </button>
   </div>
 

@@ -9,7 +9,8 @@ import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
         RouterModule.forRoot(appRoutes,{
-            enableTracing: !environment.production
+            enableTracing: false
+            // enableTracing: !environment.production
         })
     ],
     providers: [HomeGuard, AnswerListGuard, AnswerDetailsGuard, LoadStatisticsGuard]

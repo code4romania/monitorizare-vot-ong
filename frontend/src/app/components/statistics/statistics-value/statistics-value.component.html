@@ -1,15 +1,15 @@
-<div class="frow row-start">
-    <div class="col-md-1-3 frow row-start">
-        <p style="margin-right:10px">
-            <strong>{{index}}</strong>
-        </p>
-        <p>
+<div class="row">
+    <div class="col-xs-8">
+        <span style="margin-right:10px">
+            <strong>{{index | number:'2.0-0'}}</strong>
+        </span>
+        <span>
             <strong>
             {{label}}
           </strong>
-        </p>
+        </span>
     </div>
-    <p class="col-md-1-3">
+    <div class="col-xs-4 text-center">
         {{value}}
-    </p>
+    </div>
 </div>

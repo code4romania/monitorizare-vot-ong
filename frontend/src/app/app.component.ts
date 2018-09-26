@@ -1,6 +1,7 @@
 import 'rxjs/Rx';
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,17 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(translate: TranslateService) {
-    translate.setDefaultLang('ro');
-    translate.use('ro');
+  public languages: string[] = ['en', 'ro'];
+  public langIndex: number = 0;
+  constructor(translate: TranslateService, zone: NgZone) {
+    const lang = localStorage.getItem('language');
+    console.log('xx', lang);
+    if (lang) {
+      this.langIndex = this.languages.findIndex(x => x === lang);
+    } else {
+      localStorage.setItem('language', 'en')
+    }
+    translate.setDefaultLang(lang || 'en');
+    translate.use(lang || 'en');
   }
 }

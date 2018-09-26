@@ -15,11 +15,6 @@ export class AnswerComponent implements OnInit {
     answerState: Observable<AnswerState>;
     formState: Observable<FormState>;
 
-    urgentHeader = "Ultimele sesizări trimise de observatorii pe care i-ai acreditat";
-    urgentSubHeader = "Sunt marcate ca ugente pentru că reprezintă semnale de fraudă sau nereguli grave în secțiile în care au fost raportate.";
-    notUrgentHeader = "Ultimele răspunsuri trimise de observatorii pe care i-ai acreditat";
-    notUrgentSubheader = "Sunt listate toate răspunsurile date de fiecare observator, între care și cele de tip flagged, semnalate specific.";
-
     constructor(private store: Store<AppState>) { }
 
     ngOnInit() {

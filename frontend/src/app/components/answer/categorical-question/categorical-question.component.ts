@@ -29,7 +29,7 @@ export class CategoricalQuestionComponent implements OnInit {
 
   @Input() question: FormQuestion;
 
-  @Input('completedAnswers') 
+  @Input('completedAnswers')
   set inputCompletedAnswers(value: CompletedAnswer[]) {
     if (value && value.length) {
       if (!environment.production) {
@@ -44,14 +44,26 @@ export class CategoricalQuestionComponent implements OnInit {
   completedAnswers: _.Dictionary<CompletedAnswer> = {};
 
   @Input()
-  notes: Note[]
+  notes: Note[];
 
   showNotes = false;
 
   constructor() { }
 
   ngOnInit() {
-
+    this.notes = [{
+      idNota: 1,
+      caleFisierAtasat: null,
+      textNota: 'amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls ',
+      codFormular: 'b01',
+      codIntrebare: 5,
+    },{
+      idNota: 1,
+      caleFisierAtasat: null,
+      textNota: 'amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls ',
+      codFormular: 'b01',
+      codIntrebare: 5,
+    }];
   }
 
 

@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
       FormsModule,
       CommonModule,
       CollapseModule,
-      TabsModule,
+      TabsModule.forRoot(),
       RouterModule,
       TranslateModule
     ],
