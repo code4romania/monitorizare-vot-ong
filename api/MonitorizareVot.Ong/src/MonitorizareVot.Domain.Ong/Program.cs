@@ -40,7 +40,7 @@ namespace MonitorizareVot.Domain.Ong
                 context.Database.EnsureCreated();
                 logger.LogDebug($"Migration finished");
                 logger.LogDebug($"Initializing data seeding...");
-                context.EnsureSeedData();
+                context.EnsureUSRSeedData();
                 logger.LogDebug($"Data seeded for {conn}");
 
             }
