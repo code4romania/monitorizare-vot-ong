@@ -13,6 +13,7 @@ namespace MonitorizareVot.Domain.Ong
     public class OptiuneExcel
     {
         public bool HasFlag { get; set; }
+        public bool SeIntroduceText { get; set; }
         public string Text { get; set; }
     }
     public class IntrebareExcel
@@ -58,6 +59,7 @@ namespace MonitorizareVot.Domain.Ong
                                 {
                                     HasFlag = reader.GetString(0) == "flag",
                                     CodFormular = reader.GetString(1)?.Trim(),
+                                    IdSectiune = reader.GetString(1)?.Trim(),
                                     CodIntrebare = reader.GetString(2)?.Trim(),
                                     TextIntrebare = reader.GetString(3)?.Trim(),
                                     IdTipIntrebare = reader.GetString(4)?.Trim(),
@@ -69,7 +71,7 @@ namespace MonitorizareVot.Domain.Ong
                                 // Caz special pentru intrebari de tip number & text
                                 if(intrebareExcel.IdTipIntrebare == "number" || intrebareExcel.IdTipIntrebare == "text"){
 
-                                    intrebareExcel.Optiuni.Add(new OptiuneExcel() { Text = "input", HasFlag = false });
+                                    intrebareExcel.Optiuni.Add(new OptiuneExcel() { Text = "input", HasFlag = false, SeIntroduceText=true });
 
                                 } else {
 
@@ -78,7 +80,7 @@ namespace MonitorizareVot.Domain.Ong
                                     while (indexOptiune < reader.FieldCount)
                                     {
                                         var optiune = reader.GetType() != typeof(String) ? reader.GetValue(indexOptiune)?.ToString() : reader.GetString(indexOptiune);
-                                        if (optiune != null && optiune != string.Empty)
+                                        if (optiune != null && optiune != string.Empty && optiune != "input")
                                         {
                                             //IMPORTANT: conventie la nivelul excelului, marcam optiune flagged appenduind la optiune "-flag"
                                             intrebareExcel.Optiuni.Add(new OptiuneExcel() {

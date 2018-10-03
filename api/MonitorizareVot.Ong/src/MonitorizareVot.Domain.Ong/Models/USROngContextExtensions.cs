@@ -16,19 +16,14 @@ namespace MonitorizareVot.Domain.Ong
     public static class USROngContextExtensions
     {
 
-        private static List<Sectiune> _sectiuni = new List<Sectiune>
-        {
-                new Sectiune { IdSectiune = 1, CodSectiune = "A", Descriere = "Deschidere" }
-        };
-
-       
-  
+      
         public static void EnsureUSRSeedData(this OngContext context)
         {
 
             var intrebariExcel = ExcelParser.GetIntrebariObservatorFromFile();
             List<Optiune> optiuni = GetOptiuni(intrebariExcel);
-            List<Intrebare> intrebari = GetIntrebariObservator(intrebariExcel, optiuni);
+            List<Sectiune> sectiuni = GetSectiuni(intrebariExcel);
+            List<Intrebare> intrebari = GetIntrebariObservator(intrebariExcel, optiuni, sectiuni);
 
             if (!context.AllMigrationsApplied())
                 return;
@@ -38,7 +33,7 @@ namespace MonitorizareVot.Domain.Ong
                 context.DataCleanUp();
                 context.SeedVersions();
                 context.SeedJudete();
-                context.SeedSectiune();
+                context.SeedSectiune(sectiuni);
                 context.SeedOptiuni(optiuni);
                 context.SeedIntrebariObservator(intrebari);
 
@@ -113,10 +108,12 @@ namespace MonitorizareVot.Domain.Ong
 
         private static void DataCleanUp(this OngContext context)
         {
+            
             context.Database.ExecuteSqlCommand("delete from RaspunsDisponibil");
             context.Database.ExecuteSqlCommand("delete from Intrebare");
             context.Database.ExecuteSqlCommand("delete from Sectiune");
             context.Database.ExecuteSqlCommand("delete from VersiuneFormular");
+            context.Database.ExecuteSqlCommand("delete from Optiune");
         }
 
         private static void SeedOptiuni(this OngContext context, List<Optiune> optiuni)
@@ -130,13 +127,13 @@ namespace MonitorizareVot.Domain.Ong
             context.SaveChanges();
         }
 
-        private static void SeedSectiune(this OngContext context)
+        private static void SeedSectiune(this OngContext context, List<Sectiune> sectiuni)
         {
             if (context.Sectiune.Any())
                 return;
 
             context.Sectiune.AddRange(
-               _sectiuni
+               sectiuni
                 );
 
             context.SaveChanges();
@@ -178,25 +175,45 @@ namespace MonitorizareVot.Domain.Ong
 
         private static List<Optiune> GetOptiuni(List<IntrebareExcel> intrebariExcel)
         {
-            var textOptiuni = intrebariExcel.SelectMany(x => x.Optiuni).Select(x => x.Text).Distinct().ToList();
-            var optiuni = textOptiuni.Select((text, index) => new Optiune { IdOptiune = index + 1, TextOptiune = text }).ToList();
+           
+           
+            var optiuni = intrebariExcel.SelectMany(x => x.Optiuni)
+                .GroupBy(p => new { p.Text, p.SeIntroduceText })
+                .Select(g => g.First())
+                .Select((optiuneExcel, index) => 
+                new Optiune { IdOptiune = index + 1, TextOptiune = optiuneExcel.Text, SeIntroduceText = optiuneExcel.SeIntroduceText }
+                ).ToList();
+          
             return optiuni;
         }
 
-        private static List<Intrebare> GetIntrebariObservator(List<IntrebareExcel> intrebariExcel, List<Optiune> optiuni)
+        private static List<Sectiune> GetSectiuni(List<IntrebareExcel> intrebariExcel)
+        {
+
+
+            var sectiuni = intrebariExcel.Select(x => x.IdSectiune).Distinct()
+                .Select((text, index) =>
+                new Sectiune { IdSectiune = index + 1, CodSectiune = text.Split('-')[0], Descriere = text  }
+                )
+                .ToList();
+
+            return sectiuni;
+        }
+
+        private static List<Intrebare> GetIntrebariObservator(List<IntrebareExcel> intrebariExcel, List<Optiune> optiuni, List<Sectiune> sectiuni)
         {
             var intrebari = intrebariExcel.Select((x, index) => new Intrebare
             {
                 IdIntrebare = index + 1,
                 CodIntrebare = x.CodIntrebare,
                 CodFormular = x.CodFormular.Split('-')[0],
-                IdSectiune = 1, // IMPORTANT: ce sectiune?
+                IdSectiune = GetIdSectiune(x.IdSectiune, sectiuni),
                 IdTipIntrebare = GetTipIntrebare(x.IdTipIntrebare),
                 TextIntrebare = x.TextIntrebare,
                 RaspunsDisponibil = x.Optiuni.Select((y, indexOptiune) => new RaspunsDisponibil
                 {
                     IdRaspunsDisponibil = index * 1000 + indexOptiune,
-                    IdOptiune = GetIdOptiune(y.Text, optiuni),
+                    IdOptiune = GetIdOptiune(y, optiuni),
                     RaspunsCuFlag = y.HasFlag
                 }).ToList()
             }).ToList();
@@ -213,17 +230,22 @@ namespace MonitorizareVot.Domain.Ong
                 { "single choice cu text",  TipIntrebareEnum.OSinguraOptiune},
                 { "multiple choice",  TipIntrebareEnum.OptiuniMultiple},
                 { "multiple choice cu text",  TipIntrebareEnum.OptiuniMultipleCuText},
-                { "number",  TipIntrebareEnum.OSinguraOptiuneCuText},
-                { "text",  TipIntrebareEnum.OSinguraOptiuneCuText}
+                { "number",  TipIntrebareEnum.OSinguraOptiune},
+                { "text",  TipIntrebareEnum.OSinguraOptiune}
             };
 
             return hash[cod];
         }
 
 
-        private static int GetIdOptiune(string cod, List<Optiune> optiuni)
+        private static int GetIdOptiune(OptiuneExcel optiuneExcel, List<Optiune> optiuni)
         {
-            return optiuni.SingleOrDefault(x => x.TextOptiune == cod).IdOptiune;
+            return optiuni.SingleOrDefault(x => x.TextOptiune == optiuneExcel.Text && x.SeIntroduceText == optiuneExcel.SeIntroduceText).IdOptiune;
+        }
+
+        private static int GetIdSectiune(String sectiuneExcel, List<Sectiune> sectiuni)
+        {
+            return sectiuni.SingleOrDefault(x => x.Descriere == sectiuneExcel).IdSectiune;
         }
 
 
