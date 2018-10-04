@@ -193,7 +193,7 @@ namespace MonitorizareVot.Domain.Ong
 
             var sectiuni = intrebariExcel.Select(x => x.IdSectiune).Distinct()
                 .Select((text, index) =>
-                new Sectiune { IdSectiune = index + 1, CodSectiune = text.Split('-')[0], Descriere = text  }
+                new Sectiune { IdSectiune = index + 1, CodSectiune = text.Split('-')[0], Descriere = text.Split('-')[1] }
                 )
                 .ToList();
 
@@ -245,7 +245,7 @@ namespace MonitorizareVot.Domain.Ong
 
         private static int GetIdSectiune(String sectiuneExcel, List<Sectiune> sectiuni)
         {
-            return sectiuni.SingleOrDefault(x => x.Descriere == sectiuneExcel).IdSectiune;
+            return sectiuni.SingleOrDefault(x => x.CodSectiune == sectiuneExcel.Split('-')[0]).IdSectiune;
         }
 
 

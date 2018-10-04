@@ -30,7 +30,7 @@ namespace MonitorizareVot.Domain.Ong
 
     public class ExcelParser
     {
-        public static List<IntrebareExcel> GetIntrebariObservatorFromFile(string filePath = "Formulare breakdown.xlsx")
+        public static List<IntrebareExcel> GetIntrebariObservatorFromFile(string filePath = "MV Sambata.xlsx")
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var intrebariExcel = new List<IntrebareExcel>();
@@ -82,10 +82,11 @@ namespace MonitorizareVot.Domain.Ong
                                         var optiune = reader.GetType() != typeof(String) ? reader.GetValue(indexOptiune)?.ToString() : reader.GetString(indexOptiune);
                                         if (optiune != null && optiune != string.Empty && optiune != "input")
                                         {
-                                            //IMPORTANT: conventie la nivelul excelului, marcam optiune flagged appenduind la optiune "-flag"
+                                           
                                             intrebareExcel.Optiuni.Add(new OptiuneExcel() {
-                                                Text = optiune.Trim().Split(new string[] { "-flag" }, StringSplitOptions.None)[0],
-                                                HasFlag = optiune.Contains("-flag") });
+                                                Text = optiune.Trim().Split(new string[] { "$" }, StringSplitOptions.None)[0],
+                                                HasFlag = optiune.Contains("$flag"),
+                                                SeIntroduceText = optiune.Contains("$text") });
                                         }
 
                                         indexOptiune++;
