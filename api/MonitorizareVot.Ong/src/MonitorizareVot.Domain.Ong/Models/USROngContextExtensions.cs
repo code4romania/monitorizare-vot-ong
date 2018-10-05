@@ -108,7 +108,9 @@ namespace MonitorizareVot.Domain.Ong
 
         private static void DataCleanUp(this OngContext context)
         {
-            
+            context.Database.ExecuteSqlCommand("truncate table Nota");
+            context.Database.ExecuteSqlCommand("truncate table NotaLipsa");
+            context.Database.ExecuteSqlCommand("truncate table Raspuns");
             context.Database.ExecuteSqlCommand("delete from RaspunsDisponibil");
             context.Database.ExecuteSqlCommand("delete from Intrebare");
             context.Database.ExecuteSqlCommand("delete from Sectiune");
@@ -147,9 +149,9 @@ namespace MonitorizareVot.Domain.Ong
                 return;
 
             context.VersiuneFormular.AddRange(
-                 new VersiuneFormular { CodFormular = "A", VersiuneaCurenta = 1 },
-                 new VersiuneFormular { CodFormular = "B", VersiuneaCurenta = 1 },
-                 new VersiuneFormular { CodFormular = "C", VersiuneaCurenta = 1 }
+                 new VersiuneFormular { CodFormular = "A", VersiuneaCurenta = 2 },
+                 new VersiuneFormular { CodFormular = "B", VersiuneaCurenta = 2 },
+                 new VersiuneFormular { CodFormular = "C", VersiuneaCurenta = 2 }
              );
 
             context.SaveChanges();
@@ -205,11 +207,11 @@ namespace MonitorizareVot.Domain.Ong
             var intrebari = intrebariExcel.Select((x, index) => new Intrebare
             {
                 IdIntrebare = index + 1,
-                CodIntrebare = x.CodIntrebare,
-                CodFormular = x.CodFormular.Split('-')[0],
+                CodIntrebare = x.CodFormular,
+                CodFormular = x.NewCodFormular,
                 IdSectiune = GetIdSectiune(x.IdSectiune, sectiuni),
                 IdTipIntrebare = GetTipIntrebare(x.IdTipIntrebare),
-                TextIntrebare = x.TextIntrebare,
+                TextIntrebare = x.CodIntrebare + " " + x.TextIntrebare,
                 RaspunsDisponibil = x.Optiuni.Select((y, indexOptiune) => new RaspunsDisponibil
                 {
                     IdRaspunsDisponibil = index * 1000 + indexOptiune,
@@ -227,11 +229,9 @@ namespace MonitorizareVot.Domain.Ong
         {
             Dictionary<string, int> hash = new Dictionary<string, int>() {
                 { "single choice",  TipIntrebareEnum.OSinguraOptiune},
-                { "single choice cu text",  TipIntrebareEnum.OSinguraOptiune},
+                { "single choice cu text",  TipIntrebareEnum.OSinguraOptiuneCuText},
                 { "multiple choice",  TipIntrebareEnum.OptiuniMultiple},
-                { "multiple choice cu text",  TipIntrebareEnum.OptiuniMultipleCuText},
-                { "number",  TipIntrebareEnum.OSinguraOptiune},
-                { "text",  TipIntrebareEnum.OSinguraOptiune}
+                { "multiple choice cu text",  TipIntrebareEnum.OptiuniMultipleCuText}
             };
 
             return hash[cod];
