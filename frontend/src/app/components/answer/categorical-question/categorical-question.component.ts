@@ -51,19 +51,6 @@ export class CategoricalQuestionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.notes = [{
-      idNota: 1,
-      caleFisierAtasat: null,
-      textNota: 'amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls ',
-      codFormular: 'b01',
-      codIntrebare: 5,
-    },{
-      idNota: 1,
-      caleFisierAtasat: null,
-      textNota: 'amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls amazebaamazeballslls ',
-      codFormular: 'b01',
-      codIntrebare: 5,
-    }];
   }
 
 
