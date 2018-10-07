@@ -10,7 +10,10 @@ using MonitorizareVot.Ong.Api.Services;
 
 namespace MonitorizareVot.Api.Queries
 {
-    public class ObserverRequestsHandler :IAsyncRequestHandler<ImportObserversRequest, int>, IAsyncRequestHandler<NewObserverRequest, int>
+    public class ObserverRequestsHandler :
+        IAsyncRequestHandler<ImportObserversRequest, int>, 
+        IAsyncRequestHandler<NewObserverRequest, int>,
+        IAsyncRequestHandler<ResetDeviceIdRequest>
     {
         private readonly OngContext _context;
         private readonly ILogger _logger;
@@ -74,6 +77,24 @@ namespace MonitorizareVot.Api.Queries
             };
             _context.Observator.Add(observer);
             return _context.SaveChangesAsync();
+        }
+
+
+        public Task Handle(ResetDeviceIdRequest message)
+        {
+            // find observer
+            var observers = _context.Observator.Where(o => o.NumarTelefon == message.PhoneNumber);
+            if (observers.Count() != 1)
+            {
+                return Task.FromResult(0);
+            }
+
+            // make sure the number is unique
+            // clear device id
+            observers.First().IdDispozitivMobil = null;
+
+            return _context.SaveChangesAsync();
+            // save
         }
     }
 }
