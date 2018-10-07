@@ -32,7 +32,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                                      .Select(Mapper.Map<UserInfo>)
                                      .FirstOrDefault();
 
-            return userinfo;
+            return await Task.FromResult(userinfo);
         }
     }
 }

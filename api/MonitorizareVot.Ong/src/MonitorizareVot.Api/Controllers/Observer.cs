@@ -50,7 +50,7 @@ namespace MonitorizareVot.Api.Controllers
 
             //await _mediator.Send(new ResetDeviceIdRequest {PhoneNumber = phoneNumber});
 
-            return Task.FromResult(new { });
+            return await Task.FromResult(new { });
         }
     }
 }

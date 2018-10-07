@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,6 +22,7 @@ using MonitorizareVot.Ong.Api.Services;
 using Serilog;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +31,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Swashbuckle.AspNetCore.Swagger;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace MonitorizareVot.Ong.Api
@@ -70,7 +68,7 @@ namespace MonitorizareVot.Ong.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            
+
             ConfigureJwt(services);
 
             services.AddAuthorization(options =>
@@ -81,6 +79,7 @@ namespace MonitorizareVot.Ong.Api
 
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
 
             services.AddMvc(config =>
             {
@@ -210,11 +209,6 @@ namespace MonitorizareVot.Ong.Api
                 .ApplicationInsightsTraces(Configuration["ApplicationInsights:InstrumentationKey"])
                 .CreateLogger();
 
-            app.UseApplicationInsightsRequestTelemetry();
-
-            app.UseApplicationInsightsExceptionTelemetry();
-
-
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
             app.Use(async (context, next) =>
@@ -227,7 +221,6 @@ namespace MonitorizareVot.Ong.Api
                 }
             });
 
-            app.UseStaticFiles();
 
             app.UseExceptionHandler(
             builder =>
@@ -241,7 +234,7 @@ namespace MonitorizareVot.Ong.Api
                 );
             });
 
-            
+            app.UseAuthentication();
 
             ConfigureHash(app);
 
@@ -257,16 +250,14 @@ namespace MonitorizareVot.Ong.Api
 
             _container.Verify();
 
-            app.UseMvc();
-
-
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
-            app.UseSwaggerUI();
-        }
+            app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "MV API v1"));
 
+            app.UseMvc();
+        }
 
         private void ConfigureCache(IServiceCollection services)
         {
@@ -307,7 +298,7 @@ namespace MonitorizareVot.Ong.Api
                     {
 
                         services.AddDistributedMemoryCache();
-                       // _container.RegisterInstance<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
+                        // _container.RegisterInstance<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
                         break;
                     }
             }
@@ -317,11 +308,6 @@ namespace MonitorizareVot.Ong.Api
         {
             _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<HashOptions>>());
             _container.RegisterSingleton<IHashService, HashService>();
-            //_container.RegisterInstance<IOptions<HashOptions>>(new OptionsManager<HashOptions>(new List<IConfigureOptions<HashOptions>>
-            //    {
-            //        new ConfigureFromConfigurationOptions<HashOptions>(
-            //            Configuration.GetSection("HashOptions"))
-            //    }));
         }
 
         private void ConfigureContainer(IServiceCollection services)
@@ -340,7 +326,6 @@ namespace MonitorizareVot.Ong.Api
         {
             //exemplu de servicii custom
             _container.Register(() => app.ApplicationServices.GetService<IOptions<JwtIssuerOptions>>(), Lifestyle.Transient);
-            _container.RegisterSingleton<IHashService, HashService>();
             //container.Register<ISectieDeVotareService, SectieDevotareDBService>(Lifestyle.Scoped);
         }
 
@@ -355,14 +340,14 @@ namespace MonitorizareVot.Ong.Api
 
 
             // Cross-wire ASP.NET services (if any). For instance:
-            _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+            _container.RegisterInstance(app.ApplicationServices.GetService<ILoggerFactory>());
             _container.RegisterConditional(
                 typeof(ILogger),
                 c => typeof(Logger<>).MakeGenericType(c.Consumer.ImplementationType),
                 Lifestyle.Singleton,
                 c => true);
 
-            _container.RegisterSingleton<IConfigurationRoot>(Configuration);
+            _container.RegisterInstance<IConfigurationRoot>(Configuration);
         }
 
         private void RegisterDbContext<TDbContext>(string connectionString = null)
@@ -373,7 +358,7 @@ namespace MonitorizareVot.Ong.Api
                 var optionsBuilder = new DbContextOptionsBuilder<TDbContext>();
                 optionsBuilder.UseSqlServer(connectionString);
 
-                _container.RegisterSingleton(optionsBuilder.Options);
+                _container.RegisterInstance(optionsBuilder.Options);
 
                 _container.Register<TDbContext>(Lifestyle.Scoped);
             }
@@ -383,24 +368,20 @@ namespace MonitorizareVot.Ong.Api
             }
         }
 
-        private IMediator BuildMediator()
+        private void BuildMediator()
         {
             var assemblies = GetAssemblies().ToArray();
             _container.RegisterSingleton<IMediator, Mediator>();
             _container.Register(typeof(IRequestHandler<,>), assemblies);
             _container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
-            _container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            _container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
-            _container.RegisterSingleton(Console.Out);
-            _container.RegisterSingleton(new SingleInstanceFactory(_container.GetInstance));
-            _container.RegisterSingleton(new MultiInstanceFactory(_container.GetAllInstances));
+            _container.Collection.Register(typeof(INotificationHandler<>), assemblies);
+            _container.Collection.Register(typeof(IAsyncNotificationHandler<>), assemblies);
+            _container.RegisterInstance(Console.Out);
+            _container.RegisterInstance(new SingleInstanceFactory(_container.GetInstance));
+            _container.RegisterInstance(new MultiInstanceFactory(_container.GetAllInstances));
 
             // had to add this registration as we were getting the same behavior as described here: https://github.com/jbogard/MediatR/issues/155
-            _container.RegisterCollection(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
-
-            var mediator = _container.GetInstance<IMediator>();
-
-            return mediator;
+            _container.Collection.Register(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
         }
 
         private void RegisterAutomapper()
@@ -411,7 +392,7 @@ namespace MonitorizareVot.Ong.Api
                 cfg.CreateMissingTypeMaps = true;
             });
 
-            _container.RegisterSingleton(Mapper.Configuration);
+            _container.RegisterInstance(Mapper.Configuration);
             _container.Register<IMapper>(() => new Mapper(Mapper.Configuration), Lifestyle.Scoped);
         }
 

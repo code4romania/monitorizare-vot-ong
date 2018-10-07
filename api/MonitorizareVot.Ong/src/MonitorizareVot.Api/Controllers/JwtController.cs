@@ -66,7 +66,7 @@ namespace MonitorizareVot.Api.Controllers
                 return BadRequest(ModelState);
 
             //await _mediator.Send(new ImportObserversRequest {FilePath = "d:\\mv-name-rest.11.15.txt", IdOng = 3, NameIndexInFile = 2}); // mv
-            await _mediator.Send(new ImportObserversRequest { FilePath = "d:\\dv-rest7.txt", IdOng = 2, NameIndexInFile = 0 }); // usr
+            //await _mediator.Send(new ImportObserversRequest { FilePath = "d:\\dv-rest7.txt", IdOng = 2, NameIndexInFile = 0 }); // usr
 
             var identity = await GetClaimsIdentity(applicationUser);
             if (identity == null)
