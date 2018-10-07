@@ -32,6 +32,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Swagger;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace MonitorizareVot.Ong.Api
@@ -69,17 +70,8 @@ namespace MonitorizareVot.Ong.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-
-            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["SecretKey"]));
-
-            // Configure JwtIssuerOptions
-            services.Configure<JwtIssuerOptions>(options =>
-            {
-                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
-            });
+            
+            ConfigureJwt(services);
 
             services.AddAuthorization(options =>
             {
@@ -92,21 +84,15 @@ namespace MonitorizareVot.Ong.Api
 
             services.AddMvc(config =>
             {
-
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-
-                //TODO: uncomment this to apply [Authorize] attribute on All controller actions and thus enable authorization
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
-
-            services.AddSwaggerGen();
-
-            services.ConfigureSwaggerGen(options =>
+            services.AddSwaggerGen(options =>
             {
-                options.SingleApiVersion(new Info
+                options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "Monitorizare Vot - API ONG",
@@ -118,39 +104,34 @@ namespace MonitorizareVot.Ong.Api
                             Email = "info@monitorizarevot.ro",
                             Name = "Code for Romania",
                             Url = "http://monitorizarevot.ro"
-                        },
+                        }
                 });
 
                 var path = PlatformServices.Default.Application.ApplicationBasePath +
-                           System.IO.Path.DirectorySeparatorChar + "MonitorizareVot.Ong.Api.xml";
+                           Path.DirectorySeparatorChar + "MonitorizareVot.Ong.Api.xml";
 
-                if (System.IO.File.Exists(path))
+                if (File.Exists(path))
                     options.IncludeXmlComments(path);
             });
+
             ConfigureContainer(services);
+            ConfigureCache(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-            IApplicationLifetime appLifetime, IDistributedCache cache)
+        private void ConfigureJwt(IServiceCollection services)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            loggerFactory.AddSerilog();
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo
-                .ApplicationInsightsTraces(Configuration["ApplicationInsights:InstrumentationKey"])
-                .CreateLogger();
-
-            app.UseApplicationInsightsRequestTelemetry();
-
-            app.UseApplicationInsightsExceptionTelemetry();
-
-
-            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
-
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["SecretKey"]));
+
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+            });
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
@@ -167,40 +148,74 @@ namespace MonitorizareVot.Ong.Api
 
                 ClockSkew = TimeSpan.Zero
             };
-            var events = new JwtBearerEvents
-            {
-                OnAuthenticationFailed = (context) =>
+
+            //var events = new JwtBearerEvents
+            //{
+            //    OnAuthenticationFailed = (context) =>
+            //    {
+            //        if (context.Exception is SecurityTokenExpiredException &&
+            //            context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+            //            context.Request.Method.ToLower() == "put")
+            //        {
+            //            // skip authentification 
+            //            context.SkipToNextMiddleware();
+            //        }
+
+            //        return Task.FromResult(0);
+            //    },
+            //    OnTokenValidated = (context) =>
+            //    {
+            //        if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+            //            context.Request.Method.ToLower() == "put")
+            //        {
+            //            context.HandleResponse();
+            //            throw new SecurityTokenSignatureKeyNotFoundException();
+            //        }
+
+            //        return Task.FromResult(0);
+            //    }
+            //};
+
+            //var jwtoptions = new JwtBearerOptions
+            //{
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true,
+            //    TokenValidationParameters = tokenValidationParameters,
+            //    Events = events
+            //});
+
+            services.AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
+                .AddJwtBearer(options =>
                 {
-                    if (context.Exception is SecurityTokenExpiredException &&
-                        context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
-                        context.Request.Method.ToLower() == "put")
-                    {
-                        // skip authentification 
-                        context.SkipToNextMiddleware();
-                    }
+                    options.TokenValidationParameters = tokenValidationParameters;
+                    //options.Events = events;
+                    options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                    options.RequireHttpsMetadata = false;
+                    options.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                });
+        }
 
-                    return Task.FromResult(0);
-                },
-                OnTokenValidated = (context) =>
-                {
-                    if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
-                        context.Request.Method.ToLower() == "put")
-                    {
-                        context.HandleResponse();
-                        throw new SecurityTokenSignatureKeyNotFoundException();
-                    }
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            IApplicationLifetime appLifetime, IDistributedCache cache)
+        {
+            app.UseStaticFiles();
 
-                    return Task.FromResult(0);
-                }
-            };
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters,
-                Events = events
-            });
+            loggerFactory.AddSerilog();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo
+                .ApplicationInsightsTraces(Configuration["ApplicationInsights:InstrumentationKey"])
+                .CreateLogger();
+
+            app.UseApplicationInsightsRequestTelemetry();
+
+            app.UseApplicationInsightsExceptionTelemetry();
+
+
+            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
             app.Use(async (context, next) =>
             {
@@ -226,9 +241,9 @@ namespace MonitorizareVot.Ong.Api
                 );
             });
 
-            ConfigureCache(env);
+            
 
-            ConfigureHash();
+            ConfigureHash(app);
 
             RegisterServices(app);
 
@@ -249,17 +264,17 @@ namespace MonitorizareVot.Ong.Api
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
-            app.UseSwaggerUi();
+            app.UseSwaggerUI();
         }
 
 
-        private void ConfigureCache(IHostingEnvironment env)
+        private void ConfigureCache(IServiceCollection services)
         {
             var enableCache = Configuration.GetValue<bool>("ApplicationCacheOptions:Enabled");
 
             if (!enableCache)
             {
-                _container.RegisterSingleton<ICacheService>(new NoCacheService());
+                _container.RegisterInstance<ICacheService>(new NoCacheService());
                 return;
             }
 
@@ -271,33 +286,42 @@ namespace MonitorizareVot.Ong.Api
             {
                 case "RedisCache":
                     {
-                        _container.RegisterSingleton<IDistributedCache>(
-                          new RedisCache(
-                              new OptionsManager<RedisCacheOptions>(new List<IConfigureOptions<RedisCacheOptions>>
-                              {
-                                new ConfigureFromConfigurationOptions<RedisCacheOptions>(
-                                    Configuration.GetSection("RedisCacheOptions"))
-                               })
-                          ));
+                        services.AddDistributedRedisCache(options =>
+                        {
+                            Configuration.GetSection("RedisCacheOptions").Bind(options);
+                        });
+
+                        //_container.RegisterInstance<IDistributedCache>(
+                        //  new RedisCache(
+                        //      new OptionsManager<RedisCacheOptions>(new List<IConfigureOptions<RedisCacheOptions>>
+                        //      {
+                        //        new ConfigureFromConfigurationOptions<RedisCacheOptions>(
+                        //            Configuration.GetSection("RedisCacheOptions"))
+                        //       })
+                        //  ));
                         break;
                     }
 
                 default:
                 case "MemoryDistributedCache":
                     {
-                        _container.RegisterSingleton<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
+
+                        services.AddDistributedMemoryCache();
+                       // _container.RegisterInstance<IDistributedCache>(new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions())));
                         break;
                     }
             }
         }
 
-        private void ConfigureHash()
+        private void ConfigureHash(IApplicationBuilder app)
         {
-            _container.RegisterSingleton<IOptions<HashOptions>>(new OptionsManager<HashOptions>(new List<IConfigureOptions<HashOptions>>
-                {
-                    new ConfigureFromConfigurationOptions<HashOptions>(
-                        Configuration.GetSection("HashOptions"))
-                }));
+            _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<HashOptions>>());
+            _container.RegisterSingleton<IHashService, HashService>();
+            //_container.RegisterInstance<IOptions<HashOptions>>(new OptionsManager<HashOptions>(new List<IConfigureOptions<HashOptions>>
+            //    {
+            //        new ConfigureFromConfigurationOptions<HashOptions>(
+            //            Configuration.GetSection("HashOptions"))
+            //    }));
         }
 
         private void ConfigureContainer(IServiceCollection services)
