@@ -1,4 +1,30 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Redis;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
+using MonitorizareVot.Domain.Ong.Models;
+using MonitorizareVot.Ong.Api.Common;
+using MonitorizareVot.Ong.Api.Models;
+using MonitorizareVot.Ong.Api.Services;
+using Serilog;
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,36 +32,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using MonitorizareVot.Ong.Api.Services;
-using Serilog;
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore;
-using SimpleInjector.Integration.AspNetCore.Mvc;
-using Swashbuckle.Swagger.Model;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
-using MonitorizareVot.Domain.Ong.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using MonitorizareVot.Ong.Api.Common;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
-using MonitorizareVot.Ong.Api.Models;
-using Microsoft.Extensions.Caching.Redis;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -54,7 +51,7 @@ namespace MonitorizareVot.Ong.Api
             if (env.EnvironmentName.EndsWith("Development", StringComparison.CurrentCultureIgnoreCase))
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
+                builder.AddUserSecrets<Startup>();
 
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
                 builder.AddApplicationInsightsSettings(developerMode: true);
@@ -95,7 +92,7 @@ namespace MonitorizareVot.Ong.Api
 
             services.AddMvc(config =>
             {
-                
+
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();

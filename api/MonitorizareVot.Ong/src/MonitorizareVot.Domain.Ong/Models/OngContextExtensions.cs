@@ -3,10 +3,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Domain.Ong.ValueObjects;
 
-namespace MonitorizareVot.Domain.Ong
+namespace MonitorizareVot.Domain.Ong.Models
 {
     public static class OngContextExtensions
     {
