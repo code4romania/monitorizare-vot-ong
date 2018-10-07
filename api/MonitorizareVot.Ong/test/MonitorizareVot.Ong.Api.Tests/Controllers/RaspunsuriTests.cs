@@ -5,7 +5,6 @@ using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Newtonsoft.Json;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using Xunit;
 
@@ -148,7 +147,6 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int page = 2;
             const int pageSize = 5;
             const bool urgent = false;
-            const int idOng = -1;
 
             // ACT
             var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");
@@ -170,7 +168,6 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int page = 2;
             const int pageSize = 5;
             const bool urgent = false;
-            const int idOng = -1;
 
             // ACT
             var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");
