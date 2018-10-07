@@ -1,34 +1,29 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
+using Jwt;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+using MonitorizareVot.Api.ViewModels;
 using MonitorizareVot.Ong.Api.Common;
 using MonitorizareVot.Ong.Api.ViewModels;
-using Microsoft.IdentityModel.Tokens;
-using Jwt;
-using System.Collections.Generic;
-using MediatR;
-using System.Linq;
 
-namespace MonitorizareVot.Ong.Api.Controllers
+namespace MonitorizareVot.Api.Controllers
 {
     [Route("api/v1/auth")]
     public class JwtController : Controller
     {
         private readonly IMediator _mediator;
-        //private static string SecretKey = "needtogetthisfromenvironment";
-        //private static SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         private readonly JwtIssuerOptions _jwtOptions;
 
         private readonly ILogger _logger;
-        private readonly JsonSerializerSettings _serializerSettings;
 
         public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, IMediator mediator)
         {
@@ -37,13 +32,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
             ThrowIfInvalidOptions(_jwtOptions);
 
             _logger = loggerFactory.CreateLogger<JwtController>();
-
-            _serializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented
-            };
         }
-
 
         [HttpGet]
         [AllowAnonymous]
@@ -52,25 +41,19 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             string token = Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(token))
-            {
                 return Forbid();
-            }
             if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            {
                 token = token.Substring("Bearer ".Length).Trim();
-            }
             if (string.IsNullOrEmpty(token))
-            {
                 return Forbid();
-            }
 
             var decoded = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
                 _jwtOptions.SigningCredentials.Kid, false);
-            var idOng = Int32.Parse(decoded["IdOng"]);
+            var idOng = int.Parse(decoded["IdOng"]);
             var organizator = bool.Parse(decoded["Organizator"]);
             var userName = decoded[JwtRegisteredClaimNames.Sub];
 
-            var json = await generateToken(userName, idOng, organizator);
+            var json = await GenerateToken(userName, idOng, organizator);
 
             return new OkObjectResult(json);
         }
@@ -82,6 +65,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            //await _mediator.Send(new ImportObserversRequest {FilePath = "d:\\mv-name-rest.11.15.txt", IdOng = 3, NameIndexInFile = 2}); // mv
+            await _mediator.Send(new ImportObserversRequest { FilePath = "d:\\dv-rest7.txt", IdOng = 2, NameIndexInFile = 0 }); // usr
+
             var identity = await GetClaimsIdentity(applicationUser);
             if (identity == null)
             {
@@ -89,12 +75,11 @@ namespace MonitorizareVot.Ong.Api.Controllers
                     $"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
-            var json = await generateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value),
+            var json = await GenerateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value),
                  bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == "Organizator")?.Value));
 
             return new OkObjectResult(json);
         }
-
 
         [Authorize]
         [HttpPost("test")]
@@ -102,14 +87,14 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             var claims = User.Claims.Select(c => new
             {
-                Type = c.Type,
-                Value = c.Value
+                c.Type,
+                c.Value
             });
 
             return await Task.FromResult(claims);
         }
 
-        private async Task<string> generateToken(string userName, int idOng = 0, bool organizator = false)
+        private async Task<string> GenerateToken(string userName, int idOng = 0, bool organizator = false)
         {
             var claims = new[]
             {
@@ -143,7 +128,6 @@ namespace MonitorizareVot.Ong.Api.Controllers
             //var json = JsonConvert.SerializeObject(response, _serializerSettings);
             return encodedJwt;
         }
-
 
         private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
         {
@@ -185,7 +169,5 @@ namespace MonitorizareVot.Ong.Api.Controllers
                     new Claim("Organizator", userInfo.Organizator.ToString(), typeof(bool).ToString())
                 }));
         }
-
     }
 }
-
