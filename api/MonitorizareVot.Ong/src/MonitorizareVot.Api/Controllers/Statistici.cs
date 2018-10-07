@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.Extensions.Configuration;
+using MonitorizareVot.Api.ViewModels;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
@@ -262,5 +265,66 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 CacheSeconds = _cacheSeconds
             });
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/answers")]
+        public async Task<SimpleStatisticsModel> Answers()
+        {
+            return await _mediator.Send(new AnswersRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/stations")]
+        public async Task<SimpleStatisticsModel> StationsVisited()
+        {
+            return await _mediator.Send(new StationsVisitedRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/counties")]
+        public async Task<SimpleStatisticsModel> Counties()
+        {
+            return await _mediator.Send(new CountiesVisitedRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/notes")]
+        public async Task<SimpleStatisticsModel> Notes()
+        {
+            return await _mediator.Send(new NotesUploadedRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/loggedinobservers")]
+        public async Task<SimpleStatisticsModel> LoggedInObservers()
+        {
+            return await _mediator.Send(new LoggedInObserversRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/flaggedanswers")]
+        public async Task<SimpleStatisticsModel> FlaggedAnswers()
+        {
+            return await _mediator.Send(new FlaggedAnswersRequest());
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("mini/all")]
+        public async Task<List<SimpleStatisticsModel>> All()
+        {
+            var list = new List<SimpleStatisticsModel>
+            {
+                await _mediator.Send(new AnswersRequest()),
+                await _mediator.Send(new StationsVisitedRequest()),
+                await _mediator.Send(new CountiesVisitedRequest()),
+                await _mediator.Send(new NotesUploadedRequest()),
+                await _mediator.Send(new LoggedInObserversRequest()),
+                await _mediator.Send(new FlaggedAnswersRequest())
+            };
+
+            return list;
+        }
+
     }
 }

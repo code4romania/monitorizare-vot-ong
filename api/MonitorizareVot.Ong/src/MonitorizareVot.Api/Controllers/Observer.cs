@@ -40,5 +40,17 @@ namespace MonitorizareVot.Api.Controllers
             
             return Task.FromResult(new {});
         }
+        [Authorize]
+        [HttpPatch]
+        [Route("")]
+        public async Task<dynamic> ResetDeviceId(string phoneNumber)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            //await _mediator.Send(new ResetDeviceIdRequest {PhoneNumber = phoneNumber});
+
+            return Task.FromResult(new { });
+        }
     }
 }

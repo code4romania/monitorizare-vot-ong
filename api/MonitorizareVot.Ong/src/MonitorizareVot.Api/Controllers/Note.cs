@@ -19,9 +19,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <summary>
         /// Returneaza notele atasate unui formular 
         /// </summary>
-        /// <param name="IdSectieDeVotare">Id-ul sectiei unde s-a completat formularul</param>
-        /// <param name="idObservator">Id-ul observatorului care a completat formularul</param>
-        /// <returns></returns>
+        /// <param name="SectionId">Id-ul sectiei unde s-a completat formularul</param>
+        /// <param name="ObserverId">Id-ul observatorului care a completat formularul</param>
+        /// <param name="model">{SectionId:int, ObserverId:int}</param>
+        /// <returns></returns> 
         [HttpGet]
         public async Task<List<NotaModel>> Get(FiltruNoteModel model)
         {

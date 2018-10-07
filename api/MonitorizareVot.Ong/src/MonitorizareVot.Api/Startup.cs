@@ -130,7 +130,6 @@ namespace MonitorizareVot.Ong.Api
                 if (System.IO.File.Exists(path))
                     options.IncludeXmlComments(path);
             });
-
             ConfigureContainer(services);
         }
 
@@ -171,27 +170,31 @@ namespace MonitorizareVot.Ong.Api
 
                 ClockSkew = TimeSpan.Zero
             };
-            var events = new JwtBearerEvents();
-            events.OnAuthenticationFailed = (context) =>
+            var events = new JwtBearerEvents
             {
-                if (context.Exception is SecurityTokenExpiredException &&
-                    context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
-                    context.Request.Method.ToLower() == "put")
+                OnAuthenticationFailed = (context) =>
                 {
-                    // skip authentification 
-                    context.SkipToNextMiddleware();
-                }
+                    if (context.Exception is SecurityTokenExpiredException &&
+                        context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+                        context.Request.Method.ToLower() == "put")
+                    {
+                        // skip authentification 
+                        context.SkipToNextMiddleware();
+                    }
 
-                return Task.FromResult(0);
-            };
-            events.OnTokenValidated = (context) =>
-            {
-                if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" && context.Request.Method.ToLower() == "put")
+                    return Task.FromResult(0);
+                },
+                OnTokenValidated = (context) =>
                 {
-                    context.HandleResponse();
-                    throw new SecurityTokenSignatureKeyNotFoundException();
+                    if (context.Request.Path.ToString().ToLower() == "/api/v1/auth" &&
+                        context.Request.Method.ToLower() == "put")
+                    {
+                        context.HandleResponse();
+                        throw new SecurityTokenSignatureKeyNotFoundException();
+                    }
+
+                    return Task.FromResult(0);
                 }
-                return Task.FromResult(0);
             };
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
@@ -226,15 +229,11 @@ namespace MonitorizareVot.Ong.Api
                 );
             });
 
-            app.UseSimpleInjectorAspNetRequestScoping(_container);
-
-            _container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
-
             ConfigureCache(env);
 
-            RegisterServices(app);
-
             ConfigureHash();
+
+            RegisterServices(app);
 
             InitializeContainer(app);
 
@@ -306,6 +305,10 @@ namespace MonitorizareVot.Ong.Api
 
         private void ConfigureContainer(IServiceCollection services)
         {
+            services.UseSimpleInjectorAspNetRequestScoping(_container);
+
+            _container.Options.DefaultScopedLifestyle = new SimpleInjector.Lifestyles.AsyncScopedLifestyle();// AspNetRequestLifestyle();
+
             services.AddSingleton<IControllerActivator>(
                 new SimpleInjectorControllerActivator(_container));
             services.AddSingleton<IViewComponentActivator>(
