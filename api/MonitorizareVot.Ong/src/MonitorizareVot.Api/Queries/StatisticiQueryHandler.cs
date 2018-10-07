@@ -8,15 +8,16 @@ using MonitorizareVot.Ong.Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using MonitorizareVot.Ong.Api.Services;
 using System;
+using System.Threading;
 using Microsoft.Extensions.Caching.Distributed;
 using MonitorizareVot.Ong.Api.Common;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class StatisticiQueryHandler :
-        IAsyncRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
-        IAsyncRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
+        IRequestHandler<StatisticiNumarObservatoriQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
+        IRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
         private readonly OngContext _context;
         private readonly ICacheService _cacheService;
@@ -29,7 +30,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _cacheService = cacheService;
         }
 
-        public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message)
+        public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message, CancellationToken token)
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
@@ -73,7 +74,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             );
         }
 
-        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message)
+        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message, CancellationToken token)
         {
             //var queryBuilder = new StatisticiQueryBuilder
             //{
@@ -122,14 +123,14 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariQuery message)
+        public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiTopSesizariQuery message, CancellationToken token)
         {
             return message.Grupare == TipGrupareStatistici.Judet
-                ? await GetSesizariJudete(message)
-                : await GetSesizariSectii(message);
+                ? await GetSesizariJudete(message, token)
+                : await GetSesizariSectii(message, token);
         }
 
-        private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariJudete(StatisticiTopSesizariQuery message)
+        private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariJudete(StatisticiTopSesizariQuery message, CancellationToken token)
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
@@ -172,7 +173,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariSectii(StatisticiTopSesizariQuery message)
+        private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariSectii(StatisticiTopSesizariQuery message, CancellationToken token)
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {

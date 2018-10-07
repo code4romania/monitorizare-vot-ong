@@ -7,14 +7,15 @@ using MonitorizareVot.Ong.Api.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
-        IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
-        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
-        IAsyncRequestHandler<RaspunsuriFormularQuery, RaspunsFormularModel>
+        IRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
+        IRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
+        IRequestHandler<RaspunsuriFormularQuery, RaspunsFormularModel>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -25,7 +26,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _mapper = mapper;
         }
 
-        public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message)
+        public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
             string queryUnPaged = $@"SELECT IdSectieDeVotare AS IdSectie, R.IdObservator AS IdObservator, O.NumeIntreg AS Observator, CONCAT(CodJudet, ' ', NumarSectie) AS Sectie, MAX(DataUltimeiModificari) AS DataUltimeiModificari
                 FROM Raspuns R
@@ -56,7 +57,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message)
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message, CancellationToken cancellationToken)
         {
             var raspunsuri = await _context.Raspuns
                 .Include(r => r.IdRaspunsDisponibilNavigation)
@@ -73,7 +74,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();
         }
 
-        public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message)
+        public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message, CancellationToken cancellationToken)
         {
             var raspunsuriFormular = await _context.RaspunsFormular
                 .FirstOrDefaultAsync(rd => rd.IdObservator == message.IdObservator && rd.IdSectieDeVotare == message.IdSectieDeVotare);

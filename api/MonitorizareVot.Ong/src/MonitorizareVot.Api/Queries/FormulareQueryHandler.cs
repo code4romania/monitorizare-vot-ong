@@ -5,12 +5,13 @@ using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class FormulareQueryHandler :
-        IAsyncRequestHandler<IntrebariQuery, List<SectiuneModel>>
+        IRequestHandler<IntrebariQuery, List<SectiuneModel>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<SectiuneModel>> Handle(IntrebariQuery message)
+        public async Task<List<SectiuneModel>> Handle(IntrebariQuery message, CancellationToken cancellationToken)
         {
             var intrebari = await _context.Intrebare
                 .Include(i => i.IdSectiuneNavigation)

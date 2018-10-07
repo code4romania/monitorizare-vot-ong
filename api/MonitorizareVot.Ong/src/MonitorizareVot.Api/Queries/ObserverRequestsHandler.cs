@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,9 +12,9 @@ using MonitorizareVot.Ong.Api.Services;
 namespace MonitorizareVot.Api.Queries
 {
     public class ObserverRequestsHandler :
-        IAsyncRequestHandler<ImportObserversRequest, int>, 
-        IAsyncRequestHandler<NewObserverRequest, int>,
-        IAsyncRequestHandler<ResetDeviceIdRequest>
+        IRequestHandler<ImportObserversRequest, int>, 
+        IRequestHandler<NewObserverRequest, int>,
+        IRequestHandler<ResetDeviceIdRequest>
     {
         private readonly OngContext _context;
         private readonly ILogger _logger;
@@ -31,7 +32,7 @@ namespace MonitorizareVot.Api.Queries
             return _context.Observator.Max(o => o.IdObservator) + 1;
         }
 
-        public Task<int> Handle(ImportObserversRequest message)
+        public Task<int> Handle(ImportObserversRequest message, CancellationToken token)
         {
             var pathToFile = message.FilePath;
             var counter = 0;
@@ -64,7 +65,7 @@ namespace MonitorizareVot.Api.Queries
         }
 
 
-        public Task<int> Handle(NewObserverRequest message)
+        public Task<int> Handle(NewObserverRequest message, CancellationToken token)
         {
             var id = GetMaxIdObserver();
             var observer = new Observator
@@ -80,7 +81,7 @@ namespace MonitorizareVot.Api.Queries
         }
 
 
-        public Task Handle(ResetDeviceIdRequest message)
+        public Task Handle(ResetDeviceIdRequest message, CancellationToken token)
         {
             // find observer
             var observers = _context.Observator.Where(o => o.NumarTelefon == message.PhoneNumber);

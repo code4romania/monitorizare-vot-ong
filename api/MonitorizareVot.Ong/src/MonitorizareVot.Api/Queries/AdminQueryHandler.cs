@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
-    public class AdminQueryHandler : IAsyncRequestHandler<ApplicationUser, UserInfo>
+    public class AdminQueryHandler : IRequestHandler<ApplicationUser, UserInfo>
     {
         private readonly OngContext _context;
         private readonly IHashService _hash;
@@ -21,7 +22,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _hash = hash;
         }
 
-        public async Task<UserInfo> Handle(ApplicationUser message)
+        public async Task<UserInfo> Handle(ApplicationUser message, CancellationToken token)
         {
             var hashValue = _hash.GetHash(message.Password);
 

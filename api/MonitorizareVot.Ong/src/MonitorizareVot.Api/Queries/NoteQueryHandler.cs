@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MonitorizareVot.Domain.Ong.Models;
 using System.Linq;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class NoteQueryHandler :
-        IAsyncRequestHandler<NotaQuery, List<NotaModel>>
+        IRequestHandler<NotaQuery, List<NotaModel>>
     {
 
         private readonly OngContext _context;
@@ -21,7 +22,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _context = context;
             _mapper = mapper;
         }
-        public async Task<List<NotaModel>> Handle(NotaQuery message)
+        public async Task<List<NotaModel>> Handle(NotaQuery message, CancellationToken token)
         {
             return await _context.Nota
                 .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)

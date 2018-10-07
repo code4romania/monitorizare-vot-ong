@@ -62,8 +62,6 @@ namespace MonitorizareVot.Ong.Api
 
         public IConfigurationRoot Configuration { get; }
 
-
-
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
@@ -368,20 +366,24 @@ namespace MonitorizareVot.Ong.Api
             }
         }
 
-        private void BuildMediator()
+        private IMediator BuildMediator()
         {
             var assemblies = GetAssemblies().ToArray();
             _container.RegisterSingleton<IMediator, Mediator>();
             _container.Register(typeof(IRequestHandler<,>), assemblies);
-            _container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
+            _container.Register(typeof(AsyncRequestHandler<,>), assemblies);
             _container.Collection.Register(typeof(INotificationHandler<>), assemblies);
-            _container.Collection.Register(typeof(IAsyncNotificationHandler<>), assemblies);
+            _container.Collection.Register(typeof(AsyncNotificationHandler<>), assemblies);
             _container.RegisterInstance(Console.Out);
             _container.RegisterInstance(new SingleInstanceFactory(_container.GetInstance));
             _container.RegisterInstance(new MultiInstanceFactory(_container.GetAllInstances));
 
             // had to add this registration as we were getting the same behavior as described here: https://github.com/jbogard/MediatR/issues/155
             _container.Collection.Register(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
+
+            var mediator = _container.GetInstance<IMediator>();
+
+            return mediator;
         }
 
         private void RegisterAutomapper()

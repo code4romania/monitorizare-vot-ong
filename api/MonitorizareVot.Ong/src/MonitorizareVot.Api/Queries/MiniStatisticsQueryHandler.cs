@@ -4,17 +4,18 @@ using MonitorizareVot.Api.ViewModels;
 using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MonitorizareVot.Api.Queries
 {
     public class MiniStatisticsQueryHandler :
-        IAsyncRequestHandler<AnswersRequest, SimpleStatisticsModel>,
-        IAsyncRequestHandler<StationsVisitedRequest, SimpleStatisticsModel>,
-        IAsyncRequestHandler<FlaggedAnswersRequest, SimpleStatisticsModel>,
-        IAsyncRequestHandler<CountiesVisitedRequest, SimpleStatisticsModel>,
-        IAsyncRequestHandler<NotesUploadedRequest, SimpleStatisticsModel>,
-        IAsyncRequestHandler<LoggedInObserversRequest, SimpleStatisticsModel>
+        IRequestHandler<AnswersRequest, SimpleStatisticsModel>,
+        IRequestHandler<StationsVisitedRequest, SimpleStatisticsModel>,
+        IRequestHandler<FlaggedAnswersRequest, SimpleStatisticsModel>,
+        IRequestHandler<CountiesVisitedRequest, SimpleStatisticsModel>,
+        IRequestHandler<NotesUploadedRequest, SimpleStatisticsModel>,
+        IRequestHandler<LoggedInObserversRequest, SimpleStatisticsModel>
     {
         private readonly OngContext _context;
 
@@ -23,7 +24,7 @@ namespace MonitorizareVot.Api.Queries
             _context = context;
         }
 
-        public async Task<SimpleStatisticsModel> Handle(AnswersRequest message)
+        public async Task<SimpleStatisticsModel> Handle(AnswersRequest message, CancellationToken token)
         {
             var number = await _context.Raspuns.CountAsync();
             return new SimpleStatisticsModel
@@ -32,7 +33,7 @@ namespace MonitorizareVot.Api.Queries
                 Value = number.ToString()
             };
         }
-        public async Task<SimpleStatisticsModel> Handle(StationsVisitedRequest message)
+        public async Task<SimpleStatisticsModel> Handle(StationsVisitedRequest message, CancellationToken token)
         {
             var number = await _context.Raspuns.Select(r => r.IdSectieDeVotare).Distinct().CountAsync();
             return new SimpleStatisticsModel
@@ -41,7 +42,7 @@ namespace MonitorizareVot.Api.Queries
                 Value = number.ToString()
             };
         }
-        public async Task<SimpleStatisticsModel> Handle(CountiesVisitedRequest message)
+        public async Task<SimpleStatisticsModel> Handle(CountiesVisitedRequest message, CancellationToken token)
         {
             var number = await _context.Raspuns.Select(r => r.CodJudet).Distinct().CountAsync();
             return new SimpleStatisticsModel
@@ -50,7 +51,7 @@ namespace MonitorizareVot.Api.Queries
                 Value = number.ToString()
             };
         }
-        public async Task<SimpleStatisticsModel> Handle(NotesUploadedRequest message)
+        public async Task<SimpleStatisticsModel> Handle(NotesUploadedRequest message, CancellationToken token)
         {
             var number = await _context.Nota.CountAsync();
             return new SimpleStatisticsModel
@@ -59,7 +60,7 @@ namespace MonitorizareVot.Api.Queries
                 Value = number.ToString()
             };
         }
-        public async Task<SimpleStatisticsModel> Handle(LoggedInObserversRequest message)
+        public async Task<SimpleStatisticsModel> Handle(LoggedInObserversRequest message, CancellationToken token)
         {
             var number = await _context.Observator.CountAsync(o => o.IdDispozitivMobil != null);
             return new SimpleStatisticsModel
@@ -68,7 +69,7 @@ namespace MonitorizareVot.Api.Queries
                 Value = number.ToString()
             };
         }
-        public async Task<SimpleStatisticsModel> Handle(FlaggedAnswersRequest message)
+        public async Task<SimpleStatisticsModel> Handle(FlaggedAnswersRequest message, CancellationToken token)
         {
             var number = await _context.Raspuns.Include(r=>r.IdRaspunsDisponibilNavigation).CountAsync(r=>r.IdRaspunsDisponibilNavigation.RaspunsCuFlag);
             return new SimpleStatisticsModel
