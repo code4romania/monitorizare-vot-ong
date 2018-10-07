@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <PackageId>MonitorizareVot.Api</PackageId>
     <UserSecretsId>TBR</UserSecretsId>
-    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
 
