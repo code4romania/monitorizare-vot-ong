@@ -252,15 +252,9 @@ paket-files/
 *.sln.iml
 
 *.vscode
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/publish-module.psm1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/mvonguat-publish.ps1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/appsettings.Development.json
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/mvonguat - Web Deploy-publish.ps1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Domain.Ong/appsettings.development.json
-api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/ongqa - Web Deploy-publish.ps1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/LocalIIS-publish.ps1
+
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Domain.Ong/appsettings.*.json
 /api/MonitorizareVot.Ong/src/MonitorizareVot.Api/wwwroot
 /frontend/wwwroot
-api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/monitorizarevotong - Web Deploy-publish.ps1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/monitorizarevotong - Web Deploy-publish.ps1
-/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/appsettings.production.json
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/Properties/PublishProfiles/
+/api/MonitorizareVot.Ong/src/MonitorizareVot.Api/appsettings.*.json
