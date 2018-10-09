@@ -66,6 +66,7 @@ namespace MonitorizareVot.Ong.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
+            services.Configure<HashOptions>(options => Configuration.GetSection("HashOptions").Bind(options));
 
             ConfigureJwt(services);
 
