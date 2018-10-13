@@ -87,6 +87,7 @@ namespace MonitorizareVot.Ong.Api
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            services.AddSpaStaticFiles(config => config.RootPath = "wwwroot");
 
             services.AddSwaggerGen(options =>
             {
@@ -198,6 +199,7 @@ namespace MonitorizareVot.Ong.Api
             IApplicationLifetime appLifetime, IDistributedCache cache)
         {
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -256,6 +258,7 @@ namespace MonitorizareVot.Ong.Api
             app.UseSwaggerUI(o => o.SwaggerEndpoint("/swagger/v1/swagger.json", "MV API v1"));
 
             app.UseMvc();
+            app.UseSpa(options => { options.Options.SourcePath = "../../frontend"; });
         }
 
         private void ConfigureCache(IServiceCollection services)
