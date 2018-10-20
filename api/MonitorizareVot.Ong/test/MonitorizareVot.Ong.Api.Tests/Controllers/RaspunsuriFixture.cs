@@ -43,12 +43,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 return;
 
             context.Ong.AddRange(
-                 new Domain.Ong.Models.Ong { IdOng = 1, NumeOng = "Denumire ONG A", AbreviereNumeOng = "ONG A" },
-                 new Domain.Ong.Models.Ong { IdOng = 2, NumeOng = "Denumire ONG B", AbreviereNumeOng = "ONG B" },
-                 new Domain.Ong.Models.Ong { IdOng = 3, NumeOng = "Denumire ONG C", AbreviereNumeOng = "ONG C" },
-                 new Domain.Ong.Models.Ong { IdOng = 4, NumeOng = "Denumire ONG D", AbreviereNumeOng = "ONG D" },
-                 new Domain.Ong.Models.Ong { IdOng = 5, NumeOng = "Denumire ONG E", AbreviereNumeOng = "ONG E" },
-                 new Domain.Ong.Models.Ong { IdOng = 6, NumeOng = "Denumire ONG F", AbreviereNumeOng = "ONG F" }
+                 new Domain.Ong.Models.Ngo { Id = 1, Name = "Denumire ONG A", ShortName = "ONG A" },
+                 new Domain.Ong.Models.Ngo { Id = 2, Name = "Denumire ONG B", ShortName = "ONG B" },
+                 new Domain.Ong.Models.Ngo { Id = 3, Name = "Denumire ONG C", ShortName = "ONG C" },
+                 new Domain.Ong.Models.Ngo { Id = 4, Name = "Denumire ONG D", ShortName = "ONG D" },
+                 new Domain.Ong.Models.Ngo { Id = 5, Name = "Denumire ONG E", ShortName = "ONG E" },
+                 new Domain.Ong.Models.Ngo { Id = 6, Name = "Denumire ONG F", ShortName = "ONG F" }
              );
 
             context.SaveChanges();

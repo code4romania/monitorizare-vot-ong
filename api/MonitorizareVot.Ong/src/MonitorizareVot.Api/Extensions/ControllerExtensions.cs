@@ -17,7 +17,7 @@ namespace MonitorizareVot.Ong.Api.Extensions
         public static bool GetOrganizatorOrDefault(this Controller controller, bool defaultOrganizator)
         {
             bool result;
-            return bool.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "Organizator")?.Value, out result)
+            return bool.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "Organizer")?.Value, out result)
                 ? result
                 : defaultOrganizator;
         }

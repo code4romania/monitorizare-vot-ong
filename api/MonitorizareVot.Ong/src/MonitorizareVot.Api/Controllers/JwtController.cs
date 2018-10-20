@@ -50,7 +50,7 @@ namespace MonitorizareVot.Api.Controllers
             var decoded = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
                 _jwtOptions.SigningCredentials.Kid, false);
             var idOng = int.Parse(decoded["IdNgo"]);
-            var organizator = bool.Parse(decoded["Organizator"]);
+            var organizator = bool.Parse(decoded["Organizer"]);
             var userName = decoded[JwtRegisteredClaimNames.Sub];
 
             var json = await GenerateToken(userName, idOng, organizator);
@@ -76,7 +76,7 @@ namespace MonitorizareVot.Api.Controllers
                 return BadRequest("Invalid credentials");
             }
             var json = await GenerateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdNgo")?.Value),
-                 bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == "Organizator")?.Value));
+                 bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == "Organizer")?.Value));
 
             return new OkObjectResult(json);
         }
@@ -104,7 +104,7 @@ namespace MonitorizareVot.Api.Controllers
                     ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
                 new Claim("IdNgo", idOng.ToString()),
-                new Claim("Organizator", organizator.ToString())
+                new Claim("Organizer", organizator.ToString())
             };
 
             // Create the JWT security token and encode it.
@@ -166,7 +166,7 @@ namespace MonitorizareVot.Api.Controllers
                 new GenericIdentity(user.UserName, "Token"), new[]
                 {
                     new Claim("IdNgo", userInfo.IdOng.ToString()),
-                    new Claim("Organizator", userInfo.Organizator.ToString(), typeof(bool).ToString())
+                    new Claim("Organizer", userInfo.Organizator.ToString(), typeof(bool).ToString())
                 }));
         }
     }

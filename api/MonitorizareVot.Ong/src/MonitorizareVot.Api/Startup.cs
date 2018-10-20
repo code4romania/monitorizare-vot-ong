@@ -73,7 +73,7 @@ namespace MonitorizareVot.Ong.Api
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AppUser",
-                                  policy => policy.RequireClaim("Organizatie", "Ong"));
+                                  policy => policy.RequireClaim("Organizatie", "Ngo"));
             });
 
             // Add framework services.

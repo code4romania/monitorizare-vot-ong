@@ -10,6 +10,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string Account { get; set; }
         public string Password { get; set; }
 
-        public virtual Ong Ngo { get; set; }
+        public virtual Ngo Ngo { get; set; }
     }
 }

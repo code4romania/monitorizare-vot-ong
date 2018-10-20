@@ -46,7 +46,7 @@
                 CacheKey = $"{CacheKey}-{idONG}";
             }
             else
-                CacheKey = $"{CacheKey}-Organizator";
+                CacheKey = $"{CacheKey}-Organizer";
         }
 
         /// <summary>
@@ -61,7 +61,7 @@
                 CacheKey = $"{CacheKey}-{idONG}";
             }
             else
-                CacheKey = $"{CacheKey}-Organizator";
+                CacheKey = $"{CacheKey}-Organizer";
         }
 
         /// <summary>

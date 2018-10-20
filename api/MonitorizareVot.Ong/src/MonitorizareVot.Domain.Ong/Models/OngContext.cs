@@ -29,7 +29,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(100);
 
                 entity.HasOne(d => d.Ngo)
-                    .WithMany(p => p.AdminOng)
+                    .WithMany(p => p.NgoAdmins)
                     .HasForeignKey(d => d.IdNgo)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_AdminONG_ONG");
@@ -138,30 +138,30 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(100);
 
                 entity.HasOne(d => d.Ngo)
-                    .WithMany(p => p.Observator)
+                    .WithMany(p => p.Observers)
                     .HasForeignKey(d => d.IdNgo)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Ong>(entity =>
+            modelBuilder.Entity<Ngo>(entity =>
             {
-                entity.HasKey(e => e.IdOng)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_ONG");
 
                 entity.ToTable("ONG");
 
-                entity.Property(e => e.IdOng).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.AbreviereNumeOng)
+                entity.Property(e => e.ShortName)
                     .IsRequired()
                     .HasMaxLength(10);
 
-                entity.Property(e => e.NumeOng)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("NumeONG")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Organizator).HasDefaultValueSql("0");
+                entity.Property(e => e.Organizer).HasDefaultValueSql("0");
             });
 
             modelBuilder.Entity<Option>(entity =>
@@ -370,7 +370,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<County> Judet { get; set; }
         public virtual DbSet<Note> Nota { get; set; }
         public virtual DbSet<Observer> Observator { get; set; }
-        public virtual DbSet<Ong> Ong { get; set; }
+        public virtual DbSet<Ngo> Ong { get; set; }
         public virtual DbSet<Option> Optiune { get; set; }
         public virtual DbSet<Answer> Raspuns { get; set; }
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
