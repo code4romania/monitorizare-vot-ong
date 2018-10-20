@@ -26,8 +26,8 @@ namespace MonitorizareVot.Ong.Api.ViewModels
                 .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.OptionsToQuestions));
 
             CreateMap<RaspunsDisponibil, RaspunsDisponibilModel>()
-                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))
-                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptiuneNavigation.SeIntroduceText))
+                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptionNavigation.Text))
+                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptionNavigation.IsFreeText))
                 .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.IdRaspunsDisponibil));
         }   
     }

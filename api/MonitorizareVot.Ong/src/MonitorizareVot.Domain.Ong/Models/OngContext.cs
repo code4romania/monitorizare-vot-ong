@@ -164,16 +164,16 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.Property(e => e.Organizator).HasDefaultValueSql("0");
             });
 
-            modelBuilder.Entity<Optiune>(entity =>
+            modelBuilder.Entity<Option>(entity =>
             {
-                entity.HasKey(e => e.IdOptiune)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Optiune");
 
-                entity.Property(e => e.IdOptiune).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.SeIntroduceText).HasDefaultValueSql("0");
+                entity.Property(e => e.IsFreeText).HasDefaultValueSql("0");
 
-                entity.Property(e => e.TextOptiune)
+                entity.Property(e => e.Text)
                     .IsRequired()
                     .HasMaxLength(100);
             });
@@ -244,8 +244,8 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsDisponibil_Intrebare");
 
-                entity.HasOne(d => d.IdOptiuneNavigation)
-                    .WithMany(p => p.RaspunsDisponibil)
+                entity.HasOne(d => d.IdOptionNavigation)
+                    .WithMany(p => p.OptionsToQuestions)
                     .HasForeignKey(d => d.IdOptiune)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsDisponibil_Optiune");
@@ -371,7 +371,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Nota> Nota { get; set; }
         public virtual DbSet<Observator> Observator { get; set; }
         public virtual DbSet<Ong> Ong { get; set; }
-        public virtual DbSet<Optiune> Optiune { get; set; }
+        public virtual DbSet<Option> Optiune { get; set; }
         public virtual DbSet<Answer> Raspuns { get; set; }
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
         public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }

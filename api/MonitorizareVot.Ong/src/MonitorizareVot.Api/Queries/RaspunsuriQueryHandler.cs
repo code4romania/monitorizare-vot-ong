@@ -63,7 +63,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Include(r => r.OptionAnswered)
                     .ThenInclude(rd => rd.IdIntrebareNavigation)
                 .Include(r => r.OptionAnswered)
-                    .ThenInclude(rd => rd.IdOptiuneNavigation)
+                    .ThenInclude(rd => rd.IdOptionNavigation)
                 .Where(r => r.IdObserver == message.IdObservator && r.IdPollingStation == message.IdSectieDeVotare)
                 .ToListAsync();
 

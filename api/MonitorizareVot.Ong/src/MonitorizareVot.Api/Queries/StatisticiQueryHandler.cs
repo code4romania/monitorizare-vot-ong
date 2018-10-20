@@ -34,17 +34,17 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
-                Query = $@"SELECT OB.TextOptiune AS Label, OB.IdOptiune AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
+                Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
                   FROM Answer AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
-                  INNER JOIN Optiune AS OB ON OB.IdOptiune = RD.IdOptiune
+                  INNER JOIN Option AS OB ON OB.Id = RD.Id
                   INNER JOIN Observator O ON O.IdObserver = R.IdObserver
                   WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
 
             queryBuilder.AndOngFilter(message.Organizator, message.IdONG);
-            queryBuilder.Append("GROUP BY OB.TextOptiune, OB.IdOptiune, RD.RaspunsCuFlag");
+            queryBuilder.Append("GROUP BY OB.Text, OB.Id, RD.RaspunsCuFlag");
 
             return await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
                 async () =>

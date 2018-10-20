@@ -95,18 +95,18 @@ namespace MonitorizareVot.Domain.Ong.Models
             if (context.Optiune.Any())
                 return;
             context.Optiune.AddRange(
-                new Optiune { IdOptiune = 1, TextOptiune = "Da", },
-                new Optiune { IdOptiune = 2, TextOptiune = "Nu", },
-                new Optiune { IdOptiune = 3, TextOptiune = "Nu stiu", },
-                new Optiune { IdOptiune = 4, TextOptiune = "Dark Island", },
-                new Optiune { IdOptiune = 5, TextOptiune = "London Pride", },
-                new Optiune { IdOptiune = 6, TextOptiune = "Zaganu", },
-                new Optiune { IdOptiune = 7, TextOptiune = "Transmisia manualã", },
-                new Optiune { IdOptiune = 8, TextOptiune = "Transmisia automatã", },
-                new Optiune { IdOptiune = 9, TextOptiune = "Altele (specificaţi)", SeIntroduceText = true },
-                new Optiune { IdOptiune = 10, TextOptiune = "Metrou" },
-                new Optiune { IdOptiune = 11, TextOptiune = "Tramvai" },
-                new Optiune { IdOptiune = 12, TextOptiune = "Autobuz" }
+                new Option { Id = 1, Text = "Da", },
+                new Option { Id = 2, Text = "Nu", },
+                new Option { Id = 3, Text = "Nu stiu", },
+                new Option { Id = 4, Text = "Dark Island", },
+                new Option { Id = 5, Text = "London Pride", },
+                new Option { Id = 6, Text = "Zaganu", },
+                new Option { Id = 7, Text = "Transmisia manualã", },
+                new Option { Id = 8, Text = "Transmisia automatã", },
+                new Option { Id = 9, Text = "Altele (specificaţi)", IsFreeText = true },
+                new Option { Id = 10, Text = "Metrou" },
+                new Option { Id = 11, Text = "Tramvai" },
+                new Option { Id = 12, Text = "Autobuz" }
             );
 
             context.SaveChanges();
