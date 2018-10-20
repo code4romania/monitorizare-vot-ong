@@ -35,7 +35,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(StationsVisitedRequest message, CancellationToken token)
         {
-            var number = await _context.Raspuns.Select(r => r.IdSectieDeVotare).Distinct().CountAsync();
+            var number = await _context.Raspuns.Select(r => r.IdPollingStation).Distinct().CountAsync();
             return new SimpleStatisticsModel
             {
                 Label = "Number of Polling Stations visited",
@@ -44,7 +44,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(CountiesVisitedRequest message, CancellationToken token)
         {
-            var number = await _context.Raspuns.Select(r => r.CodJudet).Distinct().CountAsync();
+            var number = await _context.Raspuns.Select(r => r.CountyCode).Distinct().CountAsync();
             return new SimpleStatisticsModel
             {
                 Label = "Number of Counties visited",
@@ -71,7 +71,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(FlaggedAnswersRequest message, CancellationToken token)
         {
-            var number = await _context.Raspuns.Include(r=>r.IdRaspunsDisponibilNavigation).CountAsync(r=>r.IdRaspunsDisponibilNavigation.RaspunsCuFlag);
+            var number = await _context.Raspuns.Include(r=>r.OptionAnswered).CountAsync(r=>r.OptionAnswered.RaspunsCuFlag);
             return new SimpleStatisticsModel
             {
                 Label = "Number of flagged answers submitted",

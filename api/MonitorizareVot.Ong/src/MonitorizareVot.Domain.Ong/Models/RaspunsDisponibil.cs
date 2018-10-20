@@ -7,7 +7,7 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public RaspunsDisponibil()
         {
-            Raspuns = new HashSet<Raspuns>();
+            Raspuns = new HashSet<Answer>();
         }
 
         public int IdRaspunsDisponibil { get; set; }
@@ -15,7 +15,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public int IdOptiune { get; set; }
         public bool RaspunsCuFlag { get; set; }
 
-        public virtual ICollection<Raspuns> Raspuns { get; set; }
+        public virtual ICollection<Answer> Raspuns { get; set; }
         public virtual Question IdIntrebareNavigation { get; set; }
         public virtual Optiune IdOptiuneNavigation { get; set; }
     }

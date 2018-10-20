@@ -178,44 +178,44 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Raspuns>(entity =>
+            modelBuilder.Entity<Answer>(entity =>
             {
-                entity.HasKey(e => new { e.IdObservator, e.IdRaspunsDisponibil, e.IdSectieDeVotare })
+                entity.HasKey(e => new { IdObservator = e.IdObserver, IdRaspunsDisponibil = e.IdOptionToQuestion, IdSectieDeVotare = e.IdPollingStation })
                     .HasName("PK_Raspuns_1");
 
-                entity.HasIndex(e => e.IdObservator)
+                entity.HasIndex(e => e.IdObserver)
                     .HasName("IX_Raspuns_IdObservator");
 
-                entity.HasIndex(e => e.IdRaspunsDisponibil)
+                entity.HasIndex(e => e.IdOptionToQuestion)
                     .HasName("IX_Raspuns_IdRaspunsDisponibil");
 
-                entity.HasIndex(e => e.IdSectieDeVotare)
+                entity.HasIndex(e => e.IdPollingStation)
                     .HasName("IX_Raspuns_IdSectieDeVotare");
 
-                entity.Property(e => e.DataUltimeiModificari)
+                entity.Property(e => e.LastModified)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Value).HasMaxLength(1000);
 
-                entity.Property(e => e.NumarSectie);
+                entity.Property(e => e.PollingStationNumber);
 
-                entity.Property(e => e.CodJudet).HasMaxLength(2);
+                entity.Property(e => e.CountyCode).HasMaxLength(2);
 
-                entity.HasOne(d => d.IdObservatorNavigation)
+                entity.HasOne(d => d.Observer)
                     .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdObservator)
+                    .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Raspuns_Observator");
 
-                entity.HasOne(d => d.IdRaspunsDisponibilNavigation)
+                entity.HasOne(d => d.OptionAnswered)
                     .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdRaspunsDisponibil)
+                    .HasForeignKey(d => d.IdOptionToQuestion)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.IdSectieDeVotareNavigation)
+                entity.HasOne(d => d.PollingStation)
                     .WithMany(p => p.Raspuns)
-                    .HasForeignKey(d => d.IdSectieDeVotare)
+                    .HasForeignKey(d => d.IdPollingStation)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -372,7 +372,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Observator> Observator { get; set; }
         public virtual DbSet<Ong> Ong { get; set; }
         public virtual DbSet<Optiune> Optiune { get; set; }
-        public virtual DbSet<Raspuns> Raspuns { get; set; }
+        public virtual DbSet<Answer> Raspuns { get; set; }
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
         public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }

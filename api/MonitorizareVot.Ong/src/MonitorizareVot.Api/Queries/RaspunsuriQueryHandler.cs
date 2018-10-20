@@ -28,17 +28,17 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
-            string queryUnPaged = $@"SELECT IdSectieDeVotare AS IdSectie, R.IdObservator AS IdObservator, O.NumeIntreg AS Observator, CONCAT(CodJudet, ' ', NumarSectie) AS Sectie, MAX(DataUltimeiModificari) AS DataUltimeiModificari
-                FROM Raspuns R
-                INNER JOIN OBSERVATOR O ON O.IdObservator = R.IdObservator
-                INNER JOIN OptionsToQuestions RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObserver, O.NumeIntreg AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS LastModified
+                FROM Answer R
+                INNER JOIN OBSERVATOR O ON O.IdObserver = R.IdObserver
+                INNER JOIN OptionsToQuestions RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                 WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
 
             if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdOng = {message.IdONG}";
 
-            queryUnPaged = $"{queryUnPaged} GROUP BY IdSectieDeVotare, CodJudet, NumarSectie, R.IdObservator, O.NumeIntreg, CodJudet";
+            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.NumeIntreg, CountyCode";
 
-            var queryPaged = $@"{queryUnPaged} ORDER BY DataUltimeiModificari DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+            var queryPaged = $@"{queryUnPaged} ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 
             var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
                 .FromSql(queryPaged)
@@ -60,15 +60,15 @@ namespace MonitorizareVot.Ong.Api.Queries
         public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message, CancellationToken cancellationToken)
         {
             var raspunsuri = await _context.Raspuns
-                .Include(r => r.IdRaspunsDisponibilNavigation)
+                .Include(r => r.OptionAnswered)
                     .ThenInclude(rd => rd.IdIntrebareNavigation)
-                .Include(r => r.IdRaspunsDisponibilNavigation)
+                .Include(r => r.OptionAnswered)
                     .ThenInclude(rd => rd.IdOptiuneNavigation)
-                .Where(r => r.IdObservator == message.IdObservator && r.IdSectieDeVotare == message.IdSectieDeVotare)
+                .Where(r => r.IdObserver == message.IdObservator && r.IdPollingStation == message.IdSectieDeVotare)
                 .ToListAsync();
 
             var intrebari = raspunsuri
-                .Select(r => r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation)
+                .Select(r => r.OptionAnswered.IdIntrebareNavigation)
                 .ToList();
 
             return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();

@@ -8,7 +8,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public Observator()
         {
             Nota = new HashSet<Nota>();
-            Raspuns = new HashSet<Raspuns>();
+            Raspuns = new HashSet<Answer>();
             RaspunsFormular = new HashSet<RaspunsFormular>();
         }
 
@@ -22,7 +22,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public DateTime? DataInregistrariiDispozitivului { get; set; }
 
         public virtual ICollection<Nota> Nota { get; set; }
-        public virtual ICollection<Raspuns> Raspuns { get; set; }
+        public virtual ICollection<Answer> Raspuns { get; set; }
         public virtual ICollection<RaspunsFormular> RaspunsFormular { get; set; }
         public virtual Ong IdOngNavigation { get; set; }
     }

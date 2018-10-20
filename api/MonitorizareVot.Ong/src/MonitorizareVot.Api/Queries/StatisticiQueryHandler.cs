@@ -35,10 +35,10 @@ namespace MonitorizareVot.Ong.Api.Queries
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
                 Query = $@"SELECT OB.TextOptiune AS Label, OB.IdOptiune AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
-                  FROM Raspuns AS R 
-                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                  FROM Answer AS R 
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                   INNER JOIN Optiune AS OB ON OB.IdOptiune = RD.IdOptiune
-                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator
+                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
                   WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
@@ -81,8 +81,8 @@ namespace MonitorizareVot.Ong.Api.Queries
             //    Query = @"SELECT J.Nume AS Label, COUNT(*) as Value
             //      FROM Judet J
             //      INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
-            //      INNER JOIN [Raspuns] AS R ON R.IdSectieDeVotare = SV.IdSectieDeVotarre
-            //      INNER JOIN Observator O ON O.IdObservator = R.IdObservator",
+            //      INNER JOIN [Answer] AS R ON R.IdPollingStation = SV.IdSectieDeVotarre
+            //      INNER JOIN Observator O ON O.IdObserver = R.IdObserver",
             //    CacheKey = "StatisticiObservatori"
             //};
 
@@ -134,10 +134,10 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
-                Query = @"SELECT R.CodJudet AS Label, COUNT(*) as Value
-                  FROM Raspuns AS R 
-                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
-                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator
+                Query = @"SELECT R.CountyCode AS Label, COUNT(*) as Value
+                  FROM Answer AS R 
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
+                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiJudete"
@@ -145,7 +145,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             queryBuilder.AndOngFilter(message.Organizator, message.IdONG);
             queryBuilder.AndFormularFilter(message.Formular);
-            queryBuilder.Append("GROUP BY R.CodJudet ORDER BY Value DESC");
+            queryBuilder.Append("GROUP BY R.CountyCode ORDER BY Value DESC");
 
             // get or save all records in cache
             var records = await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
@@ -177,10 +177,10 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
-                Query = @"SELECT R.CodJudet AS Label, R.NumarSectie AS Cod, COUNT(*) as Value
-                  FROM Raspuns AS R 
-                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
-                  INNER JOIN Observator O ON O.IdObservator = R.IdObservator
+                Query = @"SELECT R.CountyCode AS Label, R.PollingStationNumber AS Cod, COUNT(*) as Value
+                  FROM Answer AS R 
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
+                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiSectii"
@@ -188,7 +188,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             queryBuilder.AndOngFilter(message.Organizator, message.IdONG);
             queryBuilder.AndFormularFilter(message.Formular);
-            queryBuilder.Append("GROUP BY R.CodJudet, R.NumarSectie");
+            queryBuilder.Append("GROUP BY R.CountyCode, R.PollingStationNumber");
 
             // get or save paginated response in cache
             return await _cacheService.GetOrSaveDataInCacheAsync($"{queryBuilder.CacheKey}-{message.Page}",
