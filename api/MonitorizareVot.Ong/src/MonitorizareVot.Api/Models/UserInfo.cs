@@ -17,9 +17,9 @@ namespace MonitorizareVot.Ong.Api.Models
     {
         public UserInfoProfile()
         {
-            CreateMap<AdminOng, UserInfo>()
-                .ForMember(u => u.IdOng, opt => opt.MapFrom(a => a.IdOng))
-                .ForMember(u => u.Organizator, opt => opt.MapFrom(a => a.IdOngNavigation.Organizator));
+            CreateMap<NgoAdmin, UserInfo>()
+                .ForMember(u => u.IdOng, opt => opt.MapFrom(a => a.IdNgo))
+                .ForMember(u => u.Organizator, opt => opt.MapFrom(a => a.Ngo.Organizator));
         }   
     }
 }

@@ -9,7 +9,7 @@ namespace MonitorizareVot.Ong.Api.Extensions
         public static int GetIdOngOrDefault(this Controller controller, int defaultIdOng)
         {
             int result;
-            return int.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "IdOng")?.Value, out result) 
+            return int.TryParse(controller.User.Claims.FirstOrDefault(a => a.Type == "IdNgo")?.Value, out result) 
                 ? result 
                 : defaultIdOng;
         }

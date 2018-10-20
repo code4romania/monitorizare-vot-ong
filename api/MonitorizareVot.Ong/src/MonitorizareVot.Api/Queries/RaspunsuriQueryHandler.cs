@@ -34,7 +34,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 INNER JOIN OptionsToQuestions RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                 WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
 
-            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdOng = {message.IdONG}";
+            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
             queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.NumeIntreg, CountyCode";
 

@@ -7,7 +7,7 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public Ong()
         {
-            AdminOng = new HashSet<AdminOng>();
+            AdminOng = new HashSet<NgoAdmin>();
             Observator = new HashSet<Observator>();
         }
 
@@ -16,7 +16,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string NumeOng { get; set; }
         public bool Organizator { get; set; }
 
-        public virtual ICollection<AdminOng> AdminOng { get; set; }
+        public virtual ICollection<NgoAdmin> AdminOng { get; set; }
         public virtual ICollection<Observator> Observator { get; set; }
     }
 }

@@ -36,13 +36,13 @@
 
         /// <summary>
         /// Adds an AND condition to the WHERE clause
-        /// Filters statistics by IdOng if the ong is admin
+        /// Filters statistics by IdNgo if the ong is admin
         /// </summary>
         public void AndOngFilter(bool organizator, int idONG)
         {
             if(!organizator) 
             {
-                Query = $"{Query} AND O.IdOng = {idONG}";
+                Query = $"{Query} AND O.IdNgo = {idONG}";
                 CacheKey = $"{CacheKey}-{idONG}";
             }
             else
@@ -51,13 +51,13 @@
 
         /// <summary>
         /// Adds a WHERE clause
-        /// Filters statistics by IdOng if the ong is admin
+        /// Filters statistics by IdNgo if the ong is admin
         /// </summary>
         public void WhereOngFilter(bool organizator, int idONG)
         {
             if (!organizator) 
             {
-                Query = $"{Query} WHERE O.IdOng = {idONG}";
+                Query = $"{Query} WHERE O.IdNgo = {idONG}";
                 CacheKey = $"{CacheKey}-{idONG}";
             }
             else

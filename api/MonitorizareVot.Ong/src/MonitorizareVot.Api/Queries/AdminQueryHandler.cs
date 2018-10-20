@@ -27,9 +27,9 @@ namespace MonitorizareVot.Ong.Api.Queries
             var hashValue = _hash.GetHash(message.Password);
 
             var userinfo = _context.AdminOng
-                .Include(a => a.IdOngNavigation)
-                .Where(a => a.Parola == hashValue &&
-                                     a.Cont == message.UserName)
+                .Include(a => a.Ngo)
+                .Where(a => a.Password == hashValue &&
+                                     a.Account == message.UserName)
                                      .Select(Mapper.Map<UserInfo>)
                                      .FirstOrDefault();
 

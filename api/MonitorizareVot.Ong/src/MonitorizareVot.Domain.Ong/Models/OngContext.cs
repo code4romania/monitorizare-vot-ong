@@ -9,28 +9,28 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdminOng>(entity =>
+            modelBuilder.Entity<NgoAdmin>(entity =>
             {
-                entity.HasKey(e => e.IdAdminOng)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_AdminONG");
 
                 entity.ToTable("AdminONG");
 
-                entity.Property(e => e.IdAdminOng)
+                entity.Property(e => e.Id)
                     .HasColumnName("IdAdminONG")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Cont)
+                entity.Property(e => e.Account)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Parola)
+                entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.HasOne(d => d.IdOngNavigation)
+                entity.HasOne(d => d.Ngo)
                     .WithMany(p => p.AdminOng)
-                    .HasForeignKey(d => d.IdOng)
+                    .HasForeignKey(d => d.IdNgo)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_AdminONG_ONG");
             });
@@ -365,7 +365,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             });
         }
 
-        public virtual DbSet<AdminOng> AdminOng { get; set; }
+        public virtual DbSet<NgoAdmin> AdminOng { get; set; }
         public virtual DbSet<Question> Intrebare { get; set; }
         public virtual DbSet<County> Judet { get; set; }
         public virtual DbSet<Nota> Nota { get; set; }

@@ -140,7 +140,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.Equal(last.IdObservator, firstModel.IdObservator);
         }
 
-        [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
+        [Fact(Skip = "Actualizat testul atunci cand IdNgo este luat din token")]
         public async void GetRaspunsuri_OngNuExista_ReturneazaEmptyList()
         {
             // ARRANGE
@@ -161,7 +161,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.Equal(0, model.TotalPages);
         }
 
-        [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
+        [Fact(Skip = "Actualizat testul atunci cand IdNgo este luat din token")]
         public async void GetRaspunsuri_OngNuAreRaspunsuriMarcateCuFlag_ReturneazaEmptyList()
         {
             // ARRANGE
