@@ -88,7 +88,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             var queryBuilder = new StatisticiQueryBuilder
             {
-                Query = @"select count(distinct r.IdObserver) as [Value], CountyCode as Label
+                Query = @"select count(distinct a.IdObserver) as [Value], CountyCode as Label
                           from Answers a (nolock) inner join Observers o on a.IdObserver = o.Id ",
                 CacheKey = "StatisticiObservatori"
             };
