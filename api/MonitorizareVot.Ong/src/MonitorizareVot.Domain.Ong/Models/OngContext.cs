@@ -104,7 +104,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.PollingStation)
-                    .WithMany(p => p.Nota)
+                    .WithMany(p => p.Notes)
                     .HasForeignKey(d => d.IdPollingStation)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -214,7 +214,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.PollingStation)
-                    .WithMany(p => p.Raspuns)
+                    .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.IdPollingStation)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -278,39 +278,39 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsFormular_Observator");
 
-                entity.HasOne(d => d.IdSectieDeVotareNavigation)
-                    .WithMany(p => p.RaspunsFormular)
+                entity.HasOne(d => d.IdPollingStationNavigation)
+                    .WithMany(p => p.PollingStationInfos)
                     .HasForeignKey(d => d.IdSectieDeVotare)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<SectieDeVotare>(entity =>
+            modelBuilder.Entity<PollingStation>(entity =>
             {
-                entity.HasKey(e => e.IdSectieDeVotarre)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_SectieDeVotare");
 
-                entity.HasIndex(e => e.IdJudet)
+                entity.HasIndex(e => e.IdCounty)
                     .HasName("IX_SectieDeVotare_IdJudet");
 
-                entity.HasIndex(e => new { e.IdJudet, e.IdSectieDeVotarre })
+                entity.HasIndex(e => new { IdJudet = e.IdCounty, IdSectieDeVotarre = e.Id })
                     .HasName("IX_Unique_IDJudet_NumarSectie")
                     .IsUnique();
 
-                entity.Property(e => e.IdSectieDeVotarre).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.AdresaSectie).HasMaxLength(500);
+                entity.Property(e => e.Address).HasMaxLength(500);
 
-                entity.Property(e => e.Coordonate).HasColumnType("varchar(200)");
+                entity.Property(e => e.Coordinates).HasColumnType("varchar(200)");
 
-                entity.Property(e => e.DenumireUat).HasMaxLength(100);
+                entity.Property(e => e.AdministrativeTerritoryCode).HasMaxLength(100);
 
-                entity.Property(e => e.LocalitateComponenta)
+                entity.Property(e => e.TerritoryCode)
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.HasOne(d => d.IdCountyNavigation)
+                entity.HasOne(d => d.County)
                     .WithMany(p => p.PollingStations)
-                    .HasForeignKey(d => d.IdJudet)
+                    .HasForeignKey(d => d.IdCounty)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_SectieDeVotare_Judet");
             });
@@ -375,7 +375,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Answer> Raspuns { get; set; }
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
         public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }
-        public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
+        public virtual DbSet<PollingStation> SectieDeVotare { get; set; }
         public virtual DbSet<FormSection> Sectiune { get; set; }
         public virtual DbSet<FormVersion> VersiuneFormular { get; set; }
 

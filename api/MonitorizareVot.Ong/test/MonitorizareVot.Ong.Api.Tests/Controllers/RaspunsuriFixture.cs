@@ -56,15 +56,15 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
 
         private void SeedSectiiDeVotare(OngContext context, int idJudet)
         {
-            if (context.SectieDeVotare.Any(a => a.IdJudet == idJudet))
+            if (context.SectieDeVotare.Any(a => a.IdCounty == idJudet))
                 return;
 
             context.SectieDeVotare.AddRange(
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 1, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 1}", NumarSectie = 1, LocalitateComponenta = $"Localitate {idJudet * 10 + 1}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 2, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 2}", NumarSectie = 2, LocalitateComponenta = $"Localitate {idJudet * 10 + 2}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 3, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 3}", NumarSectie = 3, LocalitateComponenta = $"Localitate {idJudet * 10 + 3}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 4, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 4}", NumarSectie = 4, LocalitateComponenta = $"Localitate {idJudet * 10 + 4}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 5, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 5}", NumarSectie = 5, LocalitateComponenta = $"Localitate {idJudet * 10 + 5}" }
+                 new PollingStation { Id = idJudet * 10 + 1, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 1}", Number = 1, TerritoryCode = $"Localitate {idJudet * 10 + 1}" },
+                 new PollingStation { Id = idJudet * 10 + 2, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 2}", Number = 2, TerritoryCode = $"Localitate {idJudet * 10 + 2}" },
+                 new PollingStation { Id = idJudet * 10 + 3, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 3}", Number = 3, TerritoryCode = $"Localitate {idJudet * 10 + 3}" },
+                 new PollingStation { Id = idJudet * 10 + 4, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 4}", Number = 4, TerritoryCode = $"Localitate {idJudet * 10 + 4}" },
+                 new PollingStation { Id = idJudet * 10 + 5, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 5}", Number = 5, TerritoryCode = $"Localitate {idJudet * 10 + 5}" }
              );
 
             context.SaveChanges();

@@ -14,6 +14,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public bool? PresedinteBesvesteFemeie { get; set; }
 
         public virtual Observer IdObserverNavigation { get; set; }
-        public virtual SectieDeVotare IdSectieDeVotareNavigation { get; set; }
+        public virtual PollingStation IdPollingStationNavigation { get; set; }
     }
 }

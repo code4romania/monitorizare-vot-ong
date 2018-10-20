@@ -75,7 +75,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 countObservatori = await context.Raspuns
                  .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.RaspunsCuFlag == urgent)
                  .Select(y =>
-                   new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.DenumireUat, DataUltimeiModificari = y.LastModified }
+                   new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                   )
                  .Distinct()
                  .CountAsync();
@@ -111,7 +111,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 var sectiiCuObservatori = await context.Raspuns
                   .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.RaspunsCuFlag == urgent)
                   .Select(y =>
-                    new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.DenumireUat, DataUltimeiModificari = y.LastModified }
+                    new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                    )
                   .Distinct()
                   .OrderByDescending(x => x.DataUltimeiModificari)

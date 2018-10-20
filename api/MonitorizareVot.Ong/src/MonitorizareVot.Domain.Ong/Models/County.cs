@@ -7,7 +7,7 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public County()
         {
-            PollingStations = new HashSet<SectieDeVotare>();
+            PollingStations = new HashSet<PollingStation>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string Name { get; set; }
         public int NumberOfPollingStations { get; set; }
 
-        public virtual ICollection<SectieDeVotare> PollingStations { get; set; }
+        public virtual ICollection<PollingStation> PollingStations { get; set; }
     }
 }

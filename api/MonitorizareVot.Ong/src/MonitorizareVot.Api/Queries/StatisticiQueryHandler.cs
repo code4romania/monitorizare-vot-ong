@@ -81,7 +81,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             //    Query = @"SELECT J.Name AS Label, COUNT(*) as Value
             //      FROM County J
             //      INNER JOIN PollingStations AS SV ON SV.Id = J.Id
-            //      INNER JOIN [Answer] AS R ON R.IdPollingStation = SV.IdSectieDeVotarre
+            //      INNER JOIN [Answer] AS R ON R.IdPollingStation = SV.Id
             //      INNER JOIN Observer O ON O.IdObserver = R.IdObserver",
             //    CacheKey = "StatisticiObservatori"
             //};
