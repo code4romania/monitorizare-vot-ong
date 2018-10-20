@@ -71,7 +71,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(FlaggedAnswersRequest message, CancellationToken token)
         {
-            var number = await _context.Raspuns.Include(r=>r.OptionAnswered).CountAsync(r=>r.OptionAnswered.RaspunsCuFlag);
+            var number = await _context.Raspuns.Include(r=>r.OptionAnswered).CountAsync(r=>r.OptionAnswered.Flagged);
             return new SimpleStatisticsModel
             {
                 Label = "Number of flagged answers submitted",

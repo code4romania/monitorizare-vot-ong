@@ -34,7 +34,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
             {
-                Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
+                Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.Flagged, COUNT(*) as Value
                   FROM Answer AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                   INNER JOIN Option AS OB ON OB.Id = RD.Id
@@ -44,7 +44,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
 
             queryBuilder.AndOngFilter(message.Organizator, message.IdONG);
-            queryBuilder.Append("GROUP BY OB.Text, OB.Id, RD.RaspunsCuFlag");
+            queryBuilder.Append("GROUP BY OB.Text, OB.Id, RD.Flagged");
 
             return await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
                 async () =>
@@ -139,7 +139,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                   INNER JOIN Observer O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
-                  WHERE RD.RaspunsCuFlag = 1",
+                  WHERE RD.Flagged = 1",
                 CacheKey = "StatisticiJudete"
             };
 
@@ -182,7 +182,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                   INNER JOIN Observer O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
-                  WHERE RD.RaspunsCuFlag = 1",
+                  WHERE RD.Flagged = 1",
                 CacheKey = "StatisticiSectii"
             };
 

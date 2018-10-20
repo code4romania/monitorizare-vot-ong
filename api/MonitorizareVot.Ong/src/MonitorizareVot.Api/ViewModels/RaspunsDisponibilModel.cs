@@ -18,12 +18,12 @@ namespace MonitorizareVot.Ong.Api.ViewModels
             CreateMap<Question, IntrebareModel<RaspunsCompletatModel>>()
               .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.OptionsToQuestions));
 
-            CreateMap<RaspunsDisponibil, RaspunsCompletatModel>()
-                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptionNavigation.Text))
-                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptionNavigation.IsFreeText))
+            CreateMap<OptionToQuestion, RaspunsCompletatModel>()
+                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.Option.Text))
+                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.Option.IsFreeText))
                 .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.IdRaspunsDisponibil))
-                .ForMember(dest => dest.RaspunsCuFlag, c => c.MapFrom(src => src.RaspunsCuFlag))
-                .ForMember(dest => dest.Value, c => c.MapFrom(src => src.Raspuns.First().Value));
+                .ForMember(dest => dest.RaspunsCuFlag, c => c.MapFrom(src => src.Flagged))
+                .ForMember(dest => dest.Value, c => c.MapFrom(src => src.Answers.First().Value));
         }
     }
 }

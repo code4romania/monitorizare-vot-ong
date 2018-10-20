@@ -139,11 +139,11 @@ namespace MonitorizareVot.Domain.Ong.Models
                     IdSection = 1, //B
                     QuestionType = TipIntrebareEnum.OSinguraOptiune,
                     Text = $"{idFormular}: Iti place berea? (se alege o singura optiune selectabila)",
-                    OptionsToQuestions = new List<RaspunsDisponibil>
+                    OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 1, IdOptiune = 1},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 2, IdOptiune = 2, RaspunsCuFlag = true},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 3, IdOptiune = 3}
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 1, IdOption = 1},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 2, IdOption = 2, Flagged = true},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 3, IdOption = 3}
                     }
                 },
                  new Question
@@ -153,11 +153,11 @@ namespace MonitorizareVot.Domain.Ong.Models
                                     IdSection = 1, //B
                                     QuestionType = TipIntrebareEnum.OptiuniMultiple,
                                     Text = $"{idFormular}: Ce tipuri de bere iti plac? (se pot alege optiuni multiple)",
-                                    OptionsToQuestions = new List<RaspunsDisponibil>
+                                    OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 4, IdOptiune = 4, RaspunsCuFlag = true},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 5, IdOptiune = 5},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 6, IdOptiune = 6}
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 4, IdOption = 4, Flagged = true},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 5, IdOption = 5},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 6, IdOption = 6}
                     }
                  },
                  new Question
@@ -167,11 +167,11 @@ namespace MonitorizareVot.Domain.Ong.Models
                      IdSection = 2, //C
                      QuestionType = TipIntrebareEnum.OSinguraOptiuneCuText,
                      Text = $"{idFormular}: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
-                     OptionsToQuestions = new List<RaspunsDisponibil>
+                     OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 7, IdOptiune = 7, RaspunsCuFlag = true},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 8, IdOptiune = 8},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 9, IdOptiune = 9}
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 7, IdOption = 7, Flagged = true},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 8, IdOption = 8},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 9, IdOption = 9}
                     }
                  },
                  new Question
@@ -181,12 +181,12 @@ namespace MonitorizareVot.Domain.Ong.Models
                      IdSection = 2, //C
                      QuestionType = TipIntrebareEnum.OptiuniMultipleCuText,
                      Text = $"{idFormular}: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
-                     OptionsToQuestions = new List<RaspunsDisponibil>
+                     OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 10, IdOptiune = 10, RaspunsCuFlag = true},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 11, IdOptiune = 11},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 12, IdOptiune = 12},
-                        new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 13, IdOptiune = 9}
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 10, IdOption = 10, Flagged = true},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 11, IdOption = 11},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 12, IdOption = 12},
+                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 13, IdOption = 9}
                     }
                  }
                 );

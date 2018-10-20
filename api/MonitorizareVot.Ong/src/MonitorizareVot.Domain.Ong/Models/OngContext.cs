@@ -209,7 +209,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasConstraintName("FK_Raspuns_Observator");
 
                 entity.HasOne(d => d.OptionAnswered)
-                    .WithMany(p => p.Raspuns)
+                    .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.IdOptionToQuestion)
                     .OnDelete(DeleteBehavior.Restrict);
 
@@ -219,34 +219,34 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<RaspunsDisponibil>(entity =>
+            modelBuilder.Entity<OptionToQuestion>(entity =>
             {
                 entity.HasKey(e => e.IdRaspunsDisponibil)
                     .HasName("IX_IdOptiune_IdIntrebare");
 
-                entity.HasIndex(e => e.IdIntrebare)
+                entity.HasIndex(e => e.IdQuestion)
                     .HasName("IX_RaspunsDisponibil_IdIntrebare");
 
-                entity.HasIndex(e => e.IdOptiune)
+                entity.HasIndex(e => e.IdOption)
                     .HasName("IX_RaspunsDisponibil_IdOptiune");
 
-                entity.HasIndex(e => new { e.IdOptiune, e.IdIntrebare })
+                entity.HasIndex(e => new { IdOptiune = e.IdOption, IdIntrebare = e.IdQuestion })
                     .HasName("IX_RaspunsDisponibil")
                     .IsUnique();
 
                 entity.Property(e => e.IdRaspunsDisponibil).ValueGeneratedNever();
 
-                entity.Property(e => e.RaspunsCuFlag).HasDefaultValueSql("0");
+                entity.Property(e => e.Flagged).HasDefaultValueSql("0");
 
-                entity.HasOne(d => d.IdIntrebareNavigation)
+                entity.HasOne(d => d.Question)
                     .WithMany(p => p.OptionsToQuestions)
-                    .HasForeignKey(d => d.IdIntrebare)
+                    .HasForeignKey(d => d.IdQuestion)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsDisponibil_Intrebare");
 
-                entity.HasOne(d => d.IdOptionNavigation)
+                entity.HasOne(d => d.Option)
                     .WithMany(p => p.OptionsToQuestions)
-                    .HasForeignKey(d => d.IdOptiune)
+                    .HasForeignKey(d => d.IdOption)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsDisponibil_Optiune");
             });
@@ -373,7 +373,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Ngo> Ong { get; set; }
         public virtual DbSet<Option> Optiune { get; set; }
         public virtual DbSet<Answer> Raspuns { get; set; }
-        public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
+        public virtual DbSet<OptionToQuestion> RaspunsDisponibil { get; set; }
         public virtual DbSet<PollingStationInfo> RaspunsFormular { get; set; }
         public virtual DbSet<PollingStation> SectieDeVotare { get; set; }
         public virtual DbSet<FormSection> Sectiune { get; set; }

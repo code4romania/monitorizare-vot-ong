@@ -32,7 +32,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 FROM Answer R
                 INNER JOIN OBSERVATOR O ON O.IdObserver = R.IdObserver
                 INNER JOIN OptionsToQuestions RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
-                WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
+                WHERE RD.Flagged = {Convert.ToInt32(message.Urgent)}";
 
             if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
@@ -61,14 +61,14 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var raspunsuri = await _context.Raspuns
                 .Include(r => r.OptionAnswered)
-                    .ThenInclude(rd => rd.IdIntrebareNavigation)
+                    .ThenInclude(rd => rd.Question)
                 .Include(r => r.OptionAnswered)
-                    .ThenInclude(rd => rd.IdOptionNavigation)
+                    .ThenInclude(rd => rd.Option)
                 .Where(r => r.IdObserver == message.IdObservator && r.IdPollingStation == message.IdSectieDeVotare)
                 .ToListAsync();
 
             var intrebari = raspunsuri
-                .Select(r => r.OptionAnswered.IdIntrebareNavigation)
+                .Select(r => r.OptionAnswered.Question)
                 .ToList();
 
             return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();

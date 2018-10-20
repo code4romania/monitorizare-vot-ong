@@ -27,7 +27,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             var intrebari = await _context.Intrebare
                 .Include(i => i.FormSection)
                 .Include(i => i.OptionsToQuestions)
-                    .ThenInclude(i => i.IdOptionNavigation)
+                    .ThenInclude(i => i.Option)
                 .Where(i => i.FormCode == message.CodFormular)
                 .ToListAsync();
 

@@ -73,7 +73,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
             {
                 countObservatori = await context.Raspuns
-                 .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.RaspunsCuFlag == urgent)
+                 .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                  .Select(y =>
                    new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                   )
@@ -109,7 +109,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
             {
                 var sectiiCuObservatori = await context.Raspuns
-                  .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.RaspunsCuFlag == urgent)
+                  .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                   .Select(y =>
                     new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                    )
