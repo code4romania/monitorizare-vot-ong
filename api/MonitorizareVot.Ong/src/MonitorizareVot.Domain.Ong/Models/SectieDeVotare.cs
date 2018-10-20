@@ -7,7 +7,7 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public SectieDeVotare()
         {
-            Nota = new HashSet<Nota>();
+            Nota = new HashSet<Note>();
             Raspuns = new HashSet<Answer>();
             RaspunsFormular = new HashSet<RaspunsFormular>();
         }
@@ -20,7 +20,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string LocalitateComponenta { get; set; }
         public int NumarSectie { get; set; }
 
-        public virtual ICollection<Nota> Nota { get; set; }
+        public virtual ICollection<Note> Nota { get; set; }
         public virtual ICollection<Answer> Raspuns { get; set; }
         public virtual ICollection<RaspunsFormular> RaspunsFormular { get; set; }
         public virtual County IdCountyNavigation { get; set; }

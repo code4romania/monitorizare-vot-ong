@@ -25,15 +25,15 @@ namespace MonitorizareVot.Ong.Api.Queries
         public async Task<List<NotaModel>> Handle(NotaQuery message, CancellationToken token)
         {
             return await _context.Nota
-                .Where(n => n.IdObservator == message.IdObservator && n.IdSectieDeVotare == message.IdSectieDeVotare)
-                .OrderBy(n => n.DataUltimeiModificari)
+                .Where(n => n.IdObserver == message.IdObservator && n.IdPollingStation == message.IdSectieDeVotare)
+                .OrderBy(n => n.LastModified)
                 .Select(n => new NotaModel
                 {
-                    IdNota = n.IdNota,
-                    CaleFisierAtasat = n.CaleFisierAtasat,
-                    TextNota = n.TextNota,
-                    CodFormular = n.IdIntrebareNavigation.FormCode,
-                    CodIntrebare = n.IdIntrebareNavigation.Id
+                    IdNota = n.Id,
+                    CaleFisierAtasat = n.AttachementPath,
+                    TextNota = n.Text,
+                    CodFormular = n.Question.FormCode,
+                    CodIntrebare = n.Question.Id
                 })
                 .ToListAsync();
         }

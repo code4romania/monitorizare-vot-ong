@@ -7,7 +7,7 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public Question()
         {
-            Notes = new HashSet<Nota>();
+            Notes = new HashSet<Note>();
             OptionsToQuestions = new HashSet<RaspunsDisponibil>();
         }
 
@@ -19,7 +19,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string Text { get; set; }
         public string Hint { get; set; }
 
-        public virtual ICollection<Nota> Notes { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<RaspunsDisponibil> OptionsToQuestions { get; set; }
         public virtual Sectiune FormSection { get; set; }
     }

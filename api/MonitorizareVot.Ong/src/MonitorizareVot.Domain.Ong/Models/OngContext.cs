@@ -75,37 +75,37 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Nota>(entity =>
+            modelBuilder.Entity<Note>(entity =>
             {
-                entity.HasKey(e => e.IdNota)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Nota");
 
-                entity.HasIndex(e => e.IdIntrebare)
+                entity.HasIndex(e => e.IdQuestion)
                     .HasName("IX_Nota_IdIntrebare");
 
-                entity.HasIndex(e => e.IdObservator)
+                entity.HasIndex(e => e.IdObserver)
                     .HasName("IX_Nota_IdObservator");
 
-                entity.HasIndex(e => e.IdSectieDeVotare)
+                entity.HasIndex(e => e.IdPollingStation)
                     .HasName("IX_Nota_IdSectieDeVotare");
 
-                entity.Property(e => e.CaleFisierAtasat).HasMaxLength(1000);
+                entity.Property(e => e.AttachementPath).HasMaxLength(1000);
 
-                entity.Property(e => e.DataUltimeiModificari).HasColumnType("datetime");
+                entity.Property(e => e.LastModified).HasColumnType("datetime");
 
-                entity.HasOne(d => d.IdIntrebareNavigation)
+                entity.HasOne(d => d.Question)
                     .WithMany(p => p.Notes)
-                    .HasForeignKey(d => d.IdIntrebare)
+                    .HasForeignKey(d => d.IdQuestion)
                     .HasConstraintName("FK_Nota_Intrebare");
 
-                entity.HasOne(d => d.IdObservatorNavigation)
+                entity.HasOne(d => d.Observer)
                     .WithMany(p => p.Nota)
-                    .HasForeignKey(d => d.IdObservator)
+                    .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.IdSectieDeVotareNavigation)
+                entity.HasOne(d => d.PollingStation)
                     .WithMany(p => p.Nota)
-                    .HasForeignKey(d => d.IdSectieDeVotare)
+                    .HasForeignKey(d => d.IdPollingStation)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -368,7 +368,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<NgoAdmin> AdminOng { get; set; }
         public virtual DbSet<Question> Intrebare { get; set; }
         public virtual DbSet<County> Judet { get; set; }
-        public virtual DbSet<Nota> Nota { get; set; }
+        public virtual DbSet<Note> Nota { get; set; }
         public virtual DbSet<Observator> Observator { get; set; }
         public virtual DbSet<Ong> Ong { get; set; }
         public virtual DbSet<Option> Optiune { get; set; }
