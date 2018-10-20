@@ -105,7 +105,13 @@ namespace MonitorizareVot.Ong.Api
                             Url = "http://monitorizarevot.ro"
                         }
                 });
-
+                options.AddSecurityDefinition("bearer", new ApiKeyScheme() {
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>{
+                    { "bearer", new[] {"readAccess", "writeAccess" } } });
                 var path = PlatformServices.Default.Application.ApplicationBasePath +
                            Path.DirectorySeparatorChar + "MonitorizareVot.Ong.Api.xml";
 

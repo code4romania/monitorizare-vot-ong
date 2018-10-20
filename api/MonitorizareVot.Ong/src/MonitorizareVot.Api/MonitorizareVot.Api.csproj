@@ -10,6 +10,8 @@
     <UserSecretsId>TBR</UserSecretsId>
     <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <AssetTargetFallback>$(AssetTargetFallback);</AssetTargetFallback>
+    <ApplicationInsightsResourceId>/subscriptions/8ad78fbb-bdc8-408b-ac97-bab673b57011/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MonitorizareVot.Api</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/8ad78fbb-bdc8-408b-ac97-bab673b57011/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MonitorizareVot.Api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,6 +45,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="3.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Service References" />
   </ItemGroup>
 
 </Project>
