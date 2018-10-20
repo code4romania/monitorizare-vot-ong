@@ -153,7 +153,6 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnName("NumeONG")
                     .HasMaxLength(200);
 
                 entity.Property(e => e.Organizer).HasDefaultValueSql("0");
