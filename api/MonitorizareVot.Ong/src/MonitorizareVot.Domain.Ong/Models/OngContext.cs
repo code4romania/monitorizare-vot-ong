@@ -251,36 +251,36 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasConstraintName("FK_RaspunsDisponibil_Optiune");
             });
 
-            modelBuilder.Entity<RaspunsFormular>(entity =>
+            modelBuilder.Entity<PollingStationInfo>(entity =>
             {
-                entity.HasKey(e => new { e.IdObservator, e.IdSectieDeVotare })
+                entity.HasKey(e => new { IdObservator = e.IdObserver, IdSectieDeVotare = e.IdPollingStation })
                     .HasName("PK_RaspunsFormular_1");
 
-                entity.HasIndex(e => e.IdObservator)
+                entity.HasIndex(e => e.IdObserver)
                     .HasName("IX_RaspunsFormular_IdObservator");
 
-                entity.HasIndex(e => e.IdSectieDeVotare)
+                entity.HasIndex(e => e.IdPollingStation)
                     .HasName("IX_RaspunsFormular_IdSectieDeVotare");
 
-                entity.Property(e => e.DataUltimeiModificari)
+                entity.Property(e => e.LastModified)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("getdate()");
 
-                entity.Property(e => e.OraPlecarii).HasColumnType("datetime");
+                entity.Property(e => e.ObserverLeaveTime).HasColumnType("datetime");
 
-                entity.Property(e => e.OraSosirii).HasColumnType("datetime");
+                entity.Property(e => e.ObserverArrivalTime).HasColumnType("datetime");
 
-                entity.Property(e => e.PresedinteBesvesteFemeie).HasColumnName("PresedinteBESVEsteFemeie");
+                entity.Property(e => e.IsPollingStationPresidentFemale).HasColumnName("PresedinteBESVEsteFemeie");
 
-                entity.HasOne(d => d.IdObserverNavigation)
+                entity.HasOne(d => d.Observer)
                     .WithMany(p => p.PollingStationInfos)
-                    .HasForeignKey(d => d.IdObservator)
+                    .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsFormular_Observator");
 
-                entity.HasOne(d => d.IdPollingStationNavigation)
+                entity.HasOne(d => d.PollingStation)
                     .WithMany(p => p.PollingStationInfos)
-                    .HasForeignKey(d => d.IdSectieDeVotare)
+                    .HasForeignKey(d => d.IdPollingStation)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -374,7 +374,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Option> Optiune { get; set; }
         public virtual DbSet<Answer> Raspuns { get; set; }
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
-        public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }
+        public virtual DbSet<PollingStationInfo> RaspunsFormular { get; set; }
         public virtual DbSet<PollingStation> SectieDeVotare { get; set; }
         public virtual DbSet<FormSection> Sectiune { get; set; }
         public virtual DbSet<FormVersion> VersiuneFormular { get; set; }

@@ -77,7 +77,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message, CancellationToken cancellationToken)
         {
             var raspunsuriFormular = await _context.RaspunsFormular
-                .FirstOrDefaultAsync(rd => rd.IdObservator == message.IdObservator && rd.IdSectieDeVotare == message.IdSectieDeVotare);
+                .FirstOrDefaultAsync(rd => rd.IdObserver == message.IdObservator && rd.IdPollingStation == message.IdSectieDeVotare);
 
             return _mapper.Map<RaspunsFormularModel>(raspunsuriFormular);
         }

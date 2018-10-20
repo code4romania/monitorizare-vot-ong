@@ -8,7 +8,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         {
             Notes = new HashSet<Note>();
             Answers = new HashSet<Answer>();
-            PollingStationInfos = new HashSet<RaspunsFormular>();
+            PollingStationInfos = new HashSet<PollingStationInfo>();
         }
 
         public int Id { get; set; }
@@ -21,7 +21,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
-        public virtual ICollection<RaspunsFormular> PollingStationInfos { get; set; }
+        public virtual ICollection<PollingStationInfo> PollingStationInfos { get; set; }
         public virtual County County { get; set; }
     }
 }
