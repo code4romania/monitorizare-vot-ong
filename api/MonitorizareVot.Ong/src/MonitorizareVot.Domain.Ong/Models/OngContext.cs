@@ -331,12 +331,12 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(200);
             });
 
-            modelBuilder.Entity<VersiuneFormular>(entity =>
+            modelBuilder.Entity<FormVersion>(entity =>
             {
-                entity.HasKey(e => e.CodFormular)
+                entity.HasKey(e => e.Code)
                     .HasName("PK_VersiuneFormular");
 
-                entity.Property(e => e.CodFormular).HasMaxLength(2);
+                entity.Property(e => e.Code).HasMaxLength(2);
             });
 
 
@@ -377,7 +377,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
         public virtual DbSet<Sectiune> Sectiune { get; set; }
-        public virtual DbSet<VersiuneFormular> VersiuneFormular { get; set; }
+        public virtual DbSet<FormVersion> VersiuneFormular { get; set; }
 
         // Entities used for GROUP BY results
         public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }
