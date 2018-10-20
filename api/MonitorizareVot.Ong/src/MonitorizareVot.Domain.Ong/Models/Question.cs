@@ -21,6 +21,6 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<RaspunsDisponibil> OptionsToQuestions { get; set; }
-        public virtual Sectiune FormSection { get; set; }
+        public virtual FormSection FormSection { get; set; }
     }
 }

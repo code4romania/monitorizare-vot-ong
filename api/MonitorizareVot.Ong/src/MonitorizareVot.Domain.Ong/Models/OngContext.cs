@@ -54,7 +54,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasMaxLength(200);
 
                 entity.HasOne(d => d.FormSection)
-                    .WithMany(p => p.Intrebare)
+                    .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.IdSection)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -315,18 +315,18 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasConstraintName("FK_SectieDeVotare_Judet");
             });
 
-            modelBuilder.Entity<Sectiune>(entity =>
+            modelBuilder.Entity<FormSection>(entity =>
             {
-                entity.HasKey(e => e.IdSectiune)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Sectiune");
 
-                entity.Property(e => e.IdSectiune).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CodSectiune)
+                entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(4);
 
-                entity.Property(e => e.Descriere)
+                entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(200);
             });
@@ -376,7 +376,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<RaspunsDisponibil> RaspunsDisponibil { get; set; }
         public virtual DbSet<RaspunsFormular> RaspunsFormular { get; set; }
         public virtual DbSet<SectieDeVotare> SectieDeVotare { get; set; }
-        public virtual DbSet<Sectiune> Sectiune { get; set; }
+        public virtual DbSet<FormSection> Sectiune { get; set; }
         public virtual DbSet<FormVersion> VersiuneFormular { get; set; }
 
         // Entities used for GROUP BY results

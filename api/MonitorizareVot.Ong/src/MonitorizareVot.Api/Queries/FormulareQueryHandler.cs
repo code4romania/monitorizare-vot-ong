@@ -31,7 +31,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 .Where(i => i.FormCode == message.CodFormular)
                 .ToListAsync();
 
-            var sectiuni = intrebari.Select(a => new { IdSectiune = a.IdSection, a.FormSection.CodSectiune, a.FormSection.Descriere }).Distinct();
+            var sectiuni = intrebari.Select(a => new { IdSectiune = a.IdSection, CodSectiune = a.FormSection.Code, Descriere = a.FormSection.Description }).Distinct();
 
             return sectiuni.Select(i => new SectiuneModel
             {
