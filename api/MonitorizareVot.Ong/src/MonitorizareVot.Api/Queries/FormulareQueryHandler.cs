@@ -13,10 +13,10 @@ namespace MonitorizareVot.Ong.Api.Queries
     public class FormulareQueryHandler :
         IRequestHandler<IntrebariQuery, List<SectiuneModel>>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
 
-        public FormulareQueryHandler(OngContext context, IMapper mapper)
+        public FormulareQueryHandler(VoteMonitorContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<List<SectiuneModel>> Handle(IntrebariQuery message, CancellationToken cancellationToken)
         {
-            var intrebari = await _context.Intrebare
+            var intrebari = await _context.Questions
                 .Include(i => i.FormSection)
                 .Include(i => i.OptionsToQuestions)
                     .ThenInclude(i => i.Option)

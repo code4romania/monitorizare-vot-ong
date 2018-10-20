@@ -17,10 +17,10 @@ namespace MonitorizareVot.Ong.Api.Queries
         IRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
         IRequestHandler<RaspunsuriFormularQuery, RaspunsFormularModel>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
 
-        public RaspunsuriQueryHandler(OngContext context, IMapper mapper)
+        public RaspunsuriQueryHandler(VoteMonitorContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -59,7 +59,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message, CancellationToken cancellationToken)
         {
-            var raspunsuri = await _context.Raspuns
+            var raspunsuri = await _context.Answers
                 .Include(r => r.OptionAnswered)
                     .ThenInclude(rd => rd.Question)
                 .Include(r => r.OptionAnswered)
@@ -76,7 +76,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message, CancellationToken cancellationToken)
         {
-            var raspunsuriFormular = await _context.RaspunsFormular
+            var raspunsuriFormular = await _context.PollingStationInfos
                 .FirstOrDefaultAsync(rd => rd.IdObserver == message.IdObservator && rd.IdPollingStation == message.IdSectieDeVotare);
 
             return _mapper.Map<RaspunsFormularModel>(raspunsuriFormular);

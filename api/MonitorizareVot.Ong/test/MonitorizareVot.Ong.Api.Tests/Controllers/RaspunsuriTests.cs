@@ -70,9 +70,9 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int idONG = 1; // TODO set the idONG in token and use it as a param for the test
             int countObservatori;
 
-            using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
+            using (var context = new VoteMonitorContext(_raspunsuriFixture.ContextOptions))
             {
-                countObservatori = await context.Raspuns
+                countObservatori = await context.Answers
                  .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                  .Select(y =>
                    new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
@@ -106,9 +106,9 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int idONG = 1; // TODO set the idONG in token and use it as a param for the test
             RaspunsModel first, last;
 
-            using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
+            using (var context = new VoteMonitorContext(_raspunsuriFixture.ContextOptions))
             {
-                var sectiiCuObservatori = await context.Raspuns
+                var sectiiCuObservatori = await context.Answers
                   .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                   .Select(y =>
                     new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }

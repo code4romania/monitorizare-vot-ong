@@ -243,7 +243,7 @@ namespace MonitorizareVot.Ong.Api
 
             InitializeContainer(app);
 
-            RegisterDbContext<OngContext>(Configuration.GetConnectionString("DefaultConnection"));
+            RegisterDbContext<VoteMonitorContext>(Configuration.GetConnectionString("DefaultConnection"));
 
             RegisterAutomapper();
 
@@ -406,7 +406,7 @@ namespace MonitorizareVot.Ong.Api
         {
             yield return typeof(IMediator).GetTypeInfo().Assembly;
             yield return typeof(Startup).GetTypeInfo().Assembly;
-            yield return typeof(OngContext).GetTypeInfo().Assembly;
+            yield return typeof(VoteMonitorContext).GetTypeInfo().Assembly;
         }
     }
 }

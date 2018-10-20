@@ -19,11 +19,11 @@ namespace MonitorizareVot.Ong.Api.Queries
         IRequestHandler<StatisticiTopSesizariQuery, ApiListResponse<SimpleStatisticsModel>>,
         IRequestHandler<StatisticiOptiuniQuery, OptiuniModel>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly ICacheService _cacheService;
         private readonly IMapper _mapper;
 
-        public StatisticiQueryHandler(OngContext context, IMapper mapper, ICacheService cacheService)
+        public StatisticiQueryHandler(VoteMonitorContext context, IMapper mapper, ICacheService cacheService)
         {
             _context = context;
             _mapper = mapper;

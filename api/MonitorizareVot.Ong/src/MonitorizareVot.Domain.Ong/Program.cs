@@ -26,7 +26,7 @@ namespace MonitorizareVot.Domain.Ong
             var conn = configuration.GetConnectionString("DefaultConnection");
 
 
-            services.AddDbContext<OngContext>(options => options.UseSqlServer(conn));
+            services.AddDbContext<VoteMonitorContext>(options => options.UseSqlServer(conn));
 
             IServiceProvider provider = services.BuildServiceProvider();
 
@@ -35,7 +35,7 @@ namespace MonitorizareVot.Domain.Ong
 
             using (var serviceScope = provider.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<OngContext>();
+                var context = serviceScope.ServiceProvider.GetService<VoteMonitorContext>();
                 logger.LogDebug($"Initializing Database...");
                 context.Database.EnsureCreated();
                 logger.LogDebug($"Migration finished");

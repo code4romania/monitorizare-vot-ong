@@ -7,9 +7,9 @@ using MonitorizareVot.Domain.Ong.ValueObjects;
 
 namespace MonitorizareVot.Domain.Ong.Models
 {
-    public static class OngContextExtensions
+    public static class VoteMonitorContextExtensions
     {
-        public static void EnsureSeedData(this OngContext context)
+        public static void EnsureSeedData(this VoteMonitorContext context)
         {
             if (!context.AllMigrationsApplied())
                 return;
@@ -30,12 +30,12 @@ namespace MonitorizareVot.Domain.Ong.Models
             }
         }
 
-        private static void SeedJudete(this OngContext context)
+        private static void SeedJudete(this VoteMonitorContext context)
         {
-            if (context.Judet.Any())
+            if (context.Counties.Any())
                 return;
 
-            context.Judet.AddRange(
+            context.Counties.AddRange(
                 new County { Id = 0, Code = "AB", Name = "ALBA" },
                 new County { Id = 1, Code = "AR", Name = "ARAD" },
                 new County { Id = 2, Code = "AG", Name = "ARGES" },
@@ -81,7 +81,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                 );
         }
 
-        private static void DataCleanUp(this OngContext context)
+        private static void DataCleanUp(this VoteMonitorContext context)
         {
             context.Database.ExecuteSqlCommand("delete from OptionsToQuestions");
             context.Database.ExecuteSqlCommand("delete from Questions");
@@ -90,11 +90,11 @@ namespace MonitorizareVot.Domain.Ong.Models
            // context.Database.ExecuteSqlCommand("delete from County");
         }
 
-        private static void SeedOptiuni(this OngContext context)
+        private static void SeedOptiuni(this VoteMonitorContext context)
         {
-            if (context.Optiune.Any())
+            if (context.Options.Any())
                 return;
-            context.Optiune.AddRange(
+            context.Options.AddRange(
                 new Option { Id = 1, Text = "Da", },
                 new Option { Id = 2, Text = "Nu", },
                 new Option { Id = 3, Text = "Nu stiu", },
@@ -112,12 +112,12 @@ namespace MonitorizareVot.Domain.Ong.Models
             context.SaveChanges();
         }
 
-        private static void SeedSectiune(this OngContext context)
+        private static void SeedSectiune(this VoteMonitorContext context)
         {
-            if (context.Sectiune.Any())
+            if (context.FormSections.Any())
                 return;
 
-            context.Sectiune.AddRange(
+            context.FormSections.AddRange(
                 new FormSection { Id = 1, Code = "B", Description = "Despre Bere" },
                 new FormSection { Id = 2, Code = "C", Description = "Descriere masini" }
                 );
@@ -125,12 +125,12 @@ namespace MonitorizareVot.Domain.Ong.Models
             context.SaveChanges();
         }
 
-        private static void SeedQuestions(this OngContext context, char idFormular)
+        private static void SeedQuestions(this VoteMonitorContext context, char idFormular)
         {
-            if (context.Intrebare.Any(a => a.FormCode == idFormular.ToString()))
+            if (context.Questions.Any(a => a.FormCode == idFormular.ToString()))
                 return;
 
-            context.Intrebare.AddRange(
+            context.Questions.AddRange(
                 // primul formular
                 new Question
                 {
@@ -195,12 +195,12 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         }
 
-        private static void SeedVersions(this OngContext context)
+        private static void SeedVersions(this VoteMonitorContext context)
         {
-            if (context.VersiuneFormular.Any())
+            if (context.FormVersions.Any())
                 return;
 
-            context.VersiuneFormular.AddRange(
+            context.FormVersions.AddRange(
                  new FormVersion { Code = "A", CurrentVersion = 1 },
                  new FormVersion { Code = "B", CurrentVersion = 1 },
                  new FormVersion { Code = "C", CurrentVersion = 1 }
@@ -209,7 +209,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             context.SaveChanges();
         }
 
-        //private static void SeedAnswers(this OngContext context)
+        //private static void SeedAnswers(this VoteMonitorContext context)
         //{
         //    if(contex)
         //}

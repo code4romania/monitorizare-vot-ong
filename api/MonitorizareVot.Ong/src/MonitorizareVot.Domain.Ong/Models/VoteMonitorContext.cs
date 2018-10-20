@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Domain.Ong.Models
 {
-    public partial class OngContext : DbContext
+    public partial class VoteMonitorContext : DbContext
     {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -12,12 +10,11 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<NgoAdmin>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_AdminONG");
+                    .HasName("PK_NgoAdminId");
 
-                entity.ToTable("AdminONG");
+                entity.ToTable("NgoAdmin");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("IdAdminONG")
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Account)
@@ -32,16 +29,16 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .WithMany(p => p.NgoAdmins)
                     .HasForeignKey(d => d.IdNgo)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_AdminONG_ONG");
+                    .HasConstraintName("FK_NgoAdmin_Ngo");
             });
 
             modelBuilder.Entity<Question>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Intrebare");
+                    .HasName("PK_Question");
 
                 entity.HasIndex(e => e.IdSection)
-                    .HasName("IX_Intrebare_IdSectiune");
+                    .HasName("IX_Question_IdSection");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -62,7 +59,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<County>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Judet");
+                    .HasName("PK_County");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -78,16 +75,16 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<Note>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Nota");
+                    .HasName("PK_Note");
 
                 entity.HasIndex(e => e.IdQuestion)
-                    .HasName("IX_Nota_IdIntrebare");
+                    .HasName("IX_Note_IdQuestion");
 
                 entity.HasIndex(e => e.IdObserver)
-                    .HasName("IX_Nota_IdObservator");
+                    .HasName("IX_Note_IdObserver");
 
                 entity.HasIndex(e => e.IdPollingStation)
-                    .HasName("IX_Nota_IdSectieDeVotare");
+                    .HasName("IX_Note_IdPollingStation");
 
                 entity.Property(e => e.AttachementPath).HasMaxLength(1000);
 
@@ -96,7 +93,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.HasOne(d => d.Question)
                     .WithMany(p => p.Notes)
                     .HasForeignKey(d => d.IdQuestion)
-                    .HasConstraintName("FK_Nota_Intrebare");
+                    .HasConstraintName("FK_Note_Question");
 
                 entity.HasOne(d => d.Observer)
                     .WithMany(p => p.Notes)
@@ -112,10 +109,10 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<Observer>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Observator");
+                    .HasName("PK_Observer");
 
                 entity.HasIndex(e => e.IdNgo)
-                    .HasName("IX_Observator_IdOng");
+                    .HasName("IX_Observer_IdNgo");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -146,9 +143,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<Ngo>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_ONG");
-
-                entity.ToTable("ONG");
+                    .HasName("PK_NGO");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -167,7 +162,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<Option>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Optiune");
+                    .HasName("PK_Option");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -181,16 +176,16 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<Answer>(entity =>
             {
                 entity.HasKey(e => new { IdObservator = e.IdObserver, IdRaspunsDisponibil = e.IdOptionToQuestion, IdSectieDeVotare = e.IdPollingStation })
-                    .HasName("PK_Raspuns_1");
+                    .HasName("PK_Answer");
 
                 entity.HasIndex(e => e.IdObserver)
-                    .HasName("IX_Raspuns_IdObservator");
+                    .HasName("IX_Answer_IdObserver");
 
                 entity.HasIndex(e => e.IdOptionToQuestion)
-                    .HasName("IX_Raspuns_IdRaspunsDisponibil");
+                    .HasName("IX_Answer_IdOptionToQuestion");
 
                 entity.HasIndex(e => e.IdPollingStation)
-                    .HasName("IX_Raspuns_IdSectieDeVotare");
+                    .HasName("IX_Answer_IdPollingStation");
 
                 entity.Property(e => e.LastModified)
                     .HasColumnType("datetime")
@@ -206,7 +201,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Raspuns_Observator");
+                    .HasConstraintName("FK_Answer_Observer");
 
                 entity.HasOne(d => d.OptionAnswered)
                     .WithMany(p => p.Answers)
@@ -222,16 +217,16 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<OptionToQuestion>(entity =>
             {
                 entity.HasKey(e => e.IdRaspunsDisponibil)
-                    .HasName("IX_IdOptiune_IdIntrebare");
+                    .HasName("PK_OptionToQuestion");
 
                 entity.HasIndex(e => e.IdQuestion)
-                    .HasName("IX_RaspunsDisponibil_IdIntrebare");
+                    .HasName("IX_OptionToQuestion_Question");
 
                 entity.HasIndex(e => e.IdOption)
-                    .HasName("IX_RaspunsDisponibil_IdOptiune");
+                    .HasName("IX_OptionToQuestion_Option");
 
                 entity.HasIndex(e => new { IdOptiune = e.IdOption, IdIntrebare = e.IdQuestion })
-                    .HasName("IX_RaspunsDisponibil")
+                    .HasName("IX_OptionToQuestion")
                     .IsUnique();
 
                 entity.Property(e => e.IdRaspunsDisponibil).ValueGeneratedNever();
@@ -242,25 +237,25 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .WithMany(p => p.OptionsToQuestions)
                     .HasForeignKey(d => d.IdQuestion)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_RaspunsDisponibil_Intrebare");
+                    .HasConstraintName("FK_OptionToQuestion_Question");
 
                 entity.HasOne(d => d.Option)
                     .WithMany(p => p.OptionsToQuestions)
                     .HasForeignKey(d => d.IdOption)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_RaspunsDisponibil_Optiune");
+                    .HasConstraintName("FK_OptionToQuestion_Option");
             });
 
             modelBuilder.Entity<PollingStationInfo>(entity =>
             {
                 entity.HasKey(e => new { IdObservator = e.IdObserver, IdSectieDeVotare = e.IdPollingStation })
-                    .HasName("PK_RaspunsFormular_1");
+                    .HasName("PK_PollingStationInfo");
 
                 entity.HasIndex(e => e.IdObserver)
-                    .HasName("IX_RaspunsFormular_IdObservator");
+                    .HasName("IX_PollingStationInfo_IdObserver");
 
                 entity.HasIndex(e => e.IdPollingStation)
-                    .HasName("IX_RaspunsFormular_IdSectieDeVotare");
+                    .HasName("IX_PollingStationInfo_IdPollingStation");
 
                 entity.Property(e => e.LastModified)
                     .HasColumnType("datetime")
@@ -270,13 +265,11 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.ObserverArrivalTime).HasColumnType("datetime");
 
-                entity.Property(e => e.IsPollingStationPresidentFemale).HasColumnName("PresedinteBESVEsteFemeie");
-
                 entity.HasOne(d => d.Observer)
                     .WithMany(p => p.PollingStationInfos)
                     .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_RaspunsFormular_Observator");
+                    .HasConstraintName("FK_PollingStationInfo_Observer");
 
                 entity.HasOne(d => d.PollingStation)
                     .WithMany(p => p.PollingStationInfos)
@@ -287,13 +280,13 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<PollingStation>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_SectieDeVotare");
+                    .HasName("PK_PollingStation");
 
                 entity.HasIndex(e => e.IdCounty)
-                    .HasName("IX_SectieDeVotare_IdJudet");
+                    .HasName("IX_PollingStation_IdCounty");
 
                 entity.HasIndex(e => new { IdJudet = e.IdCounty, IdSectieDeVotarre = e.Id })
-                    .HasName("IX_Unique_IDJudet_NumarSectie")
+                    .HasName("IX_Unique_IdCounty_IdPollingStation")
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -312,13 +305,13 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .WithMany(p => p.PollingStations)
                     .HasForeignKey(d => d.IdCounty)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_SectieDeVotare_Judet");
+                    .HasConstraintName("FK_PollingStation_County");
             });
 
             modelBuilder.Entity<FormSection>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("PK_Sectiune");
+                    .HasName("PK_FormSection");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -334,7 +327,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             modelBuilder.Entity<FormVersion>(entity =>
             {
                 entity.HasKey(e => e.Code)
-                    .HasName("PK_VersiuneFormular");
+                    .HasName("PK_FormVersion");
 
                 entity.Property(e => e.Code).HasMaxLength(2);
             });
@@ -365,19 +358,19 @@ namespace MonitorizareVot.Domain.Ong.Models
             });
         }
 
-        public virtual DbSet<NgoAdmin> AdminOng { get; set; }
-        public virtual DbSet<Question> Intrebare { get; set; }
-        public virtual DbSet<County> Judet { get; set; }
-        public virtual DbSet<Note> Nota { get; set; }
-        public virtual DbSet<Observer> Observator { get; set; }
-        public virtual DbSet<Ngo> Ong { get; set; }
-        public virtual DbSet<Option> Optiune { get; set; }
-        public virtual DbSet<Answer> Raspuns { get; set; }
-        public virtual DbSet<OptionToQuestion> RaspunsDisponibil { get; set; }
-        public virtual DbSet<PollingStationInfo> RaspunsFormular { get; set; }
-        public virtual DbSet<PollingStation> SectieDeVotare { get; set; }
-        public virtual DbSet<FormSection> Sectiune { get; set; }
-        public virtual DbSet<FormVersion> VersiuneFormular { get; set; }
+        public virtual DbSet<NgoAdmin> NgoAdmins { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<County> Counties { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<Observer> Observers { get; set; }
+        public virtual DbSet<Ngo> Ngos { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<OptionToQuestion> OptionsToQuestions { get; set; }
+        public virtual DbSet<PollingStationInfo> PollingStationInfos { get; set; }
+        public virtual DbSet<PollingStation> PollingStations { get; set; }
+        public virtual DbSet<FormSection> FormSections { get; set; }
+        public virtual DbSet<FormVersion> FormVersions { get; set; }
 
         // Entities used for GROUP BY results
         public virtual DbSet<StatisticiSimple> StatisticiSimple { get; set; }

@@ -13,10 +13,10 @@ namespace MonitorizareVot.Ong.Api.Queries
 {
     public class AdminQueryHandler : IRequestHandler<ApplicationUser, UserInfo>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IHashService _hash;
 
-        public AdminQueryHandler(OngContext context, IHashService hash)
+        public AdminQueryHandler(VoteMonitorContext context, IHashService hash)
         {
             _context = context;
             _hash = hash;
@@ -26,7 +26,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var hashValue = _hash.GetHash(message.Password);
 
-            var userinfo = _context.AdminOng
+            var userinfo = _context.NgoAdmins
                 .Include(a => a.Ngo)
                 .Where(a => a.Password == hashValue &&
                                      a.Account == message.UserName)

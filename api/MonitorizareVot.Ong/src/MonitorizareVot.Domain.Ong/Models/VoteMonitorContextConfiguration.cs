@@ -8,20 +8,20 @@ namespace MonitorizareVot.Domain.Ong.Models
     /// <summary>
     ///  used only on migrations
     /// </summary>
-    public class OngContextConfiguration : IDesignTimeDbContextFactory<OngContext>
+    public class VoteMonitorContextConfiguration : IDesignTimeDbContextFactory<VoteMonitorContext>
     {
-        public OngContext CreateDBContext(DbContextFactoryOptions options)
+        public VoteMonitorContext CreateDBContext(DbContextFactoryOptions options)
         {
-            var builder = new DbContextOptionsBuilder<OngContext>();
+            var builder = new DbContextOptionsBuilder<VoteMonitorContext>();
             builder.UseSqlServer(Startup.RegisterConfiguration().GetConnectionString("DefaultConnection"));
-            return new OngContext(builder.Options);
+            return new VoteMonitorContext(builder.Options);
         }
 
-        public OngContext CreateDbContext(string[] args)
+        public VoteMonitorContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<OngContext>();
+            var builder = new DbContextOptionsBuilder<VoteMonitorContext>();
             builder.UseSqlServer(Startup.RegisterConfiguration().GetConnectionString("DefaultConnection"));
-            return new OngContext(builder.Options);
+            return new VoteMonitorContext(builder.Options);
         }
     }
 }

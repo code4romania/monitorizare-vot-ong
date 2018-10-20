@@ -14,17 +14,17 @@ namespace MonitorizareVot.Ong.Api.Queries
         IRequestHandler<NotaQuery, List<NotaModel>>
     {
 
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
 
-        public NoteQueryHandler(OngContext context, IMapper mapper)
+        public NoteQueryHandler(VoteMonitorContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
         public async Task<List<NotaModel>> Handle(NotaQuery message, CancellationToken token)
         {
-            return await _context.Nota
+            return await _context.Notes
                 .Where(n => n.IdObserver == message.IdObservator && n.IdPollingStation == message.IdSectieDeVotare)
                 .OrderBy(n => n.LastModified)
                 .Select(n => new NotaModel

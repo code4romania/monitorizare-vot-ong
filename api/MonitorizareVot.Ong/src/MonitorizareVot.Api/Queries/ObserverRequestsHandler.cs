@@ -16,11 +16,11 @@ namespace MonitorizareVot.Api.Queries
         IRequestHandler<NewObserverRequest, int>,
         IRequestHandler<ResetDeviceIdRequest>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly ILogger _logger;
         private  IHashService _hashService;
 
-        public ObserverRequestsHandler(OngContext context, ILogger logger, IHashService hashService)
+        public ObserverRequestsHandler(VoteMonitorContext context, ILogger logger, IHashService hashService)
         {
             _context = context;
             _logger = logger;
@@ -29,7 +29,7 @@ namespace MonitorizareVot.Api.Queries
 
         private int GetMaxIdObserver()
         {
-            return _context.Observator.Max(o => o.Id) + 1;
+            return _context.Observers.Max(o => o.Id) + 1;
         }
 
         public Task<int> Handle(ImportObserversRequest message, CancellationToken token)
@@ -55,7 +55,7 @@ namespace MonitorizareVot.Api.Queries
                         Name = data[message.NameIndexInFile],
                         Pin = hashed
                     };
-                    _context.Observator.Add(observer);
+                    _context.Observers.Add(observer);
                     counter++;
                 }
                 _context.SaveChanges();
@@ -76,7 +76,7 @@ namespace MonitorizareVot.Api.Queries
                 Name = message.Nume,
                 Pin = _hashService.GetHash(message.PIN)
             };
-            _context.Observator.Add(observer);
+            _context.Observers.Add(observer);
             return _context.SaveChangesAsync();
         }
 
@@ -84,7 +84,7 @@ namespace MonitorizareVot.Api.Queries
         public Task Handle(ResetDeviceIdRequest message, CancellationToken token)
         {
             // find observer
-            var observers = _context.Observator.Where(o => o.Phone == message.PhoneNumber);
+            var observers = _context.Observers.Where(o => o.Phone == message.PhoneNumber);
             if (observers.Count() != 1)
             {
                 return Task.FromResult(0);

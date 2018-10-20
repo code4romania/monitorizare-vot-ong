@@ -15,7 +15,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
         {
             base.SeedData();
 
-            using (var context = new OngContext(ContextOptions))
+            using (var context = new VoteMonitorContext(ContextOptions))
             {
                 using (var tran = context.Database.BeginTransaction())
                 {
@@ -37,12 +37,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             }
         }
 
-        private void SeedOngs(OngContext context)
+        private void SeedOngs(VoteMonitorContext context)
         {
-            if (context.Ong.Any())
+            if (context.Ngos.Any())
                 return;
 
-            context.Ong.AddRange(
+            context.Ngos.AddRange(
                  new Domain.Ong.Models.Ngo { Id = 1, Name = "Denumire ONG A", ShortName = "ONG A" },
                  new Domain.Ong.Models.Ngo { Id = 2, Name = "Denumire ONG B", ShortName = "ONG B" },
                  new Domain.Ong.Models.Ngo { Id = 3, Name = "Denumire ONG C", ShortName = "ONG C" },
@@ -54,12 +54,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             context.SaveChanges();
         }
 
-        private void SeedSectiiDeVotare(OngContext context, int idJudet)
+        private void SeedSectiiDeVotare(VoteMonitorContext context, int idJudet)
         {
-            if (context.SectieDeVotare.Any(a => a.IdCounty == idJudet))
+            if (context.PollingStations.Any(a => a.IdCounty == idJudet))
                 return;
 
-            context.SectieDeVotare.AddRange(
+            context.PollingStations.AddRange(
                  new PollingStation { Id = idJudet * 10 + 1, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 1}", Number = 1, TerritoryCode = $"Localitate {idJudet * 10 + 1}" },
                  new PollingStation { Id = idJudet * 10 + 2, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 2}", Number = 2, TerritoryCode = $"Localitate {idJudet * 10 + 2}" },
                  new PollingStation { Id = idJudet * 10 + 3, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 3}", Number = 3, TerritoryCode = $"Localitate {idJudet * 10 + 3}" },
@@ -70,9 +70,9 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             context.SaveChanges();
         }
 
-        private void SeedObservatoriCuRaspunsuri(OngContext context, int idOng)
+        private void SeedObservatoriCuRaspunsuri(VoteMonitorContext context, int idOng)
         {
-            if (context.Observator.Any(a => a.IdNgo == idOng))
+            if (context.Observers.Any(a => a.IdNgo == idOng))
                 return;
 
             var listaObservatori = new List<Observer>
@@ -91,7 +91,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 new Observer { IdNgo = idOng, Name = "Dumbrava Valeria",  Phone = "0763000009", FromTeam = true }
             };
 
-            context.Observator.AddRange(listaObservatori);
+            context.Observers.AddRange(listaObservatori);
 
             var listaRaspunsuri = new List<Answer>
             {
@@ -173,7 +173,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
                 new Answer { IdObserver = listaObservatori[9].Id, IdOptionToQuestion = 'A' * 20 + 11, IdPollingStation = 11, LastModified = DateTime.Now },
             };
 
-            context.Raspuns.AddRange(listaRaspunsuri);
+            context.Answers.AddRange(listaRaspunsuri);
 
             context.SaveChanges();
         }
