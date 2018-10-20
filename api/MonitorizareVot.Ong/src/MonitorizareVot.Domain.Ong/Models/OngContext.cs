@@ -59,18 +59,18 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Judet>(entity =>
+            modelBuilder.Entity<County>(entity =>
             {
-                entity.HasKey(e => e.IdJudet)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Judet");
 
-                entity.Property(e => e.IdJudet).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CodJudet)
+                entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(4);
 
-                entity.Property(e => e.Nume)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
             });
@@ -308,8 +308,8 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.HasOne(d => d.IdJudetNavigation)
-                    .WithMany(p => p.SectieDeVotare)
+                entity.HasOne(d => d.IdCountyNavigation)
+                    .WithMany(p => p.PollingStations)
                     .HasForeignKey(d => d.IdJudet)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_SectieDeVotare_Judet");
@@ -367,7 +367,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         public virtual DbSet<AdminOng> AdminOng { get; set; }
         public virtual DbSet<Question> Intrebare { get; set; }
-        public virtual DbSet<Judet> Judet { get; set; }
+        public virtual DbSet<County> Judet { get; set; }
         public virtual DbSet<Nota> Nota { get; set; }
         public virtual DbSet<Observator> Observator { get; set; }
         public virtual DbSet<Ong> Ong { get; set; }

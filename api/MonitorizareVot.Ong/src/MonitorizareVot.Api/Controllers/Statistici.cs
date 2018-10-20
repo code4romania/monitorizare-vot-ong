@@ -56,7 +56,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza topul judetelor sau sectiilor in functie de numarul de sesizari
         /// </summary>
         /// <param name="model">  Detaliile de paginare (default Page=1, PageSize=20)
-        /// Grupare (0 - Judet | 1 - Sectie)
+        /// Grupare (0 - County | 1 - Sectie)
         /// Formular (codul formularulu care va fi luat in calcul pentru statistci - "" (string.Empty) inseamna toate)
         /// </param>
         /// <returns></returns>

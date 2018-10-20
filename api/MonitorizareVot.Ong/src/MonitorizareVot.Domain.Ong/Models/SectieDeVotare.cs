@@ -23,6 +23,6 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual ICollection<Nota> Nota { get; set; }
         public virtual ICollection<Answer> Raspuns { get; set; }
         public virtual ICollection<RaspunsFormular> RaspunsFormular { get; set; }
-        public virtual Judet IdJudetNavigation { get; set; }
+        public virtual County IdCountyNavigation { get; set; }
     }
 }

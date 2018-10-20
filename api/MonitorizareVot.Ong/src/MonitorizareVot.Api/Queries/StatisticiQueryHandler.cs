@@ -78,9 +78,9 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             //var queryBuilder = new StatisticiQueryBuilder
             //{
-            //    Query = @"SELECT J.Nume AS Label, COUNT(*) as Value
-            //      FROM Judet J
-            //      INNER JOIN SectieDeVotare AS SV ON SV.IdJudet = J.IdJudet
+            //    Query = @"SELECT J.Name AS Label, COUNT(*) as Value
+            //      FROM County J
+            //      INNER JOIN PollingStations AS SV ON SV.Id = J.Id
             //      INNER JOIN [Answer] AS R ON R.IdPollingStation = SV.IdSectieDeVotarre
             //      INNER JOIN Observator O ON O.IdObserver = R.IdObserver",
             //    CacheKey = "StatisticiObservatori"
@@ -94,7 +94,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
             
             queryBuilder.WhereOngFilter(message.Organizator, message.IdONG);
-            //queryBuilder.Append("GROUP BY J.Nume ORDER BY Value DESC");            
+            //queryBuilder.Append("GROUP BY J.Name ORDER BY Value DESC");            
             queryBuilder.Append("group by codjudet order by [Value] desc");
 
             // get or save all records in cache
