@@ -38,7 +38,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                   FROM Answer AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
                   INNER JOIN Option AS OB ON OB.Id = RD.Id
-                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
+                  INNER JOIN Observer O ON O.IdObserver = R.IdObserver
                   WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
@@ -82,7 +82,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             //      FROM County J
             //      INNER JOIN PollingStations AS SV ON SV.Id = J.Id
             //      INNER JOIN [Answer] AS R ON R.IdPollingStation = SV.IdSectieDeVotarre
-            //      INNER JOIN Observator O ON O.IdObserver = R.IdObserver",
+            //      INNER JOIN Observer O ON O.IdObserver = R.IdObserver",
             //    CacheKey = "StatisticiObservatori"
             //};
 
@@ -137,7 +137,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 Query = @"SELECT R.CountyCode AS Label, COUNT(*) as Value
                   FROM Answer AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
-                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
+                  INNER JOIN Observer O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiJudete"
@@ -180,7 +180,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 Query = @"SELECT R.CountyCode AS Label, R.PollingStationNumber AS Cod, COUNT(*) as Value
                   FROM Answer AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
-                  INNER JOIN Observator O ON O.IdObserver = R.IdObserver
+                  INNER JOIN Observer O ON O.IdObserver = R.IdObserver
                   INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiSectii"

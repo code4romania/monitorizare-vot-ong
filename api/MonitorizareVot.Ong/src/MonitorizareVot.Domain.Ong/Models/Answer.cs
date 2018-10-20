@@ -14,7 +14,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         public int PollingStationNumber { get; set; }
 
-        public virtual Observator Observer { get; set; }
+        public virtual Observer Observer { get; set; }
         public virtual RaspunsDisponibil OptionAnswered { get; set; }
         public virtual SectieDeVotare PollingStation { get; set; }
     }

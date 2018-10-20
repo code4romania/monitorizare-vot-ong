@@ -62,7 +62,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(LoggedInObserversRequest message, CancellationToken token)
         {
-            var number = await _context.Observator.CountAsync(o => o.IdDispozitivMobil != null);
+            var number = await _context.Observator.CountAsync(o => o.MobileDeviceId != null);
             return new SimpleStatisticsModel
             {
                 Label = "Number of logged in Observers",

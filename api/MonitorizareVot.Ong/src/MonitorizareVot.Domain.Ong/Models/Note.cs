@@ -14,7 +14,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public string Text { get; set; }
 
         public virtual Question Question { get; set; }
-        public virtual Observator Observer { get; set; }
+        public virtual Observer Observer { get; set; }
         public virtual SectieDeVotare PollingStation { get; set; }
     }
 }

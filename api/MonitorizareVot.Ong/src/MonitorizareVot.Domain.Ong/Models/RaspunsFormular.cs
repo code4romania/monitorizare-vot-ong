@@ -13,7 +13,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public DateTime? OraSosirii { get; set; }
         public bool? PresedinteBesvesteFemeie { get; set; }
 
-        public virtual Observator IdObservatorNavigation { get; set; }
+        public virtual Observer IdObserverNavigation { get; set; }
         public virtual SectieDeVotare IdSectieDeVotareNavigation { get; set; }
     }
 }

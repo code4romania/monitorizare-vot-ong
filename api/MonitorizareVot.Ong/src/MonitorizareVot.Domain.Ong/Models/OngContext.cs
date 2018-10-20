@@ -99,7 +99,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasConstraintName("FK_Nota_Intrebare");
 
                 entity.HasOne(d => d.Observer)
-                    .WithMany(p => p.Nota)
+                    .WithMany(p => p.Notes)
                     .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict);
 
@@ -109,27 +109,27 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Observator>(entity =>
+            modelBuilder.Entity<Observer>(entity =>
             {
-                entity.HasKey(e => e.IdObservator)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Observator");
 
-                entity.HasIndex(e => e.IdOng)
+                entity.HasIndex(e => e.IdNgo)
                     .HasName("IX_Observator_IdOng");
 
-                entity.Property(e => e.IdObservator).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.DataInregistrariiDispozitivului).HasColumnType("datetime");
+                entity.Property(e => e.DeviceRegisterDate).HasColumnType("datetime");
 
-                entity.Property(e => e.EsteDinEchipa).HasDefaultValueSql("0");
+                entity.Property(e => e.FromTeam).HasDefaultValueSql("0");
 
-                entity.Property(e => e.IdDispozitivMobil).HasColumnType("varchar(500)");
+                entity.Property(e => e.MobileDeviceId).HasColumnType("varchar(500)");
 
-                entity.Property(e => e.NumarTelefon)
+                entity.Property(e => e.Phone)
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.Property(e => e.NumeIntreg)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(200);
 
@@ -137,9 +137,9 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.HasOne(d => d.IdOngNavigation)
+                entity.HasOne(d => d.Ngo)
                     .WithMany(p => p.Observator)
-                    .HasForeignKey(d => d.IdOng)
+                    .HasForeignKey(d => d.IdNgo)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -203,7 +203,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.Property(e => e.CountyCode).HasMaxLength(2);
 
                 entity.HasOne(d => d.Observer)
-                    .WithMany(p => p.Raspuns)
+                    .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.IdObserver)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Raspuns_Observator");
@@ -272,8 +272,8 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.PresedinteBesvesteFemeie).HasColumnName("PresedinteBESVEsteFemeie");
 
-                entity.HasOne(d => d.IdObservatorNavigation)
-                    .WithMany(p => p.RaspunsFormular)
+                entity.HasOne(d => d.IdObserverNavigation)
+                    .WithMany(p => p.PollingStationInfos)
                     .HasForeignKey(d => d.IdObservator)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsFormular_Observator");
@@ -369,7 +369,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public virtual DbSet<Question> Intrebare { get; set; }
         public virtual DbSet<County> Judet { get; set; }
         public virtual DbSet<Note> Nota { get; set; }
-        public virtual DbSet<Observator> Observator { get; set; }
+        public virtual DbSet<Observer> Observator { get; set; }
         public virtual DbSet<Ong> Ong { get; set; }
         public virtual DbSet<Option> Optiune { get; set; }
         public virtual DbSet<Answer> Raspuns { get; set; }

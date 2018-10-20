@@ -28,7 +28,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
-            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObserver, O.NumeIntreg AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS LastModified
+            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObserver, O.Name AS Observer, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS LastModified
                 FROM Answer R
                 INNER JOIN OBSERVATOR O ON O.IdObserver = R.IdObserver
                 INNER JOIN OptionsToQuestions RD ON RD.IdOptionToQuestion = R.IdOptionToQuestion
@@ -36,7 +36,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
-            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.NumeIntreg, CountyCode";
+            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
 
             var queryPaged = $@"{queryUnPaged} ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 

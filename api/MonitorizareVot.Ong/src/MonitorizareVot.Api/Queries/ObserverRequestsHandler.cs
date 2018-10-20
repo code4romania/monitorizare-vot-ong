@@ -29,7 +29,7 @@ namespace MonitorizareVot.Api.Queries
 
         private int GetMaxIdObserver()
         {
-            return _context.Observator.Max(o => o.IdObservator) + 1;
+            return _context.Observator.Max(o => o.Id) + 1;
         }
 
         public Task<int> Handle(ImportObserversRequest message, CancellationToken token)
@@ -47,12 +47,12 @@ namespace MonitorizareVot.Api.Queries
                     var data = fileContent.Split('\t');
                     var hashed = _hashService.GetHash(data[1]);
 
-                    var observer = new Observator
+                    var observer = new Observer
                     {
-                        IdObservator = startId + counter,
-                        IdOng = message.IdOng,
-                        NumarTelefon = data[0],
-                        NumeIntreg = data[message.NameIndexInFile],
+                        Id = startId + counter,
+                        IdNgo = message.IdOng,
+                        Phone = data[0],
+                        Name = data[message.NameIndexInFile],
                         Pin = hashed
                     };
                     _context.Observator.Add(observer);
@@ -68,12 +68,12 @@ namespace MonitorizareVot.Api.Queries
         public Task<int> Handle(NewObserverRequest message, CancellationToken token)
         {
             var id = GetMaxIdObserver();
-            var observer = new Observator
+            var observer = new Observer
             {
-                IdObservator = id,
-                IdOng = message.IdOng,
-                NumarTelefon = message.NumarTelefon,
-                NumeIntreg = message.Nume,
+                Id = id,
+                IdNgo = message.IdOng,
+                Phone = message.NumarTelefon,
+                Name = message.Nume,
                 Pin = _hashService.GetHash(message.PIN)
             };
             _context.Observator.Add(observer);
@@ -84,7 +84,7 @@ namespace MonitorizareVot.Api.Queries
         public Task Handle(ResetDeviceIdRequest message, CancellationToken token)
         {
             // find observer
-            var observers = _context.Observator.Where(o => o.NumarTelefon == message.PhoneNumber);
+            var observers = _context.Observator.Where(o => o.Phone == message.PhoneNumber);
             if (observers.Count() != 1)
             {
                 return Task.FromResult(0);
@@ -92,7 +92,7 @@ namespace MonitorizareVot.Api.Queries
 
             // make sure the number is unique
             // clear device id
-            observers.First().IdDispozitivMobil = null;
+            observers.First().MobileDeviceId = null;
 
             return _context.SaveChangesAsync();
             // save
