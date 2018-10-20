@@ -165,8 +165,8 @@ namespace MonitorizareVot.Api.Controllers
             return await Task.FromResult(new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "Token"), new[]
                 {
-                    new Claim("IdNgo", userInfo.IdOng.ToString()),
-                    new Claim("Organizer", userInfo.Organizator.ToString(), typeof(bool).ToString())
+                    new Claim("IdNgo", userInfo.IdNgo.ToString()),
+                    new Claim("Organizer", userInfo.Organizer.ToString(), typeof(bool).ToString())
                 }));
         }
     }

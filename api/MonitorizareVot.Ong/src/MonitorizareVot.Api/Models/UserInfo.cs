@@ -9,8 +9,8 @@ namespace MonitorizareVot.Ong.Api.Models
 {
     public class UserInfo
     {
-        public int IdOng { get; set; }
-        public bool Organizator { get; set; }
+        public int IdNgo { get; set; }
+        public bool Organizer { get; set; }
     }
 
     public class UserInfoProfile : Profile
@@ -18,8 +18,8 @@ namespace MonitorizareVot.Ong.Api.Models
         public UserInfoProfile()
         {
             CreateMap<NgoAdmin, UserInfo>()
-                .ForMember(u => u.IdOng, opt => opt.MapFrom(a => a.IdNgo))
-                .ForMember(u => u.Organizator, opt => opt.MapFrom(a => a.Ngo.Organizer));
+                .ForMember(u => u.IdNgo, opt => opt.MapFrom(a => a.IdNgo))
+                .ForMember(u => u.Organizer, opt => opt.MapFrom(a => a.Ngo.Organizer));
         }   
     }
 }
