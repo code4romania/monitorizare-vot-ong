@@ -88,14 +88,14 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             var queryBuilder = new StatisticiQueryBuilder
             {
-                Query = @"select count(distinct r.idobservator) as [Value], codjudet as Label
-                          from raspuns r (nolock) inner join observator o on r.idobservator = o.idobservator ",
+                Query = @"select count(distinct r.IdObserver) as [Value], CountyCode as Label
+                          from Answers a (nolock) inner join Observers o on a.IdObserver = o.Id ",
                 CacheKey = "StatisticiObservatori"
             };
             
             queryBuilder.WhereOngFilter(message.Organizator, message.IdONG);
             //queryBuilder.Append("GROUP BY J.Name ORDER BY Value DESC");            
-            queryBuilder.Append("group by codjudet order by [Value] desc");
+            queryBuilder.Append("group by CountyCode order by [Value] desc");
 
             // get or save all records in cache
             var records = await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
