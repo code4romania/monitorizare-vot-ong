@@ -141,9 +141,9 @@ namespace MonitorizareVot.Domain.Ong.Models
                     Text = $"{idFormular}: Iti place berea? (se alege o singura optiune selectabila)",
                     OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 1, IdOption = 1},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 2, IdOption = 2, Flagged = true},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 3, IdOption = 3}
+                        new OptionToQuestion {Id = idFormular * 20 + 1, IdOption = 1},
+                        new OptionToQuestion {Id = idFormular * 20 + 2, IdOption = 2, Flagged = true},
+                        new OptionToQuestion {Id = idFormular * 20 + 3, IdOption = 3}
                     }
                 },
                  new Question
@@ -155,9 +155,9 @@ namespace MonitorizareVot.Domain.Ong.Models
                                     Text = $"{idFormular}: Ce tipuri de bere iti plac? (se pot alege optiuni multiple)",
                                     OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 4, IdOption = 4, Flagged = true},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 5, IdOption = 5},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 6, IdOption = 6}
+                        new OptionToQuestion {Id = idFormular * 20 + 4, IdOption = 4, Flagged = true},
+                        new OptionToQuestion {Id = idFormular * 20 + 5, IdOption = 5},
+                        new OptionToQuestion {Id = idFormular * 20 + 6, IdOption = 6}
                     }
                  },
                  new Question
@@ -169,9 +169,9 @@ namespace MonitorizareVot.Domain.Ong.Models
                      Text = $"{idFormular}: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
                      OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 7, IdOption = 7, Flagged = true},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 8, IdOption = 8},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 9, IdOption = 9}
+                        new OptionToQuestion {Id = idFormular * 20 + 7, IdOption = 7, Flagged = true},
+                        new OptionToQuestion {Id = idFormular * 20 + 8, IdOption = 8},
+                        new OptionToQuestion {Id = idFormular * 20 + 9, IdOption = 9}
                     }
                  },
                  new Question
@@ -183,10 +183,10 @@ namespace MonitorizareVot.Domain.Ong.Models
                      Text = $"{idFormular}: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
                      OptionsToQuestions = new List<OptionToQuestion>
                     {
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 10, IdOption = 10, Flagged = true},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 11, IdOption = 11},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 12, IdOption = 12},
-                        new OptionToQuestion {IdRaspunsDisponibil = idFormular * 20 + 13, IdOption = 9}
+                        new OptionToQuestion {Id = idFormular * 20 + 10, IdOption = 10, Flagged = true},
+                        new OptionToQuestion {Id = idFormular * 20 + 11, IdOption = 11},
+                        new OptionToQuestion {Id = idFormular * 20 + 12, IdOption = 12},
+                        new OptionToQuestion {Id = idFormular * 20 + 13, IdOption = 9}
                     }
                  }
                 );

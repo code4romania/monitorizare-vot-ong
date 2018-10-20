@@ -216,7 +216,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
             modelBuilder.Entity<OptionToQuestion>(entity =>
             {
-                entity.HasKey(e => e.IdRaspunsDisponibil)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_OptionToQuestion");
 
                 entity.HasIndex(e => e.IdQuestion)
@@ -229,7 +229,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasName("IX_OptionToQuestion")
                     .IsUnique();
 
-                entity.Property(e => e.IdRaspunsDisponibil).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Flagged).HasDefaultValueSql("0");
 

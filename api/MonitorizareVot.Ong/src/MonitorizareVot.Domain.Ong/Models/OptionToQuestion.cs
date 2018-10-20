@@ -10,7 +10,7 @@ namespace MonitorizareVot.Domain.Ong.Models
             Answers = new HashSet<Answer>();
         }
 
-        public int IdRaspunsDisponibil { get; set; }
+        public int Id { get; set; }
         public int IdQuestion { get; set; }
         public int IdOption { get; set; }
         public bool Flagged { get; set; }
