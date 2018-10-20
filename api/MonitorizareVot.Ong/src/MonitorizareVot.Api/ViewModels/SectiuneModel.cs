@@ -22,8 +22,8 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     {
         public FormularProfile()
         {
-            CreateMap<Intrebare, IntrebareModel<RaspunsDisponibilModel>>()
-                .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.RaspunsDisponibil));
+            CreateMap<Question, IntrebareModel<RaspunsDisponibilModel>>()
+                .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.OptionsToQuestions));
 
             CreateMap<RaspunsDisponibil, RaspunsDisponibilModel>()
                 .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))

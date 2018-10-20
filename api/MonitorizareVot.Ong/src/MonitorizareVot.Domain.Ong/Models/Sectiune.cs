@@ -7,13 +7,13 @@ namespace MonitorizareVot.Domain.Ong.Models
     {
         public Sectiune()
         {
-            Intrebare = new HashSet<Intrebare>();
+            Intrebare = new HashSet<Question>();
         }
 
         public int IdSectiune { get; set; }
         public string CodSectiune { get; set; }
         public string Descriere { get; set; }
 
-        public virtual ICollection<Intrebare> Intrebare { get; set; }
+        public virtual ICollection<Question> Intrebare { get; set; }
     }
 }

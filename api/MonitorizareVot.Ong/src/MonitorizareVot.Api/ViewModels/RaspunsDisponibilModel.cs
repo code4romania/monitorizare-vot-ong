@@ -15,8 +15,8 @@ namespace MonitorizareVot.Ong.Api.ViewModels
     {
         public RaspunsProfile()
         {
-            CreateMap<Intrebare, IntrebareModel<RaspunsCompletatModel>>()
-              .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.RaspunsDisponibil));
+            CreateMap<Question, IntrebareModel<RaspunsCompletatModel>>()
+              .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.OptionsToQuestions));
 
             CreateMap<RaspunsDisponibil, RaspunsCompletatModel>()
                 .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))

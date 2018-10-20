@@ -31,7 +31,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             string queryUnPaged = $@"SELECT IdSectieDeVotare AS IdSectie, R.IdObservator AS IdObservator, O.NumeIntreg AS Observator, CONCAT(CodJudet, ' ', NumarSectie) AS Sectie, MAX(DataUltimeiModificari) AS DataUltimeiModificari
                 FROM Raspuns R
                 INNER JOIN OBSERVATOR O ON O.IdObservator = R.IdObservator
-                INNER JOIN RaspunsDisponibil RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                INNER JOIN OptionsToQuestions RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
                 WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
 
             if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdOng = {message.IdONG}";

@@ -35,27 +35,27 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .HasConstraintName("FK_AdminONG_ONG");
             });
 
-            modelBuilder.Entity<Intrebare>(entity =>
+            modelBuilder.Entity<Question>(entity =>
             {
-                entity.HasKey(e => e.IdIntrebare)
+                entity.HasKey(e => e.Id)
                     .HasName("PK_Intrebare");
 
-                entity.HasIndex(e => e.IdSectiune)
+                entity.HasIndex(e => e.IdSection)
                     .HasName("IX_Intrebare_IdSectiune");
 
-                entity.Property(e => e.IdIntrebare).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CodFormular)
+                entity.Property(e => e.FormCode)
                     .IsRequired()
                     .HasMaxLength(2);
 
-                entity.Property(e => e.TextIntrebare)
+                entity.Property(e => e.Text)
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.HasOne(d => d.IdSectiuneNavigation)
+                entity.HasOne(d => d.FormSection)
                     .WithMany(p => p.Intrebare)
-                    .HasForeignKey(d => d.IdSectiune)
+                    .HasForeignKey(d => d.IdSection)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -94,7 +94,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.Property(e => e.DataUltimeiModificari).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdIntrebareNavigation)
-                    .WithMany(p => p.Nota)
+                    .WithMany(p => p.Notes)
                     .HasForeignKey(d => d.IdIntrebare)
                     .HasConstraintName("FK_Nota_Intrebare");
 
@@ -239,7 +239,7 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.Property(e => e.RaspunsCuFlag).HasDefaultValueSql("0");
 
                 entity.HasOne(d => d.IdIntrebareNavigation)
-                    .WithMany(p => p.RaspunsDisponibil)
+                    .WithMany(p => p.OptionsToQuestions)
                     .HasForeignKey(d => d.IdIntrebare)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RaspunsDisponibil_Intrebare");
@@ -366,7 +366,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         }
 
         public virtual DbSet<AdminOng> AdminOng { get; set; }
-        public virtual DbSet<Intrebare> Intrebare { get; set; }
+        public virtual DbSet<Question> Intrebare { get; set; }
         public virtual DbSet<Judet> Judet { get; set; }
         public virtual DbSet<Nota> Nota { get; set; }
         public virtual DbSet<Observator> Observator { get; set; }

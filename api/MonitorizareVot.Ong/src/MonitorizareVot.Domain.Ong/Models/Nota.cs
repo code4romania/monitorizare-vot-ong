@@ -13,7 +13,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public int IdSectieDeVotare { get; set; }
         public string TextNota { get; set; }
 
-        public virtual Intrebare IdIntrebareNavigation { get; set; }
+        public virtual Question IdIntrebareNavigation { get; set; }
         public virtual Observator IdObservatorNavigation { get; set; }
         public virtual SectieDeVotare IdSectieDeVotareNavigation { get; set; }
     }

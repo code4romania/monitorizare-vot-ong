@@ -32,8 +32,8 @@ namespace MonitorizareVot.Ong.Api.Queries
                     IdNota = n.IdNota,
                     CaleFisierAtasat = n.CaleFisierAtasat,
                     TextNota = n.TextNota,
-                    CodFormular = n.IdIntrebareNavigation.CodFormular,
-                    CodIntrebare = n.IdIntrebareNavigation.IdIntrebare
+                    CodFormular = n.IdIntrebareNavigation.FormCode,
+                    CodIntrebare = n.IdIntrebareNavigation.Id
                 })
                 .ToListAsync();
         }

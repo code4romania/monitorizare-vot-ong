@@ -23,13 +23,13 @@
 
         /// <summary>
         /// Adds an AND condition to the WHERE clause
-        /// Filters statistics by CodFormular
+        /// Filters statistics by FormCode
         /// </summary>
         public void AndFormularFilter(string formular)
         {
             if(!string.IsNullOrEmpty(formular))
             {
-                Query = $"{Query} AND I.CodFormular = '{formular}'";
+                Query = $"{Query} AND I.FormCode = '{formular}'";
                 CacheKey = $"{CacheKey}-{formular}";
             }
         }

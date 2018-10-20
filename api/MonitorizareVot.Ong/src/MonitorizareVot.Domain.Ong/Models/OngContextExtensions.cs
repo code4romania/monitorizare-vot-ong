@@ -83,8 +83,8 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         private static void DataCleanUp(this OngContext context)
         {
-            context.Database.ExecuteSqlCommand("delete from RaspunsDisponibil");
-            context.Database.ExecuteSqlCommand("delete from Intrebare");
+            context.Database.ExecuteSqlCommand("delete from OptionsToQuestions");
+            context.Database.ExecuteSqlCommand("delete from Questions");
             context.Database.ExecuteSqlCommand("delete from Sectiune");
             context.Database.ExecuteSqlCommand("delete from VersiuneFormular");
            // context.Database.ExecuteSqlCommand("delete from Judet");
@@ -127,61 +127,61 @@ namespace MonitorizareVot.Domain.Ong.Models
 
         private static void SeedQuestions(this OngContext context, char idFormular)
         {
-            if (context.Intrebare.Any(a => a.CodFormular == idFormular.ToString()))
+            if (context.Intrebare.Any(a => a.FormCode == idFormular.ToString()))
                 return;
 
             context.Intrebare.AddRange(
                 // primul formular
-                new Intrebare
+                new Question
                 {
-                    IdIntrebare = idFormular * 20 + 1,
-                    CodFormular = idFormular.ToString(),
-                    IdSectiune = 1, //B
-                    IdTipIntrebare = TipIntrebareEnum.OSinguraOptiune,
-                    TextIntrebare = $"{idFormular}: Iti place berea? (se alege o singura optiune selectabila)",
-                    RaspunsDisponibil = new List<RaspunsDisponibil>
+                    Id = idFormular * 20 + 1,
+                    FormCode = idFormular.ToString(),
+                    IdSection = 1, //B
+                    QuestionType = TipIntrebareEnum.OSinguraOptiune,
+                    Text = $"{idFormular}: Iti place berea? (se alege o singura optiune selectabila)",
+                    OptionsToQuestions = new List<RaspunsDisponibil>
                     {
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 1, IdOptiune = 1},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 2, IdOptiune = 2, RaspunsCuFlag = true},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 3, IdOptiune = 3}
                     }
                 },
-                 new Intrebare
+                 new Question
                  {
-                     IdIntrebare = idFormular * 20 + 2,
-                                    CodFormular = idFormular.ToString(),
-                                    IdSectiune = 1, //B
-                                    IdTipIntrebare = TipIntrebareEnum.OptiuniMultiple,
-                                    TextIntrebare = $"{idFormular}: Ce tipuri de bere iti plac? (se pot alege optiuni multiple)",
-                                    RaspunsDisponibil = new List<RaspunsDisponibil>
+                     Id = idFormular * 20 + 2,
+                                    FormCode = idFormular.ToString(),
+                                    IdSection = 1, //B
+                                    QuestionType = TipIntrebareEnum.OptiuniMultiple,
+                                    Text = $"{idFormular}: Ce tipuri de bere iti plac? (se pot alege optiuni multiple)",
+                                    OptionsToQuestions = new List<RaspunsDisponibil>
                     {
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 4, IdOptiune = 4, RaspunsCuFlag = true},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 5, IdOptiune = 5},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 6, IdOptiune = 6}
                     }
                  },
-                 new Intrebare
+                 new Question
                  {
-                     IdIntrebare = idFormular * 20 + 3,
-                     CodFormular = idFormular.ToString(),
-                     IdSectiune = 2, //C
-                     IdTipIntrebare = TipIntrebareEnum.OSinguraOptiuneCuText,
-                     TextIntrebare = $"{idFormular}: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
-                     RaspunsDisponibil = new List<RaspunsDisponibil>
+                     Id = idFormular * 20 + 3,
+                     FormCode = idFormular.ToString(),
+                     IdSection = 2, //C
+                     QuestionType = TipIntrebareEnum.OSinguraOptiuneCuText,
+                     Text = $"{idFormular}: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
+                     OptionsToQuestions = new List<RaspunsDisponibil>
                     {
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 7, IdOptiune = 7, RaspunsCuFlag = true},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 8, IdOptiune = 8},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 9, IdOptiune = 9}
                     }
                  },
-                 new Intrebare
+                 new Question
                  {
-                     IdIntrebare = idFormular * 20 + 4,
-                     CodFormular = idFormular.ToString(),
-                     IdSectiune = 2, //C
-                     IdTipIntrebare = TipIntrebareEnum.OptiuniMultipleCuText,
-                     TextIntrebare = $"{idFormular}: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
-                     RaspunsDisponibil = new List<RaspunsDisponibil>
+                     Id = idFormular * 20 + 4,
+                     FormCode = idFormular.ToString(),
+                     IdSection = 2, //C
+                     QuestionType = TipIntrebareEnum.OptiuniMultipleCuText,
+                     Text = $"{idFormular}: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
+                     OptionsToQuestions = new List<RaspunsDisponibil>
                     {
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 10, IdOptiune = 10, RaspunsCuFlag = true},
                         new RaspunsDisponibil {IdRaspunsDisponibil = idFormular * 20 + 11, IdOptiune = 11},

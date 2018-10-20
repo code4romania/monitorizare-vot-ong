@@ -246,7 +246,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza numarul raspunsurilor date de observatorii unui anumit ONG
         /// grupate pe optiuni pentru o anumita intrebare
         /// </summary>
-        /// <param name="model">IdIntrebare - id-ul intrebarei pentru care sa se returneze statisticile</param>
+        /// <param name="model">Id - id-ul intrebarei pentru care sa se returneze statisticile</param>
         /// <returns></returns>
         [HttpGet]
         [Route("RaspunsuriNumarareOptiuni")]

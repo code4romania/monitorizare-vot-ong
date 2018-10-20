@@ -16,7 +16,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public bool RaspunsCuFlag { get; set; }
 
         public virtual ICollection<Raspuns> Raspuns { get; set; }
-        public virtual Intrebare IdIntrebareNavigation { get; set; }
+        public virtual Question IdIntrebareNavigation { get; set; }
         public virtual Optiune IdOptiuneNavigation { get; set; }
     }
 }

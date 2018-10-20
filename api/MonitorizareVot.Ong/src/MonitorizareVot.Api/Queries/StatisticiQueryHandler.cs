@@ -36,10 +36,10 @@ namespace MonitorizareVot.Ong.Api.Queries
             {
                 Query = $@"SELECT OB.TextOptiune AS Label, OB.IdOptiune AS Cod, RD.RaspunsCuFlag, COUNT(*) as Value
                   FROM Raspuns AS R 
-                  INNER JOIN RaspunsDisponibil AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
                   INNER JOIN Optiune AS OB ON OB.IdOptiune = RD.IdOptiune
                   INNER JOIN Observator O ON O.IdObservator = R.IdObservator
-                  WHERE RD.IdIntrebare = {message.IdIntrebare}",
+                  WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
 
@@ -136,9 +136,9 @@ namespace MonitorizareVot.Ong.Api.Queries
             {
                 Query = @"SELECT R.CodJudet AS Label, COUNT(*) as Value
                   FROM Raspuns AS R 
-                  INNER JOIN RaspunsDisponibil AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
                   INNER JOIN Observator O ON O.IdObservator = R.IdObservator
-                  INNER JOIN Intrebare I ON I.IdIntrebare = RD.IdIntrebare
+                  INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiJudete"
             };
@@ -179,9 +179,9 @@ namespace MonitorizareVot.Ong.Api.Queries
             {
                 Query = @"SELECT R.CodJudet AS Label, R.NumarSectie AS Cod, COUNT(*) as Value
                   FROM Raspuns AS R 
-                  INNER JOIN RaspunsDisponibil AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
+                  INNER JOIN OptionsToQuestions AS RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
                   INNER JOIN Observator O ON O.IdObservator = R.IdObservator
-                  INNER JOIN Intrebare I ON I.IdIntrebare = RD.IdIntrebare
+                  INNER JOIN Question I ON I.Id = RD.Id
                   WHERE RD.RaspunsCuFlag = 1",
                 CacheKey = "StatisticiSectii"
             };

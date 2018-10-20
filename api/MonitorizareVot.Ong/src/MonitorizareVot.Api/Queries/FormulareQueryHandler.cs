@@ -25,20 +25,20 @@ namespace MonitorizareVot.Ong.Api.Queries
         public async Task<List<SectiuneModel>> Handle(IntrebariQuery message, CancellationToken cancellationToken)
         {
             var intrebari = await _context.Intrebare
-                .Include(i => i.IdSectiuneNavigation)
-                .Include(i => i.RaspunsDisponibil)
+                .Include(i => i.FormSection)
+                .Include(i => i.OptionsToQuestions)
                     .ThenInclude(i => i.IdOptiuneNavigation)
-                .Where(i => i.CodFormular == message.CodFormular)
+                .Where(i => i.FormCode == message.CodFormular)
                 .ToListAsync();
 
-            var sectiuni = intrebari.Select(a => new { a.IdSectiune, a.IdSectiuneNavigation.CodSectiune, a.IdSectiuneNavigation.Descriere }).Distinct();
+            var sectiuni = intrebari.Select(a => new { IdSectiune = a.IdSection, a.FormSection.CodSectiune, a.FormSection.Descriere }).Distinct();
 
             return sectiuni.Select(i => new SectiuneModel
             {
                 CodSectiune = i.CodSectiune,
                 Descriere = i.Descriere,
-                Intrebari = intrebari.Where(a => a.IdSectiune == i.IdSectiune)
-                                     .OrderBy(intrebare=>intrebare.CodIntrebare)
+                Intrebari = intrebari.Where(a => a.IdSection == i.IdSectiune)
+                                     .OrderBy(intrebare=>intrebare.Code)
                                      .Select(a => _mapper.Map<IntrebareModel<RaspunsDisponibilModel>>(a)).ToList()
             }).ToList();
         }
