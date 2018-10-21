@@ -38,7 +38,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                   FROM Answers AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.Id = R.IdOptionToQuestion
                   INNER JOIN Options AS OB ON OB.Id = RD.Id
-                  INNER JOIN Observesr O ON O.Id = R.IdObserver
+                  INNER JOIN Observers O ON O.Id = R.IdObserver
                   WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
