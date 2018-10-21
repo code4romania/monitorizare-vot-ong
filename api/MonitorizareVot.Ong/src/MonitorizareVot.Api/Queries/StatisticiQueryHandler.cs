@@ -34,7 +34,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var queryBuilder = new StatisticiQueryBuilder
             {
-                Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.Flagged, COUNT(*) as Value
+                Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.Flagged AS RaspunsCuFlag, COUNT(*) as Value
                   FROM Answers AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.Id = R.IdOptionToQuestion
                   INNER JOIN Options AS OB ON OB.Id = RD.Id
