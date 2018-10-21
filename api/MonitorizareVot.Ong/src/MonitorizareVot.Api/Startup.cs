@@ -31,6 +31,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MonitorizareVot.Api.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace MonitorizareVot.Ong.Api
@@ -316,6 +317,7 @@ namespace MonitorizareVot.Ong.Api
         {
             _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<HashOptions>>());
             _container.RegisterSingleton<IHashService, HashService>();
+            //_container.RegisterSingleton<IHashService, ClearTextService>();
         }
 
         private void ConfigureContainer(IServiceCollection services)

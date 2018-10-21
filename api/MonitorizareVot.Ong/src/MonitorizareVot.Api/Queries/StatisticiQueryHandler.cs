@@ -32,13 +32,13 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<OptiuniModel> Handle(StatisticiOptiuniQuery message, CancellationToken token)
         {
-            StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
+            var queryBuilder = new StatisticiQueryBuilder
             {
                 Query = $@"SELECT OB.Text AS Label, OB.Id AS Cod, RD.Flagged, COUNT(*) as Value
                   FROM Answers AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.Id = R.IdOptionToQuestion
-                  INNER JOIN Option AS OB ON OB.Id = RD.Id
-                  INNER JOIN Observer O ON O.Id = R.IdObserver
+                  INNER JOIN Options AS OB ON OB.Id = RD.Id
+                  INNER JOIN Observesr O ON O.Id = R.IdObserver
                   WHERE RD.Id = {message.IdIntrebare}",
                 CacheKey = $"StatisticiOptiuni-{message.IdIntrebare}"
             };
@@ -76,16 +76,6 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<SimpleStatisticsModel>> Handle(StatisticiNumarObservatoriQuery message, CancellationToken token)
         {
-            //var queryBuilder = new StatisticiQueryBuilder
-            //{
-            //    Query = @"SELECT J.Name AS Label, COUNT(*) as Value
-            //      FROM County J
-            //      INNER JOIN PollingStations AS SV ON SV.Id = J.Id
-            //      INNER JOIN [Answers] AS R ON R.IdPollingStation = SV.Id
-            //      INNER JOIN Observer O ON O.IdObserver = R.IdObserver",
-            //    CacheKey = "StatisticiObservatori"
-            //};
-
             var queryBuilder = new StatisticiQueryBuilder
             {
                 Query = @"select count(distinct a.IdObserver) as [Value], CountyCode as Label
@@ -132,13 +122,13 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariJudete(StatisticiTopSesizariQuery message, CancellationToken token)
         {
-            StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
+            var queryBuilder = new StatisticiQueryBuilder
             {
                 Query = @"SELECT R.CountyCode AS Label, COUNT(*) as Value
                   FROM Answers AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.Id = R.IdOptionToQuestion
-                  INNER JOIN Observer O ON O.Id = R.IdObserver
-                  INNER JOIN Question I ON I.Id = RD.IdQuestion
+                  INNER JOIN Observers O ON O.Id = R.IdObserver
+                  INNER JOIN Questions I ON I.Id = RD.IdQuestion
                   WHERE RD.Flagged = 1",
                 CacheKey = "StatisticiJudete"
             };
@@ -149,12 +139,9 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             // get or save all records in cache
             var records = await _cacheService.GetOrSaveDataInCacheAsync(queryBuilder.CacheKey,
-                async () =>
-                {
-                    return await _context.StatisticiSimple
+                async () => await _context.StatisticiSimple
                     .FromSql(queryBuilder.Query)
-                    .ToListAsync();
-                },
+                    .ToListAsync(),
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = new TimeSpan(message.CacheHours, message.CacheMinutes, message.CacheMinutes)
@@ -175,13 +162,13 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         private async Task<ApiListResponse<SimpleStatisticsModel>> GetSesizariSectii(StatisticiTopSesizariQuery message, CancellationToken token)
         {
-            StatisticiQueryBuilder queryBuilder = new StatisticiQueryBuilder
+            var queryBuilder = new StatisticiQueryBuilder
             {
                 Query = @"SELECT R.CountyCode AS Label, R.PollingStationNumber AS Cod, COUNT(*) as Value
                   FROM Answers AS R 
                   INNER JOIN OptionsToQuestions AS RD ON RD.Id = R.IdOptionToQuestion
-                  INNER JOIN Observer O ON O.Id = R.IdObserver
-                  INNER JOIN Question I ON I.Id = RD.IdQuestion
+                  INNER JOIN Observers O ON O.Id = R.IdObserver
+                  INNER JOIN Questions I ON I.Id = RD.IdQuestion
                   WHERE RD.Flagged = 1",
                 CacheKey = "StatisticiSectii"
             };
