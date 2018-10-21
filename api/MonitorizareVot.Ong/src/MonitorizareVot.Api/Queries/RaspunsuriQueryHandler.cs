@@ -30,7 +30,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObserver, O.Name AS Observer, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS LastModified
                 FROM Answers R
-                INNER JOIN Observers O ON O.IdObserver = R.IdObserver
+                INNER JOIN Observers O ON O.Id = R.IdObserver
                 INNER JOIN OptionsToQuestions RD ON RD.Id = R.IdOptionToQuestion
                 WHERE RD.Flagged = {Convert.ToInt32(message.Urgent)}";
 
