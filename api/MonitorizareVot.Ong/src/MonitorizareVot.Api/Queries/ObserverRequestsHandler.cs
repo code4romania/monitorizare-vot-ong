@@ -2,10 +2,13 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MonitorizareVot.Api.ViewModels;
 using MonitorizareVot.Domain.Ong.Models;
+using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.Services;
 
 namespace MonitorizareVot.Api.Queries
@@ -13,17 +16,21 @@ namespace MonitorizareVot.Api.Queries
     public class ObserverRequestsHandler :
         IAsyncRequestHandler<ImportObserversRequest, int>, 
         IAsyncRequestHandler<NewObserverRequest, int>,
-        IAsyncRequestHandler<ResetDeviceIdRequest>
+        IAsyncRequestHandler<ResetDeviceIdRequest>,
+        IAsyncRequestHandler<GetObserversRequest, ApiListResponse<ObserverModel>>
     {
         private readonly OngContext _context;
         private readonly ILogger _logger;
         private  IHashService _hashService;
+        private readonly IMapper _mapper;
 
-        public ObserverRequestsHandler(OngContext context, ILogger logger, IHashService hashService)
+        public ObserverRequestsHandler(OngContext context, ILogger logger, IHashService hashService,
+            IMapper mapper)
         {
             _context = context;
             _logger = logger;
             _hashService = hashService;
+            _mapper = mapper;
         }
 
         private int GetMaxIdObserver()
@@ -95,6 +102,34 @@ namespace MonitorizareVot.Api.Queries
 
             return _context.SaveChangesAsync();
             // save
+        }
+
+        /// <summary>
+        /// Retrieves a paged list of observers
+        /// </summary>
+        /// <param name="request">The request containing paging information</param>
+        /// <returns>A paged list of observers</returns>
+        public async Task<ApiListResponse<ObserverModel>> Handle(GetObserversRequest request)
+        {
+            var observers = _context.Observator;
+            var pagedObservers = await observers
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync()
+                .ConfigureAwait(false);
+            var observersCount = await observers
+                .CountAsync()
+                .ConfigureAwait(false);
+
+            return new ApiListResponse<ObserverModel>
+            {
+                Data = pagedObservers
+                    .Select(o => _mapper.Map<ObserverModel>(o))
+                    .ToList(),
+                Page = request.Page,
+                PageSize = request.PageSize,
+                TotalItems = observersCount
+            };
         }
     }
 }

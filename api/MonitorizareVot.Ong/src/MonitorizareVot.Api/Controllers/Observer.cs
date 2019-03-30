@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MonitorizareVot.Api.ViewModels;
+using MonitorizareVot.Ong.Api.Extensions;
 
 namespace MonitorizareVot.Api.Controllers
 {
@@ -52,5 +53,17 @@ namespace MonitorizareVot.Api.Controllers
 
             return Task.FromResult(new { });
         }
+
+        /// <summary>
+        /// Retrieves a paged list of observers
+        /// </summary>
+        /// <param name="request">The request containg paging information</param>
+        /// <returns>A paged list of observers</returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<ApiListResponse<ObserverModel>> Get(GetObserversRequest request)
+            => await _mediator
+                .Send(request)
+                .ConfigureAwait(false);
     }
 }
