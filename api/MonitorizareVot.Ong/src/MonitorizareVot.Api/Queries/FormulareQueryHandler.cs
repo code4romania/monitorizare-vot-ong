@@ -6,11 +6,15 @@ using MonitorizareVot.Ong.Api.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using MonitorizareVot.Api.ViewModels;
+using MonitorizareVot.Ong.Api.Controllers;
+using MonitorizareVot.Ong.Api.Extensions;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class FormulareQueryHandler :
-        IAsyncRequestHandler<IntrebariQuery, List<SectiuneModel>>
+        IAsyncRequestHandler<IntrebariQuery, List<SectiuneModel>>,
+        IAsyncRequestHandler<GetFormsRequest, ApiListResponse<SectiuneModel>>
     {
         private readonly OngContext _context;
         private readonly IMapper _mapper;
@@ -40,6 +44,28 @@ namespace MonitorizareVot.Ong.Api.Queries
                                      .OrderBy(intrebare=>intrebare.CodIntrebare)
                                      .Select(a => _mapper.Map<IntrebareModel<RaspunsDisponibilModel>>(a)).ToList()
             }).ToList();
+        }
+
+        public async Task<ApiListResponse<SectiuneModel>> Handle(GetFormsRequest request)
+        {
+            var pagedSections = await _context.Sectiune
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync()
+                .ConfigureAwait(false);
+            var formsCount = await _context.Sectiune
+                .CountAsync()
+                .ConfigureAwait(false);
+
+            return new ApiListResponse<SectiuneModel>
+            {
+                Data = pagedSections
+                    .Select(o => _mapper.Map<SectiuneModel>(o))
+                    .ToList(),
+                Page = request.Page,
+                PageSize = request.PageSize,
+                TotalItems = formsCount
+            };
         }
     }
 }

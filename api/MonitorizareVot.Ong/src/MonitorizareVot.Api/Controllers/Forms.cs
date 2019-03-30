@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MonitorizareVot.Api.ViewModels;
+using MonitorizareVot.Domain.Ong.Models;
+using MonitorizareVot.Ong.Api.Extensions;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
     [Route("api/v1/formulare")]
-    public class Formulare : Controller
+    public class Forms : Controller
     {
         private readonly IMediator _mediator;
 
-        public Formulare(IMediator mediator)
+        public Forms(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -28,5 +31,13 @@ namespace MonitorizareVot.Ong.Api.Controllers
         {
             return await _mediator.Send(new IntrebariQuery { CodFormular = model.IdFormular });
         }
+
+        /// <summary>
+        /// Get a list of forms
+        /// </summary>
+        /// <param name="request">Paging information</param>
+        /// <returns></returns>
+        [HttpGet("list")]
+        public async Task<ApiListResponse<SectiuneModel>> GetForms(GetFormsRequest request) => await _mediator.Send(request);
     }
 }
