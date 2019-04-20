@@ -14,6 +14,7 @@ import { AppState } from '..//store/store.module';
 import { AnswerComponent } from '..//components/answer/answer.component';
 import { Store } from '@ngrx/store';
 import { Routes } from '@angular/router';
+import {EditableFormsComponent} from '../components/editable-forms/editable-forms.component';
 
 export let appRoutes: Routes = [
     {
@@ -64,5 +65,9 @@ export let appRoutes: Routes = [
         path: 'login',
         canActivate: [AnonGuard],
         component: LoginComponent
+    }, {
+        path: 'forms',
+        canActivate: [AuthGuard],
+        component: EditableFormsComponent
     }
 ]

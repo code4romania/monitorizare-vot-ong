@@ -1,0 +1,13 @@
+<div class="row equal-height">
+  <div class="col-lg-3 col-md-4 new card">
+    <h3>{{ 'ADD_NEW_FORM_SET' | translate }}</h3>
+  </div>
+  <div class="col-lg-3 col-md-4" *ngFor="let editableForm of editableForms"
+       [ngClass]="{ card: true, published: editableForm.published, draft: !editableForm.published}">
+    <app-editable-form-card
+      [id]="editableForm.id"
+      [description]="editableForm.description"
+      [published]="editableForm.published">
+    </app-editable-form-card>
+  </div>
+</div>

@@ -14,6 +14,8 @@ import { AnswerDetailsComponent } from './answer/answer-details/answer-details.c
 import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
+import {EditableFormsComponent} from './editable-forms/editable-forms.component';
+import {EditableFormCardComponent} from './editable-forms/editable-form-card/editable-form-card.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -32,7 +34,9 @@ export let components = [
     StatisticsDetailsComponent,
     StatisticsValueComponent,
 
-    LoginComponent
+    LoginComponent,
+    EditableFormsComponent,
+    EditableFormCardComponent
 
 
 ] 

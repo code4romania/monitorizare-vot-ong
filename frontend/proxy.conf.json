@@ -4,5 +4,10 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/mock/*": {
+    "target": "http://localhost:6900",
+    "secure": "false",
+    "logLevel": "debug"
   }
 }
