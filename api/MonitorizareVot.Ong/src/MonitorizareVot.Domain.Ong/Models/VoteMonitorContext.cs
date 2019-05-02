@@ -65,7 +65,7 @@ namespace MonitorizareVot.Domain.Ong.Models
 
                 entity.Property(e => e.Code)
                     .IsRequired()
-                    .HasMaxLength(4);
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
