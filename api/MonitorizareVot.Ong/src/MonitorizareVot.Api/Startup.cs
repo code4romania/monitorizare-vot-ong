@@ -316,8 +316,13 @@ namespace MonitorizareVot.Ong.Api
         private void ConfigureHash(IApplicationBuilder app)
         {
             _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<HashOptions>>());
-            _container.RegisterSingleton<IHashService, HashService>();
-            //_container.RegisterSingleton<IHashService, ClearTextService>();
+            var hashOptions = new HashOptions();
+            Configuration.GetSection(nameof(HashOptions)).Bind(hashOptions);
+
+            if (hashOptions.ServiceType == nameof(HashServiceType.ClearText))
+                _container.RegisterSingleton<IHashService, ClearTextService>();
+            else
+                _container.RegisterSingleton<IHashService, HashService>();
         }
 
         private void ConfigureContainer(IServiceCollection services)
