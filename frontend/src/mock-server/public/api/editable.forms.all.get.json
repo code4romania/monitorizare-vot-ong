@@ -1,0 +1,34 @@
+{
+  "forms": [
+    {
+      "id": "A",
+      "description": "First form",
+      "version": 3,
+      "published": true
+    },
+    {
+      "id": "B",
+      "description": "Second form",
+      "version": 2,
+      "published": true
+    },
+    {
+      "id": "C",
+      "description": "Third form",
+      "version": 3,
+      "published": false
+    },
+    {
+      "id": "D",
+      "description": "Fourth form",
+      "version": 3,
+      "published": false
+    },
+    {
+      "id": "E",
+      "description": "Fifth form",
+      "version": 3,
+      "published": true
+    }
+  ]
+}

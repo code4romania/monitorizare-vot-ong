@@ -1,0 +1,32 @@
+.card {
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+  text-align: center;
+}
+.published{
+  background: #fbd844;
+}
+.draft{
+  background: #44dcfd;
+}
+.new{
+  background: #2ec122;
+  color: #fff;
+}
+
+.big-card{
+  @extend .card;
+  background-clip: content-box;
+  min-height: 100px;
+  padding-top: 10px;
+}
+.small-card{
+  @extend .card;
+  background-clip: content-box;
+}
+.small-card p{
+  padding-top: 4px;
+}

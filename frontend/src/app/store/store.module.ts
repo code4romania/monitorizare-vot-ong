@@ -26,13 +26,19 @@ export class AppState {
 }
 
 let moduleImports = [
-    StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer, editableForms: editableFormsReducer }),
+    StoreModule.provideStore({
+      form: formReducer,
+      answer: answerReducer,
+      statistics: statisticsReducer,
+      note: noteReducer,
+      editableForms: editableFormsReducer
+    }),
     EffectsModule.run(FormEffects),
     EffectsModule.run(AnswerEffects),
     EffectsModule.run(StatisticsEffects),
     EffectsModule.run(NoteEffects),
     EffectsModule.run(EditableFormsEffects)
-]
+];
 if (!environment.production) {
     moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
 }

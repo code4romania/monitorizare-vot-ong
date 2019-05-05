@@ -15,6 +15,10 @@ import { AnswerComponent } from '..//components/answer/answer.component';
 import { Store } from '@ngrx/store';
 import { Routes } from '@angular/router';
 import {EditableFormsComponent} from '../components/editable-forms/editable-forms.component';
+import {EditableFormSectionsComponent} from '../components/editable-forms/editable-form-sections/editable-form-sections.component';
+import {EditableFormsGuard} from './guards/editable-forms.guard';
+import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
+import {EditableFormSectionQuestionsComponent} from '../components/editable-forms/editable-form-section-questions/editable-form-section-questions.component';
 
 export let appRoutes: Routes = [
     {
@@ -67,7 +71,15 @@ export let appRoutes: Routes = [
         component: LoginComponent
     }, {
         path: 'forms',
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, EditableFormsGuard],
         component: EditableFormsComponent
+    }, {
+        path: 'forms/:id',
+        canActivate: [AuthGuard, EditableFormSectionsGuard],
+        component: EditableFormSectionsComponent
+    }, {
+        path: 'forms/:id/questions',
+        canActivate: [AuthGuard],
+        component: EditableFormSectionQuestionsComponent
     }
 ]

@@ -1,0 +1,31 @@
+<div *ngIf="editedForm" class="row">
+  <div class="col-lg-3 col-md-4" *ngFor="let section of editedForm.sectiuni">
+    <div class="published big-card">
+      <h3 class="text-center">{{'FORM' | translate}} - {{editedForm.idFormular}}</h3>
+      <p class="text-center">{{section.descriere}}</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-xs-4 new small-card" [routerLink]="['/forms', editedForm.idFormular, 'questions']">
+        <p>View</p>
+      </div>
+      <div class="col-sm-4 col-xs-4 new small-card" [routerLink]="['/forms', editedForm.idFormular, 'questions']">
+        <p>Edit</p>
+      </div>
+      <div class="col-sm-4 col-xs-4 new small-card" [routerLink]="['/forms', editedForm.idFormular, 'questions']">
+        <p>Delete</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-4">
+    <div class="new big-card">
+      <h3 class="text-center">{{ 'ADD_NEW_FORM' | translate }}</h3>
+    </div>
+  </div>
+</div>
+<div *ngIf="!editedForm" class="row">
+  <div class="col-lg-3 col-md-4">
+    <div class="new big-card">
+      <h3 class="text-center">{{ 'ADD_NEW_FORM' | translate }}</h3>
+    </div>
+  </div>
+</div>

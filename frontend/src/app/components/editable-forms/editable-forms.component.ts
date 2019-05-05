@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/store.module';
 import {EditableFormsLoadAllAction} from '../../store/editable-forms/editable.forms.actions';
+import {Router} from '@angular/router';
 
 const draftsFirst = (left, right) => {
   return left.published ? 1 : right.published ? -1 : 0;
@@ -20,11 +21,10 @@ export class EditableFormsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.store.select(s => s.editableForms)
+    this.sub = this.store.select(s => s.editableForms)
       .subscribe(s => {
         this.editableForms = s.forms.sort(draftsFirst);
       });
-    this.store.dispatch(new EditableFormsLoadAllAction());
   }
 
   ngOnDestroy(): void {

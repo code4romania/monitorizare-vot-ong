@@ -9,13 +9,13 @@ import { CategoricalQuestionComponent } from './answer/categorical-question/cate
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
-import { AppComponent } from '../app.component';
 import { AnswerDetailsComponent } from './answer/answer-details/answer-details.component';
 import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
 import {EditableFormsComponent} from './editable-forms/editable-forms.component';
-import {EditableFormCardComponent} from './editable-forms/editable-form-card/editable-form-card.component';
+import {EditableFormSectionsComponent} from './editable-forms/editable-form-sections/editable-form-sections.component';
+import {EditableFormSectionQuestionsComponent} from './editable-forms/editable-form-section-questions/editable-form-section-questions.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -36,10 +36,11 @@ export let components = [
 
     LoginComponent,
     EditableFormsComponent,
-    EditableFormCardComponent
+    EditableFormSectionsComponent,
+    EditableFormSectionQuestionsComponent
 
 
-] 
+]
 
 @NgModule({
     declarations:components,

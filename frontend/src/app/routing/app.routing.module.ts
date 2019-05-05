@@ -6,6 +6,8 @@ import { AnswerDetailsGuard } from './guards/load-anwer-details.guard';
 import { AnswerListGuard } from './guards/load-answer-list.guard';
 import { HomeGuard } from './guards/home.guard';
 import { NgModule } from '@angular/core';
+import {EditableFormsGuard} from './guards/editable-forms.guard';
+import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
 @NgModule({
     imports: [
         RouterModule.forRoot(appRoutes,{
@@ -13,7 +15,7 @@ import { NgModule } from '@angular/core';
             // enableTracing: !environment.production
         })
     ],
-    providers: [HomeGuard, AnswerListGuard, AnswerDetailsGuard, LoadStatisticsGuard]
+    providers: [HomeGuard, AnswerListGuard, AnswerDetailsGuard, LoadStatisticsGuard, EditableFormsGuard, EditableFormSectionsGuard]
 })
 export class AppRoutingModule {
 

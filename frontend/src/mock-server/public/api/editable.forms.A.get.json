@@ -1,0 +1,3047 @@
+[
+  {
+    "codSectiune": "A",
+    "descriere": "Deschidere",
+    "intrebari": [
+      {
+        "idIntrebare": 1,
+        "textIntrebare": "B1 Aţi observat lipsa materialelor electorale",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 0,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 2,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 2,
+        "textIntrebare": "B1.1 Dacă DA:",
+        "idTipIntrebare": 0,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 1000,
+            "textOptiune": "Urne staţionare",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1001,
+            "textOptiune": "Ştampila de control",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1002,
+            "textOptiune": "Cabine de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1003,
+            "textOptiune": "Tuşiere",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1004,
+            "textOptiune": "Ştampile de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1005,
+            "textOptiune": "Buletine de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1006,
+            "textOptiune": "Autocolante",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1007,
+            "textOptiune": "Urna mobilă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1008,
+            "textOptiune": "Liste electorale",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 1009,
+            "textOptiune": "Altele",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 3,
+        "textIntrebare": "B2 Sigiliile de pe uşa şi ferestrele secţiei de votare erau intacte",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 2000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 2001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 2002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 4,
+        "textIntrebare": "B3 Preşedintele BESV a verificat materialele necesare desfășurării votului",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 3000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 3001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 3002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 5,
+        "textIntrebare": "B4 Preşedintele BESV a ştampilat gradual buletinele de vot cu ştampila de control a secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 4000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 4001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 4002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 6,
+        "textIntrebare": "B5 Urnele staţionare şi urna specială (mobilă) erau goale înainte de a fi sigilate . (bifați doar pentru 6 octombrie dimineața)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 5000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 5001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 5002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 7,
+        "textIntrebare": "B6 Urnele staţionare şi urna specială (mobilă) au fost sigilate prin aplicarea ştampilei de control",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 6000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 6001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 6002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 8,
+        "textIntrebare": "B7 Secţia de votare a fost deschisă la 07:00",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 7000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 7001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 7002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 9,
+        "textIntrebare": "B7.1 Dacă NU:",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 8000,
+            "textOptiune": "înainte de 07:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 8001,
+            "textOptiune": "07:00-07:30",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 8002,
+            "textOptiune": "07:31-08:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 8003,
+            "textOptiune": "după 08:00",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 10,
+        "textIntrebare": "B8 Alte probleme procedurale",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 9000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 9001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 9002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 11,
+        "textIntrebare": "C1 Câţi membri are BESV",
+        "idTipIntrebare": 2,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 10000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 10001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 12,
+        "textIntrebare": "C2 Câţi membri BESV sunt prezenţi la deschidere",
+        "idTipIntrebare": 2,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 11000,
+            "textOptiune": "Numar",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 11001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 13,
+        "textIntrebare": "C3 Care sunt partidele reprezentate în BESV",
+        "idTipIntrebare": 0,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 12000,
+            "textOptiune": "ALDE",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12001,
+            "textOptiune": "PNL",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12002,
+            "textOptiune": "UDMR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12003,
+            "textOptiune": "PMP",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12004,
+            "textOptiune": "PSD",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12005,
+            "textOptiune": "USR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 12006,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 14,
+        "textIntrebare": "C4 La deschiderea secţiei de votare au fost prezenţi şi alţi observatori",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 13000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 13001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 13002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 15,
+        "textIntrebare": "C4.1 Dacă DA:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 14000,
+            "textOptiune": "Millenium for Human Rights",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 14001,
+            "textOptiune": "Asociaţia Pro Democratia",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 14002,
+            "textOptiune": "ADER",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 14003,
+            "textOptiune": "Asociația pentru Revigorarea Tradiției",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 14004,
+            "textOptiune": "Asociația Maramureș pentru Viață și Familie",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 14005,
+            "textOptiune": "Altele (specificaţi)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 16,
+        "textIntrebare": "C5 La deschiderea secţiei de votare au fost prezente persoane neautorizate",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 15000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 15001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 15002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 17,
+        "textIntrebare": "C5.1 Dacă DA:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 16000,
+            "textOptiune": "Poliţie",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 16001,
+            "textOptiune": "Autorităţi locale",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 16002,
+            "textOptiune": "Altele (specificaţi)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 18,
+        "textIntrebare": "C6 Persoane din afara BESV au intervenit în activitatea acestuia",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 17000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 17001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 17002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 19,
+        "textIntrebare": "D1 Toţi cei prezenţi au putut urmări procedurile de deschidere",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 18000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 18001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 18002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 20,
+        "textIntrebare": "D2 Echipa dumneavoastră a observat procedurile de deschidere fără restricţii",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 19000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 19001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 21,
+        "textIntrebare": "D3 Membrii BESV sau ceilalţi observatori v-au semnalat probleme legate de deschiderea secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 20000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 20001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 22,
+        "textIntrebare": "D4 Au fost depuse întâmpinări la preşedintele BESV",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 21000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 21001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 21002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 23,
+        "textIntrebare": "D.4.1 Dacă DA, specificați câte",
+        "idTipIntrebare": 2,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 22000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 24,
+        "textIntrebare": "E Evaluarea procedurii de deschidere a secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "A-Deschidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 23000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 23001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 23002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 23003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "codSectiune": "B",
+    "descriere": "Votare",
+    "intrebari": [
+      {
+        "idIntrebare": 25,
+        "textIntrebare": "B1 Există materiale de campanie pe sau în clădirea unde se află secția de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 24000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 24001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 24002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 26,
+        "textIntrebare": "B2 În apropierea secţiei de votare se desfăşoară activităţi de campanie pentru referendum",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 25000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 25001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 25002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 27,
+        "textIntrebare": "B3 Aţi observat tensiune sau agitaţie în apropierea secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 26000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 26001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 26002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 28,
+        "textIntrebare": "B4 Secţia de votare este accesibilă persoanelor cu dizabilităţi",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 27000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 27001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 27002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 29,
+        "textIntrebare": "B5 Alte probleme în apropierea secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 28000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 28001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 28002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 30,
+        "textIntrebare": "C1 Câţi membri are BESV",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 29000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 29001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 31,
+        "textIntrebare": "C2 Câţi membri BESV sunt femei",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 30000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 30001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 32,
+        "textIntrebare": "C3 Câţi membri BESV sunt prezenţi",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 31000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 31001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 33,
+        "textIntrebare": "C4 Care sunt partidele reprezentate în BESV",
+        "idTipIntrebare": 0,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 32000,
+            "textOptiune": "ALDE",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32001,
+            "textOptiune": "PNL",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32002,
+            "textOptiune": "UDMR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32003,
+            "textOptiune": "PMP",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32004,
+            "textOptiune": "PSD",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32005,
+            "textOptiune": "USR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 32006,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 34,
+        "textIntrebare": "C5 La secţia de votare sunt prezenţi şi alţi observatori",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 33000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 33001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 33002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 35,
+        "textIntrebare": "C5.1 Dacă DA:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 34000,
+            "textOptiune": "Millenium for Human Rights",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 34001,
+            "textOptiune": "Asociaţia Pro Democratia",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 34002,
+            "textOptiune": "ADER",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 34003,
+            "textOptiune": "Asociația pentru Revigorarea Tradiției",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 34004,
+            "textOptiune": "Asociația Maramureș pentru Viață și Familie",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 34005,
+            "textOptiune": "Altele (specificaţi)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 36,
+        "textIntrebare": "C6 În secţia de votare sunt prezente persoane neautorizate",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 35000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 35001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 35002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 37,
+        "textIntrebare": "C6.1 Dacă DA:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 36000,
+            "textOptiune": "Poliţie",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 36001,
+            "textOptiune": "Autorităţi locale",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 36002,
+            "textOptiune": "Altele (specificaţi)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 38,
+        "textIntrebare": "C7 Persoane din afara BESV au intervenit în activitatea acestuia",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 37000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 37001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 37002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 39,
+        "textIntrebare": "D1 Localul secţiei de votare este adecvat",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 38000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 38001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 38002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 40,
+        "textIntrebare": "D2 Urnele staţionare sunt sigilate corespunzător",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 39000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 39001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 39002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 41,
+        "textIntrebare": "D3 Urna specială (mobilă) este sigilată corespunzător",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 40000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 40001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 40002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 42,
+        "textIntrebare": "D4 Modelele buletinelor de vot anulate sunt afişate",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 41000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 41001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 41002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 43,
+        "textIntrebare": "D5 La secţia de votare se găsesc toate materialele necesare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 42000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 42001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 42002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 44,
+        "textIntrebare": "D5.1 Dacă NU:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 43000,
+            "textOptiune": "Urne staţionare",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43001,
+            "textOptiune": "Urna mobilă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43002,
+            "textOptiune": "Ştampila de control",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43003,
+            "textOptiune": "Tuşiere",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43004,
+            "textOptiune": "Ştampile de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43005,
+            "textOptiune": "Buletine de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43006,
+            "textOptiune": "Autocolante",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43007,
+            "textOptiune": "Cabine de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43008,
+            "textOptiune": "Liste electorale",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 43009,
+            "textOptiune": "Altele (specificati)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 45,
+        "textIntrebare": "E1 Aglomeraţie",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 44000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 44001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 44002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 46,
+        "textIntrebare": "E2 Materiale sau activităţi de campanie",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 45000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 45001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 45002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 47,
+        "textIntrebare": "E3 Intimidarea alegătorilor",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 46000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 46001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 46002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 48,
+        "textIntrebare": "E4 Intimidarea membrilor BESV",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 47000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 47001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 47002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 49,
+        "textIntrebare": "E5 Atmosferă tensionată",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 48000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 48001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 48002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 50,
+        "textIntrebare": "E6 Alte probleme",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 49000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 49001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 49002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 51,
+        "textIntrebare": "F1 Numărul buletinelor de vot primite la secţia de votare",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 50000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 50001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 52,
+        "textIntrebare": "F2 Numărul alegătorilor înscrişi în lista permanentă",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 51000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 51001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 53,
+        "textIntrebare": "F4 Numărul alegătorilor înscrişi în lista suplimentară",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 52000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 52001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 54,
+        "textIntrebare": "F5 Numărul alegătorilor care au cerut urna mobilă",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 53000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 53001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 55,
+        "textIntrebare": "F6 Numărul alegătorilor care au votat",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 54000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 54001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 56,
+        "textIntrebare": "G1 Alegătorii au fost verificați în listele electorale (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 55000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 55001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 55002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 55003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 55004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 57,
+        "textIntrebare": "G2 Alegătorii au votat cu documente eligibile și valabile (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 56000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 56001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 56002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 56003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 56004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 58,
+        "textIntrebare": "G3 Alegătorii au semnat lista electorală (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 57000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 57001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 57002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 57003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 57004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 59,
+        "textIntrebare": "G4 Membrii comisiei au aplicat timbrul autocolant cu ştampila VOTAT (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 58000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 58001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 58002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 58003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 58004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 60,
+        "textIntrebare": "G5 Secretul votului a fost respectat (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 59000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 59001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 59002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 59003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 59004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 61,
+        "textIntrebare": "G6 Pentru alegatorii care au cerut urna speciala s-au respectat procedurile legate de listele electorale (3 = întotdeauna; 2 = de cele mai multe ori; 1 = uneori; 0 = deloc)",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 60000,
+            "textOptiune": "3",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 60001,
+            "textOptiune": "2",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 60002,
+            "textOptiune": "1",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 60003,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 60004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 62,
+        "textIntrebare": "G7 Alegătorii au fost împiedicaţi să voteze pentru motive temeinice",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 61000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 61001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 61002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 63,
+        "textIntrebare": "G7.1 Dacă DA:",
+        "idTipIntrebare": 0,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 62000,
+            "textOptiune": "Nu au acte de identitate valabile",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 62001,
+            "textOptiune": "Au votat deja la altă secție",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 62002,
+            "textOptiune": "Nu au drept de vot",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 62003,
+            "textOptiune": "Alt motiv",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 64,
+        "textIntrebare": "G8 Alegătorii au fost împiedicaţi să voteze fără motive temeinice",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 63000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 63001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 63002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 65,
+        "textIntrebare": "G9 Alegătorilor fără documente de identitate corespunzătoare li s-a permis să voteze",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 64000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 64001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 64002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 66,
+        "textIntrebare": "G10 Alegătorilor prezenți în localitatea de domiciliu li s-a permis să voteze în altă secție",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 65000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 65001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 65002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 67,
+        "textIntrebare": "G11 Există semnături identice pe listele electorale",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 66000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 66001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 66002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 68,
+        "textIntrebare": "G12 Mai mulţi alegători au intrat împreună în cabina de vot chiar dacă nu era nevoie",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 67000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 67001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 67002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 69,
+        "textIntrebare": "G13 Cazuri în care un alegător a votat în locul altui alegător, absent sau prezent",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 68000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 68001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 68002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 70,
+        "textIntrebare": "G14 Cazuri în care care alegătorii au intrat în cabina de vot cu buletine de vot deja marcate",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 69000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 69001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 69002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 71,
+        "textIntrebare": "G15 Cazuri în care alegătorii au primit mai multe buletine de vot decât numărul legal",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 70000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 70001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 70002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 72,
+        "textIntrebare": "G16 Mai mulţi alegători au fost asistaţi în cabina de vot de aceeaşi persoană",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 71000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 71001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 71002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 73,
+        "textIntrebare": "G17 Membri ai BESV îndepărtaţi din funcţie în timpul votării",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 72000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 72001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 72002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 74,
+        "textIntrebare": "G18 Observatori îndepărtaţi din secţia de votare în timpul votării",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 73000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 73001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 73002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 75,
+        "textIntrebare": "G19 Observatorii au intervenit în organizarea secției de votare în mod abuziv",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 74000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 74001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 74002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 76,
+        "textIntrebare": "G20 Membrii BESV sau observatorii au asistat alegătorii în cabina de vot",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 75000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 75001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 75002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 77,
+        "textIntrebare": "G21 Votarea a fost suspendată",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 76000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 76001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 76002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 78,
+        "textIntrebare": "G22 Alegătorii sunt transportați la secția de votare în mod organizat",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 77000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 77001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 77002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 79,
+        "textIntrebare": "G23 Alte probleme procedurale",
+        "idTipIntrebare": 2,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 78000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 80,
+        "textIntrebare": "H1 Toţi observatorii prezenţi au putut urmări procedura de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 79000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 79001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 79002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 81,
+        "textIntrebare": "H2 Membrii BESV au fost cooperanţi şi v-au pus la dispoziţie informaţiile cerute",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 80000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 80001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 80002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 82,
+        "textIntrebare": "H3 Echipa dumneavoastră a observat procedura de votare fără restricţii",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 81000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 81001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 81002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 83,
+        "textIntrebare": "H4 Membrii BESV sau ceilalţi observatori v-au semnalat probleme legate de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 82000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 82001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 82002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 84,
+        "textIntrebare": "H5 Au fost depuse întâmpinări la preşedintele BESV",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 83000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 83001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 83002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 85,
+        "textIntrebare": "I. Numărul alegătorilor care au votat în timpul vizitei dumneavoastră",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 84000,
+            "textOptiune": "0",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 84001,
+            "textOptiune": "05/01/2018 00:00:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 84002,
+            "textOptiune": "10/06/2018 00:00:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 84003,
+            "textOptiune": "11-50",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 84004,
+            "textOptiune": "Peste 50",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 86,
+        "textIntrebare": "J1 Evaluarea secţiei de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 85000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 85001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 85002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 85003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 87,
+        "textIntrebare": "J2.1 Situaţia şi atmosfera generală",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 86000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 86001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 86002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 86003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 86004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 88,
+        "textIntrebare": "J2.2 Respectarea procedurilor",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 87000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 87001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 87002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 87003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 87004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 89,
+        "textIntrebare": "J2.3 Cât de bine înţeleg membrii BESV procedura de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 88000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 88001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 88002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 88003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 88004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 90,
+        "textIntrebare": "J2.4 Cât de bine înţeleg alegătorii procedura de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 89000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 89001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 89002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 89003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 89004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 91,
+        "textIntrebare": "J2.5 Activitatea BESV",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 90000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 90001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 90002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 90003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 90004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 92,
+        "textIntrebare": "J2.6 Transparenţa procesului",
+        "idTipIntrebare": 1,
+        "codIntrebare": "B-Votare",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 91000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 91001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 91002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 91003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 91004,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "codSectiune": "C",
+    "descriere": "Inchidere",
+    "intrebari": [
+      {
+        "idIntrebare": 93,
+        "textIntrebare": "B1 La ora 21:00 mai erau alegători în aşteptare în afara sălii unde se votează",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 92000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 92001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 92002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 94,
+        "textIntrebare": "B1.1 Dacă DA, li s-a permis să voteze",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 93000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 93001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 93002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 95,
+        "textIntrebare": "B2 Secţia de votare s-a închis la ora 21:00",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 94000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 94001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 94002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 96,
+        "textIntrebare": "B2.1 Dacă NU:",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 95000,
+            "textOptiune": "înainte de 21:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 95001,
+            "textOptiune": "21:00–21:15",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 95002,
+            "textOptiune": "21:15–21:30",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 95003,
+            "textOptiune": "21:30–22:00",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 95004,
+            "textOptiune": "după 22:00",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 97,
+        "textIntrebare": "C1 Câţi membri are BESV",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 96000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 96001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 98,
+        "textIntrebare": "C2 Câte femei fac parte din BESV",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 97000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 97001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 99,
+        "textIntrebare": "C3 Câţi membri BESV erau prezenţi la ora închiderii",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 98000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          },
+          {
+            "idOptiune": 98001,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 100,
+        "textIntrebare": "C4 Care sunt partidele reprezentate în BESV",
+        "idTipIntrebare": 0,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 99000,
+            "textOptiune": "ALDE",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99001,
+            "textOptiune": "PNL",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99002,
+            "textOptiune": "UDMR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99003,
+            "textOptiune": "PMP",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99004,
+            "textOptiune": "PSD",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99005,
+            "textOptiune": "USR",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 99006,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 101,
+        "textIntrebare": "C5 La secţia de votare sunt prezenţi şi alţi observatori",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 100000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 100001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 100002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 102,
+        "textIntrebare": "C5.1 Dacă DA:",
+        "idTipIntrebare": 3,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 101000,
+            "textOptiune": "Millenium for Human Rights",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 101001,
+            "textOptiune": "Asociaţia Pro Democratia",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 101002,
+            "textOptiune": "ADER",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 101003,
+            "textOptiune": "Asociația pentru Revigorarea Tradiției",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 101004,
+            "textOptiune": "Asociația Maramureș pentru Viață și Familie",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 101005,
+            "textOptiune": "Altele (specificaţi)",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 103,
+        "textIntrebare": "D1 Urnele de vot au fost sigilate de președintele BESV prin lipirea de benzi de hârtie pe deschizăturile acestora, pe care le semnează după ce aplică în prealabil ștampila de control",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 102000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 102001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 102002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 104,
+        "textIntrebare": "D2 Președintele BESV a introdus ștampilele cu mențiunea \"VOTAT\" într-un plic pe care l-a sigilat și pe care a aplicat ștampila de control.",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 103000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 103001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 103002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 105,
+        "textIntrebare": "D3 Preşedintele BESV a încheiat un proces verbal în care a trecut numărul ștampilelor cu mențiunea \"VOTAT\" la încheierea votării",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 104000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 104001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 104002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 106,
+        "textIntrebare": "D3.1 Daca da, introduceti numarul",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 105000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 107,
+        "textIntrebare": "D3.2 Preşedintele BESV a încheiat un proces verbal în care a trecut numărul numărul buletinelor nefolosite",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 106000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 106001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 106002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 108,
+        "textIntrebare": "D3.3 Daca da, introduceti numarul",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 107000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 109,
+        "textIntrebare": "D3.4 Preşedintele BESV a încheiat un proces verbal în care a trecut numărul persoanelor care au participat la vot în prima zi de votare",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 108000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 108001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 108002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 110,
+        "textIntrebare": "D3.5 Daca da, introduceti numarul",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 109000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 111,
+        "textIntrebare": "D4 Membrii BESV au semnat procesul",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 110000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 110001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 110002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 112,
+        "textIntrebare": "D5 Președintele BESV a sigilat toate căile de acces în localul de vot cu benzi de hârtie, pe care le semnează după ce aplică în prealabil ștampila de control.",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 111000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 111001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 111002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 113,
+        "textIntrebare": "E1 Toţi cei prezenţi au putut urmări procedura de închidere a secției",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 112000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 112001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 112002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 114,
+        "textIntrebare": "E2 Membrii BESV au fost cooperanţi şi v-au pus la dispoziţie informaţiile cerute",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 113000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 113001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 115,
+        "textIntrebare": "E3 Echipa dumneavoastră a observat procedura fără probleme",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 114000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 114001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 116,
+        "textIntrebare": "E4 Au fost depuse contestaţii la preşedintele BESV",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 115000,
+            "textOptiune": "Da",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 115001,
+            "textOptiune": "Nu",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 115002,
+            "textOptiune": "Nu stiu",
+            "seIntroduceText": false
+          }
+        ]
+      },
+      {
+        "idIntrebare": 117,
+        "textIntrebare": "E4.1 Daca DA, specificati cate:",
+        "idTipIntrebare": 2,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 116000,
+            "textOptiune": "Raspuns:",
+            "seIntroduceText": true
+          }
+        ]
+      },
+      {
+        "idIntrebare": 118,
+        "textIntrebare": "F1 Evaluarea procedurii de închidere a secției",
+        "idTipIntrebare": 1,
+        "codIntrebare": "C-Inchidere",
+        "codFormular": "A",
+        "raspunsuri": [
+          {
+            "idOptiune": 117000,
+            "textOptiune": "Foarte bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 117001,
+            "textOptiune": "Bună",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 117002,
+            "textOptiune": "Proastă",
+            "seIntroduceText": false
+          },
+          {
+            "idOptiune": 117003,
+            "textOptiune": "Foarte proastă",
+            "seIntroduceText": false
+          }
+        ]
+      }
+    ]
+  }
+]
