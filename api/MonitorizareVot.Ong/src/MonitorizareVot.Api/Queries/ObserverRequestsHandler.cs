@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,15 +12,15 @@ using MonitorizareVot.Ong.Api.Services;
 namespace MonitorizareVot.Api.Queries
 {
     public class ObserverRequestsHandler :
-        IAsyncRequestHandler<ImportObserversRequest, int>, 
-        IAsyncRequestHandler<NewObserverRequest, int>,
-        IAsyncRequestHandler<ResetDeviceIdRequest>
+        IRequestHandler<ImportObserversRequest, int>, 
+        IRequestHandler<NewObserverRequest, int>,
+        IRequestHandler<ResetDeviceIdRequest>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly ILogger _logger;
         private  IHashService _hashService;
 
-        public ObserverRequestsHandler(OngContext context, ILogger logger, IHashService hashService)
+        public ObserverRequestsHandler(VoteMonitorContext context, ILogger logger, IHashService hashService)
         {
             _context = context;
             _logger = logger;
@@ -28,10 +29,10 @@ namespace MonitorizareVot.Api.Queries
 
         private int GetMaxIdObserver()
         {
-            return _context.Observator.Max(o => o.IdObservator) + 1;
+            return _context.Observers.Max(o => o.Id) + 1;
         }
 
-        public Task<int> Handle(ImportObserversRequest message)
+        public Task<int> Handle(ImportObserversRequest message, CancellationToken token)
         {
             var pathToFile = message.FilePath;
             var counter = 0;
@@ -46,15 +47,15 @@ namespace MonitorizareVot.Api.Queries
                     var data = fileContent.Split('\t');
                     var hashed = _hashService.GetHash(data[1]);
 
-                    var observer = new Observator
+                    var observer = new Observer
                     {
-                        IdObservator = startId + counter,
-                        IdOng = message.IdOng,
-                        NumarTelefon = data[0],
-                        NumeIntreg = data[message.NameIndexInFile],
+                        Id = startId + counter,
+                        IdNgo = message.IdOng,
+                        Phone = data[0],
+                        Name = data[message.NameIndexInFile],
                         Pin = hashed
                     };
-                    _context.Observator.Add(observer);
+                    _context.Observers.Add(observer);
                     counter++;
                 }
                 _context.SaveChanges();
@@ -64,26 +65,26 @@ namespace MonitorizareVot.Api.Queries
         }
 
 
-        public Task<int> Handle(NewObserverRequest message)
+        public Task<int> Handle(NewObserverRequest message, CancellationToken token)
         {
             var id = GetMaxIdObserver();
-            var observer = new Observator
+            var observer = new Observer
             {
-                IdObservator = id,
-                IdOng = message.IdOng,
-                NumarTelefon = message.NumarTelefon,
-                NumeIntreg = message.Nume,
+                Id = id,
+                IdNgo = message.IdOng,
+                Phone = message.NumarTelefon,
+                Name = message.Nume,
                 Pin = _hashService.GetHash(message.PIN)
             };
-            _context.Observator.Add(observer);
+            _context.Observers.Add(observer);
             return _context.SaveChangesAsync();
         }
 
 
-        public Task Handle(ResetDeviceIdRequest message)
+        public Task Handle(ResetDeviceIdRequest message, CancellationToken token)
         {
             // find observer
-            var observers = _context.Observator.Where(o => o.NumarTelefon == message.PhoneNumber);
+            var observers = _context.Observers.Where(o => o.Phone == message.PhoneNumber);
             if (observers.Count() != 1)
             {
                 return Task.FromResult(0);
@@ -91,7 +92,7 @@ namespace MonitorizareVot.Api.Queries
 
             // make sure the number is unique
             // clear device id
-            observers.First().IdDispozitivMobil = null;
+            observers.First().MobileDeviceId = null;
 
             return _context.SaveChangesAsync();
             // save

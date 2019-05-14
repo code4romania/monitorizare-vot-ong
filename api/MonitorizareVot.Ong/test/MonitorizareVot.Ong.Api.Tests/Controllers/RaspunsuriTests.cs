@@ -5,7 +5,6 @@ using MonitorizareVot.Ong.Api.Extensions;
 using MonitorizareVot.Ong.Api.ViewModels;
 using Newtonsoft.Json;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using Xunit;
 
@@ -71,12 +70,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int idONG = 1; // TODO set the idONG in token and use it as a param for the test
             int countObservatori;
 
-            using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
+            using (var context = new VoteMonitorContext(_raspunsuriFixture.ContextOptions))
             {
-                countObservatori = await context.Raspuns
-                 .Where(x => x.IdObservatorNavigation.IdOng == idONG && x.IdRaspunsDisponibilNavigation.RaspunsCuFlag == urgent)
+                countObservatori = await context.Answers
+                 .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                  .Select(y =>
-                   new { y.IdObservator, Observator = y.IdObservatorNavigation.NumeIntreg, IdSectie = y.IdSectieDeVotare, Sectie = y.IdSectieDeVotareNavigation.DenumireUat, y.DataUltimeiModificari }
+                   new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                   )
                  .Distinct()
                  .CountAsync();
@@ -107,12 +106,12 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             const int idONG = 1; // TODO set the idONG in token and use it as a param for the test
             RaspunsModel first, last;
 
-            using (var context = new OngContext(_raspunsuriFixture.ContextOptions))
+            using (var context = new VoteMonitorContext(_raspunsuriFixture.ContextOptions))
             {
-                var sectiiCuObservatori = await context.Raspuns
-                  .Where(x => x.IdObservatorNavigation.IdOng == idONG && x.IdRaspunsDisponibilNavigation.RaspunsCuFlag == urgent)
+                var sectiiCuObservatori = await context.Answers
+                  .Where(x => x.Observer.IdNgo == idONG && x.OptionAnswered.Flagged == urgent)
                   .Select(y =>
-                    new { y.IdObservator, Observator = y.IdObservatorNavigation.NumeIntreg, IdSectie = y.IdSectieDeVotare, Sectie = y.IdSectieDeVotareNavigation.DenumireUat, y.DataUltimeiModificari }
+                    new { IdObservator = y.IdObserver, Observator = y.Observer.Name, IdSectie = y.IdPollingStation, Sectie = y.PollingStation.AdministrativeTerritoryCode, DataUltimeiModificari = y.LastModified }
                    )
                   .Distinct()
                   .OrderByDescending(x => x.DataUltimeiModificari)
@@ -141,14 +140,13 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.Equal(last.IdObservator, firstModel.IdObservator);
         }
 
-        [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
+        [Fact(Skip = "Actualizat testul atunci cand IdNgo este luat din token")]
         public async void GetRaspunsuri_OngNuExista_ReturneazaEmptyList()
         {
             // ARRANGE
             const int page = 2;
             const int pageSize = 5;
             const bool urgent = false;
-            const int idOng = -1;
 
             // ACT
             var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");
@@ -163,14 +161,13 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             Assert.Equal(0, model.TotalPages);
         }
 
-        [Fact(Skip = "Actualizat testul atunci cand IdOng este luat din token")]
+        [Fact(Skip = "Actualizat testul atunci cand IdNgo este luat din token")]
         public async void GetRaspunsuri_OngNuAreRaspunsuriMarcateCuFlag_ReturneazaEmptyList()
         {
             // ARRANGE
             const int page = 2;
             const int pageSize = 5;
             const bool urgent = false;
-            const int idOng = -1;
 
             // ACT
             var response = await _client.GetAsync($"api/v1/raspunsuri?page={page}&pagesize={pageSize}&urgent={urgent}");

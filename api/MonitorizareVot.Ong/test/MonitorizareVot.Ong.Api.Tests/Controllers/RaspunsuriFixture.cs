@@ -15,7 +15,7 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
         {
             base.SeedData();
 
-            using (var context = new OngContext(ContextOptions))
+            using (var context = new VoteMonitorContext(ContextOptions))
             {
                 using (var tran = context.Database.BeginTransaction())
                 {
@@ -37,143 +37,143 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             }
         }
 
-        private void SeedOngs(OngContext context)
+        private void SeedOngs(VoteMonitorContext context)
         {
-            if (context.Ong.Any())
+            if (context.Ngos.Any())
                 return;
 
-            context.Ong.AddRange(
-                 new Domain.Ong.Models.Ong { IdOng = 1, NumeOng = "Denumire ONG A", AbreviereNumeOng = "ONG A" },
-                 new Domain.Ong.Models.Ong { IdOng = 2, NumeOng = "Denumire ONG B", AbreviereNumeOng = "ONG B" },
-                 new Domain.Ong.Models.Ong { IdOng = 3, NumeOng = "Denumire ONG C", AbreviereNumeOng = "ONG C" },
-                 new Domain.Ong.Models.Ong { IdOng = 4, NumeOng = "Denumire ONG D", AbreviereNumeOng = "ONG D" },
-                 new Domain.Ong.Models.Ong { IdOng = 5, NumeOng = "Denumire ONG E", AbreviereNumeOng = "ONG E" },
-                 new Domain.Ong.Models.Ong { IdOng = 6, NumeOng = "Denumire ONG F", AbreviereNumeOng = "ONG F" }
+            context.Ngos.AddRange(
+                 new Domain.Ong.Models.Ngo { Id = 1, Name = "Denumire ONG A", ShortName = "ONG A" },
+                 new Domain.Ong.Models.Ngo { Id = 2, Name = "Denumire ONG B", ShortName = "ONG B" },
+                 new Domain.Ong.Models.Ngo { Id = 3, Name = "Denumire ONG C", ShortName = "ONG C" },
+                 new Domain.Ong.Models.Ngo { Id = 4, Name = "Denumire ONG D", ShortName = "ONG D" },
+                 new Domain.Ong.Models.Ngo { Id = 5, Name = "Denumire ONG E", ShortName = "ONG E" },
+                 new Domain.Ong.Models.Ngo { Id = 6, Name = "Denumire ONG F", ShortName = "ONG F" }
              );
 
             context.SaveChanges();
         }
 
-        private void SeedSectiiDeVotare(OngContext context, int idJudet)
+        private void SeedSectiiDeVotare(VoteMonitorContext context, int idJudet)
         {
-            if (context.SectieDeVotare.Any(a => a.IdJudet == idJudet))
+            if (context.PollingStations.Any(a => a.IdCounty == idJudet))
                 return;
 
-            context.SectieDeVotare.AddRange(
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 1, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 1}", NumarSectie = 1, LocalitateComponenta = $"Localitate {idJudet * 10 + 1}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 2, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 2}", NumarSectie = 2, LocalitateComponenta = $"Localitate {idJudet * 10 + 2}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 3, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 3}", NumarSectie = 3, LocalitateComponenta = $"Localitate {idJudet * 10 + 3}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 4, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 4}", NumarSectie = 4, LocalitateComponenta = $"Localitate {idJudet * 10 + 4}" },
-                 new SectieDeVotare { IdSectieDeVotarre = idJudet * 10 + 5, IdJudet = idJudet, DenumireUat = $"Sectia {idJudet * 10 + 5}", NumarSectie = 5, LocalitateComponenta = $"Localitate {idJudet * 10 + 5}" }
+            context.PollingStations.AddRange(
+                 new PollingStation { Id = idJudet * 10 + 1, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 1}", Number = 1, TerritoryCode = $"Localitate {idJudet * 10 + 1}" },
+                 new PollingStation { Id = idJudet * 10 + 2, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 2}", Number = 2, TerritoryCode = $"Localitate {idJudet * 10 + 2}" },
+                 new PollingStation { Id = idJudet * 10 + 3, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 3}", Number = 3, TerritoryCode = $"Localitate {idJudet * 10 + 3}" },
+                 new PollingStation { Id = idJudet * 10 + 4, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 4}", Number = 4, TerritoryCode = $"Localitate {idJudet * 10 + 4}" },
+                 new PollingStation { Id = idJudet * 10 + 5, IdCounty = idJudet, AdministrativeTerritoryCode = $"Sectia {idJudet * 10 + 5}", Number = 5, TerritoryCode = $"Localitate {idJudet * 10 + 5}" }
              );
 
             context.SaveChanges();
         }
 
-        private void SeedObservatoriCuRaspunsuri(OngContext context, int idOng)
+        private void SeedObservatoriCuRaspunsuri(VoteMonitorContext context, int idOng)
         {
-            if (context.Observator.Any(a => a.IdOng == idOng))
+            if (context.Observers.Any(a => a.IdNgo == idOng))
                 return;
 
-            var listaObservatori = new List<Observator>
+            var listaObservatori = new List<Observer>
             {
-                new Observator { IdOng = idOng, NumeIntreg = "Popescu Florin", NumarTelefon = "0763000000", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Cremarenco Alin", NumarTelefon = "0763000001", EsteDinEchipa = false },
-                new Observator { IdOng = idOng, NumeIntreg = "Chivu Marin", NumarTelefon = "0763000002", EsteDinEchipa = false },
-                new Observator { IdOng = idOng, NumeIntreg = "Neacsu Andreea", NumarTelefon = "0763000004", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Stanciu Florina", NumarTelefon = "0763000003", EsteDinEchipa = false },
-                new Observator { IdOng = idOng, NumeIntreg = "Neacsu Andreea", NumarTelefon = "0763000004", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Duta Andrei", NumarTelefon = "0763000005", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Vlad George", NumarTelefon = "0763000007", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Pascu Dan", NumarTelefon = "0763000008", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Stan Stefan", NumarTelefon = "0763000010", EsteDinEchipa = true },
-                new Observator { IdOng = idOng, NumeIntreg = "Petrache Razvan", NumarTelefon = "0763000011", EsteDinEchipa = false },
-                new Observator { IdOng = idOng, NumeIntreg = "Dumbrava Valeria",  NumarTelefon = "0763000009", EsteDinEchipa = true }
+                new Observer { IdNgo = idOng, Name = "Popescu Florin", Phone = "0763000000", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Cremarenco Alin", Phone = "0763000001", FromTeam = false },
+                new Observer { IdNgo = idOng, Name = "Chivu Marin", Phone = "0763000002", FromTeam = false },
+                new Observer { IdNgo = idOng, Name = "Neacsu Andreea", Phone = "0763000004", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Stanciu Florina", Phone = "0763000003", FromTeam = false },
+                new Observer { IdNgo = idOng, Name = "Neacsu Andreea", Phone = "0763000004", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Duta Andrei", Phone = "0763000005", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Vlad George", Phone = "0763000007", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Pascu Dan", Phone = "0763000008", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Stan Stefan", Phone = "0763000010", FromTeam = true },
+                new Observer { IdNgo = idOng, Name = "Petrache Razvan", Phone = "0763000011", FromTeam = false },
+                new Observer { IdNgo = idOng, Name = "Dumbrava Valeria",  Phone = "0763000009", FromTeam = true }
             };
 
-            context.Observator.AddRange(listaObservatori);
+            context.Observers.AddRange(listaObservatori);
 
-            var listaRaspunsuri = new List<Raspuns>
+            var listaRaspunsuri = new List<Answer>
             {
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 8, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 13, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 2, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddMinutes(10) },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 5, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddMinutes(10) },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 9, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddMinutes(10) },
-                new Raspuns { IdObservator = listaObservatori[0].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 12, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now.AddMinutes(10) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 2, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 4, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 7, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 11, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 2, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 5, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 9, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[1].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 12, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 3, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 4, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 8, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 10, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 2, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 4, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 8, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 12, IdSectieDeVotare = 12, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 5, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 9, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[2].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 10, IdSectieDeVotare = 13, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[3].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[3].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[3].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 8, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[3].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 13, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[4].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[4].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[4].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 8, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[4].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 13, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[5].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[5].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 5, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[5].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 8, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[5].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 13, IdSectieDeVotare = 14, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 2, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 4, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 7, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 11, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 2, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 5, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 9, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[6].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 12, IdSectieDeVotare = 15, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(40) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(40) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 7, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(40) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 13, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(40) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 2, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 4, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 8, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[7].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 11, IdSectieDeVotare = 25, DataUltimeiModificari = DateTime.Now.AddMinutes(-25) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 1, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 9, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 11, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(30) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 3, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 5, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 7, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 12, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 1, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 5, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 8, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'B' * 20 + 11, IdSectieDeVotare = 22, DataUltimeiModificari = DateTime.Now.AddMinutes(20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 3, IdSectieDeVotare = 23, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 6, IdSectieDeVotare = 23, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 8, IdSectieDeVotare = 23, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[8].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 12, IdSectieDeVotare = 23, DataUltimeiModificari = DateTime.Now.AddMinutes(-20) },
-                new Raspuns { IdObservator = listaObservatori[9].IdObservator, IdRaspunsDisponibil = 'C' * 20 + 1, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[9].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 5, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[9].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 9, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
-                new Raspuns { IdObservator = listaObservatori[9].IdObservator, IdRaspunsDisponibil = 'A' * 20 + 11, IdSectieDeVotare = 11, DataUltimeiModificari = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'A' * 20 + 1, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'A' * 20 + 8, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'A' * 20 + 13, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'B' * 20 + 2, IdPollingStation = 11, LastModified = DateTime.Now.AddMinutes(10) },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'B' * 20 + 5, IdPollingStation = 11, LastModified = DateTime.Now.AddMinutes(10) },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'B' * 20 + 9, IdPollingStation = 11, LastModified = DateTime.Now.AddMinutes(10) },
+                new Answer { IdObserver = listaObservatori[0].Id, IdOptionToQuestion = 'B' * 20 + 12, IdPollingStation = 11, LastModified = DateTime.Now.AddMinutes(10) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'A' * 20 + 2, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'A' * 20 + 4, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'A' * 20 + 7, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'A' * 20 + 11, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'C' * 20 + 2, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'C' * 20 + 5, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'C' * 20 + 9, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[1].Id, IdOptionToQuestion = 'C' * 20 + 12, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'A' * 20 + 3, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'A' * 20 + 4, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'A' * 20 + 8, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'A' * 20 + 10, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'C' * 20 + 2, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'C' * 20 + 4, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'C' * 20 + 8, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'C' * 20 + 12, IdPollingStation = 12, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'B' * 20 + 1, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'B' * 20 + 5, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'B' * 20 + 9, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[2].Id, IdOptionToQuestion = 'B' * 20 + 10, IdPollingStation = 13, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[3].Id, IdOptionToQuestion = 'A' * 20 + 1, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[3].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[3].Id, IdOptionToQuestion = 'A' * 20 + 8, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[3].Id, IdOptionToQuestion = 'A' * 20 + 13, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[4].Id, IdOptionToQuestion = 'A' * 20 + 1, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[4].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[4].Id, IdOptionToQuestion = 'A' * 20 + 8, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[4].Id, IdOptionToQuestion = 'A' * 20 + 13, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[5].Id, IdOptionToQuestion = 'B' * 20 + 1, IdPollingStation = 14, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[5].Id, IdOptionToQuestion = 'B' * 20 + 5, IdPollingStation = 14, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[5].Id, IdOptionToQuestion = 'B' * 20 + 8, IdPollingStation = 14, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[5].Id, IdOptionToQuestion = 'B' * 20 + 13, IdPollingStation = 14, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'A' * 20 + 2, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'A' * 20 + 4, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'A' * 20 + 7, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'A' * 20 + 11, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'B' * 20 + 2, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'B' * 20 + 5, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'B' * 20 + 9, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[6].Id, IdOptionToQuestion = 'B' * 20 + 12, IdPollingStation = 15, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'A' * 20 + 1, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(40) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(40) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'A' * 20 + 7, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(40) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'A' * 20 + 13, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(40) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'B' * 20 + 2, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'B' * 20 + 4, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'B' * 20 + 8, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[7].Id, IdOptionToQuestion = 'B' * 20 + 11, IdPollingStation = 25, LastModified = DateTime.Now.AddMinutes(-25) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'A' * 20 + 1, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'A' * 20 + 9, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'A' * 20 + 11, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(30) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 3, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 5, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 7, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 12, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'B' * 20 + 1, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'B' * 20 + 5, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'B' * 20 + 8, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'B' * 20 + 11, IdPollingStation = 22, LastModified = DateTime.Now.AddMinutes(20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 3, IdPollingStation = 23, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 6, IdPollingStation = 23, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 8, IdPollingStation = 23, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[8].Id, IdOptionToQuestion = 'C' * 20 + 12, IdPollingStation = 23, LastModified = DateTime.Now.AddMinutes(-20) },
+                new Answer { IdObserver = listaObservatori[9].Id, IdOptionToQuestion = 'C' * 20 + 1, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[9].Id, IdOptionToQuestion = 'A' * 20 + 5, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[9].Id, IdOptionToQuestion = 'A' * 20 + 9, IdPollingStation = 11, LastModified = DateTime.Now },
+                new Answer { IdObserver = listaObservatori[9].Id, IdOptionToQuestion = 'A' * 20 + 11, IdPollingStation = 11, LastModified = DateTime.Now },
             };
 
-            context.Raspuns.AddRange(listaRaspunsuri);
+            context.Answers.AddRange(listaRaspunsuri);
 
             context.SaveChanges();
         }

@@ -5,39 +5,40 @@ using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class FormulareQueryHandler :
-        IAsyncRequestHandler<IntrebariQuery, List<SectiuneModel>>
+        IRequestHandler<IntrebariQuery, List<SectiuneModel>>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
 
-        public FormulareQueryHandler(OngContext context, IMapper mapper)
+        public FormulareQueryHandler(VoteMonitorContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<List<SectiuneModel>> Handle(IntrebariQuery message)
+        public async Task<List<SectiuneModel>> Handle(IntrebariQuery message, CancellationToken cancellationToken)
         {
-            var intrebari = await _context.Intrebare
-                .Include(i => i.IdSectiuneNavigation)
-                .Include(i => i.RaspunsDisponibil)
-                    .ThenInclude(i => i.IdOptiuneNavigation)
-                .Where(i => i.CodFormular == message.CodFormular)
+            var intrebari = await _context.Questions
+                .Include(i => i.FormSection)
+                .Include(i => i.OptionsToQuestions)
+                    .ThenInclude(i => i.Option)
+                .Where(i => i.FormCode == message.CodFormular)
                 .ToListAsync();
 
-            var sectiuni = intrebari.Select(a => new { a.IdSectiune, a.IdSectiuneNavigation.CodSectiune, a.IdSectiuneNavigation.Descriere }).Distinct();
+            var sectiuni = intrebari.Select(a => new { IdSectiune = a.IdSection, CodSectiune = a.FormSection.Code, Descriere = a.FormSection.Description }).Distinct();
 
             return sectiuni.Select(i => new SectiuneModel
             {
                 CodSectiune = i.CodSectiune,
                 Descriere = i.Descriere,
-                Intrebari = intrebari.Where(a => a.IdSectiune == i.IdSectiune)
-                                     .OrderBy(intrebare=>intrebare.CodIntrebare)
+                Intrebari = intrebari.Where(a => a.IdSection == i.IdSectiune)
+                                     .OrderBy(intrebare=>intrebare.Code)
                                      .Select(a => _mapper.Map<IntrebareModel<RaspunsDisponibilModel>>(a)).ToList()
             }).ToList();
         }

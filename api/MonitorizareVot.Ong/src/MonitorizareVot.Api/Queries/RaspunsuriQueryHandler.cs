@@ -7,37 +7,38 @@ using MonitorizareVot.Ong.Api.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class RaspunsuriQueryHandler :
-        IAsyncRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
-        IAsyncRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
-        IAsyncRequestHandler<RaspunsuriFormularQuery, RaspunsFormularModel>
+        IRequestHandler<RaspunsuriQuery, ApiListResponse<RaspunsModel>>,
+        IRequestHandler<RaspunsuriCompletateQuery, List<IntrebareModel<RaspunsCompletatModel>>>,
+        IRequestHandler<RaspunsuriFormularQuery, RaspunsFormularModel>
     {
-        private readonly OngContext _context;
+        private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
 
-        public RaspunsuriQueryHandler(OngContext context, IMapper mapper)
+        public RaspunsuriQueryHandler(VoteMonitorContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message)
+        public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
-            string queryUnPaged = $@"SELECT IdSectieDeVotare AS IdSectie, R.IdObservator AS IdObservator, O.NumeIntreg AS Observator, CONCAT(CodJudet, ' ', NumarSectie) AS Sectie, MAX(DataUltimeiModificari) AS DataUltimeiModificari
-                FROM Raspuns R
-                INNER JOIN OBSERVATOR O ON O.IdObservator = R.IdObservator
-                INNER JOIN RaspunsDisponibil RD ON RD.IdRaspunsDisponibil = R.IdRaspunsDisponibil
-                WHERE RD.RaspunsCuFlag = {Convert.ToInt32(message.Urgent)}";
+            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObservator, O.Name AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS DataUltimeiModificari
+                FROM Answers R
+                INNER JOIN Observers O ON O.Id = R.IdObserver
+                INNER JOIN OptionsToQuestions RD ON RD.Id = R.IdOptionToQuestion
+                WHERE RD.Flagged = {Convert.ToInt32(message.Urgent)}";
 
-            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdOng = {message.IdONG}";
+            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
-            queryUnPaged = $"{queryUnPaged} GROUP BY IdSectieDeVotare, CodJudet, NumarSectie, R.IdObservator, O.NumeIntreg, CodJudet";
+            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
 
-            var queryPaged = $@"{queryUnPaged} ORDER BY DataUltimeiModificari DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+            var queryPaged = $@"{queryUnPaged},LastModified ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 
             var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
                 .FromSql(queryPaged)
@@ -56,27 +57,27 @@ namespace MonitorizareVot.Ong.Api.Queries
             };
         }
 
-        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message)
+        public async Task<List<IntrebareModel<RaspunsCompletatModel>>> Handle(RaspunsuriCompletateQuery message, CancellationToken cancellationToken)
         {
-            var raspunsuri = await _context.Raspuns
-                .Include(r => r.IdRaspunsDisponibilNavigation)
-                    .ThenInclude(rd => rd.IdIntrebareNavigation)
-                .Include(r => r.IdRaspunsDisponibilNavigation)
-                    .ThenInclude(rd => rd.IdOptiuneNavigation)
-                .Where(r => r.IdObservator == message.IdObservator && r.IdSectieDeVotare == message.IdSectieDeVotare)
+            var raspunsuri = await _context.Answers
+                .Include(r => r.OptionAnswered)
+                    .ThenInclude(rd => rd.Question)
+                .Include(r => r.OptionAnswered)
+                    .ThenInclude(rd => rd.Option)
+                .Where(r => r.IdObserver == message.IdObservator && r.IdPollingStation == message.IdSectieDeVotare)
                 .ToListAsync();
 
             var intrebari = raspunsuri
-                .Select(r => r.IdRaspunsDisponibilNavigation.IdIntrebareNavigation)
+                .Select(r => r.OptionAnswered.Question)
                 .ToList();
 
             return intrebari.Select(i => _mapper.Map<IntrebareModel<RaspunsCompletatModel>>(i)).ToList();
         }
 
-        public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message)
+        public async Task<RaspunsFormularModel> Handle(RaspunsuriFormularQuery message, CancellationToken cancellationToken)
         {
-            var raspunsuriFormular = await _context.RaspunsFormular
-                .FirstOrDefaultAsync(rd => rd.IdObservator == message.IdObservator && rd.IdSectieDeVotare == message.IdSectieDeVotare);
+            var raspunsuriFormular = await _context.PollingStationInfos
+                .FirstOrDefaultAsync(rd => rd.IdObserver == message.IdObservator && rd.IdPollingStation == message.IdSectieDeVotare);
 
             return _mapper.Map<RaspunsFormularModel>(raspunsuriFormular);
         }

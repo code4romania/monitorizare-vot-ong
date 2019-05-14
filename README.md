@@ -20,7 +20,7 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 ## Built With
 
- Backend app: .Net Core 1.1
+ Backend app: .Net Core 2.1
  Frontend app: Angular 2
  
  Swagger docs for the API are available [here](https://mvonguat.azurewebsites.net/swagger/ui/index.html).

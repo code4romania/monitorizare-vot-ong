@@ -20,9 +20,9 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
         public string ConnectionStringName { get; set; } = "DefaultConnection";
 
         private readonly TestServer _testServer;
-        private readonly DatabaseFixture<OngContext> _databaseFixture;
+        private readonly DatabaseFixture<VoteMonitorContext> _databaseFixture;
 
-        public DbContextOptions<OngContext> ContextOptions { get; set; }
+        public DbContextOptions<VoteMonitorContext> ContextOptions { get; set; }
         public HttpClient Client { get; private set; }
 
         public ControllerFixture(string environment)
@@ -42,18 +42,18 @@ namespace MonitorizareVot.Ong.Api.Tests.Controllers
             .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
             .Build();
 
-            ContextOptions = new DbContextOptionsBuilder<OngContext>()
+            ContextOptions = new DbContextOptionsBuilder<VoteMonitorContext>()
                 .UseSqlServer(conf.GetConnectionString(ConnectionStringName))
                 .Options;
 
-            _databaseFixture = new DatabaseFixture<OngContext>(new OngContext(ContextOptions));
+            _databaseFixture = new DatabaseFixture<VoteMonitorContext>(new VoteMonitorContext(ContextOptions));
 
             SeedData();
         }
 
         public virtual void SeedData()
         {
-            using (var c = new OngContext(ContextOptions))
+            using (var c = new VoteMonitorContext(ContextOptions))
             {
                 c.Database.EnsureCreated();
                 c.EnsureSeedData();
