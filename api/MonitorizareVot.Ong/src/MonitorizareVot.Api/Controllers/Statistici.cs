@@ -56,7 +56,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza topul judetelor sau sectiilor in functie de numarul de sesizari
         /// </summary>
         /// <param name="model">  Detaliile de paginare (default Page=1, PageSize=20)
-        /// Grupare (0 - Judet | 1 - Sectie)
+        /// Grupare (0 - County | 1 - Sectie)
         /// Formular (codul formularulu care va fi luat in calcul pentru statistci - "" (string.Empty) inseamna toate)
         /// </param>
         /// <returns></returns>
@@ -246,7 +246,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza numarul raspunsurilor date de observatorii unui anumit ONG
         /// grupate pe optiuni pentru o anumita intrebare
         /// </summary>
-        /// <param name="model">IdIntrebare - id-ul intrebarei pentru care sa se returneze statisticile</param>
+        /// <param name="model">Id - id-ul intrebarei pentru care sa se returneze statisticile</param>
         /// <returns></returns>
         [HttpGet]
         [Route("RaspunsuriNumarareOptiuni")]

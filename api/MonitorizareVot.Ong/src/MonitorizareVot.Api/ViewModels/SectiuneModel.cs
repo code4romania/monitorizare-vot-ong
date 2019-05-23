@@ -18,17 +18,5 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public string CodFormular { get; set; }
     }
 
-    public class FormularProfile : Profile
-    {
-        public FormularProfile()
-        {
-            CreateMap<Intrebare, IntrebareModel<RaspunsDisponibilModel>>()
-                .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.RaspunsDisponibil));
-
-            CreateMap<RaspunsDisponibil, RaspunsDisponibilModel>()
-                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))
-                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptiuneNavigation.SeIntroduceText))
-                .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.IdRaspunsDisponibil));
-        }   
-    }
+   
 }

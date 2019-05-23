@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using MonitorizareVot.Api.ViewModels;
 using MonitorizareVot.Ong.Api.Common;
 using MonitorizareVot.Ong.Api.ViewModels;
+using MonitorizareVot.Ong.Api.Extensions;
 
 namespace MonitorizareVot.Api.Controllers
 {
@@ -39,18 +40,18 @@ namespace MonitorizareVot.Api.Controllers
         // this method will only be called the token is expired
         public async Task<IActionResult> RefreshLogin()
         {
-            string token = Request.Headers["Authorization"];
+            string token = Request.Headers[ControllerExtensions.AUTH_HEADER_VALUE];
             if (string.IsNullOrEmpty(token))
                 return Forbid();
-            if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-                token = token.Substring("Bearer ".Length).Trim();
+            if (token.StartsWith(ControllerExtensions.BEARER_VALUE, StringComparison.OrdinalIgnoreCase))
+                token = token.Substring(ControllerExtensions.BEARER_VALUE.Length).Trim();
             if (string.IsNullOrEmpty(token))
                 return Forbid();
 
             var decoded = JsonWebToken.DecodeToObject<Dictionary<string, string>>(token,
                 _jwtOptions.SigningCredentials.Kid, false);
-            var idOng = int.Parse(decoded["IdOng"]);
-            var organizator = bool.Parse(decoded["Organizator"]);
+            var idOng = int.Parse(decoded[ControllerExtensions.ID_NGO_VALUE]);
+            var organizator = bool.Parse(decoded[ControllerExtensions.ORGANIZER_VALUE]);
             var userName = decoded[JwtRegisteredClaimNames.Sub];
 
             var json = await GenerateToken(userName, idOng, organizator);
@@ -65,8 +66,8 @@ namespace MonitorizareVot.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //await _mediator.Send(new ImportObserversRequest {FilePath = "d:\\mv-name-rest.11.15.txt", IdOng = 3, NameIndexInFile = 2}); // mv
-            await _mediator.Send(new ImportObserversRequest { FilePath = "d:\\dv-rest7.txt", IdOng = 2, NameIndexInFile = 0 }); // usr
+            //await _mediator.Send(new ImportObserversRequest {FilePath = "d:\\mv-name-rest.11.15.txt", IdNgo = 3, NameIndexInFile = 2}); // mv
+            //await _mediator.Send(new ImportObserversRequest { FilePath = "d:\\dv-rest7.txt", IdNgo = 2, NameIndexInFile = 0 }); // usr
 
             var identity = await GetClaimsIdentity(applicationUser);
             if (identity == null)
@@ -75,8 +76,9 @@ namespace MonitorizareVot.Api.Controllers
                     $"Invalid username ({applicationUser.UserName}) or password ({applicationUser.Password})");
                 return BadRequest("Invalid credentials");
             }
-            var json = await GenerateToken(applicationUser.UserName, int.Parse(identity.Claims.FirstOrDefault(c => c.Type == "IdOng")?.Value),
-                 bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == "Organizator")?.Value));
+            var json = await GenerateToken(applicationUser.UserName, 
+                                            int.Parse(identity.Claims.FirstOrDefault(c => c.Type == ControllerExtensions.ID_NGO_VALUE)?.Value),
+                                            bool.Parse(identity.Claims.FirstOrDefault(c => c.Type == ControllerExtensions.ORGANIZER_VALUE)?.Value));
 
             return new OkObjectResult(json);
         }
@@ -103,8 +105,8 @@ namespace MonitorizareVot.Api.Controllers
                 new Claim(JwtRegisteredClaimNames.Iat,
                     ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
-                new Claim("IdOng", idOng.ToString()),
-                new Claim("Organizator", organizator.ToString())
+                new Claim(ControllerExtensions.ID_NGO_VALUE, idOng.ToString()),
+                new Claim(ControllerExtensions.AUTH_HEADER_VALUE, organizator.ToString())
             };
 
             // Create the JWT security token and encode it.
@@ -163,10 +165,10 @@ namespace MonitorizareVot.Api.Controllers
                 return await Task.FromResult<ClaimsIdentity>(null);
 
             return await Task.FromResult(new ClaimsIdentity(
-                new GenericIdentity(user.UserName, "Token"), new[]
+                new GenericIdentity(user.UserName, ControllerExtensions.TOKEN_VALUE), new[]
                 {
-                    new Claim("IdOng", userInfo.IdOng.ToString()),
-                    new Claim("Organizator", userInfo.Organizator.ToString(), typeof(bool).ToString())
+                    new Claim(ControllerExtensions.ID_NGO_VALUE, userInfo.IdNgo.ToString()),
+                    new Claim(ControllerExtensions.ORGANIZER_VALUE, userInfo.Organizer.ToString(), typeof(bool).ToString())
                 }));
         }
     }
