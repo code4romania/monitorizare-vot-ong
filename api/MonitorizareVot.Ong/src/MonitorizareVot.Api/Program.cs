@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace MonitorizareVot.Ong.Api
+namespace MonitorizareVot.Api
 {
     public class Program
     {

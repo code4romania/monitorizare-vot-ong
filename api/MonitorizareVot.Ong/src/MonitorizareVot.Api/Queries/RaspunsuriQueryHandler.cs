@@ -28,7 +28,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
-            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObservator, O.Name AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS DataUltimeiModificari
+            var queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObservator, O.Name AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS DataUltimeiModificari
                 FROM Answers R
                 INNER JOIN Observers O ON O.Id = R.IdObserver
                 INNER JOIN OptionsToQuestions RD ON RD.Id = R.IdOptionToQuestion
@@ -38,15 +38,15 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
 
-            var queryPaged = $@"{queryUnPaged},LastModified ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+            var queryPaged = $@"{queryUnPaged} ORDER BY MAX(LastModified) DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 
             var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
                 .FromSql(queryPaged)
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
 
             var count = await _context.RaspunsSectie
                 .FromSql(queryUnPaged)
-                .CountAsync();
+                .CountAsync(cancellationToken: cancellationToken);
 
             return new ApiListResponse<RaspunsModel>
             {
