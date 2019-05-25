@@ -38,7 +38,7 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
 
-            var queryPaged = $@"{queryUnPaged},LastModified ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+            var queryPaged = $@"{queryUnPaged} ORDER BY MAX(LastModified) DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 
             var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
                 .FromSql(queryPaged)
