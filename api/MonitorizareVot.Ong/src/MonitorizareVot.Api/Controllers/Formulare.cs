@@ -21,7 +21,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// In definitia unui formular nu intra intrebarile standard (ora sosirii, etc). 
         /// Acestea se considera implicite pe fiecare formular.
         /// </summary>
-        /// <param name="idFormular">Id-ul formularului pentru care trebuie preluata definitia</param>
+        /// <param name="model">
+        /// "idFormular" Id-ul formularului pentru care trebuie preluata definitia
+        /// </param>
         /// <returns></returns>
         [HttpGet]
         public async Task<List<SectiuneModel>> Get(FiltruFormulareModel model)

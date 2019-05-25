@@ -14,6 +14,10 @@
     <ApplicationInsightsAnnotationResourceId>/subscriptions/8ad78fbb-bdc8-408b-ac97-bab673b57011/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MonitorizareVot.Api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MonitorizareVot.Domain.Ong\MonitorizareVot.Domain.Ong.csproj" />
   </ItemGroup>
@@ -27,7 +31,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.4.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.7.2" />
     <PackageReference Include="Microsoft.ApplicationInsights.Injector" Version="2.6.7" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.2" />
