@@ -106,7 +106,7 @@ namespace MonitorizareVot.Api.Controllers
                     ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
                 new Claim(ControllerExtensions.ID_NGO_VALUE, idOng.ToString()),
-                new Claim(ControllerExtensions.AUTH_HEADER_VALUE, organizator.ToString())
+                new Claim(ControllerExtensions.ORGANIZER_VALUE, organizator.ToString())
             };
 
             // Create the JWT security token and encode it.
@@ -168,7 +168,7 @@ namespace MonitorizareVot.Api.Controllers
                 new GenericIdentity(user.UserName, ControllerExtensions.TOKEN_VALUE), new[]
                 {
                     new Claim(ControllerExtensions.ID_NGO_VALUE, userInfo.IdNgo.ToString()),
-                    new Claim(ControllerExtensions.ORGANIZER_VALUE, userInfo.Organizer.ToString(), typeof(bool).ToString())
+                    new Claim(ControllerExtensions.ORGANIZER_VALUE, userInfo.Organizer.ToString())
                 }));
         }
     }
