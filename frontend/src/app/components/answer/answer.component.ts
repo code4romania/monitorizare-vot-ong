@@ -15,12 +15,32 @@ export class AnswerComponent implements OnInit {
     answerState: Observable<AnswerState>;
     formState: Observable<FormState>;
 
+    countyCode: string;
+    pollingStation: string;
+    observerId: string;
+    isUrgent: boolean;
+
     constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
         this.answerState = this.store.select(state => state.answer).distinctUntilChanged();
+
+        this.answerState.subscribe(value => this.isUrgent = value.urgent || false);
     }
+
+    requestFilteredData() {
+
+
+        this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
+            observerId: this.observerId,
+            pollingStation: this.pollingStation,
+            county: this.countyCode
+        }));
+
+        console.log('query sent');
+    }
+
     redoAnswerListAction() {
         // take the current state of the answerState, and do a reloaded
         this.store.select(state => state.answer).take(1)
@@ -39,7 +59,10 @@ export class AnswerComponent implements OnInit {
     pageChanged(event) {
         this.store.select(s => s.answer).take(1)
             .map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize))
-            .map(a => this.store.dispatch(a))
+            .do((x) => console.log(x))
+            .map(a => {
+                this.store.dispatch(a)
+            })
             .subscribe();
     }
 

@@ -1,8 +1,11 @@
 import { AnswerExtra } from '../../models/answer.extra.model'
 import { AnswerThread } from '../../models/answer.thread.model'
+import { AnswerFilters } from '../../models/answer.filters.model'
 import { CompletedQuestion } from '../../models/completed.question.model'
 import { actionType } from '../util'
 import { Action } from '@ngrx/store'
+
+
 export class AnswerActionTypes {
     static readonly LOAD_PREVIEW = actionType('[Answer] Load preview')
     static readonly LOAD_PREVIEW_ERROR = actionType('[Answer] Load preview error')
@@ -21,14 +24,16 @@ export class LoadAnswerPreviewAction implements Action {
         page: number,
         pageSize: number,
         urgent: boolean,
-        refresh: boolean
+        refresh: boolean,
+        answerFilters: AnswerFilters
     }
-    constructor(urgent: boolean, page = 1, pageSize = 10, refresh = false) {
+    constructor(urgent: boolean, page = 1, pageSize = 10, refresh = false, answerFilters = { observerId: null, pollingStation: null, county: null }) {
         this.payload = {
             urgent,
             page,
             pageSize,
-            refresh
+            refresh,
+            answerFilters,
         }
     }
 }
@@ -93,7 +98,7 @@ export class LoadAnswerExtraAction implements Action {
 }
 export class LoadAnswerExtraDoneAction implements Action {
     readonly type = AnswerActionTypes.LOAD_EXTRA_DONE
-    constructor(public payload: AnswerExtra) {}
+    constructor(public payload: AnswerExtra) { }
 }
 export class LoadAnswerExtraErrorAction implements Action {
     readonly type = AnswerActionTypes.LOAD_EXTRA_ERROR
@@ -105,6 +110,6 @@ export type AnswerActions =
     LoadAnswerDetailsAction |
     LoadAnswerDetailsErrorAction |
     LoadAnswerDetailsDoneAction |
-    LoadAnswerExtraAction | 
-    LoadAnswerExtraDoneAction | 
+    LoadAnswerExtraAction |
+    LoadAnswerExtraDoneAction |
     LoadAnswerExtraErrorAction
