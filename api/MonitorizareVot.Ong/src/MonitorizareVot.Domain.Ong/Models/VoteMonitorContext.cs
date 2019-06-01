@@ -54,6 +54,10 @@ namespace MonitorizareVot.Domain.Ong.Models
                     .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.IdSection)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(d => d.OptionsToQuestions)
+                    .WithOne(o => o.Question)
+                    .HasForeignKey(o => o.IdQuestion);
             });
 
             modelBuilder.Entity<County>(entity =>
@@ -328,7 +332,16 @@ namespace MonitorizareVot.Domain.Ong.Models
                 entity.HasKey(e => e.Code)
                     .HasName("PK_FormVersion");
 
-                entity.Property(e => e.Code).HasMaxLength(2);
+                entity.Property(e => e.Code).HasMaxLength(4).IsRequired();
+                entity.Property(e => e.Status)
+                    .HasDefaultValue(FormStatus.DRAFT)
+                    .HasConversion(v => v.ToString(), v => (FormStatus)System.Enum.Parse(typeof(FormStatus), v));
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(200);
+                entity.HasMany(e => e.FormSections)
+                .WithOne(e => e.FormVersion)
+                .HasForeignKey(e => e.Code);
             });
 
 

@@ -85,8 +85,8 @@ namespace MonitorizareVot.Domain.Ong.Models
         {
             context.Database.ExecuteSqlCommand("delete from OptionsToQuestions");
             context.Database.ExecuteSqlCommand("delete from Questions");
-            context.Database.ExecuteSqlCommand("delete from FormSection");
-            context.Database.ExecuteSqlCommand("delete from FormVersion");
+            context.Database.ExecuteSqlCommand("delete from FormSections");
+            context.Database.ExecuteSqlCommand("delete from FormVersions");
            // context.Database.ExecuteSqlCommand("delete from County");
         }
 
@@ -201,9 +201,9 @@ namespace MonitorizareVot.Domain.Ong.Models
                 return;
 
             context.FormVersions.AddRange(
-                 new FormVersion { Code = "A", CurrentVersion = 1 },
-                 new FormVersion { Code = "B", CurrentVersion = 1 },
-                 new FormVersion { Code = "C", CurrentVersion = 1 }
+                 new FormVersion { Code = "A", CurrentVersion = 1, Status = FormStatus.COMPLETED, Description = "Test" },
+                 new FormVersion { Code = "B", CurrentVersion = 1, Status = FormStatus.COMPLETED, Description = "Masini" },
+                 new FormVersion { Code = "C", CurrentVersion = 1 , Description="Beri"}
              );
 
             context.SaveChanges();

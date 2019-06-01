@@ -13,7 +13,7 @@ namespace MonitorizareVot.Domain.Ong.Models
         public int Id { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
-
+        public FormVersion FormVersion { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
     }
 }
