@@ -1,0 +1,21 @@
+<div *ngIf="section" class="page">
+  <div class="card-container">
+    <app-question-card
+      class="question-card"
+      [editMode]="editMode"
+      [question]="question"
+      [section]="section"
+      *ngFor="let question of section.questions">
+    </app-question-card>
+  </div>
+  <app-question-menu
+    *ngIf="editMode === true"
+    class="question-menu-container">
+  </app-question-menu>
+</div>
+<div *ngIf="!section" class="page">
+  <app-question-menu
+    *ngIf="editMode === true"
+    class="question-menu-container">
+  </app-question-menu>
+</div>

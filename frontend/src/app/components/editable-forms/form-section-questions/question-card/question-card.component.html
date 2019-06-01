@@ -1,0 +1,23 @@
+<div class="question-row">
+  <div *ngIf="editMode === true" class="question-delete" (click)="deleteQuestion()">
+    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+  </div>
+  <div class="question-body">
+    <div class="question-definition">
+      <h4>{{question.text}}</h4>
+      <p *ngFor="let option of question.options"><i class="fa fa-square-o fa-lg" aria-hidden="true"></i> {{option.text}}</p>
+    </div>
+    <div class="question-side-options">
+      <select>
+        <option>Single choice</option>
+        <option>Multiple choice</option>
+        <option>Single choice with text</option>
+        <option>Multiple choice with text</option>
+      </select>
+      <div>
+        <p><i class="fa fa-square-o fa-lg" aria-hidden="true"></i> Red flag</p>
+      </div>
+    </div>
+
+  </div>
+</div>

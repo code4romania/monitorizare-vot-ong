@@ -1,0 +1,32 @@
+@import '~variables.scss';
+.published{
+  background: $color-primary;
+}
+.draft{
+  background: $color-info;
+}
+.new{
+  background: $color-success;
+  color: $color-white;
+}
+.clickable {
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+}
+.form-sets-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: 120px;
+  grid-gap: 20px;
+}
+.card{
+  @extend .clickable;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

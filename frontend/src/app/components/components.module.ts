@@ -9,11 +9,17 @@ import { CategoricalQuestionComponent } from './answer/categorical-question/cate
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
-import { AppComponent } from '../app.component';
 import { AnswerDetailsComponent } from './answer/answer-details/answer-details.component';
 import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
+import {EditableFormsComponent} from './editable-forms/editable-forms.component';
+import {EditableFormSectionsComponent} from './editable-forms/editable-form-sections/editable-form-sections.component';
+import {QuestionCardComponent} from './editable-forms/form-section-questions/question-card/question-card.component';
+import {FormSectionQuestionsComponent} from './editable-forms/form-section-questions/form-section-questions.component';
+import {QuestionMenuComponent} from './editable-forms/form-section-questions/question-menu/question-menu.component';
+import {FormSectionMenuComponent} from './editable-forms/editable-form-sections/form-section-menu/form-section-menu.component';
+import {FormSectionCardComponent} from './editable-forms/editable-form-sections/form-section-card/form-section-card.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -32,10 +38,17 @@ export let components = [
     StatisticsDetailsComponent,
     StatisticsValueComponent,
 
-    LoginComponent
+    LoginComponent,
+    EditableFormsComponent,
+    EditableFormSectionsComponent,
+    FormSectionQuestionsComponent,
+    QuestionCardComponent,
+    QuestionMenuComponent,
+    FormSectionMenuComponent,
+    FormSectionCardComponent
 
 
-] 
+]
 
 @NgModule({
     declarations:components,

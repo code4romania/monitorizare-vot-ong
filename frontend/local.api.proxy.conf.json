@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://mv-dashboard-dev.azurewebsites.net",
+    "target": "http://localhost:5000",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

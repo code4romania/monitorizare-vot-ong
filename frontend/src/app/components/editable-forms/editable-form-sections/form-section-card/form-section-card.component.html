@@ -1,0 +1,7 @@
+<div class="card-container">
+  <div class="card" [ngClass]="{new: !hasMenu}">
+    <h3>{{title}}</h3>
+    <h5 *ngIf="subtitle">{{subtitle}}</h5>
+  </div>
+  <app-form-section-menu *ngIf="hasMenu"></app-form-section-menu>
+</div>
