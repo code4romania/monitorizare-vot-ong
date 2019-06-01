@@ -11,19 +11,23 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public bool SeIntroduceText { get; set; }
     }
 
-    public class RaspunsProfile : Profile
+    public class FormularProfile : Profile
     {
-        public RaspunsProfile()
+        public FormularProfile()
         {
-            CreateMap<Intrebare, IntrebareModel<RaspunsCompletatModel>>()
-              .ForMember(src => src.Raspunsuri, c => c.MapFrom(dest => dest.RaspunsDisponibil));
+            CreateMap<Question, IntrebareModel<RaspunsDisponibilModel>>()
+                .ForMember(dest => dest.Raspunsuri, c => c.MapFrom(src => src.OptionsToQuestions))
+                .ForMember(dest => dest.IdIntrebare, c => c.MapFrom(src => src.Id))
+                .ForMember(dest => dest.TextIntrebare, c => c.MapFrom(src => src.Text))
+                .ForMember(dest => dest.IdTipIntrebare, c => c.MapFrom(src => src.QuestionType))
+                .ForMember(dest => dest.CodIntrebare, c => c.MapFrom(src => src.Code))
+                .ForMember(dest => dest.CodFormular, c => c.MapFrom(src => src.FormCode))
+                ;
 
-            CreateMap<RaspunsDisponibil, RaspunsCompletatModel>()
-                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.IdOptiuneNavigation.TextOptiune))
-                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.IdOptiuneNavigation.SeIntroduceText))
-                .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.IdRaspunsDisponibil))
-                .ForMember(dest => dest.RaspunsCuFlag, c => c.MapFrom(src => src.RaspunsCuFlag))
-                .ForMember(dest => dest.Value, c => c.MapFrom(src => src.Raspuns.First().Value));
+            CreateMap<OptionToQuestion, RaspunsDisponibilModel>()
+                .ForMember(dest => dest.TextOptiune, c => c.MapFrom(src => src.Option.Text))
+                .ForMember(dest => dest.SeIntroduceText, c => c.MapFrom(src => src.Option.IsFreeText))
+                .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.Id));
         }
     }
 }

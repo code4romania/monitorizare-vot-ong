@@ -2,9 +2,9 @@
 
 namespace MonitorizareVot.Domain.Ong.Models
 {
-    public partial class OngContext : DbContext
+    public partial class VoteMonitorContext : DbContext
     {
-        public OngContext(DbContextOptions<OngContext> options)
+        public VoteMonitorContext(DbContextOptions<VoteMonitorContext> options)
             :base(options)
         {
 

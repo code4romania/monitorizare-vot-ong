@@ -23,5 +23,10 @@
   "IS_PRESIDENT_WOMAN": "Presedintele BESV este femeie",
   "FORMS": "Formulare",
   "ADD_NEW_FORM_SET": "Adauga formular nou",
-  "ADD_NEW_FORM": "Adauga sectiune noua"
+  "ADD_NEW_FORM": "Adauga sectiune noua",
+  "IS_PRESIDENT_WOMAN": "Presedintele BESV este femeie",
+  "FILTER_BY": "Filtreaza după:",
+  "COUNTY_CODE": "Județ:",
+  "OBSERVER_ID": "Id-ul observatorului:",
+  "POLLING_STATION_NUMBER": "Numărul secției de votare:"
 }

@@ -2,6 +2,12 @@
 .navbar.navbar-default {
   background: $color-primary;
 
+  &.navbar-custom {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+  }
+
   .navbar-brand {
     padding: 2px 40px 2px 25px;
   }

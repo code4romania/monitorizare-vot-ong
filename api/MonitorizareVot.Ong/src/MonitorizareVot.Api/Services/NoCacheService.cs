@@ -12,15 +12,9 @@ namespace MonitorizareVot.Ong.Api.Services
             return await source();
         }
 
-        public async Task<T> GetObjectSafeAsync<T>(string key)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<T> GetObjectSafeAsync<T>(string key) => throw new NotImplementedException();
 
-        public async Task SaveObjectSafeAsync(string key, object value,
-            DistributedCacheEntryOptions options = null)
-        {
-            throw new NotImplementedException();
-        }
+        public Task SaveObjectSafeAsync(string key, object value,
+            DistributedCacheEntryOptions options = null) => throw new NotImplementedException();
     }
 }

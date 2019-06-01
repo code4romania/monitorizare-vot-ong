@@ -23,5 +23,10 @@
   "IS_PRESIDENT_WOMAN": "Is the station president a woman",
   "FORMS": "Forms",
   "ADD_NEW_FORM_SET": "Add new form set",
-  "ADD_NEW_FORM": "Add new form"
+  "ADD_NEW_FORM": "Add new form",
+  "IS_PRESIDENT_WOMAN": "Is the station president a woman",
+  "FILTER_BY": "Filter by:",
+  "COUNTY_CODE": "County:",
+  "OBSERVER_ID": "Observer Id:",
+  "POLLING_STATION_NUMBER": "Polling station number:"
 }
