@@ -17,7 +17,7 @@ export class AnswerComponent implements OnInit {
     formState: Observable<FormState>;
 
     countyCode: string;
-    pollingStation: string;
+    pollingStationNumber: string;
     observerId: number;
     isUrgent: boolean;
 
@@ -30,7 +30,7 @@ export class AnswerComponent implements OnInit {
         this.answerState.subscribe(value => {
             this.isUrgent = value.urgent || false;
             this.countyCode = value.answerFilters.county;
-            this.pollingStation = value.answerFilters.pollingStation;
+            this.pollingStationNumber = value.answerFilters.pollingStationNumber;
             this.observerId = value.answerFilters.observerId;
         });
     }
@@ -39,7 +39,7 @@ export class AnswerComponent implements OnInit {
 
         this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
             observerId: this.observerId,
-            pollingStation: this.pollingStation,
+            pollingStationNumber: this.pollingStationNumber,
             county: this.countyCode
         }));
 

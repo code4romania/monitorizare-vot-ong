@@ -1,5 +1,5 @@
 export class AnswerFilters {
     observerId: number = null;
-    pollingStation: string = null;
+    pollingStationNumber: string = null;
     county: string = null;
 }

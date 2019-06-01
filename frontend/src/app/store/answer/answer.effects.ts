@@ -44,7 +44,7 @@ export class AnswerEffects {
                     pageSize: action.payload.pageSize,
                     observerId: action.payload.answerFilters.observerId,
                     county: action.payload.answerFilters.county,
-                    pollingStation: action.payload.answerFilters.pollingStation,
+                    pollingStationNumber: action.payload.answerFilters.pollingStationNumber,
                     urgent: action.payload.urgent
                 }
             })
