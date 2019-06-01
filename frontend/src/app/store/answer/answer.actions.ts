@@ -25,9 +25,9 @@ export class LoadAnswerPreviewAction implements Action {
         pageSize: number,
         urgent: boolean,
         refresh: boolean,
-        answerFilters: AnswerFilters
+        answerFilters?: AnswerFilters
     }
-    constructor(urgent: boolean, page = 1, pageSize = 10, refresh = false, answerFilters = { observerId: null, pollingStation: null, county: null }) {
+    constructor(urgent: boolean, page = 1, pageSize = 10, refresh = false, answerFilters = {} as AnswerFilters) {
         this.payload = {
             urgent,
             page,

@@ -5,6 +5,7 @@ import { AppState } from '../../store/store.module';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
+import { Form } from 'app/models/form.model';
 
 @Component({
     templateUrl: './answer.component.html',
@@ -17,7 +18,7 @@ export class AnswerComponent implements OnInit {
 
     countyCode: string;
     pollingStation: string;
-    observerId: string;
+    observerId: number;
     isUrgent: boolean;
 
     constructor(private store: Store<AppState>) { }
@@ -26,11 +27,15 @@ export class AnswerComponent implements OnInit {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
         this.answerState = this.store.select(state => state.answer).distinctUntilChanged();
 
-        this.answerState.subscribe(value => this.isUrgent = value.urgent || false);
+        this.answerState.subscribe(value => {
+            this.isUrgent = value.urgent || false;
+            this.countyCode = value.answerFilters.county;
+            this.pollingStation = value.answerFilters.pollingStation;
+            this.observerId = value.answerFilters.observerId;
+        });
     }
 
     requestFilteredData() {
-
 
         this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
             observerId: this.observerId,
@@ -38,13 +43,12 @@ export class AnswerComponent implements OnInit {
             county: this.countyCode
         }));
 
-        console.log('query sent');
     }
 
     redoAnswerListAction() {
         // take the current state of the answerState, and do a reloaded
         this.store.select(state => state.answer).take(1)
-            .map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize))
+            .map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters))
             .map(a => this.store.dispatch(a))
             .subscribe()
     }
@@ -58,8 +62,7 @@ export class AnswerComponent implements OnInit {
 
     pageChanged(event) {
         this.store.select(s => s.answer).take(1)
-            .map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize))
-            .do((x) => console.log(x))
+            .map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters))
             .map(a => {
                 this.store.dispatch(a)
             })

@@ -4,6 +4,7 @@ import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import { AnswerActions, AnswerActionTypes } from './answer.actions';
+import { AnswerFilters } from 'app/models/answer.filters.model';
 export class AnswerState {
     threads: AnswerThread[] = []
     urgent: boolean = undefined
@@ -27,6 +28,8 @@ export class AnswerState {
     answerExtra: AnswerExtra
     answerExtraLoading = false
     answerExtraError = false
+
+    answerFilters: AnswerFilters = { observerId: null, pollingStation: null, county: null }
 }
 export let initialAnswerState: AnswerState = new AnswerState()
 
@@ -35,8 +38,11 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
         case AnswerActionTypes.LOAD_PREVIEW:
             let newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
                 shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.threads.length);
+            let shouldUpdateFilters = Object.keys(action.payload.answerFilters).length > 0 ? true : false;
+
             let newState = Object.assign({}, state, {
                 page: action.payload.page,
+                answerFilters: shouldUpdateFilters ? action.payload.answerFilters : state.answerFilters,
                 pageSize: action.payload.pageSize,
                 threads: newList ? [] : state.threads,
                 threadsLoading: shouldLoadList || newList,
