@@ -20,5 +20,9 @@
   "NOTES": "notes",
   "LOADING": "Loading",
   "SEE_COMPLETE_LIST": "See the complete list",
-  "IS_PRESIDENT_WOMAN": "Is the station president a woman"
+  "IS_PRESIDENT_WOMAN": "Is the station president a woman",
+  "FILTER_BY": "Filter by:",
+  "COUNTY_CODE": "County:",
+  "OBSERVER_ID": "Observer Id:",
+  "POLLING_STATION_NUMBER": "Polling station number:"
 }
