@@ -40,11 +40,11 @@ namespace MonitorizareVot.Ong.Api.Queries
 
             // Filter by county if specified
             if (!string.IsNullOrEmpty(message.County)) 
-                queryUnPaged = $"{queryUnPaged} AND O.CountyCode = {message.County}";
+                queryUnPaged = $"{queryUnPaged} AND A.CountyCode = {message.County}";
 
             // Filter by polling station if specified
             if (message.PollingStationNumber > 0) 
-                queryUnPaged = $"{queryUnPaged} AND O.PollingStationNumber = {message.PollingStationNumber}";
+                queryUnPaged = $"{queryUnPaged} AND A.PollingStationNumber = {message.PollingStationNumber}";
 
             // Filter by polling station if specified
             if (message.ObserverId > 0)
