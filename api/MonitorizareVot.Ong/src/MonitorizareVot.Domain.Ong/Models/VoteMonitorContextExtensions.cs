@@ -85,8 +85,8 @@ namespace MonitorizareVot.Domain.Ong.Models
         {
             context.Database.ExecuteSqlCommand("delete from OptionsToQuestions");
             context.Database.ExecuteSqlCommand("delete from Questions");
-            context.Database.ExecuteSqlCommand("delete from FormSection");
-            context.Database.ExecuteSqlCommand("delete from FormVersion");
+            context.Database.ExecuteSqlCommand("delete from FormSections");
+            context.Database.ExecuteSqlCommand("delete from FormVersions");
            // context.Database.ExecuteSqlCommand("delete from County");
         }
 
