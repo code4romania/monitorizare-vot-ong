@@ -35,20 +35,20 @@ namespace MonitorizareVot.Ong.Api.Queries
                 WHERE OQ.Flagged = {Convert.ToInt32(message.Urgent)}";
 
             // Filter by the organizer flag if specified
-            if(!message.Organizator) 
+            if (!message.Organizator)
                 queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
             // Filter by county if specified
-            if (!string.IsNullOrEmpty(message.County)) 
-                queryUnPaged = $"{queryUnPaged} AND A.CountyCode = {message.County}";
+            if (!string.IsNullOrEmpty(message.County))
+                queryUnPaged = $"{queryUnPaged} AND A.CountyCode = '{message.County}'";
 
             // Filter by polling station if specified
-            if (message.PollingStationNumber > 0) 
+            if (message.PollingStationNumber > 0)
                 queryUnPaged = $"{queryUnPaged} AND A.PollingStationNumber = {message.PollingStationNumber}";
 
             // Filter by polling station if specified
             if (message.ObserverId > 0)
-                queryUnPaged = $"{queryUnPaged} AND A.ObserverId = {message.ObserverId}";
+                queryUnPaged = $"{queryUnPaged} AND A.IdObserver = {message.ObserverId}";
 
             queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, A.IdObserver, O.Name, CountyCode";
 
