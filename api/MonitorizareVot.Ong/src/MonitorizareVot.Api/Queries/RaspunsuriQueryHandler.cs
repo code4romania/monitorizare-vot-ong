@@ -34,7 +34,21 @@ namespace MonitorizareVot.Ong.Api.Queries
                 INNER JOIN OptionsToQuestions RD ON RD.Id = R.IdOptionToQuestion
                 WHERE RD.Flagged = {Convert.ToInt32(message.Urgent)}";
 
-            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
+            // Filter by the organizer flag if specified
+            if(!message.Organizator) 
+                queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
+
+            // Filter by county if specified
+            if (!string.IsNullOrEmpty(message.County)) 
+                queryUnPaged = $"{queryUnPaged} AND A.CountyCode = {message.County}";
+
+            // Filter by polling station if specified
+            if (message.PollingStationNumber > 0) 
+                queryUnPaged = $"{queryUnPaged} AND A.PollingStationNumber = {message.PollingStationNumber}";
+
+            // Filter by polling station if specified
+            if (message.ObserverId > 0)
+                queryUnPaged = $"{queryUnPaged} AND A.ObserverId = {message.ObserverId}";
 
             queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
 

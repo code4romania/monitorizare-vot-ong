@@ -39,7 +39,10 @@ namespace MonitorizareVot.Ong.Api.Controllers
                 Organizator = organizator,
                 Page = model.Page,
                 PageSize = model.PageSize,
-                Urgent = model.Urgent
+                Urgent = model.Urgent,
+                County = model.County,
+                PollingStationNumber = model.PollingStationNumber,
+                ObserverId = model.ObserverId
             });
         }
 
