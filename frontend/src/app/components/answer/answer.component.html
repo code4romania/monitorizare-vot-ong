@@ -1,19 +1,19 @@
 <div class="container-fluid">
 
   <div class="col-md-3">
-    Filtreaza dupa:
+    {{'FILTER_BY' | translate}}
     <form (ngSubmit)="requestFilteredData()" name="filtreazaDupa">
       <div class="form-group">
-        <label for="countyCode">countyCode:</label>
+        <label for="countyCode">{{'COUNTY_CODE' | translate}}</label>
         <input [(ngModel)]="countyCode" name="countyCode" class="form-control" id="countyCode">
       </div>
       <div class="form-group">
-        <label for="pollingStationNumber">pollingStationNumber:</label>
+        <label for="pollingStationNumber">{{'POLLING_STATION_NUMBER' | translate}}</label>
         <input [(ngModel)]="pollingStationNumber" name="pollingStationNumber" class="form-control"
           id="pollingStationNumber">
       </div>
       <div class="form-group">
-        <label for="observerId">observerId:</label>
+        <label for="observerId">{{'OBSERVER_ID' | translate}}</label>
         <input [(ngModel)]="observerId" name="observerId" class="form-control" id="observerId">
       </div>
       <button type="submit" class="btn btn-default">Filtreaza</button>
