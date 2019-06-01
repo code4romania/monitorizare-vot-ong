@@ -19,5 +19,8 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public int IdONG { get; set; }
         public bool Urgent { get; set; }
         public bool Organizator { get; set; }
+        public string County { get; set; }
+        public int PollingStationNumber { get; set; }
+        public int ObserverId { get; set; }
     }
 }
