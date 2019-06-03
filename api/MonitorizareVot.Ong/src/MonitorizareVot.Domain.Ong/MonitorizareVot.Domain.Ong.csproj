@@ -10,6 +10,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <ProjectGuid>{FBA151EE-CAB0-4ED1-9D61-53AD2CBD17DF}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
