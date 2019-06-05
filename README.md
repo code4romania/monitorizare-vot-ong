@@ -77,7 +77,7 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 #### Build instructions (Cristi) 
 
 Run 
-- `npm install angular-cli -g`
+- `npm install -g @angular/cli@latest`
 - `npm install`
 - `ng run build --prod`
 - enjoy
