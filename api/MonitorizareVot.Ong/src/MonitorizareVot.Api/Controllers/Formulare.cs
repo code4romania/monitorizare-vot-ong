@@ -4,8 +4,8 @@ using MonitorizareVot.Api.ViewModels;
 using MonitorizareVot.Ong.Api.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static MonitorizareVot.Ong.Api.ViewModels.VersiuneFormularCompletModel;
-using static MonitorizareVot.Ong.Api.ViewModels.VersiuneFormularModel;
+using static MonitorizareVot.Ong.Api.ViewModels.FormVersionCompleteModel;
+using static MonitorizareVot.Ong.Api.ViewModels.FormVersionModel;
 
 namespace MonitorizareVot.Ong.Api.Controllers
 {
@@ -29,7 +29,7 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<VersiuneFormularCompletModel> Get(FiltruFormulareModel model)
+        public async Task<FormVersionCompleteModel> Get(FiltruFormulareModel model)
         {
             return await _mediator.Send(new IntrebariQuery { CodFormular = model.IdFormular });
         }
@@ -38,16 +38,16 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// Returneaza toate versiunile formularelor
         /// </summary>
         /// <returns></returns>
-        [HttpGet("versiuni")]
-        public async Task<List<VersiuneFormularModel>> Get()
+        [HttpGet("versions")]
+        public async Task<List<FormVersionModel>> Get()
         {
-            return await _mediator.Send(new VersiuniQuery());
+            return await _mediator.Send(new FormVersionsQuery());
         }
 
-        [HttpGet("optiuni")]
+        [HttpGet("options")]
         public async Task<List<OptiuneModel>> GetOptiuni()
         {
-            return await _mediator.Send(new OptiuniQuery());
+            return await _mediator.Send(new OptionsQuery());
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <param name="toCreate"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<VersiuneFormularCompletModel> Post([FromBody] VersiuneFormularCompletModel toCreate)
+        public async Task<FormVersionCompleteModel> Post([FromBody] FormVersionCompleteModel toCreate)
         {
-            return await _mediator.Send(new CreateOrUpdateFormular { ToCreateOrUpdate = toCreate, isCreatingNew = true });
+            return await _mediator.Send(new CreateOrUpdateFormRequest { ToCreateOrUpdate = toCreate, isCreatingNew = true });
 
         }
         /// <summary>
@@ -68,9 +68,9 @@ namespace MonitorizareVot.Ong.Api.Controllers
         /// <returns></returns>
 
         [HttpPut]
-        public async Task<VersiuneFormularCompletModel> Put([FromBody] VersiuneFormularCompletModel toUpdate)
+        public async Task<FormVersionCompleteModel> Put([FromBody] FormVersionCompleteModel toUpdate)
         {
-            return await _mediator.Send(new CreateOrUpdateFormular { ToCreateOrUpdate = toUpdate });
+            return await _mediator.Send(new CreateOrUpdateFormRequest { ToCreateOrUpdate = toUpdate });
         }
     }
 }

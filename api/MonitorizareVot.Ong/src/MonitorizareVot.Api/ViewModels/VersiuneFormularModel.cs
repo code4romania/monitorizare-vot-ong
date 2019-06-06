@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
-    public class VersiuneFormularModel
+    public class FormVersionModel
     {
-        public string CodFormular { get; set; }
-        public string StatusFormular { get; set; }
-        public int Versiune { get; set; }
-        public string Descriere { get; set; }
+        public string FormCode { get; set; }
+        public string FormStatus { get; set; }
+        public int Version { get; set; }
+        public string Description { get; set; }
 
-           public class VersiuniQuery : IRequest<List<VersiuneFormularModel>>
+           public class FormVersionsQuery : IRequest<List<FormVersionModel>>
         {
         }
     }

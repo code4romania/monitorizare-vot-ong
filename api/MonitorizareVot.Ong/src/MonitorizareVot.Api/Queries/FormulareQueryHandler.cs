@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MonitorizareVot.Ong.Api.Queries
 {
     public class FormulareQueryHandler :
-        IRequestHandler<IntrebariQuery, VersiuneFormularCompletModel>
+        IRequestHandler<IntrebariQuery, FormVersionCompleteModel>
     {
         private readonly VoteMonitorContext _context;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace MonitorizareVot.Ong.Api.Queries
             _mapper = mapper;
         }
 
-        public async Task<VersiuneFormularCompletModel> Handle(IntrebariQuery message, CancellationToken cancellationToken)
+        public async Task<FormVersionCompleteModel> Handle(IntrebariQuery message, CancellationToken cancellationToken)
         {
             return _context.FormVersions
                 .Where(formVersion => formVersion.Code == message.CodFormular)
@@ -30,7 +30,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                     .ThenInclude(formSection => formSection.Questions)
                     .ThenInclude(question => question.OptionsToQuestions)
                     .ThenInclude(oQuestion => oQuestion.Question)
-                .Select(formVersion => _mapper.Map<VersiuneFormularCompletModel>(formVersion)).First();
+                .Select(formVersion => _mapper.Map<FormVersionCompleteModel>(formVersion)).First();
         }
     }
 }

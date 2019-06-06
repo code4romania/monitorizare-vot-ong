@@ -14,7 +14,7 @@ namespace MonitorizareVot.Api.ViewModels
         public string Hint { get; set; }
     }
 
-    public class OptiuniQuery : IRequest<List<OptiuneModel>>
+    public class OptionsQuery : IRequest<List<OptiuneModel>>
     {
 
     } 

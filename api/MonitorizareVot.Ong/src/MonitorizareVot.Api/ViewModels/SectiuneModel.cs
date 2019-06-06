@@ -14,7 +14,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
         public List<IntrebareModel<RaspunsDisponibilModel>> Intrebari { get; set; }
     }
 
-    public class IntrebariQuery : IRequest<VersiuneFormularCompletModel>
+    public class IntrebariQuery : IRequest<FormVersionCompleteModel>
     {
         public string CodFormular { get; set; }
     }

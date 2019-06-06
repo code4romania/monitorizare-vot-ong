@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace MonitorizareVot.Ong.Api.ViewModels
 {
-    public class VersiuneFormularCompletModel : VersiuneFormularModel
+    public class FormVersionCompleteModel : FormVersionModel
     {
         public List<SectiuneModel> SectiuniFormular { get; set; }
 
-        public class CreateOrUpdateFormular : IRequest<VersiuneFormularCompletModel>
+        public class CreateOrUpdateFormRequest : IRequest<FormVersionCompleteModel>
         {
-            public VersiuneFormularCompletModel ToCreateOrUpdate { get; set; }
+            public FormVersionCompleteModel ToCreateOrUpdate { get; set; }
             public bool isCreatingNew { get; set; }
         }
     }

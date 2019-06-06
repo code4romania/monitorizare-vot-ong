@@ -31,12 +31,12 @@ namespace MonitorizareVot.Ong.Api.ViewModels
                 .ForMember(dest => dest.IdOptiune, c => c.MapFrom(src => src.Id))
                 .ForMember(dest => dest.IdIntrebare, c => c.MapFrom(src => src.IdOption));
 
-            CreateMap<FormVersion, VersiuneFormularCompletModel>()
+            CreateMap<FormVersion, FormVersionCompleteModel>()
                 .ForMember(dest => dest.SectiuniFormular, c => c.MapFrom(src => src.FormSections))
-                .ForMember(dest => dest.CodFormular, c => c.MapFrom(src => src.Code))
-                .ForMember(dest => dest.Descriere, c => c.MapFrom(src => src.Description))
-                .ForMember(dest => dest.StatusFormular, c => c.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Versiune, c => c.MapFrom(src => src.CurrentVersion));
+                .ForMember(dest => dest.FormCode, c => c.MapFrom(src => src.Code))
+                .ForMember(dest => dest.Description, c => c.MapFrom(src => src.Description))
+                .ForMember(dest => dest.FormStatus, c => c.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Version, c => c.MapFrom(src => src.CurrentVersion));
 
             CreateMap<FormSection, SectiuneModel>()
                 .ForMember(dest => dest.CodSectiune, c => c.MapFrom(src => src.Code))
@@ -44,11 +44,11 @@ namespace MonitorizareVot.Ong.Api.ViewModels
                 .ForMember(dest => dest.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Intrebari, c => c.MapFrom(src => src.Questions));
 
-            CreateMap<VersiuneFormularCompletModel, FormVersion>()
-                .ForMember(dest => dest.Code, c => c.MapFrom(src => src.CodFormular))
-                .ForMember(dest => dest.CurrentVersion, c => c.MapFrom(src => src.Versiune))
-                .ForMember(dest => dest.Status, c => c.MapFrom(src => src.StatusFormular))
-                .ForMember(dest => dest.Description, c => c.MapFrom(src => src.Descriere))
+            CreateMap<FormVersionCompleteModel, FormVersion>()
+                .ForMember(dest => dest.Code, c => c.MapFrom(src => src.FormCode))
+                .ForMember(dest => dest.CurrentVersion, c => c.MapFrom(src => src.Version))
+                .ForMember(dest => dest.Status, c => c.MapFrom(src => src.FormStatus))
+                .ForMember(dest => dest.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(dest => dest.FormSections, c => c.MapFrom(src => src.SectiuniFormular));
 
             CreateMap<SectiuneModel, FormSection>()

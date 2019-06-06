@@ -9,15 +9,15 @@ using MonitorizareVot.Domain.Ong.Models;
 
 namespace MonitorizareVot.Api.Queries
 {
-    public class OptiuniQueryHandler : IRequestHandler<OptiuniQuery, List<OptiuneModel>>
+    public class OptionsQueryHandler : IRequestHandler<OptionsQuery, List<OptiuneModel>>
     {
         private VoteMonitorContext _context;
 
-        public OptiuniQueryHandler(VoteMonitorContext context)
+        public OptionsQueryHandler(VoteMonitorContext context)
         {
             _context = context;
         }
-        public async Task<List<OptiuneModel>> Handle(OptiuniQuery request, CancellationToken cancellationToken)
+        public async Task<List<OptiuneModel>> Handle(OptionsQuery request, CancellationToken cancellationToken)
         {
             return _context.Options.Select(o => new OptiuneModel
             {
