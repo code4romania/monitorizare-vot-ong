@@ -27,6 +27,8 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 ## Repos and projects
 
+![MV Solutions](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/MV%20solutions.png)
+
 MV related repos:
 
 - Android - https://github.com/code4romania/monitorizare-vot-android
