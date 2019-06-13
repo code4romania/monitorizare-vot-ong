@@ -122,6 +122,7 @@ namespace MonitorizareVot.Ong.Api
 
             ConfigureContainer(services);
             ConfigureCache(services);
+            ConfigureFileLoader(services);
         }
 
         private void ConfigureJwt(IServiceCollection services)
@@ -219,28 +220,28 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            app.Use(async (context, next) =>
-            {
-                await next();
-                if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api") && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = "/index.html";
-                    await next();
-                }
-            });
+            // app.Use(async (context, next) =>
+            // {
+            //     await next();
+            //     if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api") && !Path.HasExtension(context.Request.Path.Value))
+            //     {
+            //         context.Request.Path = "/index.html";
+            //         await next();
+            //     }
+            // });
 
 
-            app.UseExceptionHandler(
-            builder =>
-            {
-                builder.Run(context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
-                    return Task.FromResult(0);
-                }
-                );
-            });
+            // app.UseExceptionHandler(
+            // builder =>
+            // {
+            //     builder.Run(context =>
+            //     {
+            //         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            //         context.Response.ContentType = "application/json";
+            //         return Task.FromResult(0);
+            //     }
+            //     );
+            // });
 
             app.UseAuthentication();
 
@@ -311,6 +312,12 @@ namespace MonitorizareVot.Ong.Api
                         break;
                     }
             }
+        }
+
+        private void ConfigureFileLoader(IServiceCollection services)
+        {
+            _container.RegisterSingleton<IFileLoader, XlsxFileLoader>();
+            return ;
         }
 
         private void ConfigureHash(IApplicationBuilder app)
