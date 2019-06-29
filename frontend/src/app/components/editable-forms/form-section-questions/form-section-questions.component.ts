@@ -4,6 +4,11 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/store.module';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
+import {
+  EditableFormsAddFormQuestionAction,
+  EditableFormsDeleteFormQuestionAction
+} from '../../../store/editable-forms/editable.forms.actions';
+import {EditableForm} from '../../../models/editable.form.model';
 
 @Component({
   selector: 'app-form-section-questions',
@@ -11,35 +16,72 @@ import {ActivatedRoute, Params} from '@angular/router';
   styleUrls: ['./form-section-questions.component.scss']
 })
 export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
+  private formSet: EditableForm;
   private section: EditableFormSection;
   private subs: Subscription[] = [];
   private editMode: boolean = false;
+
   constructor(private store: Store<AppState>,
-              private activeRoute: ActivatedRoute) { }
+              private activeRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.subs.push(
-      this.activeRoute.params
-        .switchMap((params: Params) => {
-            console.log('Params for questions got changed:', params);
-            return this.store.select(s => s.editableForms.forms)
-              .concatMap(forms => forms)
-              .filter(f => f.id === params.formSetId)
-              .flatMap(forms => forms.sections)
-              .filter(section => section.id === parseInt(params.formId));
-        })
-        .subscribe(selectedFormSection => {
-          console.log('We received a form: ', selectedFormSection);
-          this.section = selectedFormSection;
-        })
+      this.loadFormSet(),
+      this.loadFormSection(),
+      this.loadEditMode()
     );
-    this.subs.push(
-      this.activeRoute.queryParams.subscribe(
-        (params: Params) => this.editMode = params.edit === 'true')
-    )
   }
 
-  ngOnDestroy(){
+  private loadFormSet = () => {
+    return this.activeRoute.params
+      .switchMap((params: Params) => {
+        return this.store.select(s => s.editableForms.forms)
+          .concatMap(forms => forms)
+          .filter( f => f.id === params.formSetId)
+      })
+      .subscribe(selectedFormSet => {
+        this.formSet = selectedFormSet;
+      })
+  };
+
+  private loadFormSection = () => {
+    return this.activeRoute.params
+      .switchMap((params: Params) => {
+        console.log('Params for questions got changed:', params);
+        return this.store.select(s => s.editableForms.forms)
+          .concatMap(forms => forms)
+          .filter(f => f.id === params.formSetId)
+          .flatMap(forms => forms.sections)
+          .filter(section => section.id === parseInt(params.formId));
+      })
+      .subscribe(selectedFormSection => {
+        console.log('We received a form: ', selectedFormSection);
+        this.section = selectedFormSection;
+      })
+  };
+
+  private loadEditMode = () => {
+    return this.activeRoute.queryParams.subscribe(
+      (params: Params) => this.editMode = params.edit === 'true');
+  };
+
+  addQuestionHandler() {
+    this.store.dispatch(new EditableFormsAddFormQuestionAction({
+      formSet: this.formSet,
+      formId: this.section.id
+    }));
+  }
+
+  deleteQuestionHandler(questionId) {
+    this.store.dispatch(new EditableFormsDeleteFormQuestionAction({
+      formSet: this.formSet,
+      formId: this.section.id,
+      questionId: questionId
+    }));
+  }
+
+  ngOnDestroy() {
     this.subs.forEach(s => s.unsubscribe());
   }
 }

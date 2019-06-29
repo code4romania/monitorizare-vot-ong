@@ -1,3 +1,19 @@
+<div *ngIf="selectedFormSet">
+  <div>
+    <h3>Form section details</h3>
+    <button class="btn btn-success" routerLink="/forms">Back</button>
+  </div>
+  <dl class="dl-horizontal">
+    <dt>Id</dt>
+    <dd>{{selectedFormSet.id}}</dd>
+    <dt>Version</dt>
+    <dd>{{selectedFormSet.version}}</dd>
+    <dt>Description</dt>
+    <dd>{{selectedFormSet.description}}</dd>
+    <dt>Published</dt>
+    <dd>{{selectedFormSet.published}}</dd>
+  </dl>
+</div>
 <div *ngIf="selectedFormSet" class="form-sections-container">
   <div class="form-section-card-container" *ngFor="let section of selectedFormSet.sections">
     <div class="published form-section-card">

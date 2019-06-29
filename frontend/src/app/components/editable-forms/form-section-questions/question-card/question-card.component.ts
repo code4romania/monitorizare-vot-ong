@@ -1,9 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EditableFormQuestion} from '../../../../models/editable.form.question.model';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../store/store.module';
 import {EditableFormSection} from '../../../../models/editable.form.section.model';
-import {EditableFormsDeleteFormQuestionAction} from '../../../../store/editable-forms/editable.forms.actions';
 
 @Component({
   selector: 'app-question-card',
@@ -14,16 +11,14 @@ export class QuestionCardComponent implements OnInit {
   @Input() private section: EditableFormSection;
   @Input() private question: EditableFormQuestion;
   @Input() private editMode: boolean = false;
-  constructor(private store: Store<AppState>) { }
+  @Output() deleteQuestion = new EventEmitter<number>();
+  constructor() { }
 
   ngOnInit() {
   }
 
-  deleteQuestion(){
-    this.store.dispatch(new EditableFormsDeleteFormQuestionAction({
-      sectionId: this.section.code,
-      questionId: this.question.id
-    }));
+  deleteQuestionHandler(){
+    this.deleteQuestion.emit(this.question.id);
   }
 
 }

@@ -3,12 +3,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/store.module';
 import {Subscription} from 'rxjs';
-import {EditableFormsUpdateFormSetAction,} from '../../../store/editable-forms/editable.forms.actions';
+import {EditableFormsAddFormToSetAction, EditableFormsDeleteFormAction,} from '../../../store/editable-forms/editable.forms.actions';
 import {EditableForm} from '../../../models/editable.form.model';
-import {EditableFormSection} from '../../../models/editable.form.section.model';
-import {nextNumericId} from '../../../shared/id.service';
-
-const DEFAULT_FORM_SET_DESCRIPTION = "This is newly generated";
 
 @Component({
   selector: 'app-editable-form-sections',
@@ -40,22 +36,13 @@ export class EditableFormSectionsComponent implements OnInit, OnDestroy {
   }
 
   addNewForm() {
-    const existingIds = this.selectedFormSet.sections.map(section => section.id);
-    const updatedFormSet = {
-      ...this.selectedFormSet,
-      sections: [
-        new EditableFormSection(nextNumericId(existingIds), this.selectedFormSet.id, DEFAULT_FORM_SET_DESCRIPTION, []),
-        ...this.selectedFormSet.sections
-      ]
-    };
-    this.store.dispatch(new EditableFormsUpdateFormSetAction(updatedFormSet));
+    this.store.dispatch(new EditableFormsAddFormToSetAction(this.selectedFormSet));
   }
 
   deleteFormSection(formSectionId: number) {
-    const updatedFormSet = {
-      ...this.selectedFormSet,
-      sections: this.selectedFormSet.sections.filter(section => section.id !== formSectionId)
-    };
-    this.store.dispatch(new EditableFormsUpdateFormSetAction(updatedFormSet));
+    this.store.dispatch(new EditableFormsDeleteFormAction({
+      formSet: this.selectedFormSet,
+      formId: formSectionId
+    }));
   }
 }

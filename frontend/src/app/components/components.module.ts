@@ -45,8 +45,7 @@ export let components = [
     FormSectionCardComponent,
     FormSectionQuestionsComponent,
     QuestionCardComponent,
-    QuestionMenuComponent,
-
+    QuestionMenuComponent
 
 ];
 

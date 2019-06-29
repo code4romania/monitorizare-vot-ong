@@ -1,21 +1,39 @@
-<div *ngIf="section" class="page">
+<div *ngIf="section">
+  <div>
+    <h3>Form section details</h3>
+    <button class="btn btn-primary" routerLink="../.." >Back</button>
+  </div>
+  <dl class="dl-horizontal">
+    <dt>Id</dt>
+    <dd>{{section.id}}</dd>
+    <dt>Code</dt>
+    <dd>{{section.code}}</dd>
+    <dt>Description</dt>
+    <dd>{{section.description}}</dd>
+  </dl>
+</div>
+
+<div *ngIf="section && section.questions.length > 0" class="page">
   <div class="card-container">
     <app-question-card
       class="question-card"
       [editMode]="editMode"
       [question]="question"
       [section]="section"
+      (deleteQuestion)="deleteQuestionHandler($event)"
       *ngFor="let question of section.questions">
     </app-question-card>
   </div>
   <app-question-menu
     *ngIf="editMode === true"
+    (addQuestion)="addQuestionHandler()"
     class="question-menu-container">
   </app-question-menu>
 </div>
-<div *ngIf="!section" class="page">
+<div *ngIf="!section || section.questions.length === 0" class="page">
   <app-question-menu
     *ngIf="editMode === true"
+    (addQuestion)="addQuestionHandler()"
     class="question-menu-container">
   </app-question-menu>
 </div>
