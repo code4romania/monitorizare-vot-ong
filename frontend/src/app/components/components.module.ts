@@ -14,6 +14,9 @@ import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
 import {EditableFormsComponent} from './editable-forms/editable-forms.component';
+import {EditableFormSectionsComponent} from './editable-forms/editable-form-sections/editable-form-sections.component';
+import {FormSectionMenuComponent} from './editable-forms/editable-form-sections/form-section-menu/form-section-menu.component';
+import {FormSectionCardComponent} from './editable-forms/editable-form-sections/form-section-card/form-section-card.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -33,7 +36,10 @@ export let components = [
     StatisticsValueComponent,
 
     LoginComponent,
-    EditableFormsComponent
+    EditableFormsComponent,
+    EditableFormSectionsComponent,
+    FormSectionMenuComponent,
+    FormSectionCardComponent
 
 
 ];

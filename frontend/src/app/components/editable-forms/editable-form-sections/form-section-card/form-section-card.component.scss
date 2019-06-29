@@ -1,0 +1,13 @@
+@import "~variables.scss";
+
+.card-container{
+
+}
+.card{
+  min-height: 80px;
+  text-align: center;
+}
+.new{
+  color: $color-white;
+  background-color: $color-success;
+}

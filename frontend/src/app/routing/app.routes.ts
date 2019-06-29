@@ -12,6 +12,8 @@ import {AnswerComponent} from '../components/answer/answer.component';
 import {Routes} from '@angular/router';
 import {EditableFormsComponent} from '../components/editable-forms/editable-forms.component';
 import {EditableFormsGuard} from './guards/editable-forms.guard';
+import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
+import {EditableFormSectionsComponent} from '../components/editable-forms/editable-form-sections/editable-form-sections.component';
 
 export let appRoutes: Routes = [
     {
@@ -66,5 +68,9 @@ export let appRoutes: Routes = [
         path: 'forms',
         canActivate: [AuthGuard, EditableFormsGuard],
         component: EditableFormsComponent
+    }, {
+        path: 'forms/:id',
+        canActivate: [AuthGuard, EditableFormSectionsGuard],
+        component: EditableFormSectionsComponent
     }
 ];

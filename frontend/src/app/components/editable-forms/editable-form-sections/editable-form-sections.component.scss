@@ -1,0 +1,46 @@
+@import '~variables.scss';
+.published{
+  background: $color-primary;
+}
+.draft{
+  background: $color-info;
+}
+.new{
+  background: $color-success;
+  color: $color-white;
+}
+.clickable {
+  text-align: center;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+}
+.form-sections-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 20px;
+}
+.form-section-card-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 120px 30px;
+  grid-gap: 10px;
+}
+.form-section-card{
+  @extend .clickable;
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.form-section-menu{
+  @extend .clickable;
+  text-align: center;
+  color: $color-white;
+  background-color: $color-success;
+}
