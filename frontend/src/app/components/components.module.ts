@@ -20,6 +20,7 @@ import {FormSectionCardComponent} from './editable-forms/editable-form-sections/
 import {QuestionCardComponent} from './editable-forms/form-section-questions/question-card/question-card.component';
 import {FormSectionQuestionsComponent} from './editable-forms/form-section-questions/form-section-questions.component';
 import {QuestionMenuComponent} from './editable-forms/form-section-questions/question-menu/question-menu.component';
+import {InlineEditInputComponent} from './shared/inline-edit-input/inline-edit-input.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -45,7 +46,9 @@ export let components = [
     FormSectionCardComponent,
     FormSectionQuestionsComponent,
     QuestionCardComponent,
-    QuestionMenuComponent
+    QuestionMenuComponent,
+
+    InlineEditInputComponent
 
 ];
 

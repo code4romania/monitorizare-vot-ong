@@ -1,0 +1,7 @@
+@import '~variables.scss';
+div{
+  width: 100%;
+  p{
+    border-bottom: 2px dashed $color-secondary;
+  }
+}

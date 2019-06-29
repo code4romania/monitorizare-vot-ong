@@ -1,7 +1,7 @@
 <div *ngIf="section">
   <div>
     <h3>Form section details</h3>
-    <button class="btn btn-primary" routerLink="../.." >Back</button>
+    <button class="btn btn-success" routerLink="../.." >Back</button>
   </div>
   <dl class="dl-horizontal">
     <dt>Id</dt>
@@ -20,20 +20,21 @@
       [editMode]="editMode"
       [question]="question"
       [section]="section"
-      (deleteQuestion)="deleteQuestionHandler($event)"
+      (deleteQuestion)="onDeleteQuestion($event)"
+      (updateQuestion)="onUpdateQuestion($event)"
       *ngFor="let question of section.questions">
     </app-question-card>
   </div>
   <app-question-menu
     *ngIf="editMode === true"
-    (addQuestion)="addQuestionHandler()"
+    (addQuestion)="onAddQuestion()"
     class="question-menu-container">
   </app-question-menu>
 </div>
 <div *ngIf="!section || section.questions.length === 0" class="page">
   <app-question-menu
     *ngIf="editMode === true"
-    (addQuestion)="addQuestionHandler()"
+    (addQuestion)="onAddQuestion()"
     class="question-menu-container">
   </app-question-menu>
 </div>

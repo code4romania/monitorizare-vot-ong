@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
 import {
   EditableFormsAddFormQuestionAction,
-  EditableFormsDeleteFormQuestionAction
+  EditableFormsDeleteFormQuestionAction, EditableFormsUpdateFormQuestionAction
 } from '../../../store/editable-forms/editable.forms.actions';
 import {EditableForm} from '../../../models/editable.form.model';
 
@@ -66,19 +66,27 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
       (params: Params) => this.editMode = params.edit === 'true');
   };
 
-  addQuestionHandler() {
+  onAddQuestion() {
     this.store.dispatch(new EditableFormsAddFormQuestionAction({
       formSet: this.formSet,
       formId: this.section.id
     }));
   }
 
-  deleteQuestionHandler(questionId) {
+  onDeleteQuestion(questionId) {
     this.store.dispatch(new EditableFormsDeleteFormQuestionAction({
       formSet: this.formSet,
       formId: this.section.id,
       questionId: questionId
     }));
+  }
+
+  onUpdateQuestion(question) {
+    this.store.dispatch(new EditableFormsUpdateFormQuestionAction({
+      formSet: this.formSet,
+      formId: this.section.id,
+      question: question
+    }))
   }
 
   ngOnDestroy() {

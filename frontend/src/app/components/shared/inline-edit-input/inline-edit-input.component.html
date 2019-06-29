@@ -1,0 +1,4 @@
+<div>
+  <input class="form-control" *ngIf="_editMode" #inlineEditControl [(ngModel)]="value" (blur)="onBlur()" />
+  <p [className]="viewClassNames" *ngIf="!_editMode" (focus)="startEditing()" tabindex="0" (click)="startEditing()">{{value}}</p>
+</div>

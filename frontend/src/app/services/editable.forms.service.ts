@@ -108,6 +108,26 @@ export class EditableFormsService {
     return this.http.put(API.forms(), this.mapFormSetToFormular(nextFormSet));
   };
 
+  updateQuestionInForm = (formSet: EditableForm, formId: number, question: EditableFormQuestion) => {
+    const updatedFormIndex = formSet.sections.findIndex(s => s.id === formId);
+    const existingForm = formSet.sections[updatedFormIndex];
+    const updatedQuestionIndex = existingForm.questions.findIndex(q => q.id === question.id);
+    const nextForm = new EditableFormSection(
+      existingForm.id,
+      existingForm.code,
+      existingForm.description,
+      replaceAt(existingForm.questions, updatedQuestionIndex, question)
+    );
+    const nextFormSet = new EditableForm(
+      formSet.id,
+      replaceAt(formSet.sections, updatedFormIndex, nextForm),
+      formSet.description,
+      formSet.version,
+      formSet.published
+    );
+    return this.http.put(API.forms(), this.mapFormSetToFormular(nextFormSet));
+  };
+
   deserialize = (clientInput) => {
     return this.mapFormularToForm(clientInput);
   };

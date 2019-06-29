@@ -68,4 +68,12 @@ export class EditableFormsEffects {
     .concatMap(res => res)
     .map(res => this.service.deserialize(res.json()))
     .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
+
+  @Effect()
+  updateQuestionInForm = this.actions
+    .ofType(EditableFormsActionTypes.UPDATE_QUESTION_IN_FORM)
+    .map(action => this.service.updateQuestionInForm(action.payload.formSet, action.payload.formId, action.payload.question))
+    .concatMap(res => res)
+    .map(res => this.service.deserialize(res.json()))
+    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
 }

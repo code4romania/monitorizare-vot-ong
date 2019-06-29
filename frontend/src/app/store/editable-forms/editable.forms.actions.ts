@@ -1,6 +1,7 @@
 import {actionType} from '../util';
 import {Action} from '@ngrx/store';
 import {EditableForm} from '../../models/editable.form.model';
+import {EditableFormQuestion} from '../../models/editable.form.question.model';
 
 export class EditableFormsActionTypes{
   static readonly LOAD_ALL = actionType('[Editable Forms] LOAD ALL');
@@ -13,7 +14,7 @@ export class EditableFormsActionTypes{
   static readonly DELETE_FORM_FROM_SET = actionType('[Editable Forms] DELETE FORM FROM SET');
   static readonly ADD_QUESTION_TO_FORM = actionType('[Editable Forms] ADD QUESTION TO FORM');
   static readonly DELETE_QUESTION_FROM_FORM = actionType('[Editable Forms] DELETE QUESTION FROM FORM');
-  //
+  static readonly UPDATE_QUESTION_IN_FORM = actionType('[Editable Forms] UPDATE QUESTION IN FORM');
   static readonly UPDATE_FORM_SET = actionType('[Editable Forms] UPDATE FORM SET');
   static readonly UPDATE_FORM_SET_COMPLETE = actionType('[Editable Forms] UPDATE FORM SET COMPLETE');
 }
@@ -55,6 +56,10 @@ export class EditableFormsDeleteFormQuestionAction implements Action{
   readonly type = EditableFormsActionTypes.DELETE_QUESTION_FROM_FORM;
   constructor(public payload: {formSet: EditableForm, formId: number, questionId: number}) {}
 }
+export class EditableFormsUpdateFormQuestionAction implements Action{
+  readonly type = EditableFormsActionTypes.UPDATE_QUESTION_IN_FORM;
+  constructor(public payload: {formSet: EditableForm, formId: number, question: EditableFormQuestion}) {}
+}
 export class EditableFormsUpdateFormSetAction implements Action{
   readonly type = EditableFormsActionTypes.UPDATE_FORM_SET;
   constructor(public payload: EditableForm) {}
@@ -74,4 +79,5 @@ export type EditableFormsActions = EditableFormsLoadAllAction
   | EditableFormsDeleteFormQuestionAction
   | EditableFormsCreateCompleteAction
   | EditableFormsUpdateFormSetAction
-  | EditableFormsUpdateFormSetCompleteAction;
+  | EditableFormsUpdateFormSetCompleteAction
+  | EditableFormsUpdateFormQuestionAction;
