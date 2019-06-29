@@ -14,21 +14,31 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {editableFormsReducer, EditableFormsState} from './editable-forms/editable.forms.reducer';
+import {EditableFormsEffects} from './editable-forms/editable.forms.effects';
 
 export class AppState {
-    form: FormState
-    answer: AnswerState
-    statistics: StatisticsState
-    note: NoteState
+    form: FormState;
+    answer: AnswerState;
+    statistics: StatisticsState;
+    note: NoteState;
+    editableForms: EditableFormsState;
 }
 
 let moduleImports = [
-    StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
+    StoreModule.provideStore({
+      form: formReducer,
+      answer: answerReducer,
+      statistics: statisticsReducer,
+      note: noteReducer,
+      editableForms: editableFormsReducer
+    }),
     EffectsModule.run(FormEffects),
     EffectsModule.run(AnswerEffects),
     EffectsModule.run(StatisticsEffects),
-    EffectsModule.run(NoteEffects)
-]
+    EffectsModule.run(NoteEffects),
+    EffectsModule.run(EditableFormsEffects)
+];
 if (!environment.production) {
     moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
 }
