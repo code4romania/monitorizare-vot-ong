@@ -17,6 +17,9 @@ import {EditableFormsComponent} from './editable-forms/editable-forms.component'
 import {EditableFormSectionsComponent} from './editable-forms/editable-form-sections/editable-form-sections.component';
 import {FormSectionMenuComponent} from './editable-forms/editable-form-sections/form-section-menu/form-section-menu.component';
 import {FormSectionCardComponent} from './editable-forms/editable-form-sections/form-section-card/form-section-card.component';
+import {QuestionCardComponent} from './editable-forms/form-section-questions/question-card/question-card.component';
+import {FormSectionQuestionsComponent} from './editable-forms/form-section-questions/form-section-questions.component';
+import {QuestionMenuComponent} from './editable-forms/form-section-questions/question-menu/question-menu.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -39,7 +42,10 @@ export let components = [
     EditableFormsComponent,
     EditableFormSectionsComponent,
     FormSectionMenuComponent,
-    FormSectionCardComponent
+    FormSectionCardComponent,
+    FormSectionQuestionsComponent,
+    QuestionCardComponent,
+    QuestionMenuComponent,
 
 
 ];

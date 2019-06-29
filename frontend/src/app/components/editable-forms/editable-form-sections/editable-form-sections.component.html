@@ -4,10 +4,10 @@
       <h3>{{ 'FORM' | translate }} - {{selectedFormSet.id}}</h3>
       <p> {{section.id}} - {{section.description}}</p>
     </div>
-    <div class="form-section-menu">
+    <div class="form-section-menu" [routerLink]="[section.id, 'questions']">
       <h6>View</h6>
     </div>
-    <div class="form-section-menu">
+    <div class="form-section-menu" [routerLink]="[section.id, 'questions']" [queryParams]="{edit: true}">
       <h6>Edit</h6>
     </div>
     <div class="form-section-menu" (click)="deleteFormSection(section.id)">

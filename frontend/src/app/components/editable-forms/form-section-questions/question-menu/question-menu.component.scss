@@ -1,0 +1,36 @@
+@import "~variables.scss";
+.clickable {
+  text-align: center;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  cursor: pointer;
+}
+.menu-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 10px;
+}
+.menu-item{
+  @extend .clickable;
+  min-width: 100px;
+  text-align: center;
+  color: $color-white;
+  background-color: $color-success;
+  h6{
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .menu-container{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .menu-container{
+    grid-template-columns: 1fr;
+  }
+}
