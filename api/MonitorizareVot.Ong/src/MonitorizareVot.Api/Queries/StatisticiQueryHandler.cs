@@ -51,7 +51,7 @@ namespace MonitorizareVot.Ong.Api.Queries
                 {
                     var records = await _context.StatisticiOptiuni
                         .FromSql(queryBuilder.Query)
-                        .ToListAsync();
+                        .ToListAsync(cancellationToken: token);
 
                     return new OptiuniModel
                     {

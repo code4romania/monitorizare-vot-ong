@@ -42,6 +42,9 @@ export class AnswerEffects {
                 body: {
                     page: action.payload.page,
                     pageSize: action.payload.pageSize,
+                    observerId: action.payload.answerFilters.observerId,
+                    county: action.payload.answerFilters.county,
+                    pollingStationNumber: action.payload.answerFilters.pollingStationNumber,
                     urgent: action.payload.urgent
                 }
             })

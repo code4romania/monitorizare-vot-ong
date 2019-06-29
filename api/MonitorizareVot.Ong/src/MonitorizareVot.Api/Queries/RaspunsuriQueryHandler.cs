@@ -28,25 +28,39 @@ namespace MonitorizareVot.Ong.Api.Queries
 
         public async Task<ApiListResponse<RaspunsModel>> Handle(RaspunsuriQuery message, CancellationToken cancellationToken)
         {
-            string queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, R.IdObserver AS IdObservator, O.Name AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS DataUltimeiModificari
-                FROM Answers R
-                INNER JOIN Observers O ON O.Id = R.IdObserver
-                INNER JOIN OptionsToQuestions RD ON RD.Id = R.IdOptionToQuestion
-                WHERE RD.Flagged = {Convert.ToInt32(message.Urgent)}";
+            var queryUnPaged = $@"SELECT IdPollingStation AS IdSectie, A.IdObserver AS IdObservator, O.Name AS Observator, CONCAT(CountyCode, ' ', PollingStationNumber) AS Sectie, MAX(LastModified) AS DataUltimeiModificari
+                FROM Answers A
+                INNER JOIN Observers O ON O.Id = A.IdObserver
+                INNER JOIN OptionsToQuestions OQ ON OQ.Id = A.IdOptionToQuestion
+                WHERE OQ.Flagged = {Convert.ToInt32(message.Urgent)}";
 
-            if(!message.Organizator) queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
+            // Filter by the organizer flag if specified
+            if (!message.Organizator)
+                queryUnPaged = $"{queryUnPaged} AND O.IdNgo = {message.IdONG}";
 
-            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, R.IdObserver, O.Name, CountyCode";
+            // Filter by county if specified
+            if (!string.IsNullOrEmpty(message.County))
+                queryUnPaged = $"{queryUnPaged} AND A.CountyCode = '{message.County}'";
 
-            var queryPaged = $@"{queryUnPaged},LastModified ORDER BY LastModified DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
+            // Filter by polling station if specified
+            if (message.PollingStationNumber > 0)
+                queryUnPaged = $"{queryUnPaged} AND A.PollingStationNumber = {message.PollingStationNumber}";
+
+            // Filter by polling station if specified
+            if (message.ObserverId > 0)
+                queryUnPaged = $"{queryUnPaged} AND A.IdObserver = {message.ObserverId}";
+
+            queryUnPaged = $"{queryUnPaged} GROUP BY IdPollingStation, CountyCode, PollingStationNumber, A.IdObserver, O.Name, CountyCode";
+
+            var queryPaged = $@"{queryUnPaged} ORDER BY MAX(LastModified) DESC OFFSET {(message.Page - 1) * message.PageSize} ROWS FETCH NEXT {message.PageSize} ROWS ONLY";
 
             var sectiiCuObservatoriPaginat = await _context.RaspunsSectie
                 .FromSql(queryPaged)
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
 
             var count = await _context.RaspunsSectie
                 .FromSql(queryUnPaged)
-                .CountAsync();
+                .CountAsync(cancellationToken: cancellationToken);
 
             return new ApiListResponse<RaspunsModel>
             {

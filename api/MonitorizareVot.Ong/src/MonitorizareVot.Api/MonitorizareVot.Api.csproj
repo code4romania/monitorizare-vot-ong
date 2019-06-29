@@ -10,9 +10,11 @@
     <UserSecretsId>TBR</UserSecretsId>
     <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
     <AssetTargetFallback>$(AssetTargetFallback);</AssetTargetFallback>
-    <ApplicationInsightsResourceId>/subscriptions/8ad78fbb-bdc8-408b-ac97-bab673b57011/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MonitorizareVot.Api</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/8ad78fbb-bdc8-408b-ac97-bab673b57011/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/MonitorizareVot.Api</ApplicationInsightsAnnotationResourceId>
-    <StartupObject></StartupObject>
+    <ProjectGuid>{18837128-04C4-4671-9DB8-F79342959FB8}</ProjectGuid>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +30,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.4.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.7.2" />
     <PackageReference Include="Microsoft.ApplicationInsights.Injector" Version="2.6.7" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.2" />

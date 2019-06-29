@@ -23,9 +23,11 @@ This project is built by amazing volunteers and you can be one of them! Here's a
  Backend app: .Net Core 2.1
  Frontend app: Angular 2
  
- Swagger docs for the API are available [here](https://mvonguat.azurewebsites.net/swagger/ui/index.html).
+ Swagger docs for the API are available [here](https://mv-dashboard-dev.azurewebsites.net/swagger/index.html).
 
 ## Repos and projects
+
+![MV Solutions](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/MV%20solutions.png)
 
 MV related repos:
 
@@ -77,7 +79,7 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 #### Build instructions (Cristi) 
 
 Run 
-- `npm install angular-cli -g`
+- `npm install -g @angular/cli@latest`
 - `npm install`
 - `ng run build --prod`
 - enjoy

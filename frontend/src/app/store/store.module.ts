@@ -55,8 +55,7 @@ export class AppStoreModule {
                     store.dispatch(new FormClearAll());
                 }
                 if (!clearForms) {
-                    //store.dispatch(new FormLoadAction(['A', 'B', 'C']));
-                    store.dispatch(new FormLoadAction(['A', 'B', 'C1', 'C2', 'Cg', 'Cp', 'Cs', 'Cw', 'D']));
+                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
                 }
             })
         });
