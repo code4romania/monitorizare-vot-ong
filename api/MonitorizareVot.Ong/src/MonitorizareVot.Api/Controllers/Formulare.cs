@@ -44,10 +44,25 @@ namespace MonitorizareVot.Ong.Api.Controllers
             return await _mediator.Send(new FormVersionsQuery());
         }
 
+        /// <summary>
+        /// Returneaza toate optiunile disponibile pentru formulare
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("options")]
         public async Task<List<OptiuneModel>> GetOptiuni()
         {
             return await _mediator.Send(new OptionsQuery());
+        }
+
+        [HttpPost("options")]
+        public async Task<IActionResult> CreateOption([FromBody] OptiuneModel model)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _mediator.Send(new OptiuneModelRequest(model));
+
+            return new OkObjectResult(result);
         }
 
         /// <summary>
