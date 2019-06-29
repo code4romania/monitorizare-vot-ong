@@ -1,0 +1,63 @@
+{
+  "sectiuniFormular": [
+    {
+      "id": 2,
+      "codSectiune": "C",
+      "descriere": "Descriere masini",
+      "intrebari": [
+        {
+          "idIntrebare": 1303,
+          "textIntrebare": "A: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
+          "idTipIntrebare": 2,
+          "codIntrebare": null,
+          "codFormular": "A",
+          "raspunsuri": []
+        },
+        {
+          "idIntrebare": 1304,
+          "textIntrebare": "A: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
+          "idTipIntrebare": 3,
+          "codIntrebare": null,
+          "codFormular": "A",
+          "raspunsuri": []
+        },
+        {
+          "idIntrebare": 1323,
+          "textIntrebare": "B: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
+          "idTipIntrebare": 2,
+          "codIntrebare": null,
+          "codFormular": "B",
+          "raspunsuri": []
+        },
+        {
+          "idIntrebare": 1324,
+          "textIntrebare": "B: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
+          "idTipIntrebare": 3,
+          "codIntrebare": null,
+          "codFormular": "B",
+          "raspunsuri": []
+        },
+        {
+          "idIntrebare": 1343,
+          "textIntrebare": "C: Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)",
+          "idTipIntrebare": 2,
+          "codIntrebare": null,
+          "codFormular": "C",
+          "raspunsuri": []
+        },
+        {
+          "idIntrebare": 1344,
+          "textIntrebare": "C: Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni + text pe O singura optiune)",
+          "idTipIntrebare": 3,
+          "codIntrebare": null,
+          "codFormular": "C",
+          "raspunsuri": []
+        }
+      ]
+    }
+  ],
+  "codFormular": "C",
+  "statusFormular": "DRAFT",
+  "versiune": 1,
+  "descriere": "Beri"
+}

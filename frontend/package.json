@@ -4,12 +4,14 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve --proxy proxy.conf.json",
+    "start": "concurrently \"npm run mock-server\" \"ng serve --proxy proxy.conf.json\"",
+    "local-api": "concurrently \"npm run mock-server\" \"ng serve --proxy local.api.proxy.conf.json\"",
     "build": "ng build --prod --sourcemap false",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "mock-server": "nodemon src\\mock-server\\server.js"
   },
   "private": true,
   "dependencies": {
@@ -34,7 +36,7 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "frow": "^1.4.6",
+    "frow": "^3.1.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.4",
     "ng2-bootstrap": "^1.1.16",
@@ -47,7 +49,9 @@
     "@angular/cli": "^1.1.2",
     "@types/jasmine": "^2.2.30",
     "@types/node": "^6.0.42",
+    "body-parser": "^1.19.0",
     "codelyzer": "1.0.0-beta.1",
+    "concurrently": "^4.1.0",
     "jasmine-core": "^2.4.1",
     "jasmine-spec-reporter": "^2.5.0",
     "karma": "1.2.0",
@@ -55,6 +59,7 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "nodemon": "^1.19.0",
     "protractor": "4.0.9",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
