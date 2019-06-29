@@ -6,7 +6,9 @@ import {EditableFormQuestion} from '../models/editable.form.question.model';
 import {EditableFormQuestionOption} from '../models/editable.form.question.option.model';
 import {nextNumericId} from '../shared/id.service';
 import {replaceAt} from '../shared/functions';
+import {QuestionType} from '../models/editable.form.question.type';
 
+const DEFAULT_QUESTION_TYPE = QuestionType.SINGLE_CHOICE.id;
 const DEFAULT_FORM_SET_DESCRIPTION = 'This is newly generated';
 const DEFAULT_QUESTION_TEXT = 'This is newly generated description';
 
@@ -67,7 +69,7 @@ export class EditableFormsService {
       formId,
       existingForm.id,
       DEFAULT_QUESTION_TEXT,
-      1,
+      DEFAULT_QUESTION_TYPE,
       []
     );
     const nextForm = new EditableFormSection(

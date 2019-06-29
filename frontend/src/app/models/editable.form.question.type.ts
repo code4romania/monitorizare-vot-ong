@@ -8,5 +8,5 @@ export class QuestionType{
     return [QuestionType.SINGLE_CHOICE, QuestionType.MULTIPLE_CHOICE, QuestionType.SINGLE_CHOICE_TEXT, QuestionType.MULTIPLE_CHOICE_TEXT];
   }
 
-  constructor(id: number, text: string){};
+  constructor(public id: number, public text: string){};
 }
