@@ -27,10 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using MonitorizareVot.Api.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -220,28 +218,28 @@ namespace MonitorizareVot.Ong.Api
 
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-            // app.Use(async (context, next) =>
-            // {
-            //     await next();
-            //     if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api") && !Path.HasExtension(context.Request.Path.Value))
-            //     {
-            //         context.Request.Path = "/index.html";
-            //         await next();
-            //     }
-            // });
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404 && !context.Request.Path.Value.StartsWith("/api") && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
 
 
-            // app.UseExceptionHandler(
-            // builder =>
-            // {
-            //     builder.Run(context =>
-            //     {
-            //         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            //         context.Response.ContentType = "application/json";
-            //         return Task.FromResult(0);
-            //     }
-            //     );
-            // });
+            app.UseExceptionHandler(
+            builder =>
+            {
+                builder.Run(context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+                    return Task.FromResult(0);
+                }
+                );
+            });
 
             app.UseAuthentication();
 
