@@ -25,10 +25,20 @@ namespace MonitorizareVot.Ong.Api.Queries
         }
         public Task<List<PollingStationView>> Handle(PollingStationPaginatedQuery request, CancellationToken cancellationToken)
         {
-            var pollingStations = _context.PollingStations
-                        .Select(p => _mapper.Map<PollingStationView>(p))
-                        .ToList();
-            return Task.FromResult(pollingStations.Paginate(request.PageNumber, request.PageSize));
+            var pollingStationsList = _context.PollingStations
+                        .ToList()
+                        .Paginate(request.PageNumber, request.PageSize);
+
+            return Task.FromResult(pollingStationsList
+                            .Select(p => {
+                                var view = _mapper.Map<PollingStationView>(p);
+                                view.CountyCode = _context.Counties
+                                    .Where(c => c.Id == p.IdCounty)
+                                    .FirstOrDefault()
+                                    .Code;
+                                return view;
+                            })
+                            .ToList());
         }
     }
 }

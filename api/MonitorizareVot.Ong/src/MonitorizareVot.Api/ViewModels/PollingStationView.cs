@@ -26,6 +26,7 @@ namespace MonitorizareVot.Ong.Api.ViewModels
                 .ForMember(dest => dest.PollingStationNumber, c => c.MapFrom(src => src.Number));
 
             CreateMap<PollingStationView, PollingStation>()
+                .ForMember(dest => dest.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Address, c => c.MapFrom(src => src.Address))
                 .ForMember(dest => dest.AdministrativeTerritoryCode, c => c.MapFrom(src => src.AdministrativeTerritoryCode))
                 .ForMember(dest => dest.Number, c => c.MapFrom(src => src.PollingStationNumber));

@@ -27,12 +27,17 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var pollingStation = _context.PollingStations
                     .Where(p => p.Id == request.PollingStationId)
-                    .FirstOrDefault(null);
+                    .FirstOrDefault();
 
             if(pollingStation == null)
                 throw new ResourceNotFoundException();
 
-            return _mapper.Map<PollingStationView>(pollingStation);
+            var pollingStationView = _mapper.Map<PollingStationView>(pollingStation);
+            pollingStationView.CountyCode = _context.Counties
+                    .Where(c => c.Id == pollingStation.IdCounty)
+                    .FirstOrDefault()
+                    .Code;
+            return pollingStationView;
         }
     }
 }

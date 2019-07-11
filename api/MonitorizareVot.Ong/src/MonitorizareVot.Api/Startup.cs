@@ -31,6 +31,8 @@ using System.Reflection;
 using System.Text;
 using MonitorizareVot.Api.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace MonitorizareVot.Ong.Api
 {

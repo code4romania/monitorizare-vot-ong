@@ -31,12 +31,12 @@ namespace MonitorizareVot.Api.Queries
             var maxId = _context.PollingStations.Max(p => p.Id);
             County pollingStationCounty = _context.Counties
                             .Where(c => c.Code == request.PollingStationView.CountyCode)
-                            .FirstOrDefault(null);
+                            .FirstOrDefault();
 
             if(pollingStationCounty == null)
                 throw new ResourceNotFoundException();
 
-            pollingStation.Id = maxId++;
+            pollingStation.Id = ++maxId;
             pollingStation.County = pollingStationCounty;
             pollingStation.IdCounty = pollingStationCounty.Id;
             pollingStation.TerritoryCode = random.Next(10000).ToString();

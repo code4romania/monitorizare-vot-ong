@@ -26,7 +26,7 @@ namespace MonitorizareVot.Ong.Api.Queries
         {
             var pollingStation = _context.PollingStations
                     .Where(p => p.Id == request.PollingStationView.Id)
-                    .FirstOrDefault(null);
+                    .FirstOrDefault();
 
             if(pollingStation == null)
                 throw new ResourceNotFoundException();
@@ -34,17 +34,16 @@ namespace MonitorizareVot.Ong.Api.Queries
             var updatedPollingStation = _mapper.Map<PollingStation>(request.PollingStationView);
             County pollingStationCounty = _context.Counties
                             .Where(c => c.Code == request.PollingStationView.CountyCode)
-                            .FirstOrDefault(null);
+                            .FirstOrDefault();
 
             if(pollingStationCounty == null)
                 throw new ResourceNotFoundException();
 
-            updatedPollingStation.Id = pollingStation.Id;
-            updatedPollingStation.County = pollingStationCounty;
-            updatedPollingStation.IdCounty = pollingStationCounty.Id;
-            updatedPollingStation.TerritoryCode = pollingStation.TerritoryCode;
+            pollingStation.IdCounty = pollingStationCounty.Id;
+            pollingStation.Number = updatedPollingStation.Number;
+            pollingStation.Address = updatedPollingStation.Address;
+            pollingStation.AdministrativeTerritoryCode = updatedPollingStation.AdministrativeTerritoryCode;
 
-            _context.PollingStations.Update(updatedPollingStation);
             _context.SaveChangesAsync();
 
             return Task.FromResult(updatedPollingStation);

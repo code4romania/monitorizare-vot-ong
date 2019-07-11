@@ -29,9 +29,8 @@ namespace MonitorizareVot.Api.Controllers
             this._fileLoader = loader;
         }
 
-        [HttpPost]
         [Authorize]
-        [Route("/import")]
+        [HttpPost("import")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> ImportFormatFile(IFormFile file)
         {
@@ -45,9 +44,9 @@ namespace MonitorizareVot.Api.Controllers
 
             return Ok();
         }
-
-        [HttpGet("/{id}")]
+        
         [Authorize]
+        [HttpGet("{id}")]
         [Produces("application/json")]
         public async Task<IActionResult> GetSinglePollingStation(int id)
         {
@@ -65,8 +64,8 @@ namespace MonitorizareVot.Api.Controllers
             }
         }
 
-        [HttpPost("")]
         [Authorize]
+        [HttpPost("")]
         [Consumes("application/json")]
         public async Task<IActionResult> PostSinglePollingStation([FromBody] PollingStationView PollingStationDTO)
         {
@@ -84,8 +83,9 @@ namespace MonitorizareVot.Api.Controllers
             }
         }
 
-        [HttpPut("/{id}")]
         [Authorize]
+        [HttpPut("{id}")]
+        [Consumes("application/json")]
         public async Task<IActionResult> UpdateSinglePollingStation(int id, [FromBody] PollingStationView pollingStationView)
         {
             if(!ModelState.IsValid || pollingStationView.Id != id)
@@ -101,9 +101,9 @@ namespace MonitorizareVot.Api.Controllers
                 return NotFound();
             }
         }
-
-        [HttpGet("")]
+        
         [Authorize]
+        [HttpGet("")]
         public async Task<IActionResult> GetAllPollingStations(int pageNumber, int pageSize)
         {
             if(pageNumber <= 0 || pageSize <= 0)
