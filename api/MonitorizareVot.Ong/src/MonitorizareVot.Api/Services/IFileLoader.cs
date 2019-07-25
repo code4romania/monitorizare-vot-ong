@@ -8,8 +8,8 @@ namespace MonitorizareVot.Ong.Api.Services
 {
     public interface IFileLoader
     {
-        Task<List<PollingStationDTO>> importFileAsync(IFormFile file);
+        Task<List<PollingStationDTO>> ImportFileAsync(IFormFile file);
 
-        bool validateFile(IFormFile file);
+        bool ValidateFile(IFormFile file);
     }
 }

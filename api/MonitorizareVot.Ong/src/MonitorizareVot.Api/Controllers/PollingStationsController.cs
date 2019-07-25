@@ -34,10 +34,10 @@ namespace MonitorizareVot.Api.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> ImportFormatFile(IFormFile file)
         {
-            if(!_fileLoader.validateFile(file))
+            if(!_fileLoader.ValidateFile(file))
                 return UnprocessableEntity();
 
-            var result = await _mediator.Send(new PollingStationCommand(_fileLoader.importFileAsync(file).Result));
+            var result = await _mediator.Send(new PollingStationCommand(_fileLoader.ImportFileAsync(file).Result));
 
             if(result == -1)
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
