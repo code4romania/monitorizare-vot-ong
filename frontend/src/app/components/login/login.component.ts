@@ -22,14 +22,14 @@ export class LoginComponent implements OnInit {
         if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
         }
-        this.loginSubscription = this.http.post('/api/v1/auth', {
+        this.loginSubscription = this.http.untypedPost('/api/v1/auth', {
             userName: this.userName,
             password: this.password
         })
             .subscribe(res => {
-                this.tokenService.token = res.text();
+                this.tokenService.token = res;
                 this.router.navigate(['/urgente']);
-            }, res => {
+            }, () => {
                 this.invalid = true;
             })
     }

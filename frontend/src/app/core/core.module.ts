@@ -4,13 +4,15 @@ import { SharedModule } from '../shared/shared.module';
 import { ApiService } from './apiService/api.service';
 import { TokenService } from './token/token.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpModule} from '@angular/http';
 
 
 
 @NgModule({
   imports: [
     HttpModule,
+    HttpClientModule,
     SharedModule
   ],
   exports: [

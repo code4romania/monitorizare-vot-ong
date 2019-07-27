@@ -1,122 +1,107 @@
-import { Router } from '@angular/router';
-import { TokenService } from '../token/token.service';
-import { Injectable } from '@angular/core';
-import { Headers, Http, RequestMethod, RequestOptions, Response, URLSearchParams } from '@angular/http';
-import { RequestOptionsArgs } from '@angular/http/src/interfaces';
+import {Router} from '@angular/router';
+import {TokenService} from '../token/token.service';
+import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Observable, Observer } from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+
+export interface HttpOptions {
+  body?: any;
+  headers?: HttpHeaders;
+  observe?: 'body';
+  params?: HttpParams;
+  responseType?: 'json';
+  reportProgress?: boolean;
+  withCredentials?: boolean;
+}
+
+export const HttpMethod = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+  PATCH: 'PATCH',
+  HEAD: 'HEAD',
+  OPTIONS: 'OPTIONS',
+};
 
 @Injectable()
 export class ApiService {
 
-  private tokenRefreshObservable: Observable<Response>;
+  constructor(private httpClient: HttpClient, private tokenService: TokenService, private router: Router) {
+  }
 
-
-  constructor(private http: Http, private tokenService: TokenService, private router: Router) { }
-
-
-  private request(url: string, options: RequestOptionsArgs): Observable<Response> {
-
+  private request<T>(url: string, method: string, options?: HttpOptions): Observable<T> {
     if (options.withCredentials === false) {
-      return this.http.request(url, options);
+      return this.httpClient.request<T>(method, url, options);
     }
-    options.headers.append('Authorization', 'Bearer ' + this.tokenService.token);
+    options.headers = options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
 
-    return this.http.request(url, options).catch((err: Response, res) => {
-
+    return this.httpClient.request<T>(method, url, options).catch((err: any) => {
       if (err.status === 401) {
         this.tokenService.token = undefined;
         this.router.navigateByUrl('/login');
       }
-
       return Observable.throw(err);
     });
-    // return  new Observable<Response>((obs: Observer<Response>) => this.requestSubscribe(obs, url, options))
-    //   .catch(err => this.handleRequestError(err, url, options));
   }
-  private requestSubscribe(observer: Observer<Response>, url: string, options: RequestOptionsArgs) {
-    let tokenExpired = this.tokenService.isTokenExpired();
 
-
-    if (tokenExpired) {
-      this.refreshToken();
-    }
-
-    if (this.tokenRefreshObservable) {
-      this.tokenRefreshObservable.subscribe(() => {
-        this.http.request(url, options).subscribe(observer.next);
-      });
-    }
-  }
-  private handleRequestError(err: Response, url: string, options: RequestOptionsArgs): Observable<Response> | ErrorObservable {
-    if (err.status !== 401) {
-      return Observable.throw(err);
-    }
-
-    // logout, and go to homepage
-    // TODO LOGOUT
-
-    // // we consider the jwt expired ( don't treat the invalid case yet )
-    // this.refreshToken();
-    // return this.request(url, options);
-  }
-  private normalizeRequest(url: string, method: RequestMethod, options?: RequestOptionsArgs, body?: any) {
-    options = options || new RequestOptions({
+  private normalizeRequest<T>(url: string, method: string, options?: HttpOptions, body?: any): Observable<T> {
+    let requestOptions = options || {
       withCredentials: true
-    });
-    options.method = method;
+    };
+    requestOptions.headers = requestOptions.headers || new HttpHeaders();
+    requestOptions.responseType = requestOptions.responseType || 'json';
     if (body) {
-      options.body = body;
+      requestOptions.body = body;
     }
-    options.headers = options.headers || new Headers();
-    return this.request(url, options);
-  }
-  private refreshToken() {
-    if (this.tokenRefreshObservable) {
-      return;
-    }
-    // the tokenRefreshObservable that will refresh the token
-    this.tokenRefreshObservable = this.http.get('/api/v1/auth', {
-      headers: new Headers({
-        Authorization: 'Bearer ' + this.tokenService.token
-      })
-    });
-
-    this.tokenRefreshObservable.map(response => response.text()).subscribe((token) => {
-      this.tokenRefreshObservable = undefined;
-      this.tokenService.token = token;
-    }, err => {
-      // TODO : WHEN tokenRefreshObservable FAILS, LOGOUT
-    });
+    return this.request(url, method, requestOptions);
   }
 
-  get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    if (options && options.body && !options.search) {
-      let search = new URLSearchParams();
-      _.each(options.body, (value, key) => {
-        search.set(key, value);
-      });
-      options.search = search;
+  get<T>(url: string, options?: HttpOptions): Observable<T> {
+    if (options && options.body && !options.params) {
+      let params = new HttpParams();
+      _.each(options.body, (value, key) => (
+        params = params.append(key, value)
+      ));
+      options.params = params;
     }
-    return this.normalizeRequest(url, RequestMethod.Get, options);
+    return this.normalizeRequest(url, HttpMethod.GET, options);
   }
-  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Post, options, body);
+
+  post<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.POST, options, body);
   }
-  put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Put, options, body);
+
+  untypedPost(url: string, body: any): Observable<string> {
+    return this.httpClient.post(url, body, {
+      responseType: 'text'
+    }).catch((err: any) => {
+      if (err.status === 401) {
+        this.tokenService.token = undefined;
+        this.router.navigateByUrl('/login');
+      }
+      return Observable.throw(err);
+    });
   }
-  delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Delete, options);
+
+  put<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.DELETE, options, body);
   }
-  patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Patch, options);
+
+  delete<T>(url: string, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.DELETE, options);
   }
-  head(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Head, options);
+
+  patch<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.PATCH, options);
   }
-  options(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.normalizeRequest(url, RequestMethod.Options, options);
+
+  head<T>(url: string, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.HEAD, options);
+  }
+
+  options<T>(url: string, options?: HttpOptions): Observable<T> {
+    return this.normalizeRequest(url, HttpMethod.OPTIONS, options);
   }
 }

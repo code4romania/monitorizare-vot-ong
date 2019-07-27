@@ -1,14 +1,14 @@
-import { StatisticsState } from './statistics.state';
-import { Store } from '@ngrx/store';
-import { AppState } from '../store.module';
-import { shouldLoadPage } from '../../shared/pagination.service';
-import { GroupedObservable } from 'rxjs/operator/groupBy';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { statisticsConfig } from './statistics.config';
-import { LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions } from './statistics.actions';
-import { ApiService } from '../../core/apiService/api.service';
-import { Actions, Effect } from '@ngrx/effects';
-import { Injectable } from '@angular/core';
+import {StatisticsState} from './statistics.state';
+import {Store} from '@ngrx/store';
+import {AppState} from '../store.module';
+import {shouldLoadPage} from '../../shared/pagination.service';
+import {statisticsConfig} from './statistics.config';
+import {LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions} from './statistics.actions';
+import {ApiService} from '../../core/apiService/api.service';
+import {Actions, Effect} from '@ngrx/effects';
+import {Injectable} from '@angular/core';
+import {LabelValueModel} from '../../models/labelValue.model';
+
 @Injectable()
 export class StatisticsEffects {
 
@@ -26,7 +26,11 @@ export class StatisticsEffects {
         .groupBy(a => a.payload.key)
         .flatMap((obs) =>
             obs.switchMap((a) =>
-                this.http.get(`/api/v1/statistici/${statisticsConfig.find(value => value.key === a.payload.key).method}`, {
+                this.http.get<{
+                  data: LabelValueModel[],
+                  totalPages: number,
+                  totalItems: number
+                }>(`/api/v1/statistici/${statisticsConfig.find(value => value.key === a.payload.key).method}`, {
                     body: {
                         page: a.payload.page,
                         pageSize: a.payload.pageSize
@@ -34,7 +38,7 @@ export class StatisticsEffects {
                 }).map(res => {
                     return {
                         key: a.payload.key,
-                        json: res.json()
+                        json: res
                     }
                 }))
         )
