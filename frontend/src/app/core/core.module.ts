@@ -5,13 +5,11 @@ import { ApiService } from './apiService/api.service';
 import { TokenService } from './token/token.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpModule} from '@angular/http';
 
 
 
 @NgModule({
   imports: [
-    HttpModule,
     HttpClientModule,
     SharedModule
   ],

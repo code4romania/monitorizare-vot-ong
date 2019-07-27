@@ -16,21 +16,26 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export class AppState {
-    form: FormState
-    answer: AnswerState
-    statistics: StatisticsState
+    form: FormState;
+    answer: AnswerState;
+    statistics: StatisticsState;
     note: NoteState
 }
 
 let moduleImports = [
-    StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
-    EffectsModule.run(FormEffects),
-    EffectsModule.run(AnswerEffects),
-    EffectsModule.run(StatisticsEffects),
-    EffectsModule.run(NoteEffects)
-]
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
+    EffectsModule.forRoot([
+      FormEffects,
+      AnswerEffects,
+      StatisticsEffects,
+      NoteEffects
+    ]),
+];
 if (!environment.production) {
-    moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
+    moduleImports.push(StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: false
+    }))
 }
 
 @NgModule({
