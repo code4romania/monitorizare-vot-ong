@@ -16,10 +16,12 @@ namespace MonitorizareVot.Domain.Ong.Models
         public bool FromTeam { get; set; }
         public int IdNgo { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
         public string Name { get; set; }
         public string Pin { get; set; }
         public string MobileDeviceId { get; set; }
         public DateTime? DeviceRegisterDate { get; set; }
+
 
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
