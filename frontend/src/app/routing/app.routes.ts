@@ -2,9 +2,11 @@ import { AnonGuard } from '../core/anon.guard';
 import { LoginComponent } from '../components/login/login.component';
 import { AuthGuard } from '../core/authGuard/auth.guard';
 import { StatisticsDetailsComponent } from '../components/statistics/statistics-details/statistics-details.component';
+import { ObserversComponent } from '../components/observers/observers.component';
 import { AnswerDetailsComponent } from '../components/answer/answer-details/answer-details.component';
 import { AnswerListComponent } from '../components/answer/answers-list/answer-list.component';
 import { LoadStatisticsGuard } from './guards/load-statistics.guard';
+import { LoadObserversGuard } from './guards/load-observers.guard';
 import { AnswerDetailsGuard } from './guards/load-anwer-details.guard';
 import { AnswerListGuard } from './guards/load-answer-list.guard';
 import { HomeGuard } from './guards/home.guard';
@@ -56,7 +58,13 @@ export let appRoutes: Routes = [
         path: 'statistici',
         component: StatisticsComponent,
         canActivate: [AuthGuard, LoadStatisticsGuard]
-    }, {
+    },
+    {
+        path: 'observatori',
+        component: ObserversComponent,
+        canActivate: [AuthGuard]
+    },
+     {
         path: 'statistici/:key',
         component: StatisticsDetailsComponent,
         canActivate: [AuthGuard, LoadStatisticsGuard]
