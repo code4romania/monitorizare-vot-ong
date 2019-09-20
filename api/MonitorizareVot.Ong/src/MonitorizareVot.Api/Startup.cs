@@ -27,12 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using MonitorizareVot.Api.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace MonitorizareVot.Ong.Api
 {
@@ -122,6 +122,7 @@ namespace MonitorizareVot.Ong.Api
 
             ConfigureContainer(services);
             ConfigureCache(services);
+            ConfigureFileLoader(services);
         }
 
         private void ConfigureJwt(IServiceCollection services)
@@ -311,6 +312,12 @@ namespace MonitorizareVot.Ong.Api
                         break;
                     }
             }
+        }
+
+        private void ConfigureFileLoader(IServiceCollection services)
+        {
+            _container.RegisterSingleton<IFileLoader, XlsxFileLoader>();
+            return ;
         }
 
         private void ConfigureHash(IApplicationBuilder app)
