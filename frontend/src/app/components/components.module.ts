@@ -16,6 +16,7 @@ import { ObserversComponent } from './observers/observers.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ObserversCardComponent } from './observers/observers-card/observers-card.component';
+import { ObserverProfileComponent } from './observers/observer-profile/observer-profile.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -27,6 +28,7 @@ export let components = [
     AnswerNoteComponent,
     ObserversComponent,
     ObserversCardComponent,
+    ObserverProfileComponent,
 
     HeaderComponent,
 

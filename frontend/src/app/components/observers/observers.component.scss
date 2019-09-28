@@ -1,3 +1,39 @@
-.hidden{
-    display:none
+.hidden {
+  display: none
+}
+
+.page-title {
+  padding: 0 20px;
+  font-size: 14px;
+  color: #7C8284;
+
+  a {
+    color: #5F288D;
+  }
+
+  span {
+    font-size: 24px;
+    color: #000;
+  }
+
+  .dot {
+    font-size: 30px;
+    display: inline-block;
+  }
+
+  .actions {
+    float: right;
+  }
+}
+
+.filters-panel {
+  margin: 20px;
+
+  .action-buttons {
+    margin-top: 24px;
+
+    .btn {
+      padding: 10px;
+    }
+  }
 }
