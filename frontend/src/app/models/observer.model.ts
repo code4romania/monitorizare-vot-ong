@@ -3,6 +3,7 @@ export class Observer {
   firstName?: string;
   lastName?: string;
   ngo?: string;
+  lastLogin?: Date;
   email: string;
   phoneNumber: string;
   country: string;
@@ -19,6 +20,7 @@ export class Observer {
     this.country = observerResponse.country;
     this.voteSection = observerResponse.voteSection;
     this.deviceRegisterDate = new Date(observerResponse.deviceRegisterDate);
+    this.lastLogin = new Date(observerResponse.lastLogin);
   }
 }
 
