@@ -1,6 +1,9 @@
 <div class="container-fluid">
-  <h3 *ngIf="pageState === 'new'">Add new observer</h3>
-  <h3 *ngIf="pageState === 'edit'">Edit observer</h3>
+  <div class="top-wrapper">
+    <h3 *ngIf="pageState === 'new'">Add new observer</h3>
+    <h3 *ngIf="pageState === 'edit'">Edit observer</h3>
+    <button class="btn btn-success back-button" [routerLink]="['/observatori']">Back</button>
+  </div>
   <div class="profile-panel">
     <div *ngIf="pageState !== 'new'" class="profile-header">
       <h4 class="observer-name">{{ observer?.firstName }} {{ observer?.lastName }}</h4>
@@ -71,7 +74,7 @@
             >
             <button *ngIf="pageState === 'edit'" type="button" class="btn btn-danger">Delete Account</button>
             <div class="right-buttons-wrapper">
-              <button type="button" class="btn btn-default">Cancel</button>
+              <button type="button" class="btn btn-default" [routerLink]="['/observatori']">Cancel</button>
               <button type="submit" class="btn btn-success" [disabled]="observerProfileForm.invalid" (click)="saveObserver()">
                   <span *ngIf="pageState === 'new'">Add observer</span>
                   <span *ngIf="pageState === 'edit'">Save changes</span>

@@ -1,7 +1,3 @@
-.container-fluid {
-    background: #F4F4F4;
-}
-
 .btn {
     border-radius: 2px;
     font-weight: bold;
@@ -33,7 +29,6 @@
         line-height: 21px;
         color: #7C8284;
     }
-    font-family: 'Open sans', sans-serif;
     border: 1px solid #EEE;
     border-radius: 2px;
     background: #FFF;
@@ -84,4 +79,14 @@
 
 .invalid-field-message {
     color: #FF0000;
+}
+
+.top-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.back-button {
+    height: 32px;
+    margin-top: 12px;
 }
