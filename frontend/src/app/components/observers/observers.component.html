@@ -1,8 +1,3 @@
-<div class="row">
-    <div class="col-md-6 col-lg-4" style="margin-top:20px" [class.hidden]="!canShowItem(item)" *ngFor="let item of observersState">
-        ABC
-    </div>
-</div>
 <div class="page-title">
   <span>Observers</span> &middot; 24 total &middot; Sorted by <a href="#">Last login - Ascending</a>
   <div class="actions">
@@ -11,4 +6,47 @@
 
     <button class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> add observer</button>
   </div>
+</div>
+
+<div class="panel panel-default filters-panel">
+  <div class="panel-body">
+    <form>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label for="form-name">Name</label>
+            <select name="name" id="form-name" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label for="form-votesection">Vote section</label>
+            <select name="name" id="form-votesection" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label for="form-county">County</label>
+            <select name="name" id="form-county" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group action-buttons">
+            <button class="btn btn-primary" disabled>filter</button>
+            <button class="btn btn-secondary">reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-lg-4" style="margin-top:20px" [class.hidden]="!canShowItem(item)" *ngFor="let item of observersState">
+    ABC
+  </div>
+</div>
+
+<div *ngIf="!anyObservers" class="frow row-center">
+  <app-loading-indicator></app-loading-indicator>
 </div>

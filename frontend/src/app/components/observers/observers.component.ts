@@ -1,9 +1,9 @@
-import { ObserversStateItem } from '../../store/observers/observers.state';
-import { AppState } from '../../store/store.module';
-import { Store } from '@ngrx/store';
-import { ApiService } from '../../core/apiService/api.service';
-import { Subscription } from 'rxjs/Rx';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {ObserversStateItem} from '../../store/observers/observers.state';
+import {AppState} from '../../store/store.module';
+import {Store} from '@ngrx/store';
+import {ApiService} from '../../core/apiService/api.service';
+import {Subscription} from 'rxjs/Rx';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,23 +18,29 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   anyObservers = false;
 
-  constructor(private http: ApiService, private store: Store<AppState>) { }
+  constructor(private http: ApiService, private store: Store<AppState>) {
+  }
 
 
-  canShowItem(item: ObserversStateItem){
+  canShowItem(item: ObserversStateItem) {
     return item && !item.error && !item.loading && item.values && item.values.length;
   }
 
   ngOnInit() {
-      this.sub = this.store
-        .select(state => state.statistics)
-        .map(state => _.values(state))
-        .map(s => s.filter(v => !v.error && !v.loading))
-        .subscribe(s=> {
-          this.observersState = s;
-          this.anyObservers = !!s.length
-        })
+    this.loadObservers();
   }
+
+  private loadObservers() {
+    this.sub = this.store
+      .select(state => state.observers)
+      .map(state => _.values(state))
+      .map(s => s.filter(v => !v.error && !v.loading))
+      .subscribe(s => {
+        this.observersState = s;
+        this.anyObservers = s.length > 0
+      })
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

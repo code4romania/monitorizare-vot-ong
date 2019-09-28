@@ -31,4 +31,4 @@ export class ObserversStateItem {
 export class ObserversState {
     [key: string]: ObserversStateItem
 }
-export let statisticsInitialState: ObserversState = _.keyBy<ObserversStateItem>(observersConfig.map<ObserversStateItem>((config) => new ObserversStateItem(config)),value => value.key);
+export let observersInitialState: ObserversState = _.keyBy<ObserversStateItem>(observersConfig.map<ObserversStateItem>((config) => new ObserversStateItem(config)),value => value.key);

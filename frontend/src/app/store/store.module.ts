@@ -14,20 +14,25 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {ObserversState} from './observers/observers.state';
+import {ObserversEffects} from './observers/observers.effects';
+import {observersReducer} from './observers/observers.reducer';
 
 export class AppState {
     form: FormState;
     answer: AnswerState;
     statistics: StatisticsState;
+    observers: ObserversState;
     note: NoteState
 }
 
 let moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer }),
     EffectsModule.forRoot([
       FormEffects,
       AnswerEffects,
       StatisticsEffects,
+      ObserversEffects,
       NoteEffects
     ]),
 ];

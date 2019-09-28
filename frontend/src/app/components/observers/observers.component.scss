@@ -25,3 +25,15 @@
     float: right;
   }
 }
+
+.filters-panel {
+  margin: 20px;
+
+  .action-buttons {
+    margin-top: 24px;
+
+    .btn {
+      padding: 10px;
+    }
+  }
+}
