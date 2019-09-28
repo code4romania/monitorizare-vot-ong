@@ -13,7 +13,7 @@ export class ObserversService {
   }
 
   saveChanges(observer: Observer) {
-    // return this.http.put('/observers/${id}`', observer);    
+    // return this.http.put('/observers', observer);    
     return of(null);
   }
 

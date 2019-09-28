@@ -71,3 +71,17 @@
         border: none;
     }
 }
+
+.move-right {
+    display: flex;
+    justify-content: flex-end !important;
+}
+
+.invalid-field {
+    background: #FDEAEA;
+    border: 1px solid #FF0000;
+}
+
+.invalid-field-message {
+    color: #FF0000;
+}

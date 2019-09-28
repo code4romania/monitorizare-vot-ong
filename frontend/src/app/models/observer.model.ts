@@ -1,4 +1,4 @@
-interface Observer {
+interface ObserverModel {
     id?: string;
     firstName?: string;
     lastName?: string;

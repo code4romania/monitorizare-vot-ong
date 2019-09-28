@@ -11,4 +11,11 @@ export class ObserverProfileForm extends FormGroup {
             voteSection: new FormControl('', Validators.required)
         });
     }
+
+    isFieldValid(fieldName: ObserverProfileField): boolean {
+        const field = this.get(fieldName);
+        return field.valid && field.dirty;
+    }
 }
+
+export type ObserverProfileField = keyof Observer;

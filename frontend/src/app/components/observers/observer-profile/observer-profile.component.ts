@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ObserverProfileForm } from './observer-profile.form';
 import { ObserversService } from 'app/services/observers.service';
-import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageState } from 'app/models/page-state.model';
 
 @Component({
