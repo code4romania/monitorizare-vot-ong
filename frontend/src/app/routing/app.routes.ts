@@ -4,17 +4,12 @@ import { AuthGuard } from '../core/authGuard/auth.guard';
 import { StatisticsDetailsComponent } from '../components/statistics/statistics-details/statistics-details.component';
 import { ObserversComponent } from '../components/observers/observers.component';
 import { AnswerDetailsComponent } from '../components/answer/answer-details/answer-details.component';
-import { AnswerListComponent } from '../components/answer/answers-list/answer-list.component';
 import { LoadStatisticsGuard } from './guards/load-statistics.guard';
-import { LoadObserversGuard } from './guards/load-observers.guard';
 import { AnswerDetailsGuard } from './guards/load-anwer-details.guard';
 import { AnswerListGuard } from './guards/load-answer-list.guard';
 import { HomeGuard } from './guards/home.guard';
 import { StatisticsComponent } from '..//components/statistics/statistics.component';
-import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '..//store/answer/answer.actions';
-import { AppState } from '..//store/store.module';
 import { AnswerComponent } from '..//components/answer/answer.component';
-import { Store } from '@ngrx/store';
 import { Routes } from '@angular/router';
 import { ObserverProfileComponent } from 'app/components/observers/observer-profile/observer-profile.component';
 

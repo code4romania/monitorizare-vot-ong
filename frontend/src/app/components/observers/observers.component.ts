@@ -5,6 +5,10 @@ import {ApiService} from '../../core/apiService/api.service';
 import {Subscription} from 'rxjs/Rx';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as _ from 'lodash';
+import {Observable} from 'rxjs';
+import {StatisticsStateItem} from '../../store/statistics/statistics.state';
+import {LoadObserversAction} from '../../store/observers/observers.actions';
+import {values} from 'lodash';
 
 @Component({
   selector: 'app-observers',
@@ -14,7 +18,7 @@ import * as _ from 'lodash';
 export class ObserversComponent implements OnInit, OnDestroy {
 
   observersState: ObserversStateItem[];
-  sub: Subscription;
+  observersSubscription: Subscription;
 
   anyObservers = false;
 
@@ -28,10 +32,21 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadObservers();
+    this.handleObserversData();
   }
 
   private loadObservers() {
-    this.sub = this.store
+    this.store
+      .select(s => s.observers)
+      .take(1)
+      .map(data => values(data))
+      .concatMap(s => Observable.from(s))
+      .map((storeItem: StatisticsStateItem) => new LoadObserversAction(storeItem.key, 1, 5, true))
+      .subscribe(action => this.store.dispatch(action));
+  }
+
+  private handleObserversData() {
+    this.observersSubscription = this.store
       .select(state => state.observers)
       .map(state => _.values(state))
       .map(s => s.filter(v => !v.error && !v.loading))
@@ -42,7 +57,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.observersSubscription.unsubscribe();
   }
 
 }
