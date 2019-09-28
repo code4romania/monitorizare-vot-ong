@@ -1,5 +1,5 @@
 body {
-  background: #F2F2F2;
+  background: $bg-global;
 }
 
 /**
@@ -10,7 +10,7 @@ body {
   box-shadow: none;
 }
 
-.btn-primary, .btn-secondary {
+.btn-primary, .btn-secondary, .btn-success {
   border: 0;
   border-radius: 0;
   text-transform: uppercase;
@@ -19,10 +19,11 @@ body {
   padding: 12px;
 }
 
-.btn-primary {
-  background: #5F288D;
-  color: #fff;
+.btn-secondary {
+  color: $color-secondary;
+}
 
+.btn-success {
   &:disabled {
     background: #C4C4C4;
 
@@ -52,5 +53,30 @@ Loading spinner
     position: absolute;
     left: 50%;
     top: 50%;
+  }
+}
+
+
+.page-title {
+  font-size: 14px;
+  color: #7C8284;
+  overflow: auto;
+
+  a {
+    color: $color-secondary;
+  }
+
+  span {
+    font-size: 24px;
+    color: #000;
+  }
+
+  .dot {
+    font-size: 30px;
+    display: inline-block;
+  }
+
+  .actions {
+    float: right;
   }
 }

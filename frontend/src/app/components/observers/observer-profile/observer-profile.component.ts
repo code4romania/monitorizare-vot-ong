@@ -31,7 +31,7 @@ export class ObserverProfileComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.pageState = params['state'];
       this.handleFormState();
-      this.getObserverOnViewPageState(params);
+      this.getObserver(params);
     });
   }
 
@@ -57,8 +57,8 @@ export class ObserverProfileComponent implements OnInit {
       this.observerProfileForm.enable();
   }
 
-  private getObserverOnViewPageState(params) {
-    if (this.pageState === PageState.VIEW) {
+  private getObserver(params) {
+    if (this.pageState !== PageState.NEW) {
       this.observerService.getObserver(params['id'])
         .subscribe((observer: Observer) => {
           if (observer) {

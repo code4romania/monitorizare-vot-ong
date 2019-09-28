@@ -8,8 +8,8 @@ export class ObserverProfileForm extends FormGroup {
             firstName: new FormControl(''),
             email: new FormControl('', [Validators.email, Validators.required]),
             phoneNumber: new FormControl('', [Validators.required]),
-            country: new FormControl('', Validators.required),
-            voteSection: new FormControl('', Validators.required)
+            county: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required)
         });
     }
 
