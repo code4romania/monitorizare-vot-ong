@@ -13,7 +13,6 @@ export class AppComponent {
   public langIndex: number = 0;
   constructor(translate: TranslateService, zone: NgZone) {
     const lang = localStorage.getItem('language');
-    console.log('xx', lang);
     if (lang) {
       this.langIndex = this.languages.findIndex(x => x === lang);
     } else {
