@@ -23,6 +23,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   observersList: Array<Observer>;
   listType: ListType = ListType.CARD;
   observersFilterForm: ObserversFilterForm;
+  selectedObserversIds: Array<string> = [];
 
   anyObservers = false;
 
@@ -58,6 +59,17 @@ export class ObserversComponent implements OnInit, OnDestroy {
         this.observersList = state.values;
         this.anyObservers = state.values.length > 0;
       })
+  }
+
+  onObserverSelect(selectedObserver: Partial<Observer>){
+    if(selectedObserver.isSelected) {
+      this.selectedObserversIds.push(selectedObserver.id);
+    }
+    else {
+      const index = this.selectedObserversIds.findIndex((observerId) => observerId === selectedObserver.id);
+      this.selectedObserversIds.splice(index, 1);
+    }
+    console.log("Selected UsersIds", this.selectedObserversIds);
   }
 
   ngOnDestroy() {

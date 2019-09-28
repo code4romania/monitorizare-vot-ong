@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Observer} from '../../../models/observer.model';
 
 @Component({
@@ -8,8 +8,7 @@ import {Observer} from '../../../models/observer.model';
 })
 export class ObserversCardComponent implements OnInit {
   @Input() observer: Observer;
-
-  isSelected: boolean = false;
+  @Output() onSelect: EventEmitter<Partial<Observer>> = new EventEmitter();
 
   constructor() { }
 
@@ -18,7 +17,8 @@ export class ObserversCardComponent implements OnInit {
   }
 
   toggleSelectedState(){
-    this.isSelected = !this.isSelected;
+    this.observer.isSelected = !this.observer.isSelected;
+    this.onSelect.emit({id: this.observer.id, isSelected: this.observer.isSelected})
   }
 
 }

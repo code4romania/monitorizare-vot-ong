@@ -4,7 +4,7 @@
       <span class="observe-name">
         {{observer.firstName}}    {{observer.lastName}} 
       </span>
-      <button [ngClass]="{'selected': isSelected}" (click)="toggleSelectedState()">
+      <button [ngClass]="{'selected': observer.isSelected}" (click)="toggleSelectedState()">
          <i class="fa fa-check"></i>
       </button>
     </div>
@@ -34,7 +34,7 @@
    </div>
    <div>
       <div class="btn-group">
-          <button type="button" class="btn btn-default">Edit</button>
+          <button type="button" class="btn btn-default" [routerLink]="['profil/edit/', observer.id]">Edit</button>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -42,12 +42,8 @@
           <ul class="dropdown-menu">
             <li><a href="#">Delete</a></li>
             <li><a href="#">Reset Password</a></li>
-            <li><a href="#">Send notification</a></li>
           </ul>
         </div>
    </div>
  </div>
-<!-- 
-<button class="btn btn-success" [routerLink]="['profil/edit/123']">Edit</button>
---> 
 </div>

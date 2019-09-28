@@ -33,6 +33,13 @@ body {
   }
 }
 
+.btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
+    color: #ffffff;
+    background-color: #C4C4C4;
+    background-image: none;
+    letter-spacing: 1px;
+}
+
 /**
   Forms
  */

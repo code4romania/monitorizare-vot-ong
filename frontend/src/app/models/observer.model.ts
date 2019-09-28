@@ -9,6 +9,7 @@ export class Observer {
   county: string;
   password: string;
   deviceRegisterDate: Date;
+  isSelected: boolean = false;
 
   constructor(observerResponse: any) {
     this.id = observerResponse.id;
