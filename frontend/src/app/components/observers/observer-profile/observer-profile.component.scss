@@ -1,0 +1,73 @@
+.container-fluid {
+    background: #F4F4F4;
+}
+
+.btn {
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    &.btn-default {
+        background: #C4C4C4;
+        color: #FFF;
+    }
+    &.btn-success {
+        background: #5e288d;
+    }
+    &.btn-danger {
+        background: #FFF;
+        color: #fd0001;
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.profile-panel {
+    .profile-header {
+        border-bottom: 1px solid #F4F4F4;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+    }
+    .last-login {
+        font-size: 14px;
+        line-height: 21px;
+        color: #7C8284;
+    }
+    font-family: 'Open sans', sans-serif;
+    border: 1px solid #EEE;
+    border-radius: 2px;
+    background: #FFF;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    .bottom-buttons-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 80px;
+        .btn-danger {
+            padding-left: 0;
+            outline: none;
+        }
+        .right-buttons-wrapper {
+            display: flex;
+            justify-content: space-between;
+            .btn-success {
+                margin-left: 8px;
+            }
+        }
+    }
+}
+
+.form-group {
+    label {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+        color: #7C8284;
+    }
+    .form-control {
+        box-shadow: none;
+        background: #F4f4f4;
+        border-radius: 2px;
+        border: none;
+    }
+}

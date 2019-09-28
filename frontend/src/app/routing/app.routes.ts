@@ -16,6 +16,7 @@ import { AppState } from '..//store/store.module';
 import { AnswerComponent } from '..//components/answer/answer.component';
 import { Store } from '@ngrx/store';
 import { Routes } from '@angular/router';
+import { ObserverProfileComponent } from 'app/components/observers/observer-profile/observer-profile.component';
 
 export let appRoutes: Routes = [
     {
@@ -62,6 +63,16 @@ export let appRoutes: Routes = [
     {
         path: 'observatori',
         component: ObserversComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'observatori/profil/:state',
+        component: ObserverProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'observatori/profil/:state/:id',
+        component: ObserverProfileComponent,
         canActivate: [AuthGuard]
     },
      {

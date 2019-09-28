@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <h3>Add new observer</h3>
+  <div class="profile-panel">
+    <div *ngIf="pageState !== 'new'" class="profile-header">
+      <h4 class="observer-name">Observer's name</h4>
+      <p class="last-login">Last login: never</p>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <form novalidate [formGroup]="observerProfileForm">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Last name</label>
+                <input formControlName="lastName" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Email Address *</label>
+                <input formControlName="email" type="email" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Country *</label>
+                <select formControlName="country" class="form-control">
+                  <option value="bla">blabla</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>First name</label>
+                <input formControlName="firstName" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Phone number *</label>
+                <input formControlName="phoneNumber" type="tel" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Vote section *</label>
+                <select formControlName="voteSection" class="form-control">
+                  <option value="bla">blabla</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          {{ observerProfileForm.value | json }}
+          <div *ngIf="pageState !== 'view'" class="bottom-buttons-wrapper">
+            <button type="button" class="btn btn-danger">Delete Account</button>
+            <div class="right-buttons-wrapper">
+              <button type="button" class="btn btn-default">Cancel</button>
+              <button type="submit" class="btn btn-success" [disabled]="observerProfileForm.invalid" (click)="saveObserver()">
+                  <span *ngIf="pageState === 'create'">Add observer</span>
+                  <span *ngIf="pageState === 'edit'">Save changes</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
