@@ -6,8 +6,8 @@ export class Observer {
   lastLogin?: Date;
   email: string;
   phoneNumber: string;
-  country: string;
-  voteSection: string;
+  county: string;
+  password: string;
   deviceRegisterDate: Date;
 
   constructor(observerResponse: any) {
@@ -17,8 +17,8 @@ export class Observer {
     this.lastName = observerResponse.lastName;
     this.email = observerResponse.email;
     this.phoneNumber = observerResponse.phoneNumber;
-    this.country = observerResponse.country;
-    this.voteSection = observerResponse.voteSection;
+    this.county = observerResponse.county;
+    this.password = observerResponse.password;
     this.deviceRegisterDate = new Date(observerResponse.deviceRegisterDate);
     this.lastLogin = new Date(observerResponse.lastLogin);
   }
