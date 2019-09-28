@@ -9,6 +9,8 @@ import {LoadObserversAction} from '../../store/observers/observers.actions';
 import {values} from 'lodash';
 import {map} from 'rxjs/operators';
 import {Observer} from '../../models/observer.model';
+import {ListType} from '../../models/list.type.model';
+import {ObserversFilterForm} from './observers-filter.form';
 
 @Component({
   selector: 'app-observers',
@@ -19,15 +21,22 @@ export class ObserversComponent implements OnInit, OnDestroy {
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
   observersList: Array<Observer>;
+  listType: ListType = ListType.CARD;
+  observersFilterForm: ObserversFilterForm;
 
   anyObservers = false;
 
   constructor(private http: ApiService, private store: Store<AppState>) {
+    this.observersFilterForm = new ObserversFilterForm();
   }
 
   ngOnInit() {
     this.loadObservers();
     this.handleObserversData();
+  }
+
+  changeListType(type: string) {
+    this.listType = type as ListType;
   }
 
   private loadObservers() {
