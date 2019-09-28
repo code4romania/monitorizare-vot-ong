@@ -42,11 +42,10 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6 col-lg-4" style="margin-top:20px" [class.hidden]="!canShowItem(item)" *ngFor="let item of observersState">
+  <div class="col-md-6 col-lg-4" style="margin-top:20px" [class.hidden]="!canShowItem(item)"
+       *ngFor="let item of observersState">
     ABC
   </div>
 </div>
 
-<div *ngIf="!anyObservers" class="frow row-center">
-  <app-loading-indicator></app-loading-indicator>
-</div>
+<app-loading-indicator *ngIf="!anyObservers"></app-loading-indicator>

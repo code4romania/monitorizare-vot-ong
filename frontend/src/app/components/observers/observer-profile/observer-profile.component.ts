@@ -3,6 +3,7 @@ import { ObserverProfileForm } from './observer-profile.form';
 import { ObserversService } from 'app/services/observers.service';
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 import { PageState } from 'app/models/page-state.model';
+import {Observer} from '../../../models/observer.model';
 
 @Component({
   selector: 'app-observer-profile',
@@ -47,7 +48,7 @@ export class ObserverProfileComponent implements OnInit {
     this.observerService.addNewObserver(this.observerProfileForm.value)
       .subscribe(() => this.router.navigateByUrl('/observatori/profil/view/123'));
   }
-  
+
   private handleFormState() {
     if (this.pageState === PageState.VIEW)
       this.observerProfileForm.disable();

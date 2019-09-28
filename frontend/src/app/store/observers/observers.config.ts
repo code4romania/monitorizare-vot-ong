@@ -6,7 +6,7 @@ export interface ObserversStateConfig {
 }
 export let observersConfig = [{
     key: 'observers-list',
-    method: "all",
+    method: "",
     header: 'Observatori',
     subHeader: "",
 }];

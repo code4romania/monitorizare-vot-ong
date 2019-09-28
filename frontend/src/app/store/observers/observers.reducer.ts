@@ -7,7 +7,7 @@ export function observersReducer(state = observersInitialState, action: Observer
   switch (action.type) {
     case ObserversActions.LOAD:
     case ObserversActions.LOADED:
-      let reducedItem = statisticsItemReducer(state[action.payload.key], action);
+      let reducedItem = observersItemReducer(state[action.payload.key], action);
       if (reducedItem === state[action.payload.key]) {
         return state;
       }
@@ -22,7 +22,7 @@ export function observersReducer(state = observersInitialState, action: Observer
 
 }
 
-export function statisticsItemReducer(state: ObserversStateItem, action: any) {
+export function observersItemReducer(state: ObserversStateItem, action: any) {
   switch (action.type) {
     case ObserversActions.LOAD:
       let newList = action.payload.refresh,
