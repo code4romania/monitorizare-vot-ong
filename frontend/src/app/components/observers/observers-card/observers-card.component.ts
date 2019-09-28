@@ -13,7 +13,6 @@ export class ObserversCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("Observer info", this.observer);
   }
 
   toggleSelectedState(){

@@ -17,7 +17,7 @@ export class Observer {
     this.ngo = observerResponse.ngo;
     this.lastName = observerResponse.lastName;
     this.email = observerResponse.email;
-    this.phoneNumber = observerResponse.phoneNumber;
+    this.phoneNumber = observerResponse.phone;
     this.county = observerResponse.county;
     this.password = observerResponse.password;
     this.deviceRegisterDate = new Date(observerResponse.deviceRegisterDate);

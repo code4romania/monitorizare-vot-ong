@@ -35,9 +35,9 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group action-buttons">
-              <button class="btn btn-success" [disabled]="observersFilterForm.isEmpty()">filter</button>
+              <button class="btn btn-success" [disabled]="observersFilterForm.isEmpty()" (click)="applyFilters()">filter</button>
               <button class="btn btn-secondary" [disabled]="observersFilterForm.isEmpty()"
-                      (click)="observersFilterForm.reset({name: '', county: ''})">reset
+                      (click)="resetFilters()">reset
               </button>
             </div>
           </div>
@@ -54,4 +54,12 @@
   </div>
 </div>
 
-<app-loading-indicator *ngIf="!anyObservers"></app-loading-indicator>
+<app-pagination [page]="observersState.page" [pageSize]="observersState.pageSize"
+                [totalItems]="observersState.totalItems" [nextEnabled]="!observersState.loading"
+                (pageChanged)="pageChanged($event)"></app-pagination>
+
+<app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
+<div *ngIf="observersState.error">
+  <app-error-indicator></app-error-indicator>
+</div>
+

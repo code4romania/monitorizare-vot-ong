@@ -11,6 +11,7 @@ import {map} from 'rxjs/operators';
 import {Observer} from '../../models/observer.model';
 import {ListType} from '../../models/list.type.model';
 import {ObserversFilterForm} from './observers-filter.form';
+import {LoadAnswerPreviewAction} from '../../store/answer/answer.actions';
 
 @Component({
   selector: 'app-observers',
@@ -26,13 +27,14 @@ export class ObserversComponent implements OnInit, OnDestroy {
   selectedObserversIds: Array<string> = [];
 
   anyObservers = false;
+  pageSize = 9;
 
   constructor(private http: ApiService, private store: Store<AppState>) {
     this.observersFilterForm = new ObserversFilterForm();
   }
 
   ngOnInit() {
-    this.loadObservers();
+    this.loadObservers(1);
     this.handleObserversData();
   }
 
@@ -40,13 +42,27 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.listType = type as ListType;
   }
 
-  private loadObservers() {
+
+  pageChanged(event) {
+    this.loadObservers(event.pageNo);
+  }
+
+  applyFilters() {
+    this.loadObservers(1);
+  }
+
+  resetFilters() {
+    this.observersFilterForm.reset({name: '', county: ''});
+    this.loadObservers(1);
+  }
+
+  private loadObservers(pageNo) {
     this.store
       .select(s => s.observers)
       .take(1)
       .map(data => values(data))
       .concatMap(s => Observable.from(s))
-      .map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, 1, 5, true))
+      .map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 5, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('county').value))
       .subscribe(action => this.store.dispatch(action));
   }
 
@@ -69,7 +85,6 @@ export class ObserversComponent implements OnInit, OnDestroy {
       const index = this.selectedObserversIds.findIndex((observerId) => observerId === selectedObserver.id);
       this.selectedObserversIds.splice(index, 1);
     }
-    console.log("Selected UsersIds", this.selectedObserversIds);
   }
 
   ngOnDestroy() {
