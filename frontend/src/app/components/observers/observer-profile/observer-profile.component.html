@@ -2,7 +2,7 @@
   <h3>Add new observer</h3>
   <div class="profile-panel">
     <div *ngIf="pageState !== 'new'" class="profile-header">
-      <h4 class="observer-name">Observer's name</h4>
+      <h4 class="observer-name">{{ observer.firstName }} {{ observer.lastName }}</h4>
       <p class="last-login">Last login: never</p>
     </div>
     <div class="row">

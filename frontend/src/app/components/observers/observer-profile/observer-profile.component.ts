@@ -3,7 +3,7 @@ import { ObserverProfileForm } from './observer-profile.form';
 import { ObserversService } from 'app/services/observers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageState } from 'app/models/page-state.model';
-import {Observer} from '../../../models/observer.model';
+import { Observer } from '../../../models/observer.model';
 
 @Component({
   selector: 'app-observer-profile',
@@ -13,6 +13,7 @@ import {Observer} from '../../../models/observer.model';
 export class ObserverProfileComponent implements OnInit {
 
   observerProfileForm: ObserverProfileForm;
+  observer: Observer;
   pageState: PageState;
 
   constructor(
@@ -60,7 +61,10 @@ export class ObserverProfileComponent implements OnInit {
     if (this.pageState === PageState.VIEW) {
       this.observerService.getObserver(params['id'])
         .subscribe((observer: Observer) => {
-          if (observer) this.observerProfileForm.patchValue(observer)
+          if (observer) {
+            this.observer = observer;
+            this.observerProfileForm.patchValue(observer);
+          }
         });
     }
   }
