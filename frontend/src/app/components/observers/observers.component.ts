@@ -4,11 +4,11 @@ import {Store} from '@ngrx/store';
 import {ApiService} from '../../core/apiService/api.service';
 import {Subscription} from 'rxjs/Rx';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import * as _ from 'lodash';
 import {Observable} from 'rxjs';
-import {StatisticsStateItem} from '../../store/statistics/statistics.state';
 import {LoadObserversAction} from '../../store/observers/observers.actions';
 import {values} from 'lodash';
+import {map} from 'rxjs/operators';
+import {Observer} from '../../models/observer.model';
 
 @Component({
   selector: 'app-observers',
@@ -16,18 +16,13 @@ import {values} from 'lodash';
   styleUrls: ['./observers.component.scss']
 })
 export class ObserversComponent implements OnInit, OnDestroy {
-
-  observersState: ObserversStateItem[];
+  observersState: ObserversStateItem;
   observersSubscription: Subscription;
+  observersList: Array<Observer>;
 
   anyObservers = false;
 
   constructor(private http: ApiService, private store: Store<AppState>) {
-  }
-
-
-  canShowItem(item: ObserversStateItem) {
-    return item && !item.error && !item.loading && item.values && item.values.length;
   }
 
   ngOnInit() {
@@ -41,18 +36,18 @@ export class ObserversComponent implements OnInit, OnDestroy {
       .take(1)
       .map(data => values(data))
       .concatMap(s => Observable.from(s))
-      .map((storeItem: StatisticsStateItem) => new LoadObserversAction(storeItem.key, 1, 5, true))
+      .map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, 1, 5, true))
       .subscribe(action => this.store.dispatch(action));
   }
 
   private handleObserversData() {
     this.observersSubscription = this.store
       .select(state => state.observers)
-      .map(state => _.values(state))
-      .map(s => s.filter(v => !v.error && !v.loading))
-      .subscribe(s => {
-        this.observersState = s;
-        this.anyObservers = s.length > 0
+      .pipe(map(state => values(state)), map(state => state[0]))
+      .subscribe(state => {
+        this.observersState = state;
+        this.observersList = state.values;
+        this.anyObservers = state.values.length > 0;
       })
   }
 

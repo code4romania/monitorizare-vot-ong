@@ -1,6 +1,7 @@
 import {LabelValueModel} from '../../models/labelValue.model';
 import {Action} from '@ngrx/store';
 import {actionType} from '../util';
+import {Observer} from '../../models/observer.model';
 
 export class ObserversActions {
   static LOAD = actionType('[Observers] Load');
@@ -36,7 +37,6 @@ export class LoadObserversErrorAction implements Action {
   };
 
   constructor(key: string) {
-    console.log("ERROR ACTION", key);
     this.payload = {
       key
     }
@@ -54,7 +54,6 @@ export class LoadObserversCompleteAction implements Action {
   };
 
   constructor(key: string, items: Observer[], totalPages: number, totalItems: number) {
-    console.log('LOADED OBSERVERS');
     this.payload = {
       key,
       items,
