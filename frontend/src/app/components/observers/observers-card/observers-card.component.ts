@@ -9,10 +9,16 @@ import {Observer} from '../../../models/observer.model';
 export class ObserversCardComponent implements OnInit {
   @Input() observer: Observer;
 
+  isSelected: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
     console.log("Observer info", this.observer);
+  }
+
+  toggleSelectedState(){
+    this.isSelected = !this.isSelected;
   }
 
 }

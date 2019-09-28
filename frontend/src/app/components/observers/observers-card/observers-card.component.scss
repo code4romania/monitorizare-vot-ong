@@ -17,13 +17,16 @@
         border: 1px solid #000000;
         border-radius: 50%;
         color: white;
-        padding: 13px;
+        padding: 2px;
+        width: 32px;
         text-decoration: none;
+        outline: none;
       }
 
       .selected{
           background-color: $color-secondary;
           border: none;
+          padding: 3px;
           span {
               color: white;
           }
@@ -50,6 +53,8 @@
 
 .card-footer {
   padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
 
   .card-footer-header{
       font-size: 12px;
@@ -60,4 +65,11 @@
       font-size: 14px;
       color: #000000;
   }
+
+  .btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
+    color: #ffffff;
+    background-color: $color-gray;
+    background-image: none;
+    letter-spacing: 1px;
+}
 }
