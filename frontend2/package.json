@@ -1,10 +1,11 @@
 {
-  "name": "frontend2",
+  "name": "monitorizare-vot",
   "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --proxy proxy.conf.json",
+    "build": "ng build --prod --sourcemap false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
