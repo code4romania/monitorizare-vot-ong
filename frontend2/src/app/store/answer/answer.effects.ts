@@ -1,12 +1,11 @@
-import {AnswerExtra, AnswerExtraConstructorData} from '../../models/answer.extra.model';
-import {LoadNotesAction} from '../note/note.actions';
-import {shouldLoadPage} from '../../shared/pagination.service';
-import {AnswerState} from './answer.reducer';
-import {AppState} from '../store.module';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Rx';
-import {ApiService} from '../../core/apiService/api.service';
-import {CompletedQuestion} from '../../models/completed.question.model';
+import { AnswerExtra, AnswerExtraConstructorData } from '../../models/answer.extra.model';
+import { LoadNotesAction } from '../note/note.actions';
+import { shouldLoadPage } from '../../shared/pagination.service';
+import { AnswerState } from './answer.reducer';
+import { AppState } from '../store.module';
+import { Store } from '@ngrx/store';
+import { ApiService } from '../../core/apiService/api.service';
+import { CompletedQuestion } from '../../models/completed.question.model';
 import {
   AnswerActionTypes,
   LoadAnswerDetailsAction,
@@ -19,89 +18,73 @@ import {
   LoadAnswerPreviewDoneAction,
   LoadAnswerPreviewErorrAction
 } from './answer.actions';
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {AnswerThread} from '../../models/answer.thread.model';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { AnswerThread } from '../../models/answer.thread.model';
+import { of } from 'rxjs';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AnswerEffects {
 
-    state: AnswerState;
-    constructor(private http: ApiService, private actions: Actions, store: Store<AppState>) {
-        store.select(s => s.answer).subscribe(s => this.state = s)
-    }
-
-    @Effect()
-    loadThreads = this.actions
-        .ofType(AnswerActionTypes.LOAD_PREVIEW)
-        .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
-        .switchMap((action: LoadAnswerPreviewAction) => {
-            return this.http.get<{
-              data: AnswerThread[],
-              totalItems: number,
-              totalPages: number
-            }>('/api/v1/raspunsuri', {
-                body: {
-                    page: action.payload.page,
-                    pageSize: action.payload.pageSize,
-                    observerId: action.payload.answerFilters.observerId,
-                    county: action.payload.answerFilters.county,
-                    pollingStationNumber: action.payload.answerFilters.pollingStationNumber,
-                    urgent: action.payload.urgent
-                }
-            })
-        })
-        .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
-        .catch(() => Observable.of(new LoadAnswerPreviewErorrAction()));
-
-
-    shouldLoad(page: number, pageSize: number, arrayLen) {
-        if (page === undefined || pageSize === undefined) {
-            return true;
+  state: AnswerState;
+  @Effect()
+  loadThreads = this.actions.pipe(ofType(AnswerActionTypes.LOAD_PREVIEW
+    // @ts-ignore
+    , filter((a: any) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
+    , switchMap((action: LoadAnswerPreviewAction) => {
+      return this.http.get<{
+        data: AnswerThread[],
+        totalItems: number,
+        totalPages: number
+      }>('/api/v1/raspunsuri', {
+        body: {
+          page: action.payload.page,
+          pageSize: action.payload.pageSize,
+          observerId: action.payload.answerFilters.observerId,
+          county: action.payload.answerFilters.county,
+          pollingStationNumber: action.payload.answerFilters.pollingStationNumber,
+          urgent: action.payload.urgent
         }
+      });
+    })
+    , map((json: any) => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
+    , catchError(() => of(new LoadAnswerPreviewErorrAction()))));
 
-        return page * pageSize > arrayLen;
-    }
+  @Effect()
+  loadDetails = this.actions.pipe(ofType(AnswerActionTypes.LOAD_DETAILS),
+    switchMap((action: LoadAnswerDetailsAction) =>
+      this.http.get<CompletedQuestion[]>('/api/v1/raspunsuri/RaspunsuriCompletate', {
+        body: {
+          idSectieDeVotare: action.payload.sectionId,
+          idObservator: action.payload.observerId
+        }
+      })
+    )
+    , map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
+    , catchError(() => of(new LoadAnswerDetailsErrorAction())));
+  @Effect()
+  loadNotes = this.actions.pipe(ofType(AnswerActionTypes.LOAD_DETAILS)
+    , map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId)));
+  @Effect()
+  loadExtraFromAnswer = this.actions.pipe(ofType(AnswerActionTypes.LOAD_DETAILS)
+    , map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId)));
+  @Effect()
+  loadExtra = this.actions.pipe(ofType(AnswerActionTypes.LOAD_EXTRA)
+    , map((a: LoadAnswerExtraAction) => a.payload)
+    , switchMap((p: any) =>
+      this.http.get<AnswerExtraConstructorData>('/api/v1/raspunsuri/RaspunsuriFormular', {
+        body: {
+          idObservator: p.observerId,
+          idSectieDeVotare: p.sectionId
+        }
+      })
+    )
+    , map(json => json ? new AnswerExtra(json) : undefined)
+    , map(extra => new LoadAnswerExtraDoneAction(extra))
+    , catchError(() => of(new LoadAnswerExtraErrorAction())));
 
-    @Effect()
-    loadDetails = this.actions
-        .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .switchMap((action: LoadAnswerDetailsAction) =>
-            this.http.get<CompletedQuestion[]>('/api/v1/raspunsuri/RaspunsuriCompletate', {
-                body: {
-                    idSectieDeVotare: action.payload.sectionId,
-                    idObservator: action.payload.observerId
-                }
-            })
-        )
-        .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
-        .catch(() => Observable.of(new LoadAnswerDetailsErrorAction()));
-
-    @Effect()
-    loadNotes = this.actions
-        .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId));
-
-    @Effect()
-    loadExtraFromAnswer = this.actions
-        .ofType(AnswerActionTypes.LOAD_DETAILS)
-        .map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId));
-
-    @Effect()
-    loadExtra = this.actions
-        .ofType(AnswerActionTypes.LOAD_EXTRA)
-        .map((a: LoadAnswerExtraAction) => a.payload)
-        .switchMap(p =>
-            this.http.get<AnswerExtraConstructorData>('/api/v1/raspunsuri/RaspunsuriFormular', {
-                body: {
-                    idObservator: p.observerId,
-                    idSectieDeVotare: p.sectionId
-                }
-            })
-        )
-        .map(json => json ? new AnswerExtra(json) : undefined)
-        .map(extra => new LoadAnswerExtraDoneAction(extra))
-        .catch(() => Observable.of(new LoadAnswerExtraErrorAction()));
-
-
+  constructor(private http: ApiService, private actions: Actions, store: Store<AppState>) {
+    store.select(s => s.answer).subscribe(s => this.state = s);
+  }
 }

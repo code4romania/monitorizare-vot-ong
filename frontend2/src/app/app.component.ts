@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public languages: string[] = ['en', 'ro'];
-  public langIndex: number = 0;
+  public langIndex = 0;
 
   constructor(translate: TranslateService) {
     const lang = localStorage.getItem('language');

@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://mv-dashboard-dev.azurewebsites.net",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
