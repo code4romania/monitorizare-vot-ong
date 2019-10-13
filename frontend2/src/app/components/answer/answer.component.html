@@ -1,0 +1,35 @@
+<div class="container-fluid">
+
+  <div class="col-md-3">
+    {{'FILTER_BY' | translate}}
+    <form (ngSubmit)="requestFilteredData()" name="filtreazaDupa">
+      <div class="form-group">
+        <label for="countyCode">{{'COUNTY_CODE' | translate}}</label>
+        <input [(ngModel)]="countyCode" name="countyCode" class="form-control" id="countyCode">
+      </div>
+      <div class="form-group">
+        <label for="pollingStationNumber">{{'POLLING_STATION_NUMBER' | translate}}</label>
+        <input [(ngModel)]="pollingStationNumber" name="pollingStationNumber" class="form-control"
+          id="pollingStationNumber">
+      </div>
+      <div class="form-group">
+        <label for="observerId">{{'OBSERVER_ID' | translate}}</label>
+        <input [(ngModel)]="observerId" name="observerId" class="form-control" id="observerId">
+      </div>
+      <button type="submit" class="btn btn-default">Filtreaza</button>
+    </form>
+  </div>
+  <div class="list-header col-md-12">
+    <h3>{{((answerState | async)?.urgent ? 'URGENT_HEADER' : 'NOT_URGENT_HEADER') | translate}}</h3>
+    <h5>{{((answerState | async)?.urgent ? 'URGENT_SUBHEADER' : 'NOT_URGENT_SUBHEADER') | translate}}</h5>
+  </div>
+  <div class="col-md-3">
+    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()"
+      (pageChanged)="pageChanged($event)">
+    </app-answer-list>
+  </div>
+  <div class="col-md-8">
+    <router-outlet>
+    </router-outlet>
+  </div>
+</div>

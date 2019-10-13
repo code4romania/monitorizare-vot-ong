@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend2';
+  public languages: string[] = ['en', 'ro'];
+  public langIndex: number = 0;
+
+  constructor(translate: TranslateService) {
+    const lang = localStorage.getItem('language');
+    console.log('xx', lang);
+    if (lang) {
+      this.langIndex = this.languages.findIndex(x => x === lang);
+    } else {
+      localStorage.setItem('language', 'en');
+    }
+    translate.setDefaultLang(lang || 'en');
+    translate.use(lang || 'en');
+  }
 }
