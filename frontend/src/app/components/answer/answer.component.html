@@ -3,7 +3,7 @@
   <div>
     <h4>{{'FILTER_BY' | translate}}</h4>
 
-    <form class="form-inline">
+    <form class="form-inline" (ngSubmit)="requestFilteredData()" name="filtreazaDupa">
         <div class="form-group mx-sm-3 mb-2">
           <label for="countyCode" class="control-label">{{'COUNTY_CODE' | translate}}</label>
           <input [(ngModel)]="countyCode" name="countyCode" class="form-control" id="countyCode">
