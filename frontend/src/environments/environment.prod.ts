@@ -1,4 +1,7 @@
-export const environment = {
+import { EnvironmentConfig } from 'typings';
+
+export const environment: EnvironmentConfig = {
   production: true,
-  observerGuide: 'http://monitorizare-vot-ghid.azurewebsites.net/'
+  observerGuideUrl: 'http://prod-monitorizare-vot-ghid.azurewebsites.net/',
+  apiUrl: 'https://mv-prod-dashboard-dev.azurewebsites.net'
 };

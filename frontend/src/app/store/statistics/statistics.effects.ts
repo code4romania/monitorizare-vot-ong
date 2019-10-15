@@ -1,20 +1,24 @@
-import {StatisticsState} from './statistics.state';
-import {Store} from '@ngrx/store';
-import {AppState} from '../store.module';
-import {shouldLoadPage} from '../../shared/pagination.service';
-import {statisticsConfig} from './statistics.config';
-import {LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions} from './statistics.actions';
-import {ApiService} from '../../core/apiService/api.service';
-import {Actions, Effect} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
-import {LabelValueModel} from '../../models/labelValue.model';
-
+import { StatisticsState } from './statistics.state';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store.module';
+import { shouldLoadPage } from '../../shared/pagination.service';
+import { statisticsConfig } from './statistics.config';
+import { LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions } from './statistics.actions';
+import { ApiService } from '../../core/apiService/api.service';
+import { Actions, Effect } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { LabelValueModel } from '../../models/labelValue.model';
+import { environment } from 'environments/environment';
+import { Location } from '@angular/common';
 @Injectable()
 export class StatisticsEffects {
+    private baseUrl: string;
 
     state: StatisticsState;
     constructor(private http: ApiService, private actions: Actions, private store: Store<AppState>) {
-        store.select(s => s.statistics).subscribe(s => this.state = s)
+        this.baseUrl = environment.apiUrl;
+
+        store.select(s => s.statistics).subscribe(s => this.state = s);
     }
 
 
@@ -25,12 +29,14 @@ export class StatisticsEffects {
         .filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length))
         .groupBy(a => a.payload.key)
         .flatMap((obs) =>
-            obs.switchMap((a) =>
-                this.http.get<{
-                  data: LabelValueModel[],
-                  totalPages: number,
-                  totalItems: number
-                }>(`/api/v1/statistici/${statisticsConfig.find(value => value.key === a.payload.key).method}`, {
+            obs.switchMap((a) => {
+                const statisticsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/statistici/${statisticsConfig.find(value => value.key === a.payload.key).method}`);
+
+                return this.http.get<{
+                    data: LabelValueModel[],
+                    totalPages: number,
+                    totalItems: number
+                }>(statisticsUrl, {
                     body: {
                         page: a.payload.page,
                         pageSize: a.payload.pageSize
@@ -40,7 +46,8 @@ export class StatisticsEffects {
                         key: a.payload.key,
                         json: res
                     }
-                }))
+                });
+            })
         )
         // .switchMap((a: any) =>
         //     this.http.get(`/api/v1/statistici/${statisticsConfig.find(value => value.key === a.payload.key).method}`, {
