@@ -86,7 +86,7 @@ export class ApiService {
   }
 
   put<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
-    return this.normalizeRequest(url, HttpMethod.DELETE, options, body);
+    return this.normalizeRequest(url, HttpMethod.PUT, options, body);
   }
 
   delete<T>(url: string, options?: HttpOptions): Observable<T> {

@@ -1,27 +1,27 @@
 export class Observer {
-  id?: string;
-  firstName?: string;
-  lastName?: string;
-  ngo?: string;
-  lastLogin?: Date;
-  email: string;
-  phoneNumber: string;
-  county: string;
-  password: string;
-  deviceRegisterDate: Date;
-  isSelected: boolean = false;
+id: string;
+name : string;
+ngo: string;
+phone: string;
+pin: string = '';
+sendSMS: boolean = false;
+isSelected: boolean;
+deviceRegisterDate: string;
+lastSeen: string;
+numberOfNotes: number;
+numberOfPollingStations: number;
+
 
   constructor(observerResponse: any) {
-    this.id = observerResponse.id;
-    this.firstName = observerResponse.firstName;
-    this.ngo = observerResponse.ngo;
-    this.lastName = observerResponse.lastName;
-    this.email = observerResponse.email;
-    this.phoneNumber = observerResponse.phone;
-    this.county = observerResponse.county;
-    this.password = observerResponse.password;
-    this.deviceRegisterDate = new Date(observerResponse.deviceRegisterDate);
-    this.lastLogin = new Date(observerResponse.lastLogin);
+    this.id = observerResponse.id?   observerResponse.id: '';
+    this.name =  observerResponse.name?   observerResponse.name: '';
+    this.ngo = observerResponse.ngo?   observerResponse.ngo: '';
+    this.phone =observerResponse.phone?   observerResponse.phone: '';
+    this.sendSMS = observerResponse.sendSMS? observerResponse.sendSMS:false;
+    this.isSelected = observerResponse.isSelected? observerResponse.isSelected: false;
+    this.deviceRegisterDate = observerResponse.deviceRegisterDate?   observerResponse.deviceRegisterDate: null;
+    this.numberOfNotes = observerResponse.numberOfNotes?   observerResponse.numberOfNotes: 0;
+    this.numberOfPollingStations = observerResponse.numberOfPollingStations?   observerResponse.numberOfPollingStations: 0;
   }
 }
 

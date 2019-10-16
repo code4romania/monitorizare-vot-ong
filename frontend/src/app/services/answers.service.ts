@@ -12,7 +12,7 @@ export class AnswersService {
 
     getAll(urgent = false, paginationData?: PaginationData) {
         let body = Object.assign({ urgent: urgent }, paginationData);
-        return this.http.get<any>('/api/v1/raspunsuri', {
+        return this.http.get<any>('/api/v1/answers', {
             body: body
         })
     }

@@ -40,7 +40,7 @@ export class AnswerEffects {
               data: AnswerThread[],
               totalItems: number,
               totalPages: number
-            }>('/api/v1/raspunsuri', {
+            }>('/api/v1/answers', {
                 body: {
                     page: action.payload.page,
                     pageSize: action.payload.pageSize,

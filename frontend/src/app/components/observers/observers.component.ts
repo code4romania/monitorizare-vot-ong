@@ -5,13 +5,14 @@ import {ApiService} from '../../core/apiService/api.service';
 import {Subscription} from 'rxjs/Rx';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {LoadObserversAction} from '../../store/observers/observers.actions';
+import {DeleteObserverAction, LoadObserversAction} from '../../store/observers/observers.actions';
 import {values} from 'lodash';
 import {map} from 'rxjs/operators';
 import {Observer} from '../../models/observer.model';
 import {ListType} from '../../models/list.type.model';
 import {ObserversFilterForm} from './observers-filter.form';
-import {LoadAnswerPreviewAction} from '../../store/answer/answer.actions';
+import {ObserversService} from '../../services/observers.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-observers',
@@ -29,7 +30,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   anyObservers = false;
   pageSize = 9;
 
-  constructor(private http: ApiService, private store: Store<AppState>) {
+  constructor(private http: ApiService, private store: Store<AppState>, private observersService: ObserversService, private toastrService: ToastrService) {
     this.observersFilterForm = new ObserversFilterForm();
   }
 
@@ -86,6 +87,18 @@ export class ObserversComponent implements OnInit, OnDestroy {
       this.selectedObserversIds.splice(index, 1);
     }
   }
+
+  onObserverDelete(observer: Observer){
+    this.observersService.deleteObserver(observer.id).subscribe((data)=> {
+      this.loadObservers(1);
+      this.toastrService.warning("Success!", 'User has been removed');
+    })
+  }
+
+  onObserverResetPassword(observer: Observer){
+
+  }
+
 
   ngOnDestroy() {
     this.observersSubscription.unsubscribe();

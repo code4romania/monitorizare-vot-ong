@@ -7,6 +7,7 @@ export class ObserversActions {
   static LOAD = actionType('[Observers] Load');
   static LOADED = actionType('[Observers] Loaded');
   static ERROR = actionType('[Observers] Load Error');
+  static DELETE = actionType('[Observers] Delete observer');
 }
 
 export class LoadObserversAction implements Action {
@@ -43,6 +44,21 @@ export class LoadObserversErrorAction implements Action {
   constructor(key: string) {
     this.payload = {
       key
+    }
+  }
+}
+
+export class DeleteObserverAction implements Action {
+  readonly type = ObserversActions.DELETE;
+  payload: {
+    key: string,
+    id: string
+  };
+
+  constructor(key: string, id: string) {
+    this.payload = {
+      key,
+      id
     }
   }
 }

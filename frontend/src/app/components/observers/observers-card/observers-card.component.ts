@@ -9,15 +9,27 @@ import {Observer} from '../../../models/observer.model';
 export class ObserversCardComponent implements OnInit {
   @Input() observer: Observer;
   @Output() onSelect: EventEmitter<Partial<Observer>> = new EventEmitter();
+  @Output() onDelete: EventEmitter<Observer> = new EventEmitter();
+  @Output() onResetPassword: EventEmitter<Observer> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  toggleSelectedState(){
+  toggleSelectedState() {
     this.observer.isSelected = !this.observer.isSelected;
     this.onSelect.emit({id: this.observer.id, isSelected: this.observer.isSelected})
+  }
+
+
+  deleteObserver() {
+    this.onDelete.emit(this.observer);
+  }
+
+  resetPassword() {
+    this.onResetPassword.emit(this.observer);
   }
 
 }

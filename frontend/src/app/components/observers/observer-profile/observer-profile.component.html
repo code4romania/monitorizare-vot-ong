@@ -9,8 +9,9 @@
   </div>
   <div class="profile-panel">
     <div *ngIf="pageState !== 'new'" class="profile-header">
-      <h4 class="observer-name">{{ observer?.firstName }} {{ observer?.lastName }}</h4>
-      <p class="last-login">Last login: {{ observer?.lastLogin ? observer.lastLogin : 'never' }}</p>
+      <h4 class="observer-name">{{ observer?.name }} </h4>
+      <p class="last-login">Last login: {{ observer?.lastSeen ? observer.lastSeen : 'never' }}</p>
+      <p class="last-login">Device registration date: {{ observer?.deviceRegisterDate ? observer.deviceRegisterDate : 'never' }}</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -18,13 +19,13 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label>Last name</label>
+                <label>Name</label>
                 <input
-                  formControlName="lastName"
+                  formControlName="name"
                   type="text"
                   class="form-control"
                 >
-              </div>
+              </div><!--
               <div class="form-group">
                 <label>Email Address *</label>
                 <input
@@ -32,7 +33,7 @@
                   type="email"
                   class="form-control"
                 >
-              </div>
+              </div>-->
               <!-- <div class="form-group">
                 <label>County *</label>
                 <select
@@ -45,22 +46,14 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label>First name</label>
-                <input
-                  formControlName="firstName"
-                  type="text"
-                  class="form-control"
-                >
-              </div>
-              <div class="form-group">
                 <label>Phone number *</label>
                 <input
-                  formControlName="phoneNumber"
+                  formControlName="phone"
                   type="tel"
                   class="form-control"
                 >
               </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="pageState === 'new'">
                 <label>Password *</label>
                 <input
                   formControlName="password"
@@ -75,7 +68,7 @@
             class="bottom-buttons-wrapper"
             [class.move-right]="pageState === 'new'"
           >
-            <button *ngIf="pageState === 'edit'" type="button" class="btn btn-danger">Delete Account</button>
+            <button *ngIf="pageState === 'edit'" type="button" class="btn btn-danger" (click)="deleteObserver()">Delete Account</button>
             <div class="right-buttons-wrapper">
               <button type="button" class="btn btn-secondary" [routerLink]="['/observatori']">Cancel</button>
               <button type="submit" class="btn btn-success" [disabled]="observerProfileForm.invalid"
