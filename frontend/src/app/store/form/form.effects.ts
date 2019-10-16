@@ -20,12 +20,12 @@ export class FormEffects {
         .catch(() =>  Observable.of(new FormErrorAction()));
 
     private getForm(id: string): Observable<Form> {
-        return this.http.get<FormSection[]>('/api/v1/formulare', { body: { idFormular: id } })
+        return this.http.get<FormSection[]>(`/api/v1/form/${id}`)
             .map(sections => {
-                return <Form>{
-                    idFormular: id,
-                    sectiuni: sections
-                }
+                const form = new Form();
+                form.idFormular = id;
+                form.sections = sections;
+                return form;
             })
     }
 }

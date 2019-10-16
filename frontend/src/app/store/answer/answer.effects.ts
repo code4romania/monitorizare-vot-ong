@@ -42,7 +42,7 @@ export class AnswerEffects {
         data: AnswerThread[],
         totalItems: number,
         totalPages: number
-      }>('/api/v1/raspunsuri', {
+      }>('/api/v1/answers', {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload)
       })
     })
@@ -76,10 +76,10 @@ export class AnswerEffects {
   loadDetails = this.actions
     .ofType(AnswerActionTypes.LOAD_DETAILS)
     .switchMap((action: LoadAnswerDetailsAction) =>
-      this.http.get<CompletedQuestion[]>('/api/v1/raspunsuri/RaspunsuriCompletate', {
+      this.http.get<CompletedQuestion[]>('/api/v1/answers/filledIn', {
         body: {
-          idSectieDeVotare: action.payload.sectionId,
-          idObservator: action.payload.observerId
+          idPollingStation: action.payload.sectionId,
+          idObserver: action.payload.observerId
         }
       })
     )
@@ -101,10 +101,10 @@ export class AnswerEffects {
     .ofType(AnswerActionTypes.LOAD_EXTRA)
     .map((a: LoadAnswerExtraAction) => a.payload)
     .switchMap(p =>
-      this.http.get<AnswerExtraConstructorData>('/api/v1/raspunsuri/RaspunsuriFormular', {
+      this.http.get<AnswerExtraConstructorData>('/api/v1/answers/pollingStationInfo', {
         body: {
-          idObservator: p.observerId,
-          idSectieDeVotare: p.sectionId
+          ObserverId: p.observerId,
+          PollingStationNumber: p.sectionId
         }
       })
     )

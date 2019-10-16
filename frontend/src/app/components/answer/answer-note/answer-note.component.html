@@ -2,10 +2,10 @@
     <div class="content-container">
         <div class="note-text">
             <p>
-                {{note.textNota}}
+                {{note.text}}
             </p>
         </div>
-        <img *ngIf="note.caleFisierAtasat" class="note-image" src="{{note.caleFisierAtasat}}" />
+        <img *ngIf="note.attachmentPath" class="note-image" src="{{note.attachmentPath}}" />
         <!--<img class="note-image" src="https://drscdn.500px.org/photo/57559144/m%3D2048/cc4997810dbb80e66665133c33206d11" />-->
     </div>
     <div class="clear">

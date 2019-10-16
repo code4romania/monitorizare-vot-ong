@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private http: ApiService, private router: Router, private tokenService: TokenService) { }
 
-    userName: string;
+    user: string;
     password: string;
 
     invalid: boolean;
@@ -22,13 +22,13 @@ export class LoginComponent implements OnInit {
         if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
         }
-        this.loginSubscription = this.http.untypedPost('/api/v1/auth', {
-            userName: this.userName,
+        this.loginSubscription = this.http.untypedPost('/api/v1/access/authorize', {
+            user: this.user,
             password: this.password
         })
             .subscribe(res => {
                 this.tokenService.token = res;
-                this.router.navigate(['/urgente']);
+                this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;
             })

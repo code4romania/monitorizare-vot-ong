@@ -2,6 +2,6 @@
 import { BaseAnswer } from './base.answer.model';
 export class CompletedAnswer extends BaseAnswer {
     value: string = undefined;
-    raspunsCuFlag = false
+    flagged = false
 }
 

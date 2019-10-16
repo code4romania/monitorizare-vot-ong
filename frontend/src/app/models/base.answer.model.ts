@@ -1,5 +1,5 @@
 export class BaseAnswer {
-    idOptiune: number;
-    textOptiune: string;
-    seIntroduceText: boolean;
+    idOption: number;
+    text: string;
+    isFreeText: boolean;
 }

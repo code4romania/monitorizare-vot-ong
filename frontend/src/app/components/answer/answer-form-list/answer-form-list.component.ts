@@ -23,13 +23,13 @@ export class AnswerFormListComponent implements OnInit {
   notes: Note[]
 
   answersForQuestion(question: BaseQuestion) {
-    return _.find(this.completedQuestions, value => value.idIntrebare === question.idIntrebare);
+    return _.find(this.completedQuestions, value => value.id === question.id);
   }
   notesForQuestion(question: BaseQuestion) {
     if(!this.notes || !this.notes.length){
       return undefined;
     }
-    return this.notes.filter(note => note.codIntrebare === question.idIntrebare)
+    return this.notes.filter(note => note.questionId === question.id)
   }
 
   constructor() { }

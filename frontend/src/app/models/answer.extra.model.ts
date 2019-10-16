@@ -1,27 +1,27 @@
 import * as _ from 'lodash';
 export interface AnswerExtraConstructorData {
-    dataUltimeiModificari: string
-    esteZonaUrbana: boolean
-    oraSosirii: string
-    oraPlecarii: string
-    presedinteBesvesteFemeie: boolean
+    lastModified: string
+    urbanArea: boolean
+    observerArrivalTime: string
+    observerLeaveTime: string
+    isPollingStationPresidentFemale: boolean
 }
 export class AnswerExtra {
-    dataUltimeiModificari: Date
-    esteZonaUrbana = false
-    oraSosirii: Date
-    oraPlecarii: Date
-    presedinteBesvesteFemeie = false
+    lastModified: Date
+    urbanArea = false
+    observerArrivalTime: Date
+    observerLeaveTime: Date
+    isPollingStationPresidentFemale = false
 
     constructor(formInfo?:AnswerExtraConstructorData){
         if(!formInfo){
             return;
         }
-        checkForPropValue(formInfo.dataUltimeiModificari, val => this.dataUltimeiModificari = val);
-        checkForPropValue(formInfo.oraSosirii, val => this.oraSosirii = val)
-        checkForPropValue(formInfo.oraPlecarii, val => this.oraPlecarii = val)
-        this.esteZonaUrbana = formInfo.esteZonaUrbana
-        this.presedinteBesvesteFemeie = formInfo.presedinteBesvesteFemeie
+        checkForPropValue(formInfo.lastModified, val => this.lastModified = val);
+        checkForPropValue(formInfo.observerArrivalTime, val => this.observerArrivalTime = val)
+        checkForPropValue(formInfo.observerLeaveTime, val => this.observerLeaveTime = val)
+        this.urbanArea = formInfo.urbanArea
+        this.isPollingStationPresidentFemale = formInfo.isPollingStationPresidentFemale
 
         function checkForPropValue(value, setPropertyFn :(val:Date)=>void){
             if(!value){
