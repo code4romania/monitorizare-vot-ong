@@ -26,7 +26,7 @@ export class FormEffects {
         .catch(() => Observable.of(new FormErrorAction()));
 
     private getForm(id: string): Observable<Form> {
-        const formsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/form/', id);
+        const formsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${id}`);
 
         return this.http.get<FormSection[]>(formsUrl)
             .map(sections => {
