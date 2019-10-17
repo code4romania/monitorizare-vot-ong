@@ -1,9 +1,7 @@
 import { BaseQuestion } from '../../../models/base.question.model';
-import { AnswersService } from '../../../services/answers.service';
 import { Note } from '../../../models/note.model';
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-answer-note',

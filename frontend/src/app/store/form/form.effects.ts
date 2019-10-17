@@ -26,14 +26,14 @@ export class FormEffects {
         .catch(() => Observable.of(new FormErrorAction()));
 
     private getForm(id: string): Observable<Form> {
-        const formsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/formulare');
+        const formsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${id}`);
 
-        return this.http.get<FormSection[]>('', { body: { idFormular: id } })
+        return this.http.get<FormSection[]>(formsUrl)
             .map(sections => {
-                return <Form>{
-                    idFormular: id,
-                    sectiuni: sections
-                }
+                const form = new Form();
+                form.idFormular = id;
+                form.sections = sections;
+                return form;
             })
     }
 }

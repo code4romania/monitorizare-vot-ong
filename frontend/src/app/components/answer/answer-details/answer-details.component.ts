@@ -44,14 +44,14 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
     if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
       return []
     }
-    return this.noteState.notes.filter(note => note.codFormular === formId)
+    return this.noteState.notes.filter(note => note.formCode === formId)
   }
 
   formAnswers(): CompletedQuestion[] {
     if (!this.answerState || !this.answerState.selectedAnswer) {
       return [];
     }
-    return this.answerState.selectedAnswer.filter(value => value.codFormular);
+    return this.answerState.selectedAnswer.filter(value => value.formCode);
   }
 
   constructor(private store: Store<AppState>) { }
