@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageState} from 'app/models/page-state.model';
 import {Observer} from '../../../models/observer.model';
 import {ToastrService} from 'ngx-toastr';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ObserverProfileUploadForm} from './observers-profile-upload.form';
 
 @Component({
   selector: 'app-observer-profile',
@@ -12,8 +14,11 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./observer-profile.component.scss']
 })
 export class ObserverProfileComponent implements OnInit {
+  error: string;
+  fileData: File;
 
   observerProfileForm: ObserverProfileForm;
+  observerProfileUploadForm: FormGroup;
   observer: Observer;
   pageState: PageState;
 
@@ -21,20 +26,18 @@ export class ObserverProfileComponent implements OnInit {
     private observerService: ObserversService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private fb: FormBuilder,
     private router: Router) {
     this.observerProfileForm = new ObserverProfileForm();
+
+    this.observerProfileUploadForm = this.fb.group({
+      csv: null,
+      ongId: new FormControl('', Validators.required)
+    });
   }
 
   ngOnInit() {
     this.initRouteListener();
-  }
-
-  private initRouteListener() {
-    this.route.params.subscribe((params) => {
-      this.pageState = params['state'];
-      this.handleFormState();
-      this.getObserver(params);
-    });
   }
 
   saveObserver() {
@@ -53,6 +56,39 @@ export class ObserverProfileComponent implements OnInit {
           this.router.navigateByUrl('/observatori');
         });
     }
+  }
+
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      let file = event.target.files[0];
+      this.observerProfileUploadForm.get('csv').setValue(file);
+    }
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('file', this.observerProfileUploadForm.get('csv').value);
+    formData.append('ongId', this.observerProfileUploadForm.get('ongId').value);
+
+    this.observerService.uploadCsv(formData).subscribe(
+      (res) => {
+        this.toastr.success(`${res} observers have been added successfully`, 'Success');
+      },
+      (err) => {
+        this.toastr.error('Encountered error while uploading csv', 'Error');
+
+      }
+    );
+  }
+
+
+  private initRouteListener() {
+    this.route.params.subscribe((params) => {
+      this.pageState = params['state'];
+      this.handleFormState();
+      this.getObserver(params);
+    });
   }
 
   private saveChanges() {

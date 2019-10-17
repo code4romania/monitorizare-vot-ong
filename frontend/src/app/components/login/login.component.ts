@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
         if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
         }
-        this.loginSubscription = this.http.untypedPost('/api/v1/auth', {
-            userName: this.userName,
+        this.loginSubscription = this.http.untypedPost('/api/v1/access/authorize', {
+            user: this.userName,
             password: this.password
         })
             .subscribe(res => {
