@@ -19,18 +19,22 @@ import {
   LoadAnswerPreviewDoneAction,
   LoadAnswerPreviewErorrAction
 } from './answer.actions';
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { AnswerThread } from '../../models/answer.thread.model';
 import { HttpParams } from '@angular/common/http';
 import { AnswerFilters } from 'app/models/answer.filters.model';
 import * as _ from 'lodash';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { AnswerThread } from '../../models/answer.thread.model';
+import { environment } from 'environments/environment';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class AnswerEffects {
+  private baseUrl: string;
   state: AnswerState;
   constructor(private http: ApiService, private actions: Actions, store: Store<AppState>) {
-    store.select(s => s.answer).subscribe(s => this.state = s)
+    this.baseUrl = environment.apiUrl;
+    store.select(s => s.answer).subscribe(s => this.state = s);
   }
 
   @Effect()
@@ -38,11 +42,13 @@ export class AnswerEffects {
     .ofType(AnswerActionTypes.LOAD_PREVIEW)
     .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
     .switchMap((action: LoadAnswerPreviewAction) => {
+      const answearsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers');
+
       return this.http.get<{
         data: AnswerThread[],
         totalItems: number,
         totalPages: number
-      }>('/api/v1/answers', {
+      }>(answearsUrl, {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload)
       })
     })
@@ -75,13 +81,16 @@ export class AnswerEffects {
   @Effect()
   loadDetails = this.actions
     .ofType(AnswerActionTypes.LOAD_DETAILS)
-    .switchMap((action: LoadAnswerDetailsAction) =>
-      this.http.get<CompletedQuestion[]>('/api/v1/answers/filledIn', {
+    .switchMap((action: LoadAnswerDetailsAction) => {
+      const completedAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/filledIn');
+
+      return this.http.get<CompletedQuestion[]>(completedAnswears, {
         body: {
           idPollingStation: action.payload.sectionId,
           idObserver: action.payload.observerId
         }
-      })
+      });
+    }
     )
     .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
     .catch(() => Observable.of(new LoadAnswerDetailsErrorAction()));
@@ -100,13 +109,16 @@ export class AnswerEffects {
   loadExtra = this.actions
     .ofType(AnswerActionTypes.LOAD_EXTRA)
     .map((a: LoadAnswerExtraAction) => a.payload)
-    .switchMap(p =>
-      this.http.get<AnswerExtraConstructorData>('/api/v1/answers/pollingStationInfo', {
+    .switchMap(p => {
+      const formAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/pollingStationInfo');
+
+      return this.http.get<AnswerExtraConstructorData>(formAnswears, {
         body: {
           ObserverId: p.observerId,
           PollingStationNumber: p.sectionId
         }
-      })
+      });
+    }
     )
     .map(json => json ? new AnswerExtra(json) : undefined)
     .map(extra => new LoadAnswerExtraDoneAction(extra))
