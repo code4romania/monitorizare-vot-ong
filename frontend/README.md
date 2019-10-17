@@ -4,7 +4,8 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
+Run `ng serve --environment=qa`  or `npm run start-qa`  for a dev server with configs for QA.
+Run `ng serve --environment=prod` or `npm run start-prod`for a dev server with configs for Prod.
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
