@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
         this.baseUrl = environment.apiUrl;
     }
 
-    userName: string;
+    user: string;
     password: string;
 
     invalid: boolean;
@@ -29,12 +29,12 @@ export class LoginComponent implements OnInit {
         }
         const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/auth');
         this.loginSubscription = this.http.untypedPost(authUrl, {
-            userName: this.userName,
+            user: this.user,
             password: this.password
         })
             .subscribe(res => {
                 this.tokenService.token = res;
-                this.router.navigate(['/urgente']);
+                this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;
             })

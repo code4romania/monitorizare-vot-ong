@@ -1,7 +1,9 @@
 import { FormQuestion } from './form.question.model';
 
 export class FormSection {
-    codSectiune: string;
-    descriere: string;
-    intrebari: FormQuestion[];
+    uniqueId: string;
+    id: number;
+    code: string;
+    description: string;
+    questions: FormQuestion[];
 }

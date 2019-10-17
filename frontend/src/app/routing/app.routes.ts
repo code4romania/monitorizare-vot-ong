@@ -21,13 +21,13 @@ export let appRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         canActivate: [AuthGuard, HomeGuard],
-        redirectTo: '/urgente'
+        redirectTo: '/urgents'
     }, {
-        path: 'raspunsuri',
+        path: 'answers',
         component: AnswerComponent,
         canActivate: [AuthGuard, AnswerListGuard ],
         children: [{
-            path: 'detalii/:idObservator/:idSectie',
+            path: 'details/:idObserver/:idPollingStation',
             component: AnswerDetailsComponent,
             canActivate: [AuthGuard, AnswerDetailsGuard]
         }, {
@@ -37,14 +37,14 @@ export let appRoutes: Routes = [
         }]
     },
     {
-        path: 'urgente',
+        path: 'urgents',
         component: AnswerComponent,
         canActivate: [AuthGuard, AnswerListGuard ],
         data: {
             urgent: true
         },
         children: [{
-            path: 'detalii/:idObservator/:idSectie',
+            path: 'details/:idObserver/:idPollingStation',
             component: AnswerDetailsComponent,
             canActivate: [AuthGuard, AnswerDetailsGuard]
         }, {

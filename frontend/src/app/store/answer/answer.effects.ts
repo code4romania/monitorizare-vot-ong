@@ -42,7 +42,7 @@ export class AnswerEffects {
     .ofType(AnswerActionTypes.LOAD_PREVIEW)
     .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
     .switchMap((action: LoadAnswerPreviewAction) => {
-      const answearsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/raspunsuri');
+      const answearsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers');
 
       return this.http.get<{
         data: AnswerThread[],
@@ -82,12 +82,12 @@ export class AnswerEffects {
   loadDetails = this.actions
     .ofType(AnswerActionTypes.LOAD_DETAILS)
     .switchMap((action: LoadAnswerDetailsAction) => {
-      const completedAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/raspunsuri/RaspunsuriCompletate');
+      const completedAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/filledIn');
 
       return this.http.get<CompletedQuestion[]>(completedAnswears, {
         body: {
-          idSectieDeVotare: action.payload.sectionId,
-          idObservator: action.payload.observerId
+          idPollingStation: action.payload.sectionId,
+          idObserver: action.payload.observerId
         }
       });
     }
@@ -110,12 +110,12 @@ export class AnswerEffects {
     .ofType(AnswerActionTypes.LOAD_EXTRA)
     .map((a: LoadAnswerExtraAction) => a.payload)
     .switchMap(p => {
-      const formAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/raspunsuri/RaspunsuriFormular');
+      const formAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/pollingStationInfo');
 
       return this.http.get<AnswerExtraConstructorData>(formAnswears, {
         body: {
-          idObservator: p.observerId,
-          idSectieDeVotare: p.sectionId
+          ObserverId: p.observerId,
+          PollingStationNumber: p.sectionId
         }
       });
     }
