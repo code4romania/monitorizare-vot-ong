@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   get observerGuideUrl(){
-    return environment.observerGuide;
+    return environment.observerGuideUrl;
   }
 
   ngOnInit() {
