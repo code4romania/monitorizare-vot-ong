@@ -19,17 +19,17 @@ export class LoadObserversAction implements Action {
     pageSize: number,
     refresh: boolean,
     searchParamName?: string
-    searchParamCounty?: string
+    searchParamPhone?: string
   };
 
-  constructor(key: string, page: number, pageSize: number, refresh = false, searchParamName: string = '', searchParamCounty: string = '') {
+  constructor(key: string, page: number, pageSize: number, refresh = false, searchParamName: string = '', searchParamPhone: string = '') {
     this.payload = {
       key,
       page,
       pageSize,
       refresh,
       searchParamName,
-      searchParamCounty
+      searchParamPhone
     }
 
   }

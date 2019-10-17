@@ -4,7 +4,7 @@ export class ObserversFilterForm extends FormGroup {
     constructor() {
         super({
             name: new FormControl(''),
-            county: new FormControl('')
+            phone: new FormControl('')
         });
     }
 

@@ -37,7 +37,7 @@ export class ObserversEffects {
           data: Observer[],
           totalPages: number,
           totalItems: number
-        }>(`/api/v1/observer${observersConfig.find(value => value.key === a.payload.key).method}?Name=${a.payload.searchParamName}`).map(res => {
+        }>(`/api/v1/observer${observersConfig.find(value => value.key === a.payload.key).method}?Name=${a.payload.searchParamName}&Number=${a.payload.searchParamPhone}`).map(res => {
           console.log(a);
           return {
             key: a.payload.key,
