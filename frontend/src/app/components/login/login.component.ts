@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
         if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
         }
-        const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/auth');
+        const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/access/authorize');
         this.loginSubscription = this.http.untypedPost(authUrl, {
             user: this.user,
             password: this.password
