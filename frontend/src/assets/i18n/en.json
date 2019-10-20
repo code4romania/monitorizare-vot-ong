@@ -24,5 +24,6 @@
   "FILTER_BY": "Filter by:",
   "COUNTY_CODE": "County:",
   "OBSERVER_ID": "Observer Id:",
-  "POLLING_STATION_NUMBER": "Polling station number:"
+  "POLLING_STATION_NUMBER": "Polling station number:",
+  "NOTIFICATIONS": "Notifications"
 }

@@ -14,6 +14,7 @@ import { AnswerDetailsComponent } from './answer/answer-details/answer-details.c
 import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
+import {NotificationsComponent} from './notifications/notifications.component';
 
 export let components = [
     AnswerComponent, AnswerListComponent,
@@ -32,7 +33,9 @@ export let components = [
     StatisticsDetailsComponent,
     StatisticsValueComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    NotificationsComponent
 
 
 ] 
