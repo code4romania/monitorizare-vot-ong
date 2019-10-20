@@ -8,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
-  get observerGuideUrl(){
+  get observerGuideUrl() {
     return environment.observerGuide;
   }
 

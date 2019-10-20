@@ -1,11 +1,11 @@
-import {environment} from '../../../../environments/environment';
-import {Note} from '../../../models/note.model';
-import {BaseAnswer} from '../../../models/base.answer.model';
-import {CompletedAnswer} from '../../../models/completed.answer.model';
-import {FormQuestion} from '../../../models/form.question.model';
+import { environment } from '../../../../environments/environment';
+import { Note } from '../../../models/note.model';
+import { BaseAnswer } from '../../../models/base.answer.model';
+import { CompletedAnswer } from '../../../models/completed.answer.model';
+import { FormQuestion } from '../../../models/form.question.model';
 
 import * as _ from 'lodash';
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-categorical-question',
@@ -15,6 +15,13 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CategoricalQuestionComponent implements OnInit {
 
   @Input() question: FormQuestion;
+  completedAnswers: _.Dictionary<CompletedAnswer> = {};
+  @Input()
+  notes: Note[];
+  showNotes = false;
+
+  constructor() {
+  }
 
   @Input('completedAnswers')
   set inputCompletedAnswers(value: CompletedAnswer[]) {
@@ -23,59 +30,54 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = _.keyBy(value, value => value.idOptiune)
+      this.completedAnswers = _.keyBy(value, aux => aux.idOptiune);
     } else {
       this.completedAnswers = undefined;
     }
   }
-  completedAnswers: _.Dictionary<CompletedAnswer> = {};
 
-  @Input()
-  notes: Note[];
-
-  showNotes = false;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-
-
-
-  validateSingleQuestion(answers: CompletedAnswer[]) {
-    try {
-      if (this.isSingle && answers && answers.length > 1) {
-        console.log(`Multiple answers on question with id ${this.question.idIntrebare}`)
-      }
-    }
-    catch (ex) { }
-  }
-  validateTextQuestion(answers: CompletedAnswer[]) {
-    try {
-      if (this.isTextQuestion && answers && _.reject(answers, a => a.seIntroduceText || !!a.value).length > 1) {
-        console.log(`Multiple text answers on question with id ${this.question.idIntrebare}`);
-      }
-    } catch (ex) { }
-
-  }
   get hasNotes() {
     return this.notes && this.notes.length;
   }
+
   get isFlagged() {
     return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag);
   }
 
   get isTextQuestion() {
-    return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3
+    return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3;
   }
+
   get isSingle() {
     return this.question.idTipIntrebare === 0 || this.question.idTipIntrebare === 4;
+  }
+
+  ngOnInit() {
+  }
+
+  validateSingleQuestion(answers: CompletedAnswer[]) {
+    try {
+      if (this.isSingle && answers && answers.length > 1) {
+        console.log(`Multiple answers on question with id ${ this.question.idIntrebare }`);
+      }
+    } catch (ex) {
+    }
+  }
+
+  validateTextQuestion(answers: CompletedAnswer[]) {
+    try {
+      if (this.isTextQuestion && answers && _.reject(answers, a => a.seIntroduceText || !!a.value).length > 1) {
+        console.log(`Multiple text answers on question with id ${ this.question.idIntrebare }`);
+      }
+    } catch (ex) {
+    }
+
   }
 
   isChecked(answer: BaseAnswer) {
     return this.completedAnswers && this.completedAnswers[answer.idOptiune];
   }
+
   isTextAnswer(answer: BaseAnswer) {
     return this.isTextQuestion && answer.seIntroduceText;
   }
@@ -87,10 +89,5 @@ export class CategoricalQuestionComponent implements OnInit {
   answerTextValue(answer: BaseAnswer) {
     return this.completedAnswers && this.completedAnswers[answer.idOptiune] && this.completedAnswers[answer.idOptiune].value;
   }
-
-
-
-
-
 
 }

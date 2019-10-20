@@ -1,31 +1,34 @@
-import {Form} from '../../models/form.model';
-import {Observable} from 'rxjs/Rx';
-import {FormActionTypes, FormErrorAction, FormLoadAction, FormLoadCompletedAction} from './form.actions';
-import {Actions, Effect} from '@ngrx/effects';
-import {ApiService} from '../../core/apiService/api.service';
-import {Injectable} from '@angular/core';
-import {FormSection} from '../../models/form.section.model';
+import { Form } from '../../models/form.model';
+import { FormActionTypes, FormErrorAction, FormLoadAction, FormLoadCompletedAction } from './form.actions';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { ApiService } from '../../core/apiService/api.service';
+import { Injectable } from '@angular/core';
+import { FormSection } from '../../models/form.section.model';
+import { catchError, concatMap, map, switchMap } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
 
 @Injectable()
 export class FormEffects {
-    constructor(private http: ApiService, private actions: Actions) { }
+  @Effect()
+  loadFormAction = this.actions.pipe(
+    ofType(FormActionTypes.LOAD)
+    , map((action: FormLoadAction) => action.payload)
+    , switchMap((ids: string[]) => from(ids))
+    , concatMap((id: string) => this.getForm(id))
+    , map((form: Form) => new FormLoadCompletedAction([form]))
+    , catchError(() => of(new FormErrorAction())));
 
-    @Effect()
-    loadFormAction = this.actions
-        .ofType(FormActionTypes.LOAD)
-        .map((action: FormLoadAction) => action.payload)
-        .switchMap(ids => Observable.from(ids))
-        .concatMap(id => this.getForm(id))
-        .map(form => new FormLoadCompletedAction([form]))
-        .catch(() =>  Observable.of(new FormErrorAction()));
+  constructor(private http: ApiService, private actions: Actions) {
+  }
 
-    private getForm(id: string): Observable<Form> {
-        return this.http.get<FormSection[]>('/api/v1/formulare', { body: { idFormular: id } })
-            .map(sections => {
-                return <Form>{
-                    idFormular: id,
-                    sectiuni: sections
-                }
-            })
-    }
+  private getForm(id: string): Observable<Form> {
+    return this.http.get<FormSection[]>('/api/v1/formulare', { body: { idFormular: id } })
+               .pipe(
+                 map(sections => {
+                   return {
+                     idFormular: id,
+                     sectiuni: sections
+                   } as Form;
+                 }));
+  }
 }

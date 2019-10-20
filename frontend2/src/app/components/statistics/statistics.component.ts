@@ -1,12 +1,11 @@
 import { StatisticsStateItem } from '../../store/statistics/statistics.state';
-import { LoadStatisticAction } from '../../store/statistics/statistics.actions';
 import { AppState } from '../../store/store.module';
 import { Store } from '@ngrx/store';
-import { LabelValueModel } from '../../models/labelValue.model';
 import { ApiService } from '../../core/apiService/api.service';
-import { Observable, Subscription } from 'rxjs/Rx';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-statistics',
@@ -20,23 +19,24 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   anyStatistics = false;
 
-  constructor(private http: ApiService, private store: Store<AppState>) { }
+  constructor(private http: ApiService, private store: Store<AppState>) {
+  }
 
-  
-  canShowItem(item: StatisticsStateItem){
+  canShowItem(item: StatisticsStateItem) {
     return item && !item.error && !item.loading && item.values && item.values.length;
   }
 
   ngOnInit() {
-      this.sub = this.store
-        .select(state => state.statistics)
-        .map(state => _.values(state))
-        .map(s => s.filter(v => !v.error && !v.loading))
-        .subscribe(s=> {
-          this.statisticsState = s;
-          this.anyStatistics = !!s.length
-        })
+    this.sub = this.store
+                   .select(state => state.statistics).pipe(
+        map(state => _.values(state)),
+        map(s => s.filter(v => !v.error && !v.loading)))
+                   .subscribe(s => {
+                     this.statisticsState = s;
+                     this.anyStatistics = !!s.length;
+                   });
   }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

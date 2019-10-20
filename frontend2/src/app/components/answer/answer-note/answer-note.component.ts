@@ -1,9 +1,7 @@
 import { BaseQuestion } from '../../../models/base.question.model';
-import { AnswersService } from '../../../services/answers.service';
 import { Note } from '../../../models/note.model';
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-answer-note',
@@ -16,16 +14,14 @@ export class AnswerNoteComponent implements OnInit {
   note: Note;
 
   @Input()
-  question: BaseQuestion
-  
+  question: BaseQuestion;
 
-  get canShow(){
-    return this.note && this.question
+  constructor() {
   }
 
-
-
-  constructor() { }
+  get canShow() {
+    return this.note && this.question;
+  }
 
   ngOnInit() {
 

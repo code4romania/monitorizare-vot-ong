@@ -1,13 +1,13 @@
-import {NoteState} from '../../../store/note/note.reducer';
-import {LoadAnswerDetailsAction} from '../../../store/answer/answer.actions';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../store/store.module';
-import {Subscription} from 'rxjs/Rx';
-import {FormState} from '../../../store/form/form.reducer';
-import {AnswerState} from '../../../store/answer/answer.reducer';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { NoteState } from '../../../store/note/note.reducer';
+import { LoadAnswerDetailsAction } from '../../../store/answer/answer.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/store.module';
+import { FormState } from '../../../store/form/form.reducer';
+import { AnswerState } from '../../../store/answer/answer.reducer';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import {CompletedQuestion} from '../../../models/completed.question.model';
+import { CompletedQuestion } from '../../../models/completed.question.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-answer-details',
@@ -29,22 +29,25 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
   //   presedinteBesvesteFemeie: false
   // }
 
+  constructor(private store: Store<AppState>) {
+  }
 
   hasError() {
-    return !this.answerState ||  this.answerState.selectedError
+    return !this.answerState || this.answerState.selectedError;
     // || !this.noteState || this.noteState.error
     // || this.answerState.answerExtraError
   }
+
   isLoading() {
-    return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading
+    return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading;
     // || this.answerState.answerExtraLoading
   }
 
   formNotes(formId: string) {
     if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
-      return []
+      return [];
     }
-    return this.noteState.notes.filter(note => note.codFormular === formId)
+    return this.noteState.notes.filter(note => note.codFormular === formId);
   }
 
   formAnswers(): CompletedQuestion[] {
@@ -54,16 +57,15 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
     return this.answerState.selectedAnswer.filter(value => value.codFormular);
   }
 
-  constructor(private store: Store<AppState>) { }
-
   ngOnInit() {
 
     this.subs = [
       this.store.select(s => s.answer).subscribe(s => this.answerState = s),
       this.store.select(s => s.form).subscribe(s => this.formState = s),
       this.store.select(s => s.note).subscribe(s => this.noteState = s)
-    ]
+    ];
   }
+
   ngOnDestroy() {
     _.map(this.subs, sub => sub.unsubscribe());
   }

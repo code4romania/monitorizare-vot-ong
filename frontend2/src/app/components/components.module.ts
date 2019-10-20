@@ -9,40 +9,37 @@ import { CategoricalQuestionComponent } from './answer/categorical-question/cate
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
-import { AppComponent } from '../app.component';
 import { AnswerDetailsComponent } from './answer/answer-details/answer-details.component';
 import { AnswerComponent } from './answer/answer.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
 
 export let components = [
-    AnswerComponent, AnswerListComponent,
-    AnswerDetailsComponent,
-    AnswerFormListComponent,
-    AnswerNoteComponent,
-    CategoricalQuestionComponent,
-    AnswerExtraQuestionsComponent,
-    AnswerNoteComponent,
+  AnswerComponent, AnswerListComponent,
+  AnswerDetailsComponent,
+  AnswerFormListComponent,
+  AnswerNoteComponent,
+  CategoricalQuestionComponent,
+  AnswerExtraQuestionsComponent,
+  AnswerNoteComponent,
 
+  HeaderComponent,
 
-    HeaderComponent,
+  StatisticsComponent,
+  StatisticsCardComponent,
+  StatisticsDetailsComponent,
+  StatisticsValueComponent,
 
-    StatisticsComponent,
-    StatisticsCardComponent,
-    StatisticsDetailsComponent,
-    StatisticsValueComponent,
+  LoginComponent
 
-    LoginComponent
-
-
-] 
+];
 
 @NgModule({
-    declarations:components,
-    exports: components,
-    imports:[SharedModule]
+  declarations: components,
+  exports: components,
+  imports: [SharedModule]
 })
-export  class ComponentsModule {
-    
+export class ComponentsModule {
+
 }
 

@@ -14,45 +14,46 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { take } from 'rxjs/operators';
 
 export class AppState {
-    form: FormState;
-    answer: AnswerState;
-    statistics: StatisticsState;
-    note: NoteState
+  form: FormState;
+  answer: AnswerState;
+  statistics: StatisticsState;
+  note: NoteState;
 }
 
-let moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
-    EffectsModule.forRoot([
-      FormEffects,
-      AnswerEffects,
-      StatisticsEffects,
-      NoteEffects
-    ]),
+const moduleImports = [
+  StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
+  EffectsModule.forRoot([
+    FormEffects,
+    AnswerEffects,
+    StatisticsEffects,
+    NoteEffects
+  ])
 ];
 if (!environment.production) {
-    moduleImports.push(StoreDevtoolsModule.instrument({
-      maxAge: 50,
-      logOnly: false
-    }))
+  moduleImports.push(StoreDevtoolsModule.instrument({
+    maxAge: 50,
+    logOnly: false
+  }));
 }
 
 @NgModule({
-    imports: moduleImports
+  imports: moduleImports
 })
 export class AppStoreModule {
-    constructor(store: Store<AppState>, tokenService: TokenService) {
-        tokenService.tokenStream.subscribe((token) => {
-            let clearForms = !token;
-            store.select(s => s.form).take(1).subscribe(s => {
-                if (clearForms || s.items.length > 0) {
-                    store.dispatch(new FormClearAll());
-                }
-                if (!clearForms) {
-                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
-                }
-            })
-        });
-    }
+  constructor(store: Store<AppState>, tokenService: TokenService) {
+    tokenService.tokenStream.subscribe((token) => {
+      const clearForms = !token;
+      store.select(s => s.form).pipe(take(1)).subscribe(s => {
+        if (clearForms || s.items.length > 0) {
+          store.dispatch(new FormClearAll());
+        }
+        if (!clearForms) {
+          store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+        }
+      });
+    });
+  }
 }

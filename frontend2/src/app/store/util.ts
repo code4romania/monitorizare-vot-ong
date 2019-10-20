@@ -1,13 +1,13 @@
+const typeCache: { [label: string]: boolean } = {};
 
-let typeCache: { [label: string]: boolean } = {};
 export function actionType<T extends string>(label: T): T {
-    if (typeCache[<string>label]) {
-        throw new Error(`Action type "${label}" is not unqiue"`);
-    }
+  if (typeCache[label as string]) {
+    throw new Error(`Action type "${ label }" is not unqiue"`);
+  }
 
-    typeCache[<string>label] = true;
+  typeCache[label as string] = true;
 
-    return <T>label;
+  return label;
 }
 
 

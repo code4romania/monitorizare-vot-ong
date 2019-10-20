@@ -7,33 +7,28 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 })
 export class PaginationComponent implements OnInit, OnChanges {
 
-  @Input()
-  page: number
-  @Input()
-  pageSize: number
+  @Input() page: number;
+  @Input() pageSize: number;
+  @Input() totalItems: number;
+  @Input() nextEnabled = true;
 
-  @Input()
-  totalItems: number
-
-  @Input()
-  nextEnabled = true
-
-  @Output()
-  pageChanged: EventEmitter<any> = new EventEmitter();
+  @Output() pageChanged: EventEmitter<any> = new EventEmitter();
 
   startingindex: number;
   endingIndex: number;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['page'] || changes['pageSize'] || changes['totalItems']) {
-      this.startingindex = (this.page - 1) * this.pageSize + 1;
-      this.endingIndex = this.startingindex + this.pageSize - 1
 
-      if(this.endingIndex > this.totalItems){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.page || changes.pageSize || changes.totalItems) {
+      this.startingindex = (this.page - 1) * this.pageSize + 1;
+      this.endingIndex = this.startingindex + this.pageSize - 1;
+
+      if (this.endingIndex > this.totalItems) {
         this.endingIndex = this.totalItems;
       }
     }
@@ -44,31 +39,28 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.nextEnabled === false) {
       return false;
     }
-    if (this.totalItems !== undefined && this.pageSize * this.page >= this.totalItems) {
-      return false;
-    }
-    return true;
+    return !(this.totalItems !== undefined && this.pageSize * this.page >= this.totalItems);
   }
-  canPrevPage(){
-    if(this.page === 1){
-      return false;
-    }
-    return true;
+
+  canPrevPage() {
+    return this.page !== 1;
   }
+
   nextPage() {
     if (this.canNextPage()) {
       this.pageChanged.emit({
         page: this.page + 1,
         pageSize: this.pageSize
-      })
+      });
     }
   }
+
   prevPage() {
-    if(this.canPrevPage()){
+    if (this.canPrevPage()) {
       this.pageChanged.emit({
         page: this.page - 1,
         pageSize: this.pageSize
-      })
+      });
     }
   }
 

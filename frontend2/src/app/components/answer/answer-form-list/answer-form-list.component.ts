@@ -1,5 +1,4 @@
 import { Note } from '../../../models/note.model';
-import { AnswerThread } from '../../../models/answer.thread.model';
 import { BaseQuestion } from '../../../models/base.question.model';
 import { CompletedQuestion } from '../../../models/completed.question.model';
 import { Form } from '../../../models/form.model';
@@ -20,20 +19,21 @@ export class AnswerFormListComponent implements OnInit {
   completedQuestions: CompletedQuestion[];
 
   @Input()
-  notes: Note[]
+  notes: Note[];
+
+  constructor() {
+  }
 
   answersForQuestion(question: BaseQuestion) {
     return _.find(this.completedQuestions, value => value.idIntrebare === question.idIntrebare);
   }
+
   notesForQuestion(question: BaseQuestion) {
-    if(!this.notes || !this.notes.length){
+    if (!this.notes || !this.notes.length) {
       return undefined;
     }
-    return this.notes.filter(note => note.codIntrebare === question.idIntrebare)
+    return this.notes.filter(note => note.codIntrebare === question.idIntrebare);
   }
-
-  constructor() { }
-
 
   ngOnInit() {
 
