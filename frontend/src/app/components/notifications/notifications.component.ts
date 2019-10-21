@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {NotificationsService} from '../../services/notifications.service';
 
 @Component({
   selector: 'app-notifications',
@@ -9,54 +10,50 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 export class NotificationsComponent implements OnInit {
 
   notificationForm: FormGroup;
-  counties: FormArray;
-   object:
-    {
-      "message": "string",
-      "counties":[
-        "GR",
-        "IL"
-        ],
-      "observers":[
-        "123",
-        "124"
-        ],
-      "pollingStations":[
-        "3456",
-        "8966"
-        ]
-    }
-  // constructor(private formBuilder: FormBuilder) { }
-  constructor(private fb: FormBuilder, private formBuilder: FormBuilder) {
-    this.form = this.fb.group({
-      published: true,
-      credentials: this.fb.array([]),
-    });
+
+  constructor(private formBuilder: FormBuilder, private notificationsService:NotificationsService) {
   }
+
   ngOnInit() {
     this.notificationForm = this.formBuilder.group({
       message: '',
       counties: this.formBuilder.array([new FormControl('')]),
-      observers: this.formBuilder.array([]),
-      pollingStations: this.formBuilder.array([])
+      observers: this.formBuilder.array([new FormControl('')]),
+      pollingStations: this.formBuilder.array([new FormControl('')])
     });
   }
 
   addCounty(): void {
     const counties = this.notificationForm.controls.counties as FormArray;
     counties.push(new FormControl(''));
-    console.log('dsadsa')
   }
 
-  form: FormGroup;
+  addObserver(): void {
+    const observers = this.notificationForm.controls.observers as FormArray;
+    observers.push(new FormControl(''));
+  }
 
+  addPollingStation(): void {
+    const pollingStations = this.notificationForm.controls.pollingStations as FormArray;
+    pollingStations.push(new FormControl(''));
+  }
 
+  removeCounty(index: number): void {
+    const counties = this.notificationForm.controls.counties as FormArray;
+    counties.removeAt(index);
+  }
 
-  addCreds() {
-    const creds = this.form.controls.credentials as FormArray;
-    creds.push(this.fb.group({
-      username: '',
-      password: '',
-    }));
+  removeObserver(index: number): void {
+    const observers = this.notificationForm.controls.observers as FormArray;
+    observers.removeAt(index);
+  }
+
+  removePollingStation(index: number): void {
+    const pollingStations = this.notificationForm.controls.observers as FormArray;
+    pollingStations.removeAt(index);
+  }
+
+  submitNotification(){
+    this.notificationsService.pushNotification(this.notificationForm.value);
   }
 }

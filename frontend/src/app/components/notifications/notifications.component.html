@@ -1,18 +1,45 @@
-<!--<button (click)="addCounty()" class="btn btn-primary">Add county</button>-->
-<!--<form formGroupName="notificationForm">-->
-  <!--<div formArrayName="counties" *ngFor="let county of notificationForm.get('counties').control; let i = index;">-->
-    <!--<input formControlName="i" placeholder="County name">-->
-  <!--</div>-->
-<!--</form>-->
-
-<form [formGroup]="notificationForm">
-  <h2>Message</h2>
-  <textarea>Add Message</textarea>
-    <h2>Counties</h2>
-    <button (click)="addCounty()">Add</button>
-
-    <div formArrayName="counties" *ngFor="let county of notificationForm.controls.counties?.value; let i = index">
-        <input placeholder="County" [formControlName]="i">
-
+<div class="container">
+  <div [formGroup]="notificationForm" class="row">
+    <div class="col-md-3">
+      <h2>Message</h2>
+      <textarea formControlName="message" placeholder="Message"></textarea>
     </div>
-</form>
+
+    <div class="col-md-3">
+      <h2>Counties</h2>
+      <button (click)="addCounty()">Add polling station</button>
+      <div *ngFor="let county of notificationForm.controls.counties?.value; let i = index" class="row"
+           formArrayName="counties">
+        <input [formControlName]="i" class="col-xs-6" placeholder="County">
+        <button (click)="removeCounty(i)" class="col-xs-6 minus-button">
+          <img src="../../../assets/buttons/minus.svg">
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <h2>Counties</h2>
+      <button (click)="addObserver()">Add polling station</button>
+      <div *ngFor="let observer of notificationForm.controls.observers?.value; let i = index"
+           formArrayName="observers">
+        <input [formControlName]="i" class="col-xs-6" placeholder="Observer">
+        <button (click)="removeObserver(i)" class="col-xs-6 minus-button">
+          <img src="../../../assets/buttons/minus.svg">
+        </button>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <h2>Counties</h2>
+      <button (click)="addPollingStation()">Add polling station</button>
+      <div *ngFor="let pollingStation of notificationForm.controls.pollingStations?.value; let i = index"
+           formArrayName="pollingStations">
+        <input [formControlName]="i" class="col-xs-6" placeholder="pollingStation">
+        <button (click)="removePollingStation(i)" class="col-xs-6 minus-button">
+          <img src="../../../assets/buttons/minus.svg">
+        </button>
+      </div>
+    </div>
+  </div>
+  <button (click)="submitNotification()" class="float-right" >Submit</button>
+</div>
