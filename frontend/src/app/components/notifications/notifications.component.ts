@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {NotificationsService} from '../../services/notifications.service';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {NotificationModel} from '../../models/notification.model';
 
 @Component({
   selector: 'app-notifications',
@@ -9,51 +11,96 @@ import {NotificationsService} from '../../services/notifications.service';
 })
 export class NotificationsComponent implements OnInit {
 
-  notificationForm: FormGroup;
+  message: string;
+  dropdownCouties = [];
+  dropdownObservers = [];
+  dropdownPollingStations = [];
+  selectedCounties = [];
+  selectedObservers = [];
+  selectedPollingStations = [];
+  dropdownSettings: IDropdownSettings = {};
+  itemsShowLimit = 10;
 
-  constructor(private formBuilder: FormBuilder, private notificationsService:NotificationsService) {
+  constructor(private formBuilder: FormBuilder, private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
-    this.notificationForm = this.formBuilder.group({
-      message: '',
-      counties: this.formBuilder.array([new FormControl('')]),
-      observers: this.formBuilder.array([new FormControl('')]),
-      pollingStations: this.formBuilder.array([new FormControl('')])
-    });
+
+    // TODO: make a request for counties
+    // this.notificationsService.getCounties().subscribe( res => this.dropdownCouties = res);
+    this.dropdownCouties = ['Bv', 'Is', 'Cj', 'Sb', 'Tm'];
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      // idField: 'item_text',
+      // textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: this.itemsShowLimit,
+      allowSearchFilter: true
+    };
   }
 
-  addCounty(): void {
-    const counties = this.notificationForm.controls.counties as FormArray;
-    counties.push(new FormControl(''));
+  onCountySelect(item: any) {
+    // TODO: make a request depends on the observers
+    console.log(item);
+    this.getObserversAndPollingStations();
+
+    this.dropdownObservers = ['1', '2', '3', '4', '5'];
+
+    this.dropdownPollingStations = ['1', '2', '3', '4', '5'];
   }
 
-  addObserver(): void {
-    const observers = this.notificationForm.controls.observers as FormArray;
-    observers.push(new FormControl(''));
+  onSelectAllCounties(items: any) {
+    // TODO: request observers and polling stations depends on all counties
+    // this.getObserversAndPollingStations();
   }
 
-  addPollingStation(): void {
-    const pollingStations = this.notificationForm.controls.pollingStations as FormArray;
-    pollingStations.push(new FormControl(''));
+  onObserverSelect(item: any) {
+    console.log(item);
   }
 
-  removeCounty(index: number): void {
-    const counties = this.notificationForm.controls.counties as FormArray;
-    counties.removeAt(index);
+  onSelectAllObservers(items: any) {
+    console.log(items);
   }
 
-  removeObserver(index: number): void {
-    const observers = this.notificationForm.controls.observers as FormArray;
-    observers.removeAt(index);
+  onPollingStationSelect(item: any) {
+    console.log(item);
   }
 
-  removePollingStation(index: number): void {
-    const pollingStations = this.notificationForm.controls.observers as FormArray;
-    pollingStations.removeAt(index);
+  onSelectAllPollingStations(items: any) {
+    console.log(items);
   }
 
-  submitNotification(){
-    this.notificationsService.pushNotification(this.notificationForm.value);
+  submitNotification() {
+    const notification: NotificationModel = new NotificationModel(this.message, this.selectedCounties,
+      this.selectedObservers, this.selectedPollingStations);
+
+    if(this.isValid(notification)){
+      this.notificationsService.pushNotification(notification);
+    } else {
+      alert('Not all fields have been completed');
+    }
+  }
+
+  private getObserversAndPollingStations():void {
+    this.notificationsService.getObserversCountiesObservers(this.selectedCounties).subscribe(res => this.dropdownObservers = res);
+    this.notificationsService.getObserversCountiesPollingStations(this.selectedCounties).subscribe(res => this.dropdownPollingStations = res);
+  }
+
+  private isValid(notification: NotificationModel): boolean{
+    if(!notification.message || notification.message === ''){
+      return false;
+    }
+    if(!notification.counties || !(notification.counties.length > 0)){
+      return false;
+    }
+    if(!notification.observers || !(notification.observers.length > 0)){
+      return false;
+    }
+    if(!notification.pollingStations || !(notification.pollingStations.length >0)){
+      return false;
+    }
+    return true;
   }
 }

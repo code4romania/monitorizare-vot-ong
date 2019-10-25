@@ -1,35 +1,36 @@
-import { ErrorIndicatorComponent } from './error-indicator/error-indicator.component';
-import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
-import { PaginationComponent } from './pagination/pagination.component';
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import {ErrorIndicatorComponent} from './error-indicator/error-indicator.component';
+import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
+import {PaginationComponent} from './pagination/pagination.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { TabsModule, CollapseModule } from 'ngx-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import {RouterModule} from '@angular/router';
+import {CollapseModule, TabsModule} from 'ngx-bootstrap';
+import {TranslateModule} from '@ngx-translate/core';
+
 @NgModule({
-    imports: [
-      FormsModule,
-      CommonModule,
-      CollapseModule,
-      TabsModule.forRoot(),
-      RouterModule,
-      TranslateModule
-    ],
-    exports: [
-      FormsModule,
-      CommonModule,
-      CollapseModule,
-      TabsModule,
-      RouterModule,
-      PaginationComponent,
-      LoadingIndicatorComponent,
-      ErrorIndicatorComponent,
-      TranslateModule,
-      ReactiveFormsModule
-    ],
-    declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
-    providers: []
+  imports: [
+    FormsModule,
+    CommonModule,
+    CollapseModule,
+    TabsModule.forRoot(),
+    RouterModule,
+    TranslateModule,
+  ],
+  exports: [
+    FormsModule,
+    CommonModule,
+    CollapseModule,
+    TabsModule,
+    RouterModule,
+    PaginationComponent,
+    LoadingIndicatorComponent,
+    ErrorIndicatorComponent,
+    TranslateModule,
+    ReactiveFormsModule,
+  ],
+  declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
+  providers: []
 })
 export class SharedModule {
 
