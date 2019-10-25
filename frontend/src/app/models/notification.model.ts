@@ -1,4 +1,4 @@
-export class Notification {
+export class NotificationModel {
   message: string;
   counties: string[];
   observers: string[];

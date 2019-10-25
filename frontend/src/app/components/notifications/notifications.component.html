@@ -1,45 +1,50 @@
 <div class="container">
-  <div [formGroup]="notificationForm" class="row">
-    <div class="col-md-3">
-      <h2>Message</h2>
-      <textarea formControlName="message" placeholder="Message"></textarea>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <label for="messageTextarea">Message</label>
+      <textarea [(ngModel)]="message" class="form-control" id="messageTextarea" placeholder="Message"></textarea>
     </div>
 
-    <div class="col-md-3">
-      <h2>Counties</h2>
-      <button (click)="addCounty()">Add polling station</button>
-      <div *ngFor="let county of notificationForm.controls.counties?.value; let i = index" class="row"
-           formArrayName="counties">
-        <input [formControlName]="i" class="col-xs-6" placeholder="County">
-        <button (click)="removeCounty(i)" class="col-xs-6 minus-button">
-          <img src="../../../assets/buttons/minus.svg">
-        </button>
+    <div class="col-md-6 form-group">
+      <div>
+        <label for="countiesMultiSelect">Counties</label>
+        <ng-multiselect-dropdown id="countiesMultiSelect"
+          (onSelect)="onCountySelect($event)"
+          (onSelectAll)="onSelectAllCounties($event)"
+          [(ngModel)]="selectedCounties"
+          [data]="dropdownCouties"
+          [placeholder]="'Counties'"
+          [settings]="dropdownSettings"
+        >
+        </ng-multiselect-dropdown>
       </div>
-    </div>
 
-    <div class="col-md-3">
-      <h2>Counties</h2>
-      <button (click)="addObserver()">Add polling station</button>
-      <div *ngFor="let observer of notificationForm.controls.observers?.value; let i = index"
-           formArrayName="observers">
-        <input [formControlName]="i" class="col-xs-6" placeholder="Observer">
-        <button (click)="removeObserver(i)" class="col-xs-6 minus-button">
-          <img src="../../../assets/buttons/minus.svg">
-        </button>
+      <div class="margin-top">
+        <label for="observersMultiSelect">Observers</label>
+        <ng-multiselect-dropdown id="observersMultiSelect"
+          (onSelect)="onObserverSelect($event)"
+          (onSelectAll)="onSelectAllObservers($event)"
+          [(ngModel)]="selectedObservers"
+          [data]="dropdownObservers"
+          [placeholder]="'Observers'"
+          [settings]="dropdownSettings"
+        >
+        </ng-multiselect-dropdown>
       </div>
-    </div>
 
-    <div class="col-xs-3">
-      <h2>Counties</h2>
-      <button (click)="addPollingStation()">Add polling station</button>
-      <div *ngFor="let pollingStation of notificationForm.controls.pollingStations?.value; let i = index"
-           formArrayName="pollingStations">
-        <input [formControlName]="i" class="col-xs-6" placeholder="pollingStation">
-        <button (click)="removePollingStation(i)" class="col-xs-6 minus-button">
-          <img src="../../../assets/buttons/minus.svg">
-        </button>
+      <div class="margin-top">
+        <label for="pollingStationMultiSelect">Polling stations</label>
+        <ng-multiselect-dropdown id="pollingStationMultiSelect"
+          (onSelect)="onPollingStationSelect($event)"
+          (onSelectAll)="onSelectAllPollingStations($event)"
+          [(ngModel)]="selectedPollingStations"
+          [data]="dropdownPollingStations"
+          [placeholder]="'Polling stations'"
+          [settings]="dropdownSettings"
+        >
+        </ng-multiselect-dropdown>
       </div>
     </div>
   </div>
-  <button (click)="submitNotification()" class="float-right" >Submit</button>
+  <button (click)="submitNotification()" class="btn btn-default">Submit</button>
 </div>
