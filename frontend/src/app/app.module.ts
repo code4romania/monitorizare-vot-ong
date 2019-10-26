@@ -3,18 +3,17 @@ import {ComponentsModule} from './components/components.module';
 
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
-import {AnswersService} from './services/answers.service';
 import {SharedModule} from './shared/shared.module';
 import {AppStoreModule} from './store/store.module';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {EditableFormsService} from './services/editable.forms.service';
 
-export function HttpLoaderFactory(http: Http) {
-  return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
 }
 
 @NgModule({
@@ -30,12 +29,11 @@ export function HttpLoaderFactory(http: Http) {
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [Http]
+        deps: [HttpClient]
       }
     })
   ],
   providers: [
-    AnswersService,
     EditableFormsService
   ],
 

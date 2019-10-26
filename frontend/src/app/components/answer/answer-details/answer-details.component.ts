@@ -1,15 +1,14 @@
-import { AnswerExtra } from '../../../models/answer.extra.model';
-import { Note } from '../../../models/note.model';
-import { NoteState } from '../../../store/note/note.reducer';
-import { LoadAnswerDetailsAction } from '../../../store/answer/answer.actions';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/store.module';
-import { Observable, Subscriber, Subscription } from 'rxjs/Rx';
-import { Form } from '../../../models/form.model';
-import { FormState } from '../../../store/form/form.reducer';
-import { AnswerState } from '../../../store/answer/answer.reducer';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {NoteState} from '../../../store/note/note.reducer';
+import {LoadAnswerDetailsAction} from '../../../store/answer/answer.actions';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../store/store.module';
+import {Subscription} from 'rxjs/Rx';
+import {FormState} from '../../../store/form/form.reducer';
+import {AnswerState} from '../../../store/answer/answer.reducer';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as _ from 'lodash';
+import {CompletedQuestion} from '../../../models/completed.question.model';
+
 @Component({
   selector: 'app-answer-details',
   templateUrl: './answer-details.component.html',
@@ -45,14 +44,14 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
     if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
       return []
     }
-    return this.noteState.notes.filter(note => note.codFormular === formId)
+    return this.noteState.notes.filter(note => note.formCode === formId)
   }
 
-  formAnswers(formId: string) {
+  formAnswers(): CompletedQuestion[] {
     if (!this.answerState || !this.answerState.selectedAnswer) {
-      return {}
+      return [];
     }
-    return this.answerState.selectedAnswer.filter(value => value.codFormular);
+    return this.answerState.selectedAnswer.filter(value => value.formCode);
   }
 
   constructor(private store: Store<AppState>) { }

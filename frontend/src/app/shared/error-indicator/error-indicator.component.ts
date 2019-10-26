@@ -1,5 +1,4 @@
-import { EventEmitter } from '@angular/common/src/facade/async';
-import { Component, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-error-indicator',

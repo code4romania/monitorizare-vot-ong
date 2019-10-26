@@ -26,21 +26,20 @@ export class AppState {
 }
 
 let moduleImports = [
-    StoreModule.provideStore({
-      form: formReducer,
-      answer: answerReducer,
-      statistics: statisticsReducer,
-      note: noteReducer,
-      editableForms: editableFormsReducer
-    }),
-    EffectsModule.run(FormEffects),
-    EffectsModule.run(AnswerEffects),
-    EffectsModule.run(StatisticsEffects),
-    EffectsModule.run(NoteEffects),
-    EffectsModule.run(EditableFormsEffects)
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer, editableForms: editableFormsReducer}),
+    EffectsModule.forRoot([
+      FormEffects,
+      AnswerEffects,
+      StatisticsEffects,
+      NoteEffects,
+      EditableFormsEffects
+    ]),
 ];
 if (!environment.production) {
-    moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
+    moduleImports.push(StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: false
+    }))
 }
 
 @NgModule({
