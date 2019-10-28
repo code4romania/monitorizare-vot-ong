@@ -3,6 +3,6 @@ export class EditableFormQuestionOption{
     public id: number,
     public text: string,
     public isTextOption: boolean,
-    public isFlagged: boolean
+    public isFlagged: boolean = false
   ) {}
 }

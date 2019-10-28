@@ -4,18 +4,63 @@ import {EditableForm} from '../models/editable.form.model';
 import {EditableFormSection} from '../models/editable.form.section.model';
 import {EditableFormQuestion} from '../models/editable.form.question.model';
 import {EditableFormQuestionOption} from '../models/editable.form.question.option.model';
-import {nextNumericId} from '../shared/id.service';
-import {replaceAt} from '../shared/functions';
-import {QuestionType} from '../models/editable.form.question.type';
-
-const DEFAULT_QUESTION_TYPE = QuestionType.SINGLE_CHOICE.id;
-const DEFAULT_FORM_SET_DESCRIPTION = 'This is newly generated';
-const DEFAULT_QUESTION_TEXT = 'This is newly generated description';
+import {Observable} from 'rxjs';
 
 const API = {
-  forms: (id = undefined) => id ? `/mock/v1/formulare?IdFormular=${id}` : '/mock/v1/formulare',
-  formsVersions: '/mock/v1/formulare/versiuni',
+  forms: (id = undefined) => id ? `/api/v1/form/${id}` : '/api/v1/form'
 };
+
+class BackendFormQuestionOption {
+  constructor(
+    public idOption: number,
+    public text: string,
+    public isFreeText: boolean
+  ) {
+  }
+}
+
+class BackendFormQuestion {
+  constructor(
+    public id: number,
+    public formCode: string,
+    public code: string,
+    public idSection: number,
+    public questionType: number,
+    public text: string,
+    public optionsToQuestions: BackendFormQuestionOption[]
+  ) {
+  }
+}
+
+class BackendFormSection {
+  constructor(
+    public id: number,
+    public uniqueId: string,
+    public code: string,
+    public description: string,
+    public questions: any[]
+  ) {
+  }
+}
+
+class BackendForm {
+  constructor(
+    public id: number,
+    public code: string,
+    public description: string,
+    public ver: number,
+    public formSections: BackendFormSection[]
+  ) {
+  }
+}
+
+class FormVersions {
+  constructor(
+    public formVersions: BackendForm[]
+  ) {
+  }
+}
+
 
 @Injectable()
 export class EditableFormsService {
@@ -23,171 +68,21 @@ export class EditableFormsService {
   constructor(private http: ApiService) {
   }
 
-  loadAllForms = () => {
-    return this.http.get('/mock/v1/formulare/versiuni')
-      .map(res => res.json())
-      .map(json => {
-        return json.map(this.mapFormularToForm)
-      })
+  public loadAllForms(): Observable<EditableForm[]> {
+    return this.http.get<FormVersions>(API.forms())
+      .flatMap(versions => versions.formVersions)
+      .map(f => new EditableForm(f.id, f.code, f.formSections, f.description, f.ver))
+      .toArray();
   };
 
-  loadFormById = (id: string) => {
-    return this.http.get(API.forms(id))
-      .map(res => res.json())
-      .map(this.mapFormularToForm)
-  };
-
-  createFormSet = () => {
-    return this.http.post(API.forms(), {});
-  };
-
-  addFormToSetSet = (formSet: EditableForm) => {
-    const existingIds = formSet.sections.map(section => section.id);
-    const updatedFormSet = {
-      ...formSet,
-      sections: [
-        new EditableFormSection(nextNumericId(existingIds), formSet.id, DEFAULT_FORM_SET_DESCRIPTION, []),
-        ...formSet.sections
-      ]
-    };
-    return this.http.put(API.forms(), this.mapFormSetToFormular(updatedFormSet));
-  };
-
-  deleteFormFromSet = (formSet: EditableForm, formId: number) => {
-    const updatedFormSet = {
-      ...formSet,
-      sections: formSet.sections.filter(section => section.id !== formId)
-    };
-    return this.http.put(API.forms(), this.mapFormSetToFormular(updatedFormSet));
-  };
-
-  addQuestionToForm = (formSet: EditableForm, formId: number) => {
-    const updatedFormIndex = formSet.sections.findIndex(s => s.id === formId);
-    const existingForm = formSet.sections[updatedFormIndex];
-    const createdQuestion = new EditableFormQuestion(
-      nextNumericId(existingForm.questions.map(q => q.id)),
-      formId,
-      existingForm.id,
-      DEFAULT_QUESTION_TEXT,
-      DEFAULT_QUESTION_TYPE,
-      []
-    );
-    const nextForm = new EditableFormSection(
-      existingForm.id,
-      existingForm.code,
-      existingForm.description,
-      [
-        createdQuestion,
-        ...existingForm.questions
-      ]
-    );
-    const nextFormSet = new EditableForm(
-      formSet.id,
-      replaceAt(formSet.sections, updatedFormIndex, nextForm),
-      formSet.description,
-      formSet.version,
-      formSet.published
-    );
-    return this.http.put(API.forms(), this.mapFormSetToFormular(nextFormSet));
-  };
-
-  deleteQuestionFromForm = (formSet: EditableForm, formId: number, questionId: number) => {
-    const updatedFormIndex = formSet.sections.findIndex(s => s.id === formId);
-    const existingForm = formSet.sections[updatedFormIndex];
-    const nextForm = new EditableFormSection(
-      existingForm.id,
-      existingForm.code,
-      existingForm.description,
-      existingForm.questions.filter(q => q.id !== questionId)
-    );
-    const nextFormSet = new EditableForm(
-      formSet.id,
-      replaceAt(formSet.sections, updatedFormIndex, nextForm),
-      formSet.description,
-      formSet.version,
-      formSet.published
-    );
-    return this.http.put(API.forms(), this.mapFormSetToFormular(nextFormSet));
-  };
-
-  updateQuestionInForm = (formSet: EditableForm, formId: number, question: EditableFormQuestion) => {
-    const updatedFormIndex = formSet.sections.findIndex(s => s.id === formId);
-    const existingForm = formSet.sections[updatedFormIndex];
-    const updatedQuestionIndex = existingForm.questions.findIndex(q => q.id === question.id);
-    const nextForm = new EditableFormSection(
-      existingForm.id,
-      existingForm.code,
-      existingForm.description,
-      replaceAt(existingForm.questions, updatedQuestionIndex, question)
-    );
-    const nextFormSet = new EditableForm(
-      formSet.id,
-      replaceAt(formSet.sections, updatedFormIndex, nextForm),
-      formSet.description,
-      formSet.version,
-      formSet.published
-    );
-    return this.http.put(API.forms(), this.mapFormSetToFormular(nextFormSet));
-  };
-
-  deserialize = (clientInput) => {
-    return this.mapFormularToForm(clientInput);
-  };
-
-  private mapFormularToForm = (formular) => {
-    //  i don't have time to figure out why `this.mapSections` is not working here
-    const sections = (formular.sectiuniFormular || []).map(sectiune => new EditableFormSection(
-      sectiune.id,
-      sectiune.codSectiune,
-      sectiune.descriere,
-      sectiune.intrebari.map(i => new EditableFormQuestion(
-        i.idIntrebare,
-        i.codFormular,
-        i.codIntrebare,
-        i.textIntrebare,
-        i.idTipIntrebare,
-        i.raspunsuri.map(r => new EditableFormQuestionOption(
-          r.idOptiune,
-          r.textOptiune,
-          r.seIntroduceText,
-          false
+  public loadFormById(id: string): Observable<EditableFormSection[]> {
+    return this.http.get<BackendFormSection[]>(API.forms(id))
+      .map((sections: BackendFormSection[]) =>
+        (sections.map(s => new EditableFormSection(s.id, s.code, s.description,
+          s.questions.map((q: BackendFormQuestion) => new EditableFormQuestion(q.id, q.idSection, q.code, q.text, q.questionType,
+            q.optionsToQuestions.map((o: BackendFormQuestionOption) => new EditableFormQuestionOption(o.idOption, o.text, o.isFreeText)))))
         ))
-      ))
-    ));
-    return new EditableForm(
-      formular.codFormular,
-      sections,
-      formular.descriere,
-      formular.versiune,
-      formular.statusFormular === 'COMPLETED'
-    );
-  };
-
-  private mapFormSetToFormular = (formSet: EditableForm) => {
-    return {
-      codFormular: formSet.id,
-      descriere: formSet.description,
-      versiune: formSet.version,
-      statusFormular: formSet.published ? 'COMPLETED' : 'DRAFT',
-      sectiuniFormular: (formSet.sections || []).map(section => ({
-        id: section.id,
-        codSectiune: section.code,
-        descriere: section.description,
-        intrebari: section.questions.map(question => ({
-          idIntrebare: question.id,
-          codFormular: formSet.id,
-          codIntrebare: question.code,
-          textIntrebare: question.text,
-          idTipIntrebare: question.typeId,
-          raspunsuri: question.options.map(option => ({
-            idOptiune: option.id,
-            textOptiune: option.text,
-            seIntroduceText: option.isTextOption,
-            raspunsCuFlag: option.isFlagged
-          }))
-        }))
-      }))
-    };
-  };
+      );
+  }
 
 }

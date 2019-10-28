@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
             password: this.password
         })
             .subscribe(res => {
-                this.tokenService.token = res;
+                this.tokenService.token = JSON.parse(res)["access_token"];
                 this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;

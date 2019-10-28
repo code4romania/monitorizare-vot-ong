@@ -51,7 +51,7 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
         console.log('Params for questions got changed:', params);
         return this.store.select(s => s.editableForms.forms)
           .concatMap(forms => forms)
-          .filter(f => f.id === params.formSetId)
+          .filter(f => f.id === parseInt(params.formSetId))
           .flatMap(forms => forms.sections)
           .filter(section => section.id === parseInt(params.formId));
       })

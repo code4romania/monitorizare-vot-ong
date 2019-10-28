@@ -2,6 +2,7 @@ import {actionType} from '../util';
 import {Action} from '@ngrx/store';
 import {EditableForm} from '../../models/editable.form.model';
 import {EditableFormQuestion} from '../../models/editable.form.question.model';
+import {EditableFormSection} from '../../models/editable.form.section.model';
 
 export class EditableFormsActionTypes{
   static readonly LOAD_ALL = actionType('[Editable Forms] LOAD ALL');
@@ -31,7 +32,7 @@ export class EditableFormsLoadByIdAction implements Action{
 }
 export class EditableFormsLoadByIdCompleteAction implements Action {
   readonly type = EditableFormsActionTypes.LOAD_BY_ID_COMPLETE;
-  constructor(public payload: EditableForm){}
+  constructor(public payload: EditableFormSection[]){}
 }
 export class EditableFormsCreateAction implements Action{
   readonly type = EditableFormsActionTypes.CREATE_FORM_SET;

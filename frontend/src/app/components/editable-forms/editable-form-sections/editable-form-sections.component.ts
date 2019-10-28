@@ -25,7 +25,7 @@ export class EditableFormSectionsComponent implements OnInit, OnDestroy {
         .switchMap((params: Params) => this.store
           .select(s => s.editableForms.forms)
           .concatMap( forms => forms)
-          .filter( form => form.id === params.id)
+          .filter( form => form.id === parseInt(params.id))
         )
         .subscribe(selectedFormSet => this.selectedFormSet = selectedFormSet)
     );

@@ -3,7 +3,8 @@ import {EditableFormSection} from './editable.form.section.model';
 
 export class EditableForm{
   constructor(
-    public id: string,
+    public id: number,
+    public code: string,
     public sections: EditableFormSection[] = [],
     public description: string = '',
     public version: number = 1,

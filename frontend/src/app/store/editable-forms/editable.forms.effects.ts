@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {
   EditableFormsActionTypes,
-  EditableFormsCreateCompleteAction,
   EditableFormsLoadAllCompleteAction,
   EditableFormsLoadByIdAction,
-  EditableFormsLoadByIdCompleteAction,
-  EditableFormsUpdateFormSetCompleteAction
+  EditableFormsLoadByIdCompleteAction
 } from './editable.forms.actions';
 import {EditableFormsService} from '../../services/editable.forms.service';
+import {EditableForm} from '../../models/editable.form.model';
+import {EditableFormSection} from '../../models/editable.form.section.model';
 
 @Injectable()
 export class EditableFormsEffects {
@@ -19,61 +19,13 @@ export class EditableFormsEffects {
   loadEditableFormsAction = this.actions
     .ofType(EditableFormsActionTypes.LOAD_ALL)
     .concatMap(() => this.service.loadAllForms())
-    .map(forms => new EditableFormsLoadAllCompleteAction(forms));
+    .map((forms: EditableForm[]) => new EditableFormsLoadAllCompleteAction(forms));
 
   @Effect()
   loadEditableFormsByIdAction = this.actions
     .ofType(EditableFormsActionTypes.LOAD_BY_ID)
     .map((action: EditableFormsLoadByIdAction) => action.payload)
     .concatMap(id => this.service.loadFormById(id))
-    .map(form => new EditableFormsLoadByIdCompleteAction(form));
+    .map((sections: EditableFormSection[]) => new EditableFormsLoadByIdCompleteAction(sections));
 
-  @Effect()
-  createEditableFormSetAction = this.actions
-    .ofType(EditableFormsActionTypes.CREATE_FORM_SET)
-    .map(() => this.service.createFormSet())
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsCreateCompleteAction(form));
-
-  @Effect()
-  addFormToSetAction = this.actions
-    .ofType(EditableFormsActionTypes.ADD_FORM_TO_SET)
-    .map(action => this.service.addFormToSetSet(action.payload))
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
-
-
-  @Effect()
-  deleteFormFromSet = this.actions
-    .ofType(EditableFormsActionTypes.DELETE_FORM_FROM_SET)
-    .map(action => this.service.deleteFormFromSet(action.payload.formSet, action.payload.formId))
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
-
-  @Effect()
-  addQuestionToForm = this.actions
-    .ofType(EditableFormsActionTypes.ADD_QUESTION_TO_FORM)
-    .map(action => this.service.addQuestionToForm(action.payload.formSet, action.payload.formId))
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
-
-  @Effect()
-  deleteQuestionFromForm = this.actions
-    .ofType(EditableFormsActionTypes.DELETE_QUESTION_FROM_FORM)
-    .map(action => this.service.deleteQuestionFromForm(action.payload.formSet, action.payload.formId, action.payload.questionId))
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
-
-  @Effect()
-  updateQuestionInForm = this.actions
-    .ofType(EditableFormsActionTypes.UPDATE_QUESTION_IN_FORM)
-    .map(action => this.service.updateQuestionInForm(action.payload.formSet, action.payload.formId, action.payload.question))
-    .concatMap(res => res)
-    .map(res => this.service.deserialize(res.json()))
-    .map(form => new EditableFormsUpdateFormSetCompleteAction(form));
 }

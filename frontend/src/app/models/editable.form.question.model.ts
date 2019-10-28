@@ -4,7 +4,7 @@ export class EditableFormQuestion{
   constructor(
     public id: number,
     public formId: number,
-    public code: number,
+    public code: string,
     public text: string,
     public typeId: number,
     public options: EditableFormQuestionOption[]
