@@ -45,7 +45,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
 
   pageChanged(event) {
-    this.loadObservers(event.pageNo);
+    this.loadObservers(event.page);
   }
 
   applyFilters() {
@@ -63,7 +63,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
       .take(1)
       .map(data => values(data))
       .concatMap(s => Observable.from(s))
-      .map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 5, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('phone').value))
+      .map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 100, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('phone').value))
       .subscribe(action => this.store.dispatch(action));
   }
 

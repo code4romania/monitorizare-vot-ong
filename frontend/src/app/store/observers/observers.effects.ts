@@ -37,8 +37,7 @@ export class ObserversEffects {
           data: Observer[],
           totalPages: number,
           totalItems: number
-        }>(`/api/v1/observer${observersConfig.find(value => value.key === a.payload.key).method}?Name=${a.payload.searchParamName}&Number=${a.payload.searchParamPhone}`).map(res => {
-          console.log(a);
+        }>(`/api/v1/observer${observersConfig.find(value => value.key === a.payload.key).method}?Name=${a.payload.searchParamName}&Number=${a.payload.searchParamPhone}&Page=${a.payload.page}&PageSize=${a.payload.pageSize}`).map(res => {
           return {
             key: a.payload.key,
             json: res
@@ -46,7 +45,7 @@ export class ObserversEffects {
         }))
     )
     .map((value: any) => {
-        return new LoadObserversCompleteAction(value.key, value.json, 1, 100);
+        return new LoadObserversCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems);
       }
     )
     .catch((err) => Observable.of(new LoadObserversErrorAction(err)));
