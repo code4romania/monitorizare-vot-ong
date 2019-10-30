@@ -2,11 +2,11 @@
     <div *ngIf="!state.threadsLoading">
         <div *ngFor="let answer of answerList()" class="panel panel-default">
           <div class="panel-body">
-            <a [routerLink]="[answerLinkPrefix(),answer.idObservator, answer.idSectie]"
+            <a [routerLink]="[answerLinkPrefix(),answer.idObserver, answer.idPollingStation]"
                routerLinkActive="active">
 
-                <h4>{{'STATION' | translate}}: {{answer.sectie}}</h4>
-                <h6>{{answer.observator}}</h6>
+                <h4>{{'STATION' | translate}}: {{answer.pollingStationName}}</h4>
+                <h6>{{answer.observerName}}</h6>
 
             </a>
           </div>

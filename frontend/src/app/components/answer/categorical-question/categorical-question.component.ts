@@ -23,7 +23,7 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = _.keyBy(value, value => value.idOptiune)
+      this.completedAnswers = _.keyBy(value, value => value.idOption)
     } else {
       this.completedAnswers = undefined;
     }
@@ -46,15 +46,15 @@ export class CategoricalQuestionComponent implements OnInit {
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
       if (this.isSingle && answers && answers.length > 1) {
-        console.log(`Multiple answers on question with id ${this.question.idIntrebare}`)
+        console.log(`Multiple answers on question with id ${this.question.id}`)
       }
     }
     catch (ex) { }
   }
   validateTextQuestion(answers: CompletedAnswer[]) {
     try {
-      if (this.isTextQuestion && answers && _.reject(answers, a => a.seIntroduceText || !!a.value).length > 1) {
-        console.log(`Multiple text answers on question with id ${this.question.idIntrebare}`);
+      if (this.isTextQuestion && answers && _.reject(answers, a => a.isFreeText || !!a.value).length > 1) {
+        console.log(`Multiple text answers on question with id ${this.question.id}`);
       }
     } catch (ex) { }
 
@@ -63,29 +63,29 @@ export class CategoricalQuestionComponent implements OnInit {
     return this.notes && this.notes.length;
   }
   get isFlagged() {
-    return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag);
+    return _.some(_.values(this.completedAnswers), a => a.flagged);
   }
 
   get isTextQuestion() {
-    return this.question.idTipIntrebare === 2 || this.question.idTipIntrebare === 3
+    return this.question.idQuestionType === 2 || this.question.idQuestionType === 3
   }
   get isSingle() {
-    return this.question.idTipIntrebare === 0 || this.question.idTipIntrebare === 4;
+    return this.question.idQuestionType === 0 || this.question.idQuestionType === 4;
   }
 
   isChecked(answer: BaseAnswer) {
-    return this.completedAnswers && this.completedAnswers[answer.idOptiune];
+    return this.completedAnswers && this.completedAnswers[answer.idOption];
   }
   isTextAnswer(answer: BaseAnswer) {
-    return this.isTextQuestion && answer.seIntroduceText;
+    return this.isTextQuestion && answer.isFreeText;
   }
 
   isFlaggedAnswer(answer: BaseAnswer) {
-    return _.some(_.values(this.completedAnswers), a => a.raspunsCuFlag && a.idOptiune === answer.idOptiune);
+    return _.some(_.values(this.completedAnswers), a => a.flagged && a.idOption === answer.idOption);
   }
 
   answerTextValue(answer: BaseAnswer) {
-    return this.completedAnswers && this.completedAnswers[answer.idOptiune] && this.completedAnswers[answer.idOptiune].value;
+    return this.completedAnswers && this.completedAnswers[answer.idOption] && this.completedAnswers[answer.idOption].value;
   }
 
 
