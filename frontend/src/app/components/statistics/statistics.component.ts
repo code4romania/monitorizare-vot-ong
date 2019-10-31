@@ -22,7 +22,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   constructor(private http: ApiService, private store: Store<AppState>) { }
 
-  
+
   canShowItem(item: StatisticsStateItem){
     return item && !item.error && !item.loading && item.values && item.values.length;
   }

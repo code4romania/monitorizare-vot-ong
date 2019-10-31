@@ -10,6 +10,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import {ObserversService} from './services/observers.service';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -24,6 +27,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppStoreModule,
     AppRoutingModule,
     ComponentsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -33,6 +38,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
   ],
   providers: [
+    ObserversService
   ],
 
   bootstrap: [AppComponent]

@@ -4,7 +4,7 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --proxy proxy.conf.json",
     "start-qa": "ng serve --environment=qa",
     "start-prod": "ng serve --environment=prod",
     "build": "ng build --prod --sourcemap false",
@@ -40,6 +40,7 @@
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "ngx-bootstrap": "^2.0.5",
+    "ngx-toastr": "^8.10.2",
     "rxjs": "^5.5.12",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
