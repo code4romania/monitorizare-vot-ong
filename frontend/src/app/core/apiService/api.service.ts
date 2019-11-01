@@ -32,9 +32,6 @@ export class ApiService {
   }
 
   private request<T>(url: string, method: string, options?: HttpOptions): Observable<T> {
-    if (options.withCredentials === false) {
-      return this.httpClient.request<T>(method, url, options);
-    }
     options.headers = options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
 
     return this.httpClient.request<T>(method, url, options).catch((err: any) => {
@@ -47,9 +44,7 @@ export class ApiService {
   }
 
   private normalizeRequest<T>(url: string, method: string, options?: HttpOptions, body?: any): Observable<T> {
-    let requestOptions = options || {
-      withCredentials: true
-    };
+    let requestOptions = options || {};
     requestOptions.headers = requestOptions.headers || new HttpHeaders();
     requestOptions.responseType = requestOptions.responseType || 'json';
     if (body) {
