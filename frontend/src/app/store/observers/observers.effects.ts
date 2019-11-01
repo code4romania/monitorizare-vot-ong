@@ -48,7 +48,7 @@ export class ObserversEffects {
             key: a.payload.key,
             json: res
           }
-        })
+        });
       }
       )
     )
