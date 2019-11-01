@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
             this.loginSubscription.unsubscribe();
         }
         const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/access/authorize');
-        this.loginSubscription = this.http.untypedPost(authUrl, {
+        this.loginSubscription = this.http.post<{access_token: string, expires_in:number}>(authUrl, {
             user: this.user,
             password: this.password
         })
             .subscribe(res => {
-                this.tokenService.token = res;
+                this.tokenService.token = res.access_token;
                 this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;
