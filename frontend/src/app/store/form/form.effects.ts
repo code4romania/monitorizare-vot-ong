@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { FormSection } from '../../models/form.section.model';
 import { Location } from '@angular/common';
 import { environment } from 'environments/environment';
+import { FormInfo } from 'app/models/form.info.model';
 
 @Injectable()
 export class FormEffects {
@@ -19,13 +20,14 @@ export class FormEffects {
     @Effect()
     loadFormAction = this.actions
         .ofType(FormActionTypes.LOAD)
-        .map((action: FormLoadAction) => action.payload)
-        .switchMap(ids => Observable.from(ids))
+        .switchMap(_ => this.getAvailableForms())
+        .switchMap(r=>r.formVersions)
+        .map(f=>f.id)
         .concatMap(id => this.getForm(id))
         .map(form => new FormLoadCompletedAction([form]))
         .catch(() => Observable.of(new FormErrorAction()));
 
-    private getForm(id: string): Observable<Form> {
+    private getForm(id: number): Observable<Form> {
         const formsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${id}`);
 
         return this.http.get<FormSection[]>(formsUrl)
@@ -36,4 +38,10 @@ export class FormEffects {
                 return form;
             })
     }
+    private getAvailableForms(): Observable<FormInfo> {
+        const formsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/form/');
+
+        return this.http.get<FormInfo>(formsUrl);
+    }
+    
 }

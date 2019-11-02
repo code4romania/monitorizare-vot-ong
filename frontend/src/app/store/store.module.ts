@@ -49,13 +49,14 @@ if (!environment.production) {
 export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {
         tokenService.tokenStream.subscribe((token) => {
+            debugger;
             let clearForms = !token;
             store.select(s => s.form).take(1).subscribe(s => {
                 if (clearForms || s.items.length > 0) {
                     store.dispatch(new FormClearAll());
                 }
                 if (!clearForms) {
-                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+                    store.dispatch(new FormLoadAction());
                 }
             })
         });
