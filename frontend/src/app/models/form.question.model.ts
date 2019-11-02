@@ -1,7 +1,12 @@
 import { BaseAnswer } from './base.answer.model';
-import { BaseQuestion } from './base.question.model';
-export class FormQuestion extends BaseQuestion {
+
+export class FormQuestion {
+    id: number;
+    formCode: string;
+    code: string;
     idSection: number;
+    questionType: number;
+    text: string;
     hint: string;
     optionsToQuestions: BaseAnswer[];
 }

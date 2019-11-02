@@ -1,11 +1,11 @@
 <div class="comp-container">
     <div *ngIf="answerExtra" class="col-md-3-3">
         <div class="">
-            <div *ngIf="answerExtra.oraSosirii" class="col-md-1-2">
-                {{'ARRIVAL_TIME' | translate}}: {{answerExtra.oraSosirii | date:'shortTime'}}
+            <div *ngIf="answerExtra.observerArrivalTime" class="col-md-1-2">
+                {{'ARRIVAL_TIME' | translate}}: {{answerExtra.observerArrivalTime | date:'shortTime'}}
             </div>
-            <div *ngIf="answerExtra.oraPlecarii" class="col-md-1-2">
-                {{'DEPARTURE_TIME' | translate}}: {{answerExtra.oraPlecarii | date:'shortTime'}}
+            <div *ngIf="answerExtra.observerLeaveTime" class="col-md-1-2">
+                {{'DEPARTURE_TIME' | translate}}: {{answerExtra.observerLeaveTime | date:'shortTime'}}
             </div>
         </div>
         <div class="frow">
