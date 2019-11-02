@@ -1,13 +1,19 @@
-import {LabelValueModel} from '../../models/labelValue.model';
-import {Action} from '@ngrx/store';
-import {actionType} from '../util';
-import {Observer} from '../../models/observer.model';
+import { LabelValueModel } from '../../models/labelValue.model';
+import { Action } from '@ngrx/store';
+import { actionType } from '../util';
+import { Observer } from '../../models/observer.model';
 
 export class ObserversActions {
   static LOAD = actionType('[Observers] Load');
+  static LOADOBSERVERSTOTALCOUNT = actionType('[Observers] Load Total Count');
+  static LOADEDOBSERVERSTOTALCOUNT = actionType('[Observers] Loaded Total Count');
   static LOADED = actionType('[Observers] Loaded');
   static ERROR = actionType('[Observers] Load Error');
   static DELETE = actionType('[Observers] Delete observer');
+}
+
+export class LoadObserversCountAction implements Action {
+  readonly type = ObserversActions.LOADOBSERVERSTOTALCOUNT;
 }
 
 export class LoadObserversAction implements Action {
@@ -83,4 +89,16 @@ export class LoadObserversCompleteAction implements Action {
   }
 }
 
-export type ObserversActionTypes = LoadObserversAction | LoadObserversCompleteAction | LoadObserversErrorAction;
+export class LoadObserversCountCompleteAction implements Action {
+  readonly type = ObserversActions.LOADEDOBSERVERSTOTALCOUNT;
+  payload: {
+    count: number;
+  };
+
+  constructor(count: number) {
+    this.payload = { count: count };
+  }
+
+}
+
+export type ObserversActionTypes = LoadObserversAction | LoadObserversCompleteAction | LoadObserversErrorAction | LoadObserversCountAction | LoadObserversCountCompleteAction;

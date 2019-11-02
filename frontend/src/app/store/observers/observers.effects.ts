@@ -1,4 +1,4 @@
-import { ObserversState } from './observers.state';
+import { ObserversState, ObserversCountState } from './observers.state';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store.module';
 import { shouldLoadPage } from '../../shared/pagination.service';
@@ -8,7 +8,9 @@ import {
   LoadObserversAction,
   LoadObserversCompleteAction,
   LoadObserversErrorAction,
-  ObserversActions
+  ObserversActions,
+  LoadObserversCountAction,
+  LoadObserversCountCompleteAction
 } from './observers.actions';
 import { ApiService } from '../../core/apiService/api.service';
 import { Actions, Effect } from '@ngrx/effects';
@@ -82,5 +84,32 @@ export class ObserversEffects {
       )
     )
     .mapTo(new LoadObserversAction('observers', 1, 1000))
+    .catch((err) => Observable.of(new LoadObserversErrorAction(err)));
+}
+
+@Injectable()
+export class ObserversCountEffects {
+  state: ObserversCountState;
+  private baseUrl: string;
+
+  constructor(private http: ApiService, private actions: Actions, private store: Store<AppState>) {
+    store.select(s => s.observersCount).subscribe(s => this.state = s)
+    this.baseUrl = environment.apiUrl;
+  }
+
+
+  @Effect()
+  loadStats = this.actions
+    .ofType(ObserversActions.LOADOBSERVERSTOTALCOUNT)
+    .switchMap((obs) =>{
+        const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/observer/count`);
+
+        return this.http.get<number>(url).map(res => res);
+      }
+    )
+    .map((value: any) => {
+      return new LoadObserversCountCompleteAction(value);
+    }
+    )
     .catch((err) => Observable.of(new LoadObserversErrorAction(err)));
 }
