@@ -67,10 +67,10 @@ export class CategoricalQuestionComponent implements OnInit {
   }
 
   get isTextQuestion() {
-    return this.question.idQuestionType === 2 || this.question.idQuestionType === 3
+    return this.question.questionType === 2 || this.question.questionType === 3
   }
   get isSingle() {
-    return this.question.idQuestionType === 0 || this.question.idQuestionType === 4;
+    return this.question.questionType === 0 || this.question.questionType === 4;
   }
 
   isChecked(answer: BaseAnswer) {
