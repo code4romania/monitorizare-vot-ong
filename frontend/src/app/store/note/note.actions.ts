@@ -9,13 +9,13 @@ export class LoadNotesAction implements Action {
     readonly type = NoteActionTypes.LOAD
 
     payload: {
-        sectionId: number
-        observerId: number
+        idPollingStation: number
+        idObserver: number
     }
-    constructor(sectionId: number, observerId: number) {
+    constructor(idPollingStation: number, idObserver: number) {
         this.payload = {
-            sectionId,
-            observerId
+            idPollingStation,
+            idObserver
         }
     }
 }
