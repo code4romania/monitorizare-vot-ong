@@ -1,6 +1,6 @@
 import {shouldLoadPage} from '../../shared/pagination.service';
 import {ObserversActions, ObserversActionTypes} from './observers.actions';
-import {observersInitialState, ObserversStateItem} from './observers.state';
+import { observersInitialState, ObserversStateItem, observersCountInitialState } from './observers.state';
 
 export function observersReducer(state = observersInitialState, action: ObserversActionTypes) {
 
@@ -14,6 +14,18 @@ export function observersReducer(state = observersInitialState, action: Observer
       return Object.assign({}, state, {
         [action.payload.key]: reducedItem
       });
+
+    default:
+      return state;
+  }
+
+
+}
+export function observersCountReducer(state = observersCountInitialState, action: ObserversActionTypes) {
+  switch (action.type) {
+    
+    case ObserversActions.LOADEDOBSERVERSTOTALCOUNT:
+      return Object.assign({}, state, action.payload);
 
     default:
       return state;

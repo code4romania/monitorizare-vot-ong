@@ -5,7 +5,7 @@ import {ApiService} from '../../core/apiService/api.service';
 import {Subscription} from 'rxjs/Rx';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {DeleteObserverAction, LoadObserversAction} from '../../store/observers/observers.actions';
+import { LoadObserversAction, LoadObserversCountAction} from '../../store/observers/observers.actions';
 import {values} from 'lodash';
 import {map} from 'rxjs/operators';
 import {Observer} from '../../models/observer.model';
@@ -13,6 +13,7 @@ import {ListType} from '../../models/list.type.model';
 import {ObserversFilterForm} from './observers-filter.form';
 import {ObserversService} from '../../services/observers.service';
 import {ToastrService} from 'ngx-toastr';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-observers',
@@ -22,6 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 export class ObserversComponent implements OnInit, OnDestroy {
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
+  observersCountSubscription: Subscription;
   observersList: Array<Observer>;
   listType: ListType = ListType.CARD;
   observersFilterForm: ObserversFilterForm;
@@ -29,6 +31,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   anyObservers = false;
   pageSize = 9;
+  totalCount = 0;
 
   constructor(private http: ApiService, private store: Store<AppState>, private observersService: ObserversService, private toastrService: ToastrService) {
     this.observersFilterForm = new ObserversFilterForm();
@@ -37,6 +40,9 @@ export class ObserversComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadObservers(1);
     this.handleObserversData();
+    this.loadObserversCount();
+    this.handleObserversCountData();
+
   }
 
   changeListType(type: string) {
@@ -67,6 +73,14 @@ export class ObserversComponent implements OnInit, OnDestroy {
       .subscribe(action => this.store.dispatch(action));
   }
 
+  private loadObserversCount(){
+    this.store
+      .select(s => s.observersCount)
+      .take(1)
+      .map(x => new LoadObserversCountAction())
+      .subscribe(action => this.store.dispatch(action));
+  }
+
   private handleObserversData() {
     this.observersSubscription = this.store
       .select(state => state.observers)
@@ -76,6 +90,14 @@ export class ObserversComponent implements OnInit, OnDestroy {
         this.observersList = state.values;
         this.anyObservers = state.values.length > 0;
       })
+  }
+  private handleObserversCountData() {
+    this.observersCountSubscription = this.store
+      .select(state => state.observersCount)
+      .pipe(map(state => state.count))
+      .subscribe(state => {
+        this.totalCount = state;
+      });
   }
 
   onObserverSelect(selectedObserver: Partial<Observer>){
@@ -91,6 +113,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   onObserverDelete(observer: Observer){
     this.observersService.deleteObserver(observer.id).subscribe((data)=> {
       this.loadObservers(1);
+      this.loadObserversCount();
       this.toastrService.warning("Success!", 'User has been removed');
     })
   }
@@ -105,6 +128,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.observersSubscription.unsubscribe();
+    this.observersCountSubscription.unsubscribe();
   }
 
 }

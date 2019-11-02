@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="page-title">
-    <span>Observers</span> &middot; 24 total &middot; Sorted by <a href="#">Last login - Ascending</a>
+    <span>Observers</span> &middot; {{ totalCount }} total &middot; Sorted by <a href="#">Last login - Ascending</a>
     <div class="actions">
       <button class="btn" [ngClass]="(listType === 'CARD')?'btn-success':'btn-secondary'"
               (click)="changeListType('CARD')"><i
