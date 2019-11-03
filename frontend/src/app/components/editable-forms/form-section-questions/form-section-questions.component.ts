@@ -6,7 +6,10 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
 import {
   EditableFormsAddFormQuestionAction,
-  EditableFormsDeleteFormQuestionAction, EditableFormsUpdateFormQuestionAction
+  EditableFormsDeleteFormQuestionAction,
+  EditableFormsSaveFormSectionAction,
+  EditableFormsSaveOptionsAction,
+  EditableFormsUpdateFormQuestionAction
 } from '../../../store/editable-forms/editable.forms.actions';
 import {EditableForm} from '../../../models/editable.form.model';
 
@@ -36,9 +39,10 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
   private loadFormSet = () => {
     return this.activeRoute.params
       .switchMap((params: Params) => {
+        console.log('Params for questions got changed:', params);
         return this.store.select(s => s.editableForms.forms)
           .concatMap(forms => forms)
-          .filter( f => f.id === params.formSetId)
+          .filter( f => f.id === parseInt(params.formSetId))
       })
       .subscribe(selectedFormSet => {
         this.formSet = selectedFormSet;
@@ -53,7 +57,7 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
           .concatMap(forms => forms)
           .filter(f => f.id === parseInt(params.formSetId))
           .flatMap(forms => forms.sections)
-          .filter(section => section.id === parseInt(params.formId));
+          .filter(section => section.uniqueId === params.formId);
       })
       .subscribe(selectedFormSection => {
         console.log('We received a form: ', selectedFormSection);
@@ -71,6 +75,11 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
       formSet: this.formSet,
       formId: this.section.id
     }));
+  }
+
+  onSaveFormSection(){
+    this.store.dispatch(new EditableFormsSaveFormSectionAction(this.formSet));
+    this.store.dispatch(new EditableFormsSaveOptionsAction(this.formSet));
   }
 
   onDeleteQuestion(questionId) {

@@ -1,16 +1,11 @@
 <div *ngIf="section">
-  <div>
-    <h3>Form section details</h3>
-    <button class="btn btn-success" routerLink="../.." >Back</button>
+  <div style="display: flex; flex-direction: column; padding-bottom: 10px;">
+    <h3>{{ 'FORM' | translate }} - {{section.code}}</h3>
+    <mat-form-field>
+      <input matInput [(ngModel)]="section.description">
+    </mat-form-field>
+    <button mat-button color="primary" routerLink="../.." style="align-self: flex-start;" >Back</button>
   </div>
-  <dl class="dl-horizontal">
-    <dt>Id</dt>
-    <dd>{{section.id}}</dd>
-    <dt>Code</dt>
-    <dd>{{section.code}}</dd>
-    <dt>Description</dt>
-    <dd>{{section.description}}</dd>
-  </dl>
 </div>
 
 <div *ngIf="section && section.questions.length > 0" class="page">
@@ -28,6 +23,7 @@
   <app-question-menu
     *ngIf="editMode === true"
     (addQuestion)="onAddQuestion()"
+    (saveFormSection)="onSaveFormSection()"
     class="question-menu-container">
   </app-question-menu>
 </div>

@@ -7,6 +7,7 @@ import {HomeGuard} from './guards/home.guard';
 import {NgModule} from '@angular/core';
 import {EditableFormsGuard} from './guards/editable-forms.guard';
 import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
+import {EditableFormSectionQuestionsGuard} from './guards/editable-form-section-questions.guard';
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
         })
     ],
     providers: [HomeGuard, AnswerListGuard, AnswerDetailsGuard, LoadStatisticsGuard,
-      EditableFormsGuard, EditableFormSectionsGuard]
+      EditableFormsGuard, EditableFormSectionsGuard, EditableFormSectionQuestionsGuard]
 })
 export class AppRoutingModule {
 

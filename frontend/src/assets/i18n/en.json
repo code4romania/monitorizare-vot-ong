@@ -30,5 +30,6 @@
   "ADD_NEW_FORM": "Add new form",
   "ADD_NEW_QUESTION": "Add new question",
   "SAVE_AS_DRAFT": "Save as draft",
-  "PUBLISH_FORM": "Publish form"
+  "PUBLISH_FORM": "Publish form",
+  "ADD_NEW_OPTION": "Add new option"
 }

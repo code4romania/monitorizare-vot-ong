@@ -5,7 +5,7 @@
   <div class="card" *ngFor="let editableForm of editableForms"
        [ngClass]="{ published: editableForm.published, draft: !editableForm.published }"
        [routerLink]="['/forms', editableForm.id]">
-    <h3>{{ 'FORM' | translate }} - {{editableForm.id}}</h3>
+    <h3>{{ 'FORM' | translate }} - {{editableForm.code}}</h3>
     <p>{{editableForm.description}}</p>
   </div>
 </div>

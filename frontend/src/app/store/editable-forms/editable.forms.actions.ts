@@ -1,8 +1,8 @@
 import {actionType} from '../util';
 import {Action} from '@ngrx/store';
 import {EditableForm} from '../../models/editable.form.model';
-import {EditableFormQuestion} from '../../models/editable.form.question.model';
 import {EditableFormSection} from '../../models/editable.form.section.model';
+import {EditableFormQuestionOption} from '../../models/editable.form.question.option.model';
 
 export class EditableFormsActionTypes{
   static readonly LOAD_ALL = actionType('[Editable Forms] LOAD ALL');
@@ -15,9 +15,13 @@ export class EditableFormsActionTypes{
   static readonly DELETE_FORM_FROM_SET = actionType('[Editable Forms] DELETE FORM FROM SET');
   static readonly ADD_QUESTION_TO_FORM = actionType('[Editable Forms] ADD QUESTION TO FORM');
   static readonly DELETE_QUESTION_FROM_FORM = actionType('[Editable Forms] DELETE QUESTION FROM FORM');
-  static readonly UPDATE_QUESTION_IN_FORM = actionType('[Editable Forms] UPDATE QUESTION IN FORM');
-  static readonly UPDATE_FORM_SET = actionType('[Editable Forms] UPDATE FORM SET');
-  static readonly UPDATE_FORM_SET_COMPLETE = actionType('[Editable Forms] UPDATE FORM SET COMPLETE');
+  static readonly SAVE_FORM_SET = actionType('[Editable Forms] SAVE FORM SET');
+  static readonly SAVE_FORM_SET_COMPLETE = actionType('[Editable Forms] SAVE FORM SET COMPLETE');
+  //  options
+  static readonly LOAD_ALL_OPTIONS = actionType('[Editable Forms] LOAD ALL OPTIONS');
+  static readonly LOAD_ALL_OPTIONS_COMPLETE = actionType('[Editable Forms] LOAD ALL OPTIONS COMPLETE');
+  static readonly LOAD_OPTIONS_BY_ID_COMPLETE = actionType('[Editable Forms] LOAD OPTION BY ID COMPLETE');
+  static readonly SAVE_OPTIONS = actionType('[Editable Forms] SAVE OPTIONS');
 }
 export class EditableFormsLoadAllAction implements Action{
   readonly type = EditableFormsActionTypes.LOAD_ALL;
@@ -57,16 +61,27 @@ export class EditableFormsDeleteFormQuestionAction implements Action{
   readonly type = EditableFormsActionTypes.DELETE_QUESTION_FROM_FORM;
   constructor(public payload: {formSet: EditableForm, formId: number, questionId: number}) {}
 }
-export class EditableFormsUpdateFormQuestionAction implements Action{
-  readonly type = EditableFormsActionTypes.UPDATE_QUESTION_IN_FORM;
-  constructor(public payload: {formSet: EditableForm, formId: number, question: EditableFormQuestion}) {}
-}
-export class EditableFormsUpdateFormSetAction implements Action{
-  readonly type = EditableFormsActionTypes.UPDATE_FORM_SET;
+export class EditableFormsSaveFormSectionAction implements Action{
+  readonly type = EditableFormsActionTypes.SAVE_FORM_SET;
   constructor(public payload: EditableForm) {}
 }
-export class EditableFormsUpdateFormSetCompleteAction implements Action{
-  readonly type = EditableFormsActionTypes.UPDATE_FORM_SET_COMPLETE;
+export class EditableFormsSaveFormSectionCompleteAction implements Action{
+  readonly type = EditableFormsActionTypes.SAVE_FORM_SET_COMPLETE;
+}
+//  options
+export class EditableFormsLoadAllOptionsAction implements Action{
+  readonly type = EditableFormsActionTypes.LOAD_ALL_OPTIONS;
+}
+export class EditableFormsLoadAllOptionsCompleteAction implements Action{
+  readonly type = EditableFormsActionTypes.LOAD_ALL_OPTIONS_COMPLETE;
+  constructor(public payload: EditableFormQuestionOption[]){}
+}
+export class EditableFormsLoadOptionByIdCompleteAction implements Action{
+  readonly type = EditableFormsActionTypes.LOAD_OPTIONS_BY_ID_COMPLETE;
+  constructor(public payload: EditableFormQuestionOption){}
+}
+export class EditableFormsSaveOptionsAction implements Action{
+  readonly type = EditableFormsActionTypes.SAVE_OPTIONS;
   constructor(public payload: EditableForm) {}
 }
 export type EditableFormsActions = EditableFormsLoadAllAction
@@ -79,6 +94,11 @@ export type EditableFormsActions = EditableFormsLoadAllAction
   | EditableFormsAddFormQuestionAction
   | EditableFormsDeleteFormQuestionAction
   | EditableFormsCreateCompleteAction
-  | EditableFormsUpdateFormSetAction
-  | EditableFormsUpdateFormSetCompleteAction
-  | EditableFormsUpdateFormQuestionAction;
+  | EditableFormsSaveFormSectionAction
+  | EditableFormsSaveFormSectionCompleteAction
+  //  options
+  | EditableFormsLoadAllOptionsAction
+  | EditableFormsLoadAllOptionsCompleteAction
+  | EditableFormsLoadOptionByIdCompleteAction
+  | EditableFormsSaveOptionsAction
+  ;

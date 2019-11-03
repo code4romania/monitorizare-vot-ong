@@ -39,3 +39,17 @@
     border-bottom: 2px dashed $color-secondary;
   }
 }
+.question-header{
+  width: 100%;
+}
+.option-row-container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px 1fr 1fr 90px;
+  grid-gap: 10px;
+  align-items: baseline;
+  grid-template-rows: auto;
+}
+.question-options-last-item{
+  justify-self: end;
+}

@@ -1,29 +1,22 @@
 <div *ngIf="selectedFormSet">
-  <div>
-    <h3>Form section details</h3>
-    <button class="btn btn-success" routerLink="/forms">Back</button>
+  <div style="display: flex; flex-direction: column; padding-bottom: 10px;">
+    <h3>{{ 'FORM' | translate }} - {{selectedFormSet.code}}</h3>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedFormSet.description">
+    </mat-form-field>
+    <button mat-button color="primary" routerLink="/forms" style="align-self: flex-start" >Back</button>
   </div>
-  <dl class="dl-horizontal">
-    <dt>Id</dt>
-    <dd>{{selectedFormSet.id}}</dd>
-    <dt>Version</dt>
-    <dd>{{selectedFormSet.version}}</dd>
-    <dt>Description</dt>
-    <dd>{{selectedFormSet.description}}</dd>
-    <dt>Published</dt>
-    <dd>{{selectedFormSet.published}}</dd>
-  </dl>
 </div>
 <div *ngIf="selectedFormSet" class="form-sections-container">
   <div class="form-section-card-container" *ngFor="let section of selectedFormSet.sections">
     <div class="published form-section-card">
-      <h3>{{ 'FORM' | translate }} - {{selectedFormSet.id}}</h3>
-      <p> {{section.id}} - {{section.description}}</p>
+      <h3>{{ 'FORM' | translate }} - {{section.code}}</h3>
+      <p>{{section.description}}</p>
     </div>
-    <div class="form-section-menu" [routerLink]="[section.id, 'questions']">
+    <div class="form-section-menu" [routerLink]="[section.uniqueId, 'questions']">
       <h6>View</h6>
     </div>
-    <div class="form-section-menu" [routerLink]="[section.id, 'questions']" [queryParams]="{edit: true}">
+    <div class="form-section-menu" [routerLink]="[section.uniqueId, 'questions']" [queryParams]="{edit: true}">
       <h6>Edit</h6>
     </div>
     <div class="form-section-menu" (click)="deleteFormSection(section.id)">

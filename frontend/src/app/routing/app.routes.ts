@@ -15,6 +15,7 @@ import {EditableFormsGuard} from './guards/editable-forms.guard';
 import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
 import {EditableFormSectionsComponent} from '../components/editable-forms/editable-form-sections/editable-form-sections.component';
 import {FormSectionQuestionsComponent} from '../components/editable-forms/form-section-questions/form-section-questions.component';
+import {EditableFormSectionQuestionsGuard} from './guards/editable-form-section-questions.guard';
 
 export let appRoutes: Routes = [
     {
@@ -75,7 +76,7 @@ export let appRoutes: Routes = [
         component: EditableFormSectionsComponent
     }, {
         path: 'forms/:formSetId/:formId/questions',
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, EditableFormSectionQuestionsGuard],
         component: FormSectionQuestionsComponent
     }
 ];

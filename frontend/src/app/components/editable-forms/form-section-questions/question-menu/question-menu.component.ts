@@ -7,6 +7,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class QuestionMenuComponent implements OnInit {
   @Output() addQuestion = new EventEmitter();
+  @Output() saveFormSection = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -22,10 +23,12 @@ export class QuestionMenuComponent implements OnInit {
 
   saveAsDraft() {
     console.log('save as draft');
+    this.saveFormSection.emit();
   }
 
   publishForm() {
     console.log('publish the form');
+    this.saveFormSection.emit();
   }
 
 }

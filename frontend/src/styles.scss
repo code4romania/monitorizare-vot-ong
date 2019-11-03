@@ -1,4 +1,5 @@
 @import '~variables.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .nav-tabs > li > a.active {
   color: $color-secondary !important;
   font-weight: bold;

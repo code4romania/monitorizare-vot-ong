@@ -7,6 +7,6 @@ export class EditableFormQuestion{
     public code: string,
     public text: string,
     public typeId: number,
-    public options: EditableFormQuestionOption[]
+    public options: EditableFormQuestionOption[] = []
   ) {}
 }
