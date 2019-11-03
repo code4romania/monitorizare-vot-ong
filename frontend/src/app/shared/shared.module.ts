@@ -3,13 +3,14 @@ import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator
 import { PaginationComponent } from './pagination/pagination.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TabsModule, CollapseModule } from 'ngx-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
     imports: [
       FormsModule,
+      ReactiveFormsModule,
       CommonModule,
       CollapseModule,
       TabsModule.forRoot(),
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
     exports: [
       FormsModule,
+      ReactiveFormsModule,
       CommonModule,
       CollapseModule,
       TabsModule,

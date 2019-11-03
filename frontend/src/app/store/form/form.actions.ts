@@ -9,10 +9,8 @@ export class FormActionTypes{
 }
 export class FormLoadAction implements Action {
     readonly type = FormActionTypes.LOAD
-    payload: string[]
 
-    constructor(formIds: string[]) {
-        this.payload = formIds
+    constructor() {
     }
 }
 export class FormErrorAction implements Action {

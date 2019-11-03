@@ -16,6 +16,8 @@ import {EditableFormSectionsGuard} from './guards/editable-form-sections.guard';
 import {EditableFormSectionsComponent} from '../components/editable-forms/editable-form-sections/editable-form-sections.component';
 import {FormSectionQuestionsComponent} from '../components/editable-forms/form-section-questions/form-section-questions.component';
 import {EditableFormSectionQuestionsGuard} from './guards/editable-form-section-questions.guard';
+import { ObserversComponent } from '../components/observers/observers.component';
+import { ObserverProfileComponent } from 'app/components/observers/observer-profile/observer-profile.component';
 
 export let appRoutes: Routes = [
     {
@@ -55,11 +57,27 @@ export let appRoutes: Routes = [
         }]
     },
     {
-        path: 'statistici',
+        path: 'statistics',
         component: StatisticsComponent,
         canActivate: [AuthGuard, LoadStatisticsGuard]
-    }, {
-        path: 'statistici/:key',
+    },
+    {
+        path: 'observatori',
+        component: ObserversComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'observatori/profil/:state',
+        component: ObserverProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'observatori/profil/:state/:id',
+        component: ObserverProfileComponent,
+        canActivate: [AuthGuard]
+    },
+     {
+        path: 'statistics/:key',
         component: StatisticsDetailsComponent,
         canActivate: [AuthGuard, LoadStatisticsGuard]
     }, {

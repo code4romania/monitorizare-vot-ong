@@ -14,6 +14,9 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ObserversState, ObserversCountState } from './observers/observers.state';
+import {ObserversEffects, ObserversCountEffects} from './observers/observers.effects';
+import {observersReducer, observersCountReducer} from './observers/observers.reducer';
 import {editableFormsReducer, EditableFormsState} from './editable-forms/editable.forms.reducer';
 import {EditableFormsEffects} from './editable-forms/editable.forms.effects';
 
@@ -21,16 +24,20 @@ export class AppState {
     form: FormState;
     answer: AnswerState;
     statistics: StatisticsState;
+    observers: ObserversState;
+    observersCount: ObserversCountState;
     note: NoteState;
     editableForms: EditableFormsState;
 }
 
 let moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer, editableForms: editableFormsReducer}),
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer, editableForms: editableFormsReducer}),
     EffectsModule.forRoot([
       FormEffects,
       AnswerEffects,
       StatisticsEffects,
+      ObserversEffects,
+      ObserversCountEffects,
       NoteEffects,
       EditableFormsEffects
     ]),
@@ -54,7 +61,7 @@ export class AppStoreModule {
                     store.dispatch(new FormClearAll());
                 }
                 if (!clearForms) {
-                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+                    store.dispatch(new FormLoadAction());
                 }
             })
         });

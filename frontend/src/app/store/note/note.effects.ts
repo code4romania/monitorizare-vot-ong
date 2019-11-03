@@ -18,7 +18,7 @@ export class NoteEffects {
     notesStream = this.actions
         .ofType(NoteActionTypes.LOAD)
         .switchMap((a: LoadNotesAction) => {
-            const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/note');
+            const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v2/note');
 
             return this.http.get<Note[]>(notesUrl, { body: a.payload });
         })

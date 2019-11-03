@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://localhost:5000",
+    "target": "https://mv-mobile-test.azurewebsites.net/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
