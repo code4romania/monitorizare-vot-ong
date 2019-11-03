@@ -8,8 +8,7 @@ import {
   EditableFormsAddFormQuestionAction,
   EditableFormsDeleteFormQuestionAction,
   EditableFormsSaveFormSectionAction,
-  EditableFormsSaveOptionsAction,
-  EditableFormsUpdateFormQuestionAction
+  EditableFormsSaveOptionsAction
 } from '../../../store/editable-forms/editable.forms.actions';
 import {EditableForm} from '../../../models/editable.form.model';
 
@@ -88,14 +87,6 @@ export class FormSectionQuestionsComponent implements OnInit, OnDestroy {
       formId: this.section.id,
       questionId: questionId
     }));
-  }
-
-  onUpdateQuestion(question) {
-    this.store.dispatch(new EditableFormsUpdateFormQuestionAction({
-      formSet: this.formSet,
-      formId: this.section.id,
-      question: question
-    }))
   }
 
   ngOnDestroy() {

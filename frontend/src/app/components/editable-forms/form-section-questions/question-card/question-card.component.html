@@ -5,7 +5,7 @@
   <div class="question-body">
     <div class="question-definition">
       <mat-form-field class="h4 question-header">
-        <input matInput [disabled]="!editMode" [(ngModel)]="question.text" (change)="onTextChange()">
+        <input matInput [disabled]="!editMode" [(ngModel)]="question.text">
       </mat-form-field>
       <h4 *ngIf="!editMode">{{question.text}}</h4>
       <div class="question-options-container">
@@ -25,11 +25,11 @@
           <mat-checkbox class="question-options-last-item">Red flag</mat-checkbox>
         </div>
       </div>
-      <button mat-button color="primary" (click)="onAddClick()">Add</button>
+      <button *ngIf="editMode" mat-button color="primary" (click)="onAddClick()">Add</button>
     </div>
     <div class="question-side-options">
       <mat-form-field>
-        <mat-select [disabled]="!editMode" [(value)]="question.typeId" (selectionChange)="onTypeChange()">
+        <mat-select [disabled]="!editMode" [(value)]="question.typeId">
           <mat-option *ngFor="let type of questionTypes" [value]="type.id">
             {{type.text}}
           </mat-option>

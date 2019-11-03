@@ -1,7 +1,7 @@
 @import '~variables.scss';
 @import '~styles/shared.scss';
 @import '~styles/toastr.scss';
-
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .nav-tabs > li > a.active {
   color: $color-secondary !important;

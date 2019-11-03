@@ -18,7 +18,6 @@ export class QuestionCardComponent implements OnInit, OnDestroy {
   @Input() private question: EditableFormQuestion;
   @Input() private editMode: boolean = false;
   @Output() deleteQuestion = new EventEmitter<number>();
-  @Output() updateQuestion = new EventEmitter<EditableFormQuestion>();
 
   private questionTypes:QuestionType[] = QuestionType.values();
   private ADD_NEW_OPTION_ID = -999;
@@ -53,14 +52,6 @@ export class QuestionCardComponent implements OnInit, OnDestroy {
 
   onDeleteQuestion(){
     this.deleteQuestion.emit(this.question.id);
-  }
-
-  onTextChange(){
-    this.updateQuestion.emit(this.question);
-  }
-
-  onTypeChange(){
-    this.updateQuestion.emit(this.question);
   }
 
   onAddClick(){

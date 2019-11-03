@@ -16,7 +16,6 @@
       [question]="question"
       [section]="section"
       (deleteQuestion)="onDeleteQuestion($event)"
-      (updateQuestion)="onUpdateQuestion($event)"
       *ngFor="let question of section.questions">
     </app-question-card>
   </div>

@@ -70,7 +70,7 @@ export class EditableFormsEffects {
       return formSet != undefined && notSavedOptions === 0;
     })
     .do(([, formSet]) => {console.log(`Trying to save form set: ${formSet.description}`, formSet)} )
-    .concatMap(([, formSet]) => this.service.saveFormSet(formSet))
+    .switchMap(([, formSet]) => this.service.saveFormSet(formSet))
     .switchMap((savedId) => [
       new EditableFormsSaveFormSectionCompleteAction(),
       new EditableFormsLoadByIdAction(savedId)
