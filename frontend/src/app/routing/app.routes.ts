@@ -12,6 +12,7 @@ import { StatisticsComponent } from '..//components/statistics/statistics.compon
 import { AnswerComponent } from '..//components/answer/answer.component';
 import { Routes } from '@angular/router';
 import { ObserverProfileComponent } from 'app/components/observers/observer-profile/observer-profile.component';
+import { NotificationsComponent } from 'app/components/notifications/notifications.component';
 
 export let appRoutes: Routes = [
     {
@@ -20,10 +21,11 @@ export let appRoutes: Routes = [
         pathMatch: 'full',
         canActivate: [AuthGuard, HomeGuard],
         redirectTo: '/urgents'
-    }, {
+    },
+    {
         path: 'answers',
         component: AnswerComponent,
-        canActivate: [AuthGuard, AnswerListGuard ],
+        canActivate: [AuthGuard, AnswerListGuard],
         children: [{
             path: 'details/:idObserver/:idPollingStation',
             component: AnswerDetailsComponent,
@@ -37,7 +39,7 @@ export let appRoutes: Routes = [
     {
         path: 'urgents',
         component: AnswerComponent,
-        canActivate: [AuthGuard, AnswerListGuard ],
+        canActivate: [AuthGuard, AnswerListGuard],
         data: {
             urgent: true
         },
@@ -70,13 +72,19 @@ export let appRoutes: Routes = [
         component: ObserverProfileComponent,
         canActivate: [AuthGuard]
     },
-     {
+    {
         path: 'statistics/:key',
         component: StatisticsDetailsComponent,
         canActivate: [AuthGuard, LoadStatisticsGuard]
-    }, {
+    },
+    {
         path: 'login',
         canActivate: [AnonGuard],
         component: LoginComponent
-    }
+    },
+    {
+        path: 'notifications',
+        component: NotificationsComponent,
+        canActivate: [AuthGuard]
+    },
 ]

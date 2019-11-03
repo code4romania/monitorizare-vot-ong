@@ -25,6 +25,33 @@ export const HttpMethod = {
   OPTIONS: 'OPTIONS',
 };
 
+export class QueryParamBuilder {
+  private params: string[] = [];
+  private constructor(private methodUrl: string) {
+  }
+
+  public static Instance(methodUrl: string): QueryParamBuilder {
+    return new QueryParamBuilder(methodUrl);
+  }
+
+  public withParam(paramName: string, value: number | boolean | string | string[]): QueryParamBuilder {
+    if (value instanceof Array) {
+      value.forEach(x => {
+        this.params.push(`${paramName}=${x}`);
+      });
+
+    } else {
+      this.params.push(`${paramName}=${value}`);
+    }
+    return this;
+  }
+
+  public build(): string {
+    const joinedParams: string = this.params.join('&');
+    return `${this.methodUrl}?${joinedParams}`;
+  }
+}
+
 @Injectable()
 export class ApiService {
 

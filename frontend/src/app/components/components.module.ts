@@ -9,7 +9,6 @@ import { CategoricalQuestionComponent } from './answer/categorical-question/cate
 import { StatisticsCardComponent } from './statistics/statistics-card/statistics-card.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { AnswerFormListComponent } from './answer/answer-form-list/answer-form-list.component';
-import { AppComponent } from '../app.component';
 import { AnswerDetailsComponent } from './answer/answer-details/answer-details.component';
 import { AnswerComponent } from './answer/answer.component';
 import { ObserversComponent } from './observers/observers.component';
@@ -17,35 +16,35 @@ import { AnswerListComponent } from './answer/answers-list/answer-list.component
 import { HeaderComponent } from './header/header.component';
 import { ObserversCardComponent } from './observers/observers-card/observers-card.component';
 import { ObserverProfileComponent } from './observers/observer-profile/observer-profile.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ObserverTileComponent } from './notifications/observer-tile/observer-tile.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 export let components = [
-    AnswerComponent, AnswerListComponent,
+    AnswerComponent, 
+    AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
     AnswerNoteComponent,
     CategoricalQuestionComponent,
     AnswerExtraQuestionsComponent,
-    AnswerNoteComponent,
     ObserversComponent,
     ObserversCardComponent,
     ObserverProfileComponent,
-
     HeaderComponent,
-
     StatisticsComponent,
     StatisticsCardComponent,
     StatisticsDetailsComponent,
     StatisticsValueComponent,
-
+    NotificationsComponent,
+    ObserverTileComponent,
     LoginComponent
-
-
 ] 
 
 @NgModule({
     declarations:components,
     exports: components,
-    imports:[SharedModule]
+    imports:[SharedModule, NgMultiSelectDropDownModule.forRoot()]
 })
 export  class ComponentsModule {
     
