@@ -1,0 +1,29 @@
+@import "~variables.scss";
+.page{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.card-container{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  width: 100%;
+}
+.question-card{
+  margin-bottom: 20px;
+  &:last-of-type{
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .page{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .question-menu-container{
+    padding-left: 45px;
+  }
+}

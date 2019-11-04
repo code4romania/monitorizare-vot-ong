@@ -1,0 +1,11 @@
+<div class="form-sets-container">
+  <div class="new card" (click)="createNewFormSet()">
+    <h3>{{ 'ADD_NEW_FORM_SET' | translate }}</h3>
+  </div>
+  <div class="card" *ngFor="let editableForm of editableForms"
+       [ngClass]="{ published: editableForm.published, draft: !editableForm.published }"
+       [routerLink]="['/forms', editableForm.id]">
+    <h3>{{ 'FORM' | translate }} - {{editableForm.code}}</h3>
+    <p>{{editableForm.description}}</p>
+  </div>
+</div>

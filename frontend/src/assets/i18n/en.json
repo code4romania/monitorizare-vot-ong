@@ -40,5 +40,12 @@
   "DESELECT_ALL": "Deselect all",
   "SELECTED_OBSERVERS_COUNT":"Number of active observers:",
   "SEND_NOTIFICATIONS_TO": "Send notification to",
-  "RESET": "Clear filter"
+  "RESET": "Clear filter",
+  "FORMS": "Forms",
+  "ADD_NEW_FORM_SET": "Add new form set",
+  "ADD_NEW_FORM": "Add new form",
+  "ADD_NEW_QUESTION": "Add new question",
+  "SAVE_AS_DRAFT": "Save as draft",
+  "PUBLISH_FORM": "Publish form",
+  "ADD_NEW_OPTION": "Add new option"
 }

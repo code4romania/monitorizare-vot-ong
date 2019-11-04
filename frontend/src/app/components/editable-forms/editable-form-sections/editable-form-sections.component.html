@@ -1,0 +1,38 @@
+<div *ngIf="selectedFormSet">
+  <div style="display: flex; flex-direction: column; padding-bottom: 10px;">
+    <h3>{{ 'FORM' | translate }} - {{selectedFormSet.code}}</h3>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedFormSet.description">
+    </mat-form-field>
+    <button mat-button color="primary" routerLink="/forms" style="align-self: flex-start" >Back</button>
+  </div>
+</div>
+<div *ngIf="selectedFormSet" class="form-sections-container">
+  <div class="form-section-card-container" *ngFor="let section of selectedFormSet.sections">
+    <div class="published form-section-card">
+      <h3>{{ 'FORM' | translate }} - {{section.code}}</h3>
+      <p>{{section.description}}</p>
+    </div>
+    <div class="form-section-menu" [routerLink]="[section.uniqueId, 'questions']">
+      <h6>View</h6>
+    </div>
+    <div class="form-section-menu" [routerLink]="[section.uniqueId, 'questions']" [queryParams]="{edit: true}">
+      <h6>Edit</h6>
+    </div>
+    <div class="form-section-menu" (click)="deleteFormSection(section.id)">
+      <h6>Delete</h6>
+    </div>
+  </div>
+  <div class="form-section-card-container">
+    <div class="new form-section-card" (click)="addNewForm()">
+      <h3>{{'ADD_NEW_FORM' | translate}}</h3>
+    </div>
+  </div>
+</div>
+<div *ngIf="!selectedFormSet" class="form-sections-container">
+  <div class="form-section-card-container">
+    <div class="new form-section-card" (click)="addNewForm()">
+      <h3>{{'ADD_NEW_FORM' | translate}}</h3>
+    </div>
+  </div>
+</div>

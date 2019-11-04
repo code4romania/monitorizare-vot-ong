@@ -14,6 +14,7 @@ import {ObserversService} from './services/observers.service';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NotificationsService } from './services/notifications.service';
+import {EditableFormsService} from './services/editable.forms.service';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -36,9 +37,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
+    EditableFormsService,
     ObserversService,
     NotificationsService
   ],

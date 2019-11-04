@@ -32,7 +32,8 @@
         "dev": "environments/environment.ts",
         "qa": "environments/environment.qa.ts",
         "prod": "environments/environment.prod.ts",
-        "token": "environments/environment.token.ts"
+        "token": "environments/environment.token.ts",
+        "local": "environments/environment.local.ts"
       }
     }
   ],

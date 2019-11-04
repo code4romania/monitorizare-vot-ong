@@ -17,6 +17,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ObserversState, ObserversCountState } from './observers/observers.state';
 import {ObserversEffects, ObserversCountEffects} from './observers/observers.effects';
 import {observersReducer, observersCountReducer} from './observers/observers.reducer';
+import {editableFormsReducer, EditableFormsState} from './editable-forms/editable.forms.reducer';
+import {EditableFormsEffects} from './editable-forms/editable.forms.effects';
 
 export class AppState {
     form: FormState;
@@ -24,18 +26,20 @@ export class AppState {
     statistics: StatisticsState;
     observers: ObserversState;
     observersCount: ObserversCountState;
-    note: NoteState
+    note: NoteState;
+    editableForms: EditableFormsState;
 }
 
 let moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer}),
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer, editableForms: editableFormsReducer}),
     EffectsModule.forRoot([
       FormEffects,
       AnswerEffects,
       StatisticsEffects,
       ObserversEffects,
       ObserversCountEffects,
-      NoteEffects
+      NoteEffects,
+      EditableFormsEffects
     ]),
 ];
 if (!environment.production) {

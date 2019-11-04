@@ -1,0 +1,35 @@
+<div *ngIf="section">
+  <div style="display: flex; flex-direction: column; padding-bottom: 10px;">
+    <h3>{{ 'FORM' | translate }} - {{section.code}}</h3>
+    <mat-form-field>
+      <input matInput [(ngModel)]="section.description">
+    </mat-form-field>
+    <button mat-button color="primary" routerLink="../.." style="align-self: flex-start;" >Back</button>
+  </div>
+</div>
+
+<div *ngIf="section && section.questions.length > 0" class="page">
+  <div class="card-container">
+    <app-question-card
+      class="question-card"
+      [editMode]="editMode"
+      [question]="question"
+      [section]="section"
+      (deleteQuestion)="onDeleteQuestion($event)"
+      *ngFor="let question of section.questions">
+    </app-question-card>
+  </div>
+  <app-question-menu
+    *ngIf="editMode === true"
+    (addQuestion)="onAddQuestion()"
+    (saveFormSection)="onSaveFormSection()"
+    class="question-menu-container">
+  </app-question-menu>
+</div>
+<div *ngIf="!section || section.questions.length === 0" class="page">
+  <app-question-menu
+    *ngIf="editMode === true"
+    (addQuestion)="onAddQuestion()"
+    class="question-menu-container">
+  </app-question-menu>
+</div>

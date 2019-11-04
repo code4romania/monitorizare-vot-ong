@@ -1,0 +1,40 @@
+<div class="question-row">
+  <div *ngIf="editMode" class="question-delete" (click)="onDeleteQuestion()">
+    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+  </div>
+  <div class="question-body">
+    <div class="question-definition">
+      <mat-form-field class="h4 question-header">
+        <input matInput [disabled]="!editMode" [(ngModel)]="question.text">
+      </mat-form-field>
+      <h4 *ngIf="!editMode">{{question.text}}</h4>
+      <div class="question-options-container">
+        <div class="option-row-container" *ngFor="let option of question.options">
+          <i class="fa fa-square-o fa-lg" aria-hidden="true"></i>
+          <mat-form-field>
+            <mat-select [disabled]="!editMode" [(value)]="option.id" (selectionChange)="onOptionTypeChange($event)">
+              <mat-option *ngFor="let option of options" [value]="option.id">
+                {{option.text}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="option && option.id === ADD_NEW_OPTION_ID">
+            <input matInput [disabled]="!editMode" [(ngModel)]="option.text">
+          </mat-form-field>
+          <span *ngIf="option && option.id !== ADD_NEW_OPTION_ID"></span>
+          <mat-checkbox class="question-options-last-item">Red flag</mat-checkbox>
+        </div>
+      </div>
+      <button *ngIf="editMode" mat-button color="primary" (click)="onAddClick()">Add</button>
+    </div>
+    <div class="question-side-options">
+      <mat-form-field>
+        <mat-select [disabled]="!editMode" [(value)]="question.typeId">
+          <mat-option *ngFor="let type of questionTypes" [value]="type.id">
+            {{type.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
