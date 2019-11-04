@@ -47,14 +47,14 @@ export let components = [
     NotificationsComponent,
     ObserverTileComponent,
     LoginComponent,
-  EditableFormsComponent,
-  EditableFormSectionsComponent,
-  FormSectionMenuComponent,
-  FormSectionCardComponent,
-  FormSectionQuestionsComponent,
-  QuestionCardComponent,
-  QuestionMenuComponent
-] 
+    EditableFormsComponent,
+    EditableFormSectionsComponent,
+    FormSectionMenuComponent,
+    FormSectionCardComponent,
+    FormSectionQuestionsComponent,
+    QuestionCardComponent,
+    QuestionMenuComponent
+];
 
 @NgModule({
   declarations: components,
@@ -68,7 +68,7 @@ export let components = [
   ],
   imports: [
     SharedModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
     MatSelectModule,
     MatInputModule,
     MatButtonModule,

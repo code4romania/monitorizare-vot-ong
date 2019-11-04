@@ -92,8 +92,6 @@ export let appRoutes: Routes = [
         path: 'notifications',
         component: NotificationsComponent,
         canActivate: [AuthGuard]
-    },
-]
     }, {
         path: 'forms',
         canActivate: [AuthGuard, EditableFormsGuard],
