@@ -53,8 +53,8 @@ export class NotificationsComponent implements OnInit {
   submitNotification() {
     // TODO: change channel and from
     const notification: NotificationModel ={
-      channel: "some channel",
-      from: "from",
+      channel: "Firebase",
+      from: "Monitorizare Vot",
       message: this.message,
       title: this.notificationTitle,
       recipients: this.selectedObserversIds
