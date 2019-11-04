@@ -99,7 +99,13 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   private addNewObserver() {
-    this.observerService.addNewObserver(this.observerProfileForm.value)
+    const observerToAdd: Observer = new Observer({});
+    observerToAdd.phone = this.observerProfileForm.value.phone;
+    observerToAdd.pin = this.observerProfileForm.value.password;
+    observerToAdd.name = this.observerProfileForm.value.name;
+    observerToAdd.sendSMS = this.observerProfileForm.value.sendSMS;
+
+    this.observerService.addNewObserver(observerToAdd)
       .subscribe((value) => {
         this.toastr.success('Success', 'Observer has been added');
         this.router.navigateByUrl('/observatori');
