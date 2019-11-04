@@ -13,6 +13,7 @@ import {HttpClient} from '@angular/common/http';
 import {ObserversService} from './services/observers.service';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NotificationsService } from './services/notifications.service';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -38,7 +39,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
   ],
   providers: [
-    ObserversService
+    ObserversService,
+    NotificationsService
   ],
 
   bootstrap: [AppComponent]
