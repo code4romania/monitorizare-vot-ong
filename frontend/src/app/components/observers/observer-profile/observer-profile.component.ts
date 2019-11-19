@@ -7,6 +7,7 @@ import {Observer} from '../../../models/observer.model';
 import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserverProfileUploadForm} from './observers-profile-upload.form';
+import { ApiListResponse } from 'app/models/api-list-response.model';
 
 @Component({
   selector: 'app-observer-profile',
@@ -123,10 +124,10 @@ export class ObserverProfileComponent implements OnInit {
   private getObserver(params) {
     if (this.pageState !== PageState.NEW) {
       this.observerService.getObserver(params['id'])
-        .subscribe((observers: Array<Observer>) => {
+        .subscribe((observers: ApiListResponse<Observer>) => {
           if (observers) {
-            this.observer = observers[0];
-            this.observerProfileForm.patchValue(observers[0]);
+            this.observer = observers.data[0];
+            this.observerProfileForm.patchValue(this.observer);
           }
         });
     }
