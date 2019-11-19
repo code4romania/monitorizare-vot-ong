@@ -118,10 +118,12 @@ export class ObserversComponent implements OnInit, OnDestroy {
     })
   }
 
-  onObserverResetPassword(observer: Observer){
-    this.observersService.resetPasswordObserver(observer.phone).subscribe((data)=> {
+  onObserverResetPassword(data: { phone: string, password: string }) {
+    this.observersService.resetPasswordObserver(data.phone, data.password).subscribe((data) => {
       this.toastrService.success("Success!", 'Password has been reset for the observer.');
-    })
+    }, () => {
+      this.toastrService.error('Could not reset password', 'Error!');
+    });
 
   }
 

@@ -34,10 +34,24 @@
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <ul class="dropdown-menu">
-            <li><a (click)="deleteObserver()">Delete</a></li>
-            <li><a (click)="resetPassword()">Reset Password</a></li>
+            <li class="cursor-pointer"><a (click)="deleteObserver()">Delete</a></li>
+            <li class="cursor-pointer"><a (click)="openResetPasswordModal(template)">{{'RESET_PASSWORD'| translate}}</a></li>
           </ul>
         </div>
    </div>
  </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header" data-backdrop="static">
+    <h4 class="modal-title pull-left">{{'ENTER_NEW_PASSWORD' | translate}} {{observer.name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="text" name="password" placeholder="pin" [(ngModel)]="newPassword" #pin="ngModel" maxlength="4" minlength="4">
+    <p>&nbsp;</p>
+    <button type="button" class="btn btn-primary" (click)="resetPassword()" [disabled]="!isPasswordValid()">{{'RESET_PASSWORD'| translate}}</button>
+  </div>
+</ng-template>

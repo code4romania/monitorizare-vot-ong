@@ -27,9 +27,9 @@ export class ObserversService {
     return this.http.delete(url);
   }
 
-  resetPasswordObserver(phone) {
+  resetPasswordObserver(phone: string, pin: string) {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/observer/reset');
-    return this.http.post(url, { action: 'reset', phone });
+    return this.http.post(url, { action: 'reset-password', phoneNumber: phone, pin: pin });
   }
 
   getObserver(id: string) {
