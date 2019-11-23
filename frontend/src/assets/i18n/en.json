@@ -43,5 +43,7 @@
   "RESET": "Clear filter",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
-  "DOWNLOAD_ANSWERS": "Download answers"
+  "DOWNLOAD_ANSWERS": "Download answers",
+  "FROM": "From",
+  "TO": "To"
 }

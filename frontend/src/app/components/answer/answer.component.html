@@ -19,6 +19,17 @@
             <label for="observerId" class="control-label">{{'OBSERVER_ID' | translate}}</label>
             <input [(ngModel)]="observerId" name="observerId" class="form-control" id="observerId">
         </div>
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="fromTime" class="control-label">{{'FROM' | translate }}</label>
+            <input [(ngModel)]="fromTime" name="fromTime" class="form-control" id="fromTime" placeholder="yyyy-MM-dd hh:mm">
+        </div>
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="toTime" class="control-label">{{'TO' | translate}}</label>
+            <input [(ngModel)]="toTime" name="toTime" class="form-control" id="toTime"placeholder="yyyy-MM-dd hh:mm">
+        </div>
+        
         <button type="submit" class="btn btn-default mb-2">Filtreaza</button>
         <button (click)="downloadAnswers()" class="btn btn-default mb-2">{{'DOWNLOAD_ANSWERS' | translate }}</button>
       </form>

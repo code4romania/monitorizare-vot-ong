@@ -23,6 +23,8 @@ export class AnswerComponent implements OnInit {
     pollingStationNumber: string;
     observerId: number;
     isUrgent: boolean;
+    fromTime: string;
+    toTime: string;
 
     constructor(private store: Store<AppState>, 
                 private answersService: AnswersService) { }
@@ -72,8 +74,33 @@ export class AnswerComponent implements OnInit {
             .subscribe();
     }
 
-    downloadAnswers({}) {
-        return this.answersService.downloadAnswers().subscribe(res => {
+    private isValidValue(value) {
+        return value !== null && value !== '';
+    }
+
+    downloadAnswers() {
+        const filter: AnswersPackFilter = {};
+        if (this.isValidValue(this.countyCode)) {
+            filter.county = this.countyCode;
+        }
+
+        if (this.isValidValue(this.pollingStationNumber)) {
+            filter.pollingStationNumber = this.pollingStationNumber;
+        }
+
+        if (this.isValidValue(this.observerId)) {
+            filter.idObserver = this.observerId;
+        }
+
+        if (this.isValidValue(this.fromTime)) {
+            filter.from = this.fromTime;
+        }
+
+        if (this.isValidValue(this.toTime)) {
+            filter.to = this.toTime;
+        }
+
+        return this.answersService.downloadAnswers(filter).subscribe(res => {
             FileSaver.saveAs(res, 'anwsers.xlsx');
         });
     }

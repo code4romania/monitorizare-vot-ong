@@ -26,5 +26,7 @@
   "COUNTY_CODE": "Județ:",
   "OBSERVER_ID": "Id-ul observatorului:",
   "POLLING_STATION_NUMBER": "Numărul secției de votare:",
-  "DOWNLOAD_ANSWERS": "Descarca raspunsuri"
+  "DOWNLOAD_ANSWERS": "Descarca raspunsuri", 
+  "FROM": "De la",
+  "TO": "Pana la"
 }
