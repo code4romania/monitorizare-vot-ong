@@ -45,5 +45,6 @@
   "RESET_PASSWORD": "Reset password",
   "DOWNLOAD_ANSWERS": "Download answers",
   "FROM": "From",
-  "TO": "To"
+  "TO": "To",
+  "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data dowload request?"
 }

@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Form } from 'app/models/form.model';
 import * as FileSaver from 'file-saver';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class AnswerComponent implements OnInit {
     toTime: string;
 
     constructor(private store: Store<AppState>, 
-                private answersService: AnswersService) { }
+                private answersService: AnswersService,
+                private translate: TranslateService) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
@@ -79,6 +81,10 @@ export class AnswerComponent implements OnInit {
     }
 
     downloadAnswers() {
+        if (!confirm(this.translate.instant("ANSWERS_DOWNLOAD_CONFIRMATION"))) {
+            return ;
+        }
+        
         const filter: AnswersPackFilter = {};
         if (this.isValidValue(this.countyCode)) {
             filter.county = this.countyCode;
