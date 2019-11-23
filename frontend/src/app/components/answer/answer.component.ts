@@ -2,10 +2,14 @@ import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/an
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
+import { AnswersService } from '../../services/answers.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Form } from 'app/models/form.model';
+import * as FileSaver from 'file-saver';
+import {TranslateService} from '@ngx-translate/core';
+
 
 @Component({
     templateUrl: './answer.component.html',
@@ -20,8 +24,12 @@ export class AnswerComponent implements OnInit {
     pollingStationNumber: string;
     observerId: number;
     isUrgent: boolean;
+    fromTime: string;
+    toTime: string;
 
-    constructor(private store: Store<AppState>) { }
+    constructor(private store: Store<AppState>, 
+                private answersService: AnswersService,
+                private translate: TranslateService) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
@@ -36,7 +44,6 @@ export class AnswerComponent implements OnInit {
     }
 
     requestFilteredData() {
-
         this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
             observerId: this.observerId,
             pollingStationNumber: this.pollingStationNumber,
@@ -67,6 +74,41 @@ export class AnswerComponent implements OnInit {
                 this.store.dispatch(a)
             })
             .subscribe();
+    }
+
+    private isValidValue(value) {
+        return value !== null && value !== '';
+    }
+
+    downloadAnswers() {
+        if (!confirm(this.translate.instant("ANSWERS_DOWNLOAD_CONFIRMATION"))) {
+            return ;
+        }
+        
+        const filter: AnswersPackFilter = {};
+        if (this.isValidValue(this.countyCode)) {
+            filter.county = this.countyCode;
+        }
+
+        if (this.isValidValue(this.pollingStationNumber)) {
+            filter.pollingStationNumber = this.pollingStationNumber;
+        }
+
+        if (this.isValidValue(this.observerId)) {
+            filter.idObserver = this.observerId;
+        }
+
+        if (this.isValidValue(this.fromTime)) {
+            filter.from = this.fromTime;
+        }
+
+        if (this.isValidValue(this.toTime)) {
+            filter.to = this.toTime;
+        }
+
+        return this.answersService.downloadAnswers(filter).subscribe(res => {
+            FileSaver.saveAs(res, 'anwsers.xlsx');
+        });
     }
 
 }

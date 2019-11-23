@@ -14,6 +14,7 @@ import {ObserversService} from './services/observers.service';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NotificationsService } from './services/notifications.service';
+import { AnswersService } from './services/answers.service';
 import { ModalModule } from 'ngx-bootstrap';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -42,7 +43,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     ObserversService,
-    NotificationsService
+    NotificationsService, 
+    AnswersService
   ],
 
   bootstrap: [AppComponent]
