@@ -42,5 +42,6 @@
   "SEND_NOTIFICATIONS_TO": "Send notification to",
   "RESET": "Clear filter",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
-  "RESET_PASSWORD": "Reset password"
+  "RESET_PASSWORD": "Reset password",
+  "DOWNLOAD_ANSWERS": "Download answers"
 }

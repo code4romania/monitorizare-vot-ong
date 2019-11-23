@@ -2,10 +2,13 @@ import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/an
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
+import { AnswersService } from '../../services/answers.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Form } from 'app/models/form.model';
+import * as FileSaver from 'file-saver';
+
 
 @Component({
     templateUrl: './answer.component.html',
@@ -21,7 +24,8 @@ export class AnswerComponent implements OnInit {
     observerId: number;
     isUrgent: boolean;
 
-    constructor(private store: Store<AppState>) { }
+    constructor(private store: Store<AppState>, 
+                private answersService: AnswersService) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
@@ -36,7 +40,6 @@ export class AnswerComponent implements OnInit {
     }
 
     requestFilteredData() {
-
         this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
             observerId: this.observerId,
             pollingStationNumber: this.pollingStationNumber,
@@ -67,6 +70,12 @@ export class AnswerComponent implements OnInit {
                 this.store.dispatch(a)
             })
             .subscribe();
+    }
+
+    downloadAnswers({}) {
+        return this.answersService.downloadAnswers().subscribe(res => {
+            FileSaver.saveAs(res, 'anwsers.xlsx');
+        });
     }
 
 }
