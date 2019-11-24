@@ -22,9 +22,7 @@ export class AnswersService {
 		const urlWithParams = paramBuilder.build();
 
 		const url: string = Location.joinWithSlash(this.baseUrl, urlWithParams);
-		return this.http.get(url, {
-			responseType: 'blob'
-		});
+		return this.http.get<Blob>(url);
 	}
 }
 

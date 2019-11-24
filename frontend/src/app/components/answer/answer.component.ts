@@ -2,7 +2,7 @@ import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/an
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
-import { AnswersService } from '../../services/answers.service';
+import { AnswersService, AnswersPackFilter } from '../../services/answers.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
@@ -91,7 +91,7 @@ export class AnswerComponent implements OnInit {
         }
 
         if (this.isValidValue(this.pollingStationNumber)) {
-            filter.pollingStationNumber = this.pollingStationNumber;
+            filter.pollingStationNumber = this.pollingStationNumber as any;
         }
 
         if (this.isValidValue(this.observerId)) {
