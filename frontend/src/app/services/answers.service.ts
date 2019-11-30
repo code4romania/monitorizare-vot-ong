@@ -1,30 +1,36 @@
-import { ApiService } from '../core/apiService/api.service';
-import { Form } from '../models/form.model';
-import { Note } from '../models/note.model';
-import { PaginationData } from '../shared/pagination.interface';
+import { environment } from 'environments/environment';
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { ApiService, QueryParamBuilder } from 'app/core/apiService/api.service';
 
 @Injectable()
 export class AnswersService {
+	private baseUrl: string;
 
+	constructor(private http: ApiService) {
+		this.baseUrl = environment.apiUrl;
+	}
 
-    constructor(private http: ApiService) { }
+	downloadAnswers(filter: AnswersPackFilter) {
+		let paramBuilder = QueryParamBuilder
+      .Instance('/api/v1/export/all');
 
+    for (let key in filter) {
+		    let value = filter[key];
+		    paramBuilder = paramBuilder.withParam(key, value);
+		}
+		const urlWithParams = paramBuilder.build();
 
-    getAll(urgent = false, paginationData?: PaginationData) {
-        let body = Object.assign({ urgent: urgent }, paginationData);
-        return this.http.get('/api/v1/raspunsuri', {
-            body: body
-        })
-            .map(res => res.json())
-    }
-    getNotes(idObservator: number, idSectieDeVotare: number) {
-        return this.http.get('/api/v1/note', {
-            body: {
-                idObservator: idObservator,
-                idSectieDeVotoare: idSectieDeVotare
-            }
-        }).map(res => <Note[]>res.json().data)
-    }
+		const url: string = Location.joinWithSlash(this.baseUrl, urlWithParams);
+		return this.http.get<Blob>(url);
+	}
+}
+
+export interface AnswersPackFilter {
+	idNgo?: number, 
+	idObserver?: number,
+	pollingStationNumber?: number,
+	county?: string,
+	from?: string,
+	to?: string
 }

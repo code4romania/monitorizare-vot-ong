@@ -6,7 +6,7 @@ export class HomeGuard implements CanActivate
 {
     constructor(private router:Router) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.router.navigate(['/urgente'],{
+        this.router.navigate(['/urgents'],{
             queryParams: {
                 urgente: true
             }

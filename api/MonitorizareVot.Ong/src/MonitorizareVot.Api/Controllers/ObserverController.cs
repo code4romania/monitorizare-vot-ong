@@ -92,5 +92,18 @@ namespace MonitorizareVot.Api.Controllers
 
             return Task.FromResult(new OkObjectResult(result.Result));
         }
+        [HttpGet]
+        [Route("all")]
+        public async Task<IAsyncResult> All()
+        {
+            var result = await _mediator.Send(new ObserverAllCommand());
+                if (String.IsNullOrEmpty(result.ToString()))
+                    return Task.FromResult(NotFound("ERROR"));
+                else
+                    return Task.FromResult(Ok(result));
+ 
+        }
+
+
     }
 }

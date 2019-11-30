@@ -1,4 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +23,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
+using MonitorizareVot.Api.Services;
 using MonitorizareVot.Domain.Ong.Models;
 using MonitorizareVot.Ong.Api.Common;
 using MonitorizareVot.Ong.Api.Models;
@@ -23,18 +32,9 @@ using Serilog;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using MonitorizareVot.Api.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace MonitorizareVot.Ong.Api
+namespace MonitorizareVot.Api
 {
     public class Startup
     {
@@ -61,7 +61,7 @@ namespace MonitorizareVot.Ong.Api
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
+        private IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)

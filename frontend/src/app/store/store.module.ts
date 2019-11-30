@@ -14,23 +14,35 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ObserversState, ObserversCountState } from './observers/observers.state';
+import {ObserversEffects, ObserversCountEffects} from './observers/observers.effects';
+import {observersReducer, observersCountReducer} from './observers/observers.reducer';
 
 export class AppState {
-    form: FormState
-    answer: AnswerState
-    statistics: StatisticsState
+    form: FormState;
+    answer: AnswerState;
+    statistics: StatisticsState;
+    observers: ObserversState;
+    observersCount: ObserversCountState;
     note: NoteState
 }
 
 let moduleImports = [
-    StoreModule.provideStore({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, note: noteReducer }),
-    EffectsModule.run(FormEffects),
-    EffectsModule.run(AnswerEffects),
-    EffectsModule.run(StatisticsEffects),
-    EffectsModule.run(NoteEffects)
-]
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer}),
+    EffectsModule.forRoot([
+      FormEffects,
+      AnswerEffects,
+      StatisticsEffects,
+      ObserversEffects,
+      ObserversCountEffects,
+      NoteEffects
+    ]),
+];
 if (!environment.production) {
-    moduleImports.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
+    moduleImports.push(StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: false
+    }))
 }
 
 @NgModule({
@@ -45,7 +57,7 @@ export class AppStoreModule {
                     store.dispatch(new FormClearAll());
                 }
                 if (!clearForms) {
-                    store.dispatch(new FormLoadAction(['A', 'B', 'C']));
+                    store.dispatch(new FormLoadAction());
                 }
             })
         });

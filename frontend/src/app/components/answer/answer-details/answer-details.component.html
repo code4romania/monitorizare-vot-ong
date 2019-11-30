@@ -13,9 +13,9 @@
         </app-answer-extra-questions>
         <tabset>
           <tab *ngFor="let form of formState.items">
-            <template tabHeading>{{'FORM' | translate}} {{form.idFormular}}</template>
+            <ng-template tabHeading>{{form.description}}</ng-template>
             <app-answer-form-list [notes]="formNotes(form.idFormular)" [form]="form"
-                                  [completedQuestions]="formAnswers(form.idFormular)">
+                                  [completedQuestions]="formAnswers()">
             </app-answer-form-list>
           </tab>
         </tabset>

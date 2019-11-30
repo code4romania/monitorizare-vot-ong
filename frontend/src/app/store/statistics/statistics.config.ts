@@ -6,7 +6,7 @@ export interface StatisticsStateConfig {
 }
 export let statisticsConfig = [{
     key: 'numar-observatori',
-    method: "numarObservatori",
+    method: "observerNumber",
     header: 'Topul judetelor',
     subHeader: "cu cei mai multi observatori",
 }, {
@@ -16,32 +16,32 @@ export let statisticsConfig = [{
     //   subHeader: "cu cele mai multe sesizari"
     // }, {
     key: 'sesizari-judete',
-    method: "sesizariJudete",
+    method: "countiesIrregularities",
     header: "Topul judetelor",
     subHeader: "cu cele mai sesizari"
 }, {
     key: 'sesizari-sectii',
-    method: "sesizariSectii",
+    method: "pollingStationIrregularities",
     header: "Topul sectiilor",
     subHeader: "cu cele mai multe sesizari"
 }, {
     key: 'sesizari-deschidere-judete',
-    method: "sesizariDeschidereJudete",
+    method: "countiesOpeningIrregularities",
     header: "Topul judetelor",
     subHeader: "cu cele mai multe sesizari la deschidere"
 }, {
     key: 'sesizari-deschidere-sectii',
-    method: "sesizariDeschidereSectii",
+    method: "pollingStationOpeningIrregularities",
     header: "Topul sectiilor",
     subHeader: "cu cele mai multe sesizari la deschidere"
 }, {
     key: 'sesizari-numarare-judete',
-    method: "sesizariNumarareJudete",
+    method: "countiesByCountingIrregularities",
     header: "Topul judetelor",
     subHeader: "cu cele mai multe sesizari la numararea voturilor"
 }, {
     key: 'sesizari-numarare-sectii',
-    method: "sesizariNumarareSectii",
+    method: "pollingStationsByCountingIrregularities",
     header: "Topul sectiilor",
     subHeader: "cu cele mai multe sesizari la numararea voturilor"
 }];

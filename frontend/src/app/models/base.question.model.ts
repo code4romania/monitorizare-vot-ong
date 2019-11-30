@@ -1,7 +1,7 @@
 export class BaseQuestion {
-    idIntrebare: number;
-    codIntrebare: string;
-    textIntrebare: string;
-    idTipIntrebare: number;
-    codFormular: string;
+    id: number;
+    formCode: string;
+    code: string;
+    text: string;
+    idQuestionType: number;
 }

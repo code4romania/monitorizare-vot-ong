@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonitorizareVot.Api;
 
 namespace MonitorizareVot.Ong.Api.Tests.Controllers
 {

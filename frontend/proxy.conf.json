@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://monitorizarevotong.azurewebsites.net",
+    "target": "https://mv-mobile-test.azurewebsites.net/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

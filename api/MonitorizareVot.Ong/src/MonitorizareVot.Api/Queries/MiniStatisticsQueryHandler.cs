@@ -62,7 +62,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(LoggedInObserversRequest message, CancellationToken token)
         {
-            var number = await _context.Observers.CountAsync(o => o.MobileDeviceId != null);
+            var number = await _context.PollingStationInfos.Select(pi => pi.IdObserver).Distinct().CountAsync(token);
             return new SimpleStatisticsModel
             {
                 Label = "Number of logged in Observers",
@@ -71,7 +71,7 @@ namespace MonitorizareVot.Api.Queries
         }
         public async Task<SimpleStatisticsModel> Handle(FlaggedAnswersRequest message, CancellationToken token)
         {
-            var number = await _context.Answers.Include(r=>r.OptionAnswered).CountAsync(r=>r.OptionAnswered.Flagged);
+            var number = await _context.Answers.Include(r => r.OptionAnswered).CountAsync(r => r.OptionAnswered.Flagged);
             return new SimpleStatisticsModel
             {
                 Label = "Number of flagged answers submitted",

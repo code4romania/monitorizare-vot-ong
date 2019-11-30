@@ -1,20 +1,24 @@
-import { AppRoutingModule } from './routing/app.routing.module';
-import { components, ComponentsModule } from './components/components.module';
+import {AppRoutingModule} from './routing/app.routing.module';
+import {ComponentsModule} from './components/components.module';
 
-import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
+import {AppComponent} from './app.component';
+import {CoreModule} from './core/core.module';
+import {SharedModule} from './shared/shared.module';
+import {AppStoreModule} from './store/store.module';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient} from '@angular/common/http';
+import {ObserversService} from './services/observers.service';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NotificationsService } from './services/notifications.service';
 import { AnswersService } from './services/answers.service';
-import { SharedModule } from './shared/shared.module';
-import { AppStoreModule } from './store/store.module';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Http } from '@angular/http';
-import {TranslateService, TranslatePipe} from '@ngx-translate/core';
+import { ModalModule } from 'ngx-bootstrap';
 
-export function HttpLoaderFactory(http: Http) {
-  return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
 }
 
 @NgModule({
@@ -26,16 +30,21 @@ export function HttpLoaderFactory(http: Http) {
     AppStoreModule,
     AppRoutingModule,
     ComponentsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [Http]
+        deps: [HttpClient]
       }
-    })
+    }),
+    ModalModule.forRoot()
   ],
   providers: [
-    AnswersService,
+    ObserversService,
+    NotificationsService, 
+    AnswersService
   ],
 
   bootstrap: [AppComponent]
