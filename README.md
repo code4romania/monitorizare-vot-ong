@@ -26,7 +26,7 @@ Angular 2
 
 ## Repos and projects
 
-![MV diagram](https://raw.githubusercontent.com/code4romania/monitorizare-vot/develop/vote_monitor_diagram.png)
+![MV diagram](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/vote_monitor_diagram.png)
 
 MV related repos:
 
