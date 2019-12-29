@@ -1,16 +1,16 @@
-# Monitorizare Vot Admin ONG - Admin app for NGOs that send observers 
+# Monitorizare Vot Admin ONG - Admin app for NGOs that send observers
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-[See the project live](https://monitorizarevotong.azurewebsites.net)
+[See the project live](http://mv-ong-test.azurewebsites.net/)
 
-Monitorizare Vot is a mobile app for monitoring elections by authorized observers. They can use the app in order to offer a real-time snapshot on what is going on at polling stations and they can report on any noticeable irregularities. 
+Monitorizare Vot is a mobile app for monitoring elections by authorized observers. They can use the app in order to offer a real-time snapshot on what is going on at polling stations and they can report on any noticeable irregularities.
 
-The NGO-s with authorized observers for monitoring elections have real time access to the data the observers are transmitting therefore they can report on how voting is evolving and they can quickly signal to the authorities where issues need to be solved. 
+The NGO-s with authorized observers for monitoring elections have real time access to the data the observers are transmitting therefore they can report on how voting is evolving and they can quickly signal to the authorities where issues need to be solved.
 
-Moreover, where it is allowed, observers can also photograph and film specific situations and send the images to the NGO they belong to. 
+Moreover, where it is allowed, observers can also photograph and film specific situations and send the images to the NGO they belong to.
 
-The app also has a web version, available for every citizen who wants to report on election irregularities. Monitorizare Vot was launched in 2016 and it has been used for the Romanian parliamentary elections so far, but it is available for further use, regardless of the type of elections or voting process. 
+The app also has a web version, available for every citizen who wants to report on election irregularities. Monitorizare Vot was launched in 2016 and it has been used for the Romanian parliamentary elections so far, but it is available for further use, regardless of the type of elections or voting process.
 
 [Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
@@ -20,29 +20,21 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 ## Built With
 
- Backend app: .Net Core 2.1
- Frontend app: Angular 2
- 
- Swagger docs for the API are available [here](https://mv-dashboard-dev.azurewebsites.net/swagger/index.html).
+Angular 2
+
+ Swagger docs for the API are available [here](https://mv-mobile-test.azurewebsites.net/swagger/index.html).
 
 ## Repos and projects
 
-![MV Solutions](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/MV%20solutions.png)
+![MV diagram](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/vote_monitor_diagram.png)
 
 MV related repos:
 
-- Android - https://github.com/code4romania/monitorizare-vot-android
-- iOS - https://github.com/code4romania/monitorizare-vot-ios
-- rest API for mobile apps - https://github.com/code4romania/monitorizare-vot
-- https://github.com/code4romania/monitorizare-vot-admin
-- client app for general public - https://github.com/code4romania/monitorizare-vot-votanti-client/
-- api for general public - https://github.com/code4romania/monitorizare-vot-votanti-api
-- https://github.com/code4romania/monitorizare-vot-votanti-admin
-- https://github.com/code4romania/monitorizare-vot-docs
+- Android app - https://github.com/code4romania/mon-vot-android-kotlin
+- iOS app - https://github.com/code4romania/monitorizare-vot-ios
+- rest API - https://github.com/code4romania/monitorizare-vot
 
 ## Deployment
-
-### Backend app
 
 ### Frontend app
 
@@ -76,9 +68,9 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-#### Build instructions (Cristi) 
+#### Build instructions (Cristi)
 
-Run 
+Run
 - `npm install -g @angular/cli@latest`
 - `npm install`
 - `ng run build --prod`
