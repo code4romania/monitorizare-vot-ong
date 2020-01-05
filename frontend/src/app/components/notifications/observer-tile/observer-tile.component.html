@@ -1,32 +1,29 @@
-<div class="panel panel-default">
+<div class="check-tile" [ngClass]="{'selected': observer.isSelected}" (click)="toggleSelectedState()">
+  <div class="content">
+    <div class="check-icon-container">
+      <i class="fa fa-check check-icon"></i>
+    </div>
+
     <div class="card-header">
-        <div class="card-header-contents">
-            <span class="observe-name">
-                {{observer.name}}
-            </span>
-            <button [ngClass]="{'selected': observer.isSelected}"
-                (click)="toggleSelectedState()">
-                <i class="fa fa-check"></i>
-            </button>
-        </div>
+      <div class="card-header-contents">
+        <span class="observe-name">{{observer.name}}</span>
+      </div>
     </div>
     <div class="card-content">
-        <div class="card-row">
-            <span class="glyphicon glyphicon-earphone"
-                aria-hidden="true"></span>
-            <div class="phone-number">
-                {{observer.phone}}
-            </div>
-        </div>
+      <div class="card-row">
+        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+        <div class="phone-number">{{observer.phone}}</div>
+      </div>
     </div>
     <div class="card-footer">
-        <div>
-            <div class="card-footer-header">
-                Last login
-            </div>
-            <div class="card-footer-details">
-                {{observer.lastSeen}}
-            </div>
+      <div>
+        <div class="card-footer-header">
+          Last login
         </div>
+        <div class="card-footer-details">
+          {{observer.lastSeen}}
+        </div>
+      </div>
     </div>
+  </div>
 </div>

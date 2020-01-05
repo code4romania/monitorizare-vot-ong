@@ -76,11 +76,8 @@
         class="btn btn-default">{{'DESELECT_ALL' | translate}}</button>
     </div>
   </div>
-  <div class="row">
-
-    <div class="col-md-3"
-      style="width: 220px;"
-      *ngFor="let item of filteredObservers">
+  <div class="observer-list">
+    <div class="observer-data" *ngFor="let item of filteredObservers">
       <app-observer-tile [observer]="item"
         (onSelect)="onObserverSelect($event)"></app-observer-tile>
     </div>
