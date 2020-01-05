@@ -4,5 +4,6 @@ export class Note {
     attachmentPath: string;
     text: string;
     formCode: string;
+    formId: number;
     questionId: number;
 }
