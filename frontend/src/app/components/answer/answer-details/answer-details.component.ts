@@ -40,11 +40,11 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
     // || this.answerState.answerExtraLoading
   }
 
-  formNotes(formId: string) {
+  formNotes(formId: number) {
     if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
       return []
     }
-    return this.noteState.notes.filter(note => note.formCode === formId)
+    return this.noteState.notes.filter(note => note.formId === formId)
   }
 
   formAnswers(): CompletedQuestion[] {
