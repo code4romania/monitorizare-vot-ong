@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 })
 export class ObserversCardComponent implements OnInit {
   @Input() observer: Observer;
+  @Input() enableEdit: boolean = false;
   @Output() onSelect: EventEmitter<Partial<Observer>> = new EventEmitter();
   @Output() onDelete: EventEmitter<Observer> = new EventEmitter();
   @Output() onResetPassword: EventEmitter<{ phone: string, password: string }> = new EventEmitter();
