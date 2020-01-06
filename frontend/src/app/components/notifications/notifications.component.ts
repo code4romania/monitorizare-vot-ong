@@ -4,6 +4,7 @@ import { NotificationsService, CountyPollingStationInfo } from '../../services/n
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { NotificationModel } from '../../models/notification.model';
 import { Observer } from 'app/models/observer.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notifications',
@@ -23,7 +24,8 @@ export class NotificationsComponent implements OnInit {
   itemsShowLimit = 10;
   filteredObservers: Observer[] = [];
 
-  constructor(private notificationsService: NotificationsService) {
+  constructor(private notificationsService: NotificationsService,
+    private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class NotificationsComponent implements OnInit {
 
   submitNotification() {
     // TODO: change channel and from
-    const notification: NotificationModel ={
+    const notification: NotificationModel = {
       channel: "Firebase",
       from: "Monitorizare Vot",
       message: this.message,
@@ -61,7 +63,11 @@ export class NotificationsComponent implements OnInit {
     }
 
     if (this.isValid(notification)) {
-      this.notificationsService.pushNotification(notification).subscribe(x=>console.log(x));
+      const message = this.translate.instant("NOTIFICATION_SEND_CONFIRMATION");
+      if (!confirm(message.replace('<!nr!>',this.selectedObserversIds.length))) {
+        return;
+      }
+      this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
     } else {
       alert('Not all fields have been completed');
     }
@@ -128,7 +134,7 @@ export class NotificationsComponent implements OnInit {
 
   selectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x=>{
+    this.filteredObservers.forEach(x => {
       x.isSelected = true;
       this.selectedObserversIds.push(x.id);
     });
@@ -136,12 +142,12 @@ export class NotificationsComponent implements OnInit {
 
   deselectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x=>{
+    this.filteredObservers.forEach(x => {
       x.isSelected = false;
     });
-  
+
   }
-  resetFilter(){
+  resetFilter() {
     this.pollingStationFrom = [];
     this.pollingStationTo = [];
     this.selectedCounties = [];

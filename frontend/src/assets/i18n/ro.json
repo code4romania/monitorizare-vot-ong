@@ -29,5 +29,6 @@
   "DOWNLOAD_ANSWERS": "Descarca raspunsuri", 
   "FROM": "De la",
   "TO": "Pana la", 
-  "ANSWERS_DOWNLOAD_CONFIRMATION": "Esti sigur ca vrei sa lansezi cererea de descarcare a datelor?"
+  "ANSWERS_DOWNLOAD_CONFIRMATION": "Esti sigur ca vrei sa lansezi cererea de descarcare a datelor?",
+  "NOTIFICATION_SEND_CONFIRMATION": "Esti sigur ca vrei sa trimiti notificarea la <!nr!> observator(i)?"
 }
