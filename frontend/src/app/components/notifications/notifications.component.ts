@@ -64,7 +64,7 @@ export class NotificationsComponent implements OnInit {
 
     if (this.isValid(notification)) {
       const message = this.translate.instant("NOTIFICATION_SEND_CONFIRMATION");
-      if (!confirm(message.replace('<!nr!>',this.selectedObserversIds.length))) {
+      if (!confirm(message.replace('%d',this.selectedObserversIds.length))) {
         return;
       }
       this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
