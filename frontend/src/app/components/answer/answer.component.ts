@@ -6,9 +6,8 @@ import { AnswersService, AnswersPackFilter } from '../../services/answers.servic
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { Form } from 'app/models/form.model';
 import * as FileSaver from 'file-saver';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -27,9 +26,9 @@ export class AnswerComponent implements OnInit {
     fromTime: string;
     toTime: string;
 
-    constructor(private store: Store<AppState>, 
-                private answersService: AnswersService,
-                private translate: TranslateService) { }
+    constructor(private store: Store<AppState>,
+        private answersService: AnswersService,
+        private translate: TranslateService) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).distinctUntilChanged();
@@ -59,6 +58,7 @@ export class AnswerComponent implements OnInit {
             .map(a => this.store.dispatch(a))
             .subscribe()
     }
+
     redoAnswerDetailsAction() {
         // take the current state of the answerState, and do a reloaded
         this.store.select(state => state.answer).take(1)
@@ -76,15 +76,23 @@ export class AnswerComponent implements OnInit {
             .subscribe();
     }
 
+    resetFilters(): void {
+        this.countyCode = null;
+        this.pollingStationNumber = null;
+        this.observerId = null;
+        this.fromTime = null;
+        this.toTime = null;
+    }
+
     private isValidValue(value) {
         return value !== null && value !== '';
     }
 
     downloadAnswers() {
         if (!confirm(this.translate.instant("ANSWERS_DOWNLOAD_CONFIRMATION"))) {
-            return ;
+            return;
         }
-        
+
         const filter: AnswersPackFilter = {};
         if (this.isValidValue(this.countyCode)) {
             filter.county = this.countyCode;
