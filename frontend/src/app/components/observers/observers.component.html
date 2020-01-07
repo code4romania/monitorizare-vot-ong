@@ -46,10 +46,10 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6 col-lg-4" style="margin-top:20px"
+  <div class="observer-list">
+    <div class="observer-data"
          *ngFor="let item of observersList">
-      <app-observers-card [observer]="item" (onSelect)="onObserverSelect($event)" (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)"></app-observers-card>
+      <app-observers-card [observer]="item" [enableEdit]="true" (onSelect)="onObserverSelect($event)" (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)"></app-observers-card>
     </div>
   </div>
 </div>
