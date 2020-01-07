@@ -3,11 +3,9 @@
     <span>Observers</span> &middot; {{ totalCount }} total &middot; Sorted by <a href="#">Last login - Ascending</a>
     <div class="actions">
       <button class="btn" [ngClass]="(listType === 'CARD')?'btn-success':'btn-secondary'"
-              (click)="changeListType('CARD')"><i
-        class="glyphicon glyphicon-th-large"></i></button>
+        (click)="changeListType('CARD')"><i class="glyphicon glyphicon-th-large"></i></button>
       <button class="btn" [ngClass]="(listType === 'LIST')?'btn-success':'btn-secondary'"
-              (click)="changeListType('LIST')"><i
-        class="glyphicon glyphicon-th-list"></i></button>
+        (click)="changeListType('LIST')"><i class="glyphicon glyphicon-th-list"></i></button>
 
       <button class="btn btn-success" [routerLink]="['profil/new']">
         <i class="glyphicon glyphicon-plus-sign"></i> add observer/s
@@ -22,22 +20,21 @@
           <div class="col-sm-2">
             <div class="form-group">
               <label for="form-name">Name</label>
-              <input type='text' name="name" id="form-name" class="form-control"
-                     formControlName="name">
+              <input type='text' name="name" id="form-name" class="form-control" formControlName="name">
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
               <label for="form-county">Phone</label>
-              <input type='text' name="phone" id="form-county" class="form-control"
-                     formControlName="phone">
+              <input type='text' name="phone" id="form-county" class="form-control" formControlName="phone">
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group action-buttons">
-              <button class="btn btn-success" [disabled]="observersFilterForm.isEmpty()" (click)="applyFilters()">filter</button>
+              <button class="btn btn-success" [disabled]="observersFilterForm.isEmpty()"
+                (click)="applyFilters()">filter</button>
               <button class="btn btn-secondary" [disabled]="observersFilterForm.isEmpty()"
-                      (click)="resetFilters()">reset
+                (click)="resetFilters()">reset
               </button>
             </div>
           </div>
@@ -46,20 +43,76 @@
     </div>
   </div>
 
-  <div class="observer-list">
-    <div class="observer-data"
-         *ngFor="let item of observersList">
-      <app-observers-card [observer]="item" [enableEdit]="true" (onSelect)="onObserverSelect($event)" (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)"></app-observers-card>
+  <div class="observer-list" *ngIf="listType === 'CARD'">
+    <div class="observer-data" *ngFor="let item of observersList">
+      <app-observers-card [observer]="item" [enableEdit]="true" (onSelect)="onObserverSelect($event)"
+        (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)"></app-observers-card>
     </div>
   </div>
+  <div class="observer-grid" *ngIf="listType === 'LIST'">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Last login</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let observer of observersList">
+          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor">
+            <div class="checkbox">
+              <i class="fa" style="font-size:16px"
+                [ngClass]="{'fa-square': !observer.isSelected, 'fa-check-square': observer.isSelected}"
+                aria-hidden="true"></i>
+            </div>
+          </td>
+          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor"> {{ observer.name }}</td>
+          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor">
+            <div>
+              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+            <div class="phone-number">{{observer.phone}}</div>
+          </div>
+          </td>
+          <td> {{ observer.lastSeen | date:'shortTime'  }}</td>
+          <td>
+            <button type="button" class="btn btn-success" [routerLink]="['profil/edit/', observer.phone]"
+              data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+            <button type="button" class="btn btn-primary" (click)="onObserverResetPassword(observer)"
+              data-toggle="tooltip" title="Reset password"><i class="glyphicon glyphicon-refresh"></i></button>
+            <button type="button" class="btn btn-danger" (click)="onObserverDelete(observer)" data-toggle="tooltip"
+              title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <ng-template #editObserverModalTemplate>
+    <div class="modal-header" data-backdrop="static">
+      <h4 class="modal-title pull-left">{{'ENTER_NEW_PASSWORD' | translate}} {{observerToEdit.name}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" name="password" placeholder="pin" [(ngModel)]="newPassword" #pin="ngModel" maxlength="4"
+        minlength="4">
+      <p>&nbsp;</p>
+      <button type="button" class="btn btn-primary" (click)="resetPassword()"
+        [disabled]="!isPasswordValid()">{{'RESET_PASSWORD'| translate}}</button>
+    </div>
+  </ng-template>
 </div>
 
 <app-pagination [page]="observersState.page" [pageSize]="observersState.pageSize"
-                [totalItems]="observersState.totalItems" [nextEnabled]="!observersState.loading"
-                (pageChanged)="pageChanged($event)"></app-pagination>
+  [totalItems]="observersState.totalItems" [nextEnabled]="!observersState.loading" (pageChanged)="pageChanged($event)">
+</app-pagination>
 
 <app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
 <div *ngIf="observersState.error">
   <app-error-indicator></app-error-indicator>
 </div>
-

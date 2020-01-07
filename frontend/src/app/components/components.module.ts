@@ -14,7 +14,7 @@ import { AnswerComponent } from './answer/answer.component';
 import { ObserversComponent } from './observers/observers.component';
 import { AnswerListComponent } from './answer/answers-list/answer-list.component';
 import { HeaderComponent } from './header/header.component';
-import { ObserversCardComponent } from './observers/observers-card/observers-card.component';
+import { ObserverCardComponent } from './observers/observer-card/observer-card.component';
 import { ObserverProfileComponent } from './observers/observer-profile/observer-profile.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -28,7 +28,7 @@ export let components = [
     CategoricalQuestionComponent,
     AnswerExtraQuestionsComponent,
     ObserversComponent,
-    ObserversCardComponent,
+    ObserverCardComponent,
     ObserverProfileComponent,
     HeaderComponent,
     StatisticsComponent,
