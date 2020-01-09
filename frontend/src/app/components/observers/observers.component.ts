@@ -30,7 +30,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   listType: ListType = ListType.CARD;
   observersFilterForm: ObserversFilterForm;
   selectedObserversIds: Array<string> = [];
-
+  listTypes = ListType;
   anyObservers = false;
   pageSize = 9;
   totalCount = 0;

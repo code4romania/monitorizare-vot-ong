@@ -1,17 +1,20 @@
 import { Observer } from '../../models/observer.model';
-import { TemplateRef, Input, Output, EventEmitter } from '@angular/core';
+import { Input, Output, EventEmitter } from '@angular/core';
 
 export class BaseObserverCrudComponent {
     @Input() observer: Observer;
     @Input() enableEdit: boolean = false;
+    @Input() selectionEnabled: boolean = false;
 
     @Output() onSelect: EventEmitter<Partial<Observer>> = new EventEmitter();
     @Output() onDelete: EventEmitter<Observer> = new EventEmitter();
     @Output() onResetPassword: EventEmitter<Observer> = new EventEmitter();
 
     toggleSelectedState() {
-        this.observer.isSelected = !this.observer.isSelected;
-        this.onSelect.emit({ id: this.observer.id, isSelected: this.observer.isSelected })
+        if (this.selectionEnabled) {
+            this.observer.isSelected = !this.observer.isSelected;
+            this.onSelect.emit({ id: this.observer.id, isSelected: this.observer.isSelected });
+        }
     }
 
 

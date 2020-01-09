@@ -43,52 +43,28 @@
     </div>
   </div>
 
-  <div class="observer-list" *ngIf="listType === 'CARD'">
+  <div class="observer-list" *ngIf="listType === listTypes.CARD">
     <div class="observer-data" *ngFor="let item of observersList">
       <app-observers-card [observer]="item" [enableEdit]="true" (onSelect)="onObserverSelect($event)"
         (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)"></app-observers-card>
     </div>
   </div>
-  <div class="observer-grid" *ngIf="listType === 'LIST'">
+  <div class="observer-grid" *ngIf="listType === listTypes.LIST">
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>#</th>
           <th>Name</th>
           <th>Phone</th>
           <th>Last login</th>
-          <th>Actions</th>
+          <th class="text-right">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let observer of observersList">
-          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor">
-            <div class="checkbox">
-              <i class="fa" style="font-size:16px"
-                [ngClass]="{'fa-square': !observer.isSelected, 'fa-check-square': observer.isSelected}"
-                aria-hidden="true"></i>
-            </div>
-          </td>
-          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor"> {{ observer.name }}</td>
-          <td (click)="observer.isSelected = !observer.isSelected" class="pointer-cursor">
-            <div>
-              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-            <div class="phone-number">{{observer.phone}}</div>
-          </div>
-          </td>
-          <td> {{ observer.lastSeen | date:'shortTime'  }}</td>
-          <td>
-            <button type="button" class="btn btn-success" [routerLink]="['profil/edit/', observer.phone]"
-              data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
-            <button type="button" class="btn btn-primary" (click)="onObserverResetPassword(observer)"
-              data-toggle="tooltip" title="Reset password"><i class="glyphicon glyphicon-refresh"></i></button>
-            <button type="button" class="btn btn-danger" (click)="onObserverDelete(observer)" data-toggle="tooltip"
-              title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-          </td>
+        <tr *ngFor="let observer of observersList" app-oberver-row [observer]="observer" [enableEdit]="true" (onSelect)="onObserverSelect($event)"
+        (onDelete)="onObserverDelete($event)" (onResetPassword)="onObserverResetPassword($event)">
         </tr>
       </tbody>
     </table>
-
   </div>
 
   <ng-template #editObserverModalTemplate>

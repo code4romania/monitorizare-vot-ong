@@ -1,6 +1,6 @@
-<div class="check-tile" [ngClass]="{'selected': observer.isSelected}" (click)="toggleSelectedState()">
+<div class="observer-tile" [ngClass]="{'selected': observer.isSelected,'cursor-pointer': selectionEnabled}" (click)="toggleSelectedState()">
   <div class="content">
-    <div class="check-icon-container">
+    <div class="check-icon-container" *ngIf="selectionEnabled">
       <i class="fa fa-check check-icon"></i>
     </div>
 

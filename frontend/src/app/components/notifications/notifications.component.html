@@ -61,7 +61,7 @@
   </div>
   <div class="observer-list">
     <div class="observer-data" *ngFor="let item of filteredObservers">
-      <app-observers-card [observer]="item" (onSelect)="onObserverSelect($event)"></app-observers-card>
+      <app-observers-card [selectionEnabled]="true" [observer]="item" (onSelect)="onObserverSelect($event)"></app-observers-card>
     </div>
   </div>
 </div>
