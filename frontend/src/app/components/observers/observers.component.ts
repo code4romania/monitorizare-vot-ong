@@ -1,19 +1,19 @@
-import {ObserversStateItem} from '../../store/observers/observers.state';
-import {AppState} from '../../store/store.module';
-import {Store} from '@ngrx/store';
-import {ApiService} from '../../core/apiService/api.service';
-import {Subscription} from 'rxjs/Rx';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import { LoadObserversAction, LoadObserversCountAction} from '../../store/observers/observers.actions';
-import {values} from 'lodash';
-import {map} from 'rxjs/operators';
-import {Observer} from '../../models/observer.model';
-import {ListType} from '../../models/list.type.model';
-import {ObserversFilterForm} from './observers-filter.form';
-import {ObserversService} from '../../services/observers.service';
-import {ToastrService} from 'ngx-toastr';
-import { debug } from 'util';
+import { ObserversStateItem } from '../../store/observers/observers.state';
+import { AppState } from '../../store/store.module';
+import { Store } from '@ngrx/store';
+import { ApiService } from '../../core/apiService/api.service';
+import { Subscription } from 'rxjs/Rx';
+import { Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LoadObserversAction, LoadObserversCountAction } from '../../store/observers/observers.actions';
+import { values } from 'lodash';
+import { map } from 'rxjs/operators';
+import { Observer } from '../../models/observer.model';
+import { ListType } from '../../models/list.type.model';
+import { ObserversFilterForm } from './observers-filter.form';
+import { ObserversService } from '../../services/observers.service';
+import { ToastrService } from 'ngx-toastr';
+import { ModalOptions, BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-observers',
@@ -21,6 +21,8 @@ import { debug } from 'util';
   styleUrls: ['./observers.component.scss']
 })
 export class ObserversComponent implements OnInit, OnDestroy {
+  @ViewChild('editObserverModalTemplate') editObserverModal: TemplateRef<any>;
+
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
   observersCountSubscription: Subscription;
@@ -28,12 +30,23 @@ export class ObserversComponent implements OnInit, OnDestroy {
   listType: ListType = ListType.CARD;
   observersFilterForm: ObserversFilterForm;
   selectedObserversIds: Array<string> = [];
-
+  listTypes = ListType;
   anyObservers = false;
   pageSize = 9;
   totalCount = 0;
 
-  constructor(private http: ApiService, private store: Store<AppState>, private observersService: ObserversService, private toastrService: ToastrService) {
+  newPassword = '';
+  modalRef: BsModalRef;
+  modalOptions: ModalOptions = {
+    backdrop: 'static',
+    keyboard: false
+  };
+  observerToEdit: Observer;
+
+  constructor(private http: ApiService, private store: Store<AppState>,
+    private observersService: ObserversService,
+    private toastrService: ToastrService,
+    private modalService: BsModalService) {
     this.observersFilterForm = new ObserversFilterForm();
   }
 
@@ -59,7 +72,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   }
 
   resetFilters() {
-    this.observersFilterForm.reset({name: '', phone: ''});
+    this.observersFilterForm.reset({ name: '', phone: '' });
     this.loadObservers(1);
   }
 
@@ -73,7 +86,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
       .subscribe(action => this.store.dispatch(action));
   }
 
-  private loadObserversCount(){
+  private loadObserversCount() {
     this.store
       .select(s => s.observersCount)
       .take(1)
@@ -100,8 +113,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
       });
   }
 
-  onObserverSelect(selectedObserver: Partial<Observer>){
-    if(selectedObserver.isSelected) {
+  onObserverSelect(selectedObserver: Partial<Observer>) {
+    if (selectedObserver.isSelected) {
       this.selectedObserversIds.push(selectedObserver.id);
     }
     else {
@@ -110,27 +123,40 @@ export class ObserversComponent implements OnInit, OnDestroy {
     }
   }
 
-  onObserverDelete(observer: Observer){
-    this.observersService.deleteObserver(observer.id).subscribe((data)=> {
+  onObserverDelete(observer: Observer) {
+    this.observersService.deleteObserver(observer.id).subscribe((data) => {
       this.loadObservers(1);
       this.loadObserversCount();
       this.toastrService.warning("Success!", 'User has been removed');
     })
   }
 
-  onObserverResetPassword(data: { phone: string, password: string }) {
-    this.observersService.resetPasswordObserver(data.phone, data.password).subscribe((data) => {
-      this.toastrService.success("Success!", 'Password has been reset for the observer.');
-    }, () => {
-      this.toastrService.error('Could not reset password', 'Error!');
-    });
-
+  onObserverResetPassword(observer:Observer) {
+    this.observerToEdit = observer;
+    this.newPassword = '';
+    this.modalRef = this.modalService.show(this.editObserverModal, this.modalOptions);
   }
-
 
   ngOnDestroy() {
     this.observersSubscription.unsubscribe();
     this.observersCountSubscription.unsubscribe();
+  }
+
+  isPasswordValid(): boolean {
+    if (this.newPassword && this.newPassword.length === 4) {
+      return true;
+    }
+
+    return false;
+  }
+
+  resetPassword() {
+    this.observersService.resetPasswordObserver(this.observerToEdit.phone, this.newPassword).subscribe((data) => {
+      this.toastrService.success("Success!", 'Password has been reset for the observer.');
+      this.modalRef.hide();
+    }, () => {
+      this.toastrService.error('Could not reset password', 'Error!');
+    });
   }
 
 }
