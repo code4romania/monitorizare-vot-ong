@@ -1,0 +1,30 @@
+<td *ngIf="selectionEnabled" (click)="toggleSelectedState()" [ngClass]="{ 'cursor-pointer': selectionEnabled}">
+  <div class="checkbox">
+    <i class="fa" style="font-size:16px"
+      [ngClass]="{'fa-square': !observer.isSelected, 'fa-check-square': observer.isSelected}" aria-hidden="true"></i>
+  </div>
+</td>
+<td (click)="toggleSelectedState()" [ngClass]="{ 'cursor-pointer': selectionEnabled}">
+  <div class="cell-text">{{ observer.name }}</div>
+</td>
+<td (click)="toggleSelectedState()" [ngClass]="{ 'cursor-pointer': selectionEnabled}">
+  <div class="cell-text phone-number">
+    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+    <div>{{observer.phone}}</div>
+  </div>
+</td>
+<td (click)="toggleSelectedState()" [ngClass]="{ 'cursor-pointer': selectionEnabled}">
+  <div class="cell-text">
+    {{ observer.lastSeen | date:'shortTime'  }}
+  </div>
+</td>
+<td class="text-right" *ngIf="enableEdit">
+  <div class="float-right">
+    <button type="button" class="btn btn-success" [routerLink]="['profil/edit/', observer.phone]" data-toggle="tooltip"
+      title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+    <button type="button" class="btn btn-primary" (click)="openResetPasswordModal()" data-toggle="tooltip"
+      title="Reset password"><i class="glyphicon glyphicon-refresh"></i></button>
+    <button type="button" class="btn btn-danger" (click)="deleteObserver()" data-toggle="tooltip" title="Delete"><i
+        class="glyphicon glyphicon-trash"></i></button>
+  </div>
+</td>

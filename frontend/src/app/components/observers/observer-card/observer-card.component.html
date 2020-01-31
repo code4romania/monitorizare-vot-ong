@@ -1,0 +1,44 @@
+<div class="observer-tile" [ngClass]="{'selected': observer.isSelected,'cursor-pointer': selectionEnabled}" (click)="toggleSelectedState()">
+  <div class="content">
+    <div class="check-icon-container" *ngIf="selectionEnabled">
+      <i class="fa fa-check check-icon"></i>
+    </div>
+
+    <div class="card-header">
+      <div class="card-header-contents">
+        <span class="observe-name">{{observer.name}}</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="card-row">
+        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+        <div class="phone-number">{{observer.phone}}</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div>
+        <div class="card-footer-header">
+          Last login
+        </div>
+        <div class="card-footer-details">
+          {{observer.lastSeen | date:'shortTime'}}
+        </div>
+      </div>
+      <div *ngIf="enableEdit">
+        <div class="btn-group dropup pull-right">
+          <button type="button" class="btn btn-default" [routerLink]="['profil/edit/', observer.phone]">Edit</button>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li class="cursor-pointer"><a (click)="deleteObserver()">Delete</a></li>
+            <li class="cursor-pointer"><a (click)="openResetPasswordModal()">{{'RESET_PASSWORD'| translate}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
