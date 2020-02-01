@@ -39,12 +39,13 @@
   "SELECT_ALL": "Select all",
   "DESELECT_ALL": "Deselect all",
   "SELECTED_OBSERVERS_COUNT":"Number of active observers:",
-  "SEND_NOTIFICATIONS_TO": "Send notification to",
+  "SEND_NOTIFICATIONS_TO": "Send to",
   "RESET": "Clear filter",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
   "DOWNLOAD_ANSWERS": "Download answers",
   "FROM": "From",
   "TO": "To",
-  "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data dowload request?"
+  "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
+  "NOTIFICATION_SEND_CONFIRMATION": "Are you sure you want to notify %d observer(s)?"
 }
