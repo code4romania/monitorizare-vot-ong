@@ -1,7 +1,7 @@
 import { Form } from '../../models/form.model';
 import { Observable } from 'rxjs/Rx';
 import { FormActionTypes, FormErrorAction, FormLoadAction, FormLoadCompletedAction } from './form.actions';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
 import { Injectable } from '@angular/core';
 import { FormSection } from '../../models/form.section.model';
@@ -19,7 +19,7 @@ export class FormEffects {
 
     @Effect()
     loadFormAction = this.actions
-        .ofType(FormActionTypes.LOAD)
+        .pipe(ofType(FormActionTypes.LOAD))
         .switchMap(_ => this.getAvailableForms())
         .switchMap(r=>r.formVersions)
         .map(f=>{

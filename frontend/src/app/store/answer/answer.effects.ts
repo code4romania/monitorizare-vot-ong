@@ -23,7 +23,7 @@ import { HttpParams } from '@angular/common/http';
 import { AnswerFilters } from 'app/models/answer.filters.model';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { environment } from 'environments/environment';
 import { Location } from '@angular/common';
@@ -39,7 +39,7 @@ export class AnswerEffects {
 
   @Effect()
   loadThreads = this.actions
-    .ofType(AnswerActionTypes.LOAD_PREVIEW)
+    .pipe(ofType(AnswerActionTypes.LOAD_PREVIEW))
     .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
     .switchMap((action: LoadAnswerPreviewAction) => {
       const answearsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers');
@@ -80,7 +80,7 @@ export class AnswerEffects {
 
   @Effect()
   loadDetails = this.actions
-    .ofType(AnswerActionTypes.LOAD_DETAILS)
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
     .switchMap((action: LoadAnswerDetailsAction) => {
       const completedAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/filledIn');
 
@@ -97,17 +97,17 @@ export class AnswerEffects {
 
   @Effect()
   loadNotes = this.actions
-    .ofType(AnswerActionTypes.LOAD_DETAILS)
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
     .map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId));
 
   @Effect()
   loadExtraFromAnswer = this.actions
-    .ofType(AnswerActionTypes.LOAD_DETAILS)
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
     .map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId));
 
   @Effect()
   loadExtra = this.actions
-    .ofType(AnswerActionTypes.LOAD_EXTRA)
+    .pipe(ofType(AnswerActionTypes.LOAD_EXTRA))
     .map((a: LoadAnswerExtraAction) => a.payload)
     .switchMap(p => {
       const formAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/pollingStationInfo');

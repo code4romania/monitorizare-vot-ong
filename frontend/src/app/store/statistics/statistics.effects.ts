@@ -5,7 +5,7 @@ import { shouldLoadPage } from '../../shared/pagination.service';
 import { statisticsConfig } from './statistics.config';
 import { LoadStatisticAction, LoadStatisticsCompleteAction, StatisticsActions } from './statistics.actions';
 import { ApiService } from '../../core/apiService/api.service';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { LabelValueModel } from '../../models/labelValue.model';
 import { environment } from 'environments/environment';
@@ -24,7 +24,7 @@ export class StatisticsEffects {
 
     @Effect()
     loadStats = this.actions
-        .ofType(StatisticsActions.LOAD)
+        .pipe(ofType(StatisticsActions.LOAD))
         .map(a => <LoadStatisticAction>a)
         .filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length))
         .groupBy(a => a.payload.key)

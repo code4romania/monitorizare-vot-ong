@@ -13,7 +13,7 @@ import {
   LoadObserversCountCompleteAction
 } from './observers.actions';
 import { ApiService } from '../../core/apiService/api.service';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Observer } from '../../models/observer.model';
@@ -33,7 +33,7 @@ export class ObserversEffects {
 
   @Effect()
   loadStats = this.actions
-    .ofType(ObserversActions.LOAD)
+    .pipe(ofType(ObserversActions.LOAD))
     .map(a => <LoadObserversAction>a)
     .filter((a: LoadObserversAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length))
     .groupBy(a => a.payload.key)
@@ -63,7 +63,7 @@ export class ObserversEffects {
 
   @Effect()
   deleteObserver = this.actions
-    .ofType(ObserversActions.DELETE)
+    .pipe(ofType(ObserversActions.DELETE))
     .map(a => <DeleteObserverAction>a)
     .groupBy(a => a.payload.key)
     .flatMap((obs) =>
@@ -100,7 +100,7 @@ export class ObserversCountEffects {
 
   @Effect()
   loadStats = this.actions
-    .ofType(ObserversActions.LOADOBSERVERSTOTALCOUNT)
+    .pipe(ofType(ObserversActions.LOADOBSERVERSTOTALCOUNT))
     .switchMap((obs) =>{
         const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/observer/count`);
 
