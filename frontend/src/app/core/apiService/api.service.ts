@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
+
+import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {TokenService} from '../token/token.service';
 import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
-import {Observable} from 'rxjs/Rx';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 export interface HttpOptions {
@@ -61,13 +64,13 @@ export class ApiService {
   private request<T>(url: string, method: string, options?: HttpOptions): Observable<T> {
     options.headers = options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
 
-    return this.httpClient.request<T>(method, url, options).catch((err: any) => {
+    return this.httpClient.request<T>(method, url, options).pipe(catchError((err: any) => {
       if (err.status === 401) {
         this.tokenService.token = undefined;
         this.router.navigateByUrl('/login');
       }
-      return Observable.throw(err);
-    });
+      return observableThrowError(err);
+    }));
   }
 
   private normalizeRequest<T>(url: string, method: string, options?: HttpOptions, body?: any): Observable<T> {
@@ -98,13 +101,13 @@ export class ApiService {
   untypedPost(url: string, body: any): Observable<string> {
     return this.httpClient.post(url, body, {
       responseType: 'text'
-    }).catch((err: any) => {
+    }).pipe(catchError((err: any) => {
       if (err.status === 401) {
         this.tokenService.token = undefined;
         this.router.navigateByUrl('/login');
       }
-      return Observable.throw(err);
-    });
+      return observableThrowError(err);
+    }));
   }
 
   put<T>(url: string, body: any, options?: HttpOptions): Observable<T> {

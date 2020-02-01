@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 import { Observable } from 'rxjs';
@@ -17,12 +19,12 @@ export class NotificationsService {
 
   public pushNotification(notification: NotificationModel): Observable<any> {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send');
-    return this.http.post(url, notification).take(1);
+    return this.http.post(url, notification).pipe(take(1));
   }
 
   public getCounties(): Observable<CountyPollingStationInfo[]> {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/polling-station');
-    return this.http.get<CountyPollingStationInfo[]>(url).take(1);
+    return this.http.get<CountyPollingStationInfo[]>(url).pipe(take(1));
   }
 
   public getActiveObserversInCounties(counties: string[], fromPollingStationNumber: number, toPollingStationNumber: number): Observable<Observer[]> {
@@ -35,7 +37,7 @@ export class NotificationsService {
       .build();
 
     const url: string = Location.joinWithSlash(this.baseUrl, urlWithParams);
-    return this.http.get<Observer[]>(url).take(1);
+    return this.http.get<Observer[]>(url).pipe(take(1));
   }
 }
 

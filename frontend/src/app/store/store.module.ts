@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { TokenService } from '../core/token/token.service';
 import { NoteEffects } from './note/note.effects';
@@ -52,7 +54,7 @@ export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {
         tokenService.tokenStream.subscribe((token) => {
             let clearForms = !token;
-            store.select(s => s.form).take(1).subscribe(s => {
+            store.select(s => s.form).pipe(take(1)).subscribe(s => {
                 if (clearForms || s.items.length > 0) {
                     store.dispatch(new FormClearAll());
                 }

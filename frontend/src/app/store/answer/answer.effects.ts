@@ -1,10 +1,13 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {catchError, map, switchMap, filter} from 'rxjs/operators';
 import { AnswerExtra, AnswerExtraConstructorData } from '../../models/answer.extra.model';
 import { LoadNotesAction } from '../note/note.actions';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerState } from './answer.reducer';
 import { AppState } from '../store.module';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
 import { ApiService } from '../../core/apiService/api.service';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import {
@@ -39,9 +42,9 @@ export class AnswerEffects {
 
   @Effect()
   loadThreads = this.actions
-    .pipe(ofType(AnswerActionTypes.LOAD_PREVIEW))
-    .filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length))
-    .switchMap((action: LoadAnswerPreviewAction) => {
+    .pipe(ofType(AnswerActionTypes.LOAD_PREVIEW)).pipe(
+    filter((a: LoadAnswerPreviewAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state.threads.length)),
+    switchMap((action: LoadAnswerPreviewAction) => {
       const answearsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers');
 
       return this.http.get<{
@@ -51,9 +54,9 @@ export class AnswerEffects {
       }>(answearsUrl, {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload)
       })
-    })
-    .map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages))
-    .catch(() => Observable.of(new LoadAnswerPreviewErorrAction()));
+    }),
+    map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages)),
+    catchError(() => observableOf(new LoadAnswerPreviewErorrAction())),);
 
 
   shouldLoad(page: number, pageSize: number, arrayLen) {
@@ -80,8 +83,8 @@ export class AnswerEffects {
 
   @Effect()
   loadDetails = this.actions
-    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
-    .switchMap((action: LoadAnswerDetailsAction) => {
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS)).pipe(
+    switchMap((action: LoadAnswerDetailsAction) => {
       const completedAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/filledIn');
 
       return this.http.get<CompletedQuestion[]>(completedAnswears, {
@@ -91,25 +94,25 @@ export class AnswerEffects {
         }
       });
     }
-    )
-    .map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers))
-    .catch(() => Observable.of(new LoadAnswerDetailsErrorAction()));
+    ),
+    map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers)),
+    catchError(() => observableOf(new LoadAnswerDetailsErrorAction())),);
 
   @Effect()
   loadNotes = this.actions
-    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
-    .map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId));
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS)).pipe(
+    map((a: LoadAnswerDetailsAction) => new LoadNotesAction(a.payload.sectionId, a.payload.observerId)));
 
   @Effect()
   loadExtraFromAnswer = this.actions
-    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS))
-    .map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId));
+    .pipe(ofType(AnswerActionTypes.LOAD_DETAILS)).pipe(
+    map((a: LoadAnswerDetailsAction) => new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId)));
 
   @Effect()
   loadExtra = this.actions
-    .pipe(ofType(AnswerActionTypes.LOAD_EXTRA))
-    .map((a: LoadAnswerExtraAction) => a.payload)
-    .switchMap(p => {
+    .pipe(ofType(AnswerActionTypes.LOAD_EXTRA)).pipe(
+    map((a: LoadAnswerExtraAction) => a.payload),
+    switchMap(p => {
       const formAnswears: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/pollingStationInfo');
 
       return this.http.get<AnswerExtraConstructorData>(formAnswears, {
@@ -119,10 +122,10 @@ export class AnswerEffects {
         }
       });
     }
-    )
-    .map(json => json ? new AnswerExtra(json) : undefined)
-    .map(extra => new LoadAnswerExtraDoneAction(extra))
-    .catch(() => Observable.of(new LoadAnswerExtraErrorAction()));
+    ),
+    map(json => json ? new AnswerExtra(json) : undefined),
+    map(extra => new LoadAnswerExtraDoneAction(extra)),
+    catchError(() => observableOf(new LoadAnswerExtraErrorAction())),);
 
 
 }

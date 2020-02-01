@@ -2,7 +2,7 @@ import {NoteState} from '../../../store/note/note.reducer';
 import {LoadAnswerDetailsAction} from '../../../store/answer/answer.actions';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/store.module';
-import {Subscription} from 'rxjs/Rx';
+import {Subscription} from 'rxjs';
 import {FormState} from '../../../store/form/form.reducer';
 import {AnswerState} from '../../../store/answer/answer.reducer';
 import {Component, OnDestroy, OnInit} from '@angular/core';

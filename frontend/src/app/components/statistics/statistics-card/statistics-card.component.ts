@@ -1,5 +1,5 @@
 import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { LabelValueModel } from '../../../models/labelValue.model';
 import { Component, Input, OnInit } from '@angular/core';
 

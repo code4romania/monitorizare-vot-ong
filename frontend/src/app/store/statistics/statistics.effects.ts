@@ -1,3 +1,5 @@
+
+import {switchMap, mergeMap, groupBy, filter, map} from 'rxjs/operators';
 import { StatisticsState } from './statistics.state';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store.module';
@@ -24,12 +26,12 @@ export class StatisticsEffects {
 
     @Effect()
     loadStats = this.actions
-        .pipe(ofType(StatisticsActions.LOAD))
-        .map(a => <LoadStatisticAction>a)
-        .filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length))
-        .groupBy(a => a.payload.key)
-        .flatMap((obs) =>
-            obs.switchMap((a) => {
+        .pipe(ofType(StatisticsActions.LOAD)).pipe(
+        map(a => <LoadStatisticAction>a),
+        filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length)),
+        groupBy(a => a.payload.key),
+        mergeMap((obs) =>
+            obs.pipe(switchMap((a) => {
                 const statisticsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/statistics/${statisticsConfig.find(value => value.key === a.payload.key).method}`);
 
                 return this.http.get<{
@@ -41,13 +43,13 @@ export class StatisticsEffects {
                         page: a.payload.page,
                         pageSize: a.payload.pageSize
                     }
-                }).map(res => {
+                }).pipe(map(res => {
                     return {
                         key: a.payload.key,
                         json: res
                     }
-                });
-            })
-        )
-        .map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems))
+                }));
+            }))
+        ),
+        map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems)),)
 }

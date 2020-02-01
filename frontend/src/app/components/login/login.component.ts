@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { TokenService } from '../../core/token/token.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/apiService/api.service';
