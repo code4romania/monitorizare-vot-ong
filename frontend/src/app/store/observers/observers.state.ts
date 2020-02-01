@@ -18,14 +18,14 @@ export class ObserversStateItem {
 
   loading = false;
   error = false;
-  values = <Observer[]>[];
+  values = [] as Observer[];
 
   constructor(config?: ObserversStateConfig) {
     if (config) {
       this.key = config.key;
       this.method = config.method;
       this.header = config.header;
-      this.subHeader = config.subHeader
+      this.subHeader = config.subHeader;
     }
   }
 }

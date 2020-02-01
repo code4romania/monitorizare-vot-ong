@@ -3,7 +3,7 @@ export function shouldLoadPage(page: number, pageSize: number, arrayLen) {
     return true;
   }
   if (page * pageSize > arrayLen) {
-    return !((page - 1) * pageSize < arrayLen)
+    return !((page - 1) * pageSize < arrayLen);
   } else {
     return false;
   }

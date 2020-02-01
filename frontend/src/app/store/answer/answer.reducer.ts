@@ -6,39 +6,39 @@ import { CompletedQuestion } from '../../models/completed.question.model';
 import { AnswerActions, AnswerActionTypes } from './answer.actions';
 import { AnswerFilters } from 'app/models/answer.filters.model';
 export class AnswerState {
-    threads: AnswerThread[] = []
-    urgent: boolean = undefined
-    page = 1
-    pageSize = 10
-    totalItems: number = undefined
-    totalPages: number = undefined
-    threadsLoading = false
-    threadsError = false
+    threads: AnswerThread[] = [];
+    urgent: boolean = undefined;
+    page = 1;
+    pageSize = 10;
+    totalItems: number = undefined;
+    totalPages: number = undefined;
+    threadsLoading = false;
+    threadsError = false;
 
-    selectedAnswer: CompletedQuestion[]
-    selectedLoading = false
-    selectedError = false
-    observerId: number
-    sectionId: number
+    selectedAnswer: CompletedQuestion[];
+    selectedLoading = false;
+    selectedError = false;
+    observerId: number;
+    sectionId: number;
 
-    notes: Note[]
-    notesLoading: boolean
-    notesError: boolean
+    notes: Note[];
+    notesLoading: boolean;
+    notesError: boolean;
 
-    answerExtra: AnswerExtra
-    answerExtraLoading = false
-    answerExtraError = false
+    answerExtra: AnswerExtra;
+    answerExtraLoading = false;
+    answerExtraError = false;
 
-    answerFilters: AnswerFilters = { observerId: null, pollingStationNumber: null, county: null }
+    answerFilters: AnswerFilters = { observerId: null, pollingStationNumber: null, county: null };
 }
-export let initialAnswerState: AnswerState = new AnswerState()
+export let initialAnswerState: AnswerState = new AnswerState();
 
 export function answerReducer(state = initialAnswerState, action: AnswerActions) {
     switch (action.type) {
         case AnswerActionTypes.LOAD_PREVIEW:
-            let newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
+            const newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
                 shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.threads.length);
-            let shouldUpdateFilters = Object.keys(action.payload.answerFilters).length > 0 ? true : false;
+            const shouldUpdateFilters = Object.keys(action.payload.answerFilters).length > 0 ? true : false;
 
             let newState = Object.assign({}, state, {
                 page: action.payload.page,
@@ -48,7 +48,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 threadsLoading: shouldLoadList || newList,
                 threadsError: false,
                 urgent: action.payload.urgent
-            })
+            });
             // if we're loading a new list, deselect any selected answer
             if (newList) {
                 newState = Object.assign({}, newState, {
@@ -60,7 +60,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                     answerExtra: undefined,
                     answerExtraLoading: false,
                     answerExtraError: false
-                })
+                });
             }
             return newState;
 
@@ -69,7 +69,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 threadsLoading: false,
                 threadsError: true,
 
-            })
+            });
         case AnswerActionTypes.LOAD_PREVIEW_DONE:
             return Object.assign({}, state, {
                 threads: state.threads.concat(action.payload.threads),
@@ -77,40 +77,40 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
                 totalPages: action.payload.totalPages,
                 threadsLoading: false,
                 threadsError: false
-            })
+            });
         case AnswerActionTypes.LOAD_DETAILS:
             return Object.assign({}, state, action.payload, {
                 selectedLoading: true,
                 selectedError: false
-            })
+            });
         case AnswerActionTypes.LOAD_DETAILS_ERROR:
             return Object.assign({}, state, {
                 selectedLoading: false,
                 selectedError: true
-            })
+            });
         case AnswerActionTypes.LOAD_DETAILS_DONE:
             return Object.assign({}, state, {
                 selectedAnswer: action.payload,
                 selectedLoading: false,
                 selectedError: false
-            })
+            });
         case AnswerActionTypes.LOAD_EXTRA:
             return Object.assign({}, state, {
                 answerExtraLoading: false,
                 answerExtraError: false
-            })
+            });
         case AnswerActionTypes.LOAD_EXTRA_DONE:
             return Object.assign({}, state, {
                 answerExtra: action.payload,
                 answerExtraLoading: false,
                 selectedError: false
-            })
+            });
         case AnswerActionTypes.LOAD_EXTRA_ERROR:
             return Object.assign({}, state, {
                 answerExtraLoading: false,
                 selectedError: true
-            })
+            });
         default:
-            return state
+            return state;
     }
 }

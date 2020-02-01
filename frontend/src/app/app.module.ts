@@ -22,7 +22,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 @NgModule({
-  declarations:[AppComponent],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     BrowserModule,
@@ -43,7 +43,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     ObserversService,
-    NotificationsService, 
+    NotificationsService,
     AnswersService
   ],
 

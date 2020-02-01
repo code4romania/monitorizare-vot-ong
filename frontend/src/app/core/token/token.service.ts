@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class TokenService {
-  public tokenKey: string = 'token-id';
+  public tokenKey = 'token-id';
   private _token: string = undefined;
 
   private _isRefreshing: boolean;
@@ -22,12 +22,12 @@ export class TokenService {
   }
 
   setTokenStream() {
-    this.tokenStream = Observable.create((obs:Observer<string>) => {
+    this.tokenStream = Observable.create((obs: Observer<string>) => {
       obs.next(this._token);
       this.observers.push(obs);
       return () => {
         this.observers = this.observers.filter(stateObserver => stateObserver === obs);
-      }
+      };
     });
   }
 
@@ -36,7 +36,7 @@ export class TokenService {
   }
   public set token(value) {
     this._token = value;
-    if(value !== undefined){
+    if (value !== undefined){
       localStorage.setItem(this.tokenKey, value);
     } else {
       localStorage.removeItem(this.tokenKey);

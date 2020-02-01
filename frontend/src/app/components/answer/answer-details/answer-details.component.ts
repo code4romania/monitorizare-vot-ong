@@ -31,20 +31,20 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
 
   hasError() {
-    return !this.answerState ||  this.answerState.selectedError
+    return !this.answerState ||  this.answerState.selectedError;
     // || !this.noteState || this.noteState.error
     // || this.answerState.answerExtraError
   }
   isLoading() {
-    return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading
+    return !this.answerState || !this.noteState || this.answerState.selectedLoading || this.noteState.loading;
     // || this.answerState.answerExtraLoading
   }
 
   formNotes(formId: number) {
     if (!this.noteState || this.noteState.loading || this.noteState.error || !this.noteState.notes.length) {
-      return []
+      return [];
     }
-    return this.noteState.notes.filter(note => note.formId === formId)
+    return this.noteState.notes.filter(note => note.formId === formId);
   }
 
   formAnswers(): CompletedQuestion[] {
@@ -62,7 +62,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
       this.store.select(s => s.answer).subscribe(s => this.answerState = s),
       this.store.select(s => s.form).subscribe(s => this.formState = s),
       this.store.select(s => s.note).subscribe(s => this.noteState = s)
-    ]
+    ];
   }
   ngOnDestroy() {
     _.map(this.subs, sub => sub.unsubscribe());

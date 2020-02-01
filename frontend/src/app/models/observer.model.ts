@@ -3,8 +3,8 @@ export class Observer {
   name: string;
   ngo: string;
   phone: string;
-  pin: string = '';
-  sendSMS: boolean = false;
+  pin = '';
+  sendSMS = false;
   isSelected: boolean;
   deviceRegisterDate: string;
   lastSeen: string;

@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
             this.loginSubscription.unsubscribe();
         }
         const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/access/authorize');
-        this.loginSubscription = this.http.post<{access_token: string, expires_in:number}>(authUrl, {
+        this.loginSubscription = this.http.post<{access_token: string, expires_in: number}>(authUrl, {
             user: this.user,
             password: this.password
         })
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;
-            })
+            });
     }
 
     ngOnInit() {

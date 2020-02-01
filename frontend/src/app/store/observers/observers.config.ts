@@ -1,12 +1,12 @@
 export interface ObserversStateConfig {
-    key: string
-    method: string
-    header: string
-    subHeader: string
+    key: string;
+    method: string;
+    header: string;
+    subHeader: string;
 }
 export let observersConfig = [{
     key: 'observers-list',
-    method: "",
+    method: '',
     header: 'Observatori',
-    subHeader: "",
+    subHeader: '',
 }];

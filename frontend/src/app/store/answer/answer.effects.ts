@@ -53,10 +53,10 @@ export class AnswerEffects {
         totalPages: number
       }>(answearsUrl, {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload)
-      })
+      });
     }),
     map(json => new LoadAnswerPreviewDoneAction(json.data, json.totalItems, json.totalPages)),
-    catchError(() => observableOf(new LoadAnswerPreviewErorrAction())),);
+    catchError(() => observableOf(new LoadAnswerPreviewErorrAction())), );
 
 
   shouldLoad(page: number, pageSize: number, arrayLen) {
@@ -96,7 +96,7 @@ export class AnswerEffects {
     }
     ),
     map((answers: CompletedQuestion[]) => new LoadAnswerDetailsDoneAction(answers)),
-    catchError(() => observableOf(new LoadAnswerDetailsErrorAction())),);
+    catchError(() => observableOf(new LoadAnswerDetailsErrorAction())), );
 
   @Effect()
   loadNotes = this.actions
@@ -125,7 +125,7 @@ export class AnswerEffects {
     ),
     map(json => json ? new AnswerExtra(json) : undefined),
     map(extra => new LoadAnswerExtraDoneAction(extra)),
-    catchError(() => observableOf(new LoadAnswerExtraErrorAction())),);
+    catchError(() => observableOf(new LoadAnswerExtraErrorAction())), );
 
 
 }

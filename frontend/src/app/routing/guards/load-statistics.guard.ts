@@ -20,7 +20,7 @@ export class LoadStatisticsGuard implements CanActivate {
             this.store
                 .select(s => s.statistics[route.params['key']]).pipe(
                 take(1),
-                map(s => new LoadStatisticAction(s.key, 1, 20, true)),)
+                map(s => new LoadStatisticAction(s.key, 1, 20, true)), )
                 .subscribe(a => this.store.dispatch(a));
         } else {
             this.store
@@ -30,7 +30,7 @@ export class LoadStatisticsGuard implements CanActivate {
                 map(s => values(s)),
                 concatMap(s => observableFrom(s)),
                 // .do(console.log)
-                map((i: StatisticsStateItem) => new LoadStatisticAction(i.key, 1, 5, true)),)
+                map((i: StatisticsStateItem) => new LoadStatisticAction(i.key, 1, 5, true)), )
                 .subscribe(a => this.store.dispatch(a));
         }
         return observableOf(true);

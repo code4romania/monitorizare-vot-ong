@@ -15,8 +15,8 @@ export class AnswersService {
 		let paramBuilder = QueryParamBuilder
       .Instance('/api/v1/export/all');
 
-    for (let key in filter) {
-		    let value = filter[key];
+  for (const key in filter) {
+		    const value = filter[key];
 		    paramBuilder = paramBuilder.withParam(key, value);
 		}
 		const urlWithParams = paramBuilder.build();
@@ -27,10 +27,10 @@ export class AnswersService {
 }
 
 export interface AnswersPackFilter {
-	idNgo?: number, 
-	idObserver?: number,
-	pollingStationNumber?: number,
-	county?: string,
-	from?: string,
-	to?: string
+	idNgo?: number;
+	idObserver?: number;
+	pollingStationNumber?: number;
+	county?: string;
+	from?: string;
+	to?: string;
 }

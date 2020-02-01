@@ -33,11 +33,11 @@ export class StatisticsComponent implements OnInit, OnDestroy {
       this.sub = this.store
         .select(state => state.statistics).pipe(
         map(state => _.values(state)),
-        map(s => s.filter(v => !v.error && !v.loading)),)
-        .subscribe(s=> {
+        map(s => s.filter(v => !v.error && !v.loading)), )
+        .subscribe(s => {
           this.statisticsState = s;
-          this.anyStatistics = !!s.length
-        })
+          this.anyStatistics = !!s.length;
+        });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

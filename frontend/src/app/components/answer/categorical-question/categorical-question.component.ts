@@ -23,7 +23,7 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = _.keyBy(value, value => value.idOption)
+      this.completedAnswers = _.keyBy(value, value => value.idOption);
     } else {
       this.completedAnswers = undefined;
     }
@@ -46,7 +46,7 @@ export class CategoricalQuestionComponent implements OnInit {
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
       if (this.isSingle && answers && answers.length > 1) {
-        console.log(`Multiple answers on question with id ${this.question.id}`)
+        console.log(`Multiple answers on question with id ${this.question.id}`);
       }
     }
     catch (ex) { }
@@ -67,7 +67,7 @@ export class CategoricalQuestionComponent implements OnInit {
   }
 
   get isTextQuestion() {
-    return this.question.questionType === 2 || this.question.questionType === 3
+    return this.question.questionType === 2 || this.question.questionType === 3;
   }
   get isSingle() {
     return this.question.questionType === 0 || this.question.questionType === 4;

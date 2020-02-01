@@ -5,4 +5,4 @@ export interface NotificationModel {
     message: string;
     recipients: string[];
   }
-  
+

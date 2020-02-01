@@ -45,9 +45,9 @@ export class ObserversComponent implements OnInit, OnDestroy {
   observerToEdit: Observer;
 
   constructor(private http: ApiService, private store: Store<AppState>,
-    private observersService: ObserversService,
-    private toastrService: ToastrService,
-    private modalService: BsModalService) {
+              private observersService: ObserversService,
+              private toastrService: ToastrService,
+              private modalService: BsModalService) {
     this.observersFilterForm = new ObserversFilterForm();
   }
 
@@ -83,7 +83,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
       take(1),
       map(data => values(data)),
       concatMap(s => observableFrom(s)),
-      map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 100, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('phone').value)),)
+      map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 100, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('phone').value)), )
       .subscribe(action => this.store.dispatch(action));
   }
 
@@ -91,7 +91,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.store
       .select(s => s.observersCount).pipe(
       take(1),
-      map(x => new LoadObserversCountAction()),)
+      map(x => new LoadObserversCountAction()), )
       .subscribe(action => this.store.dispatch(action));
   }
 
@@ -103,7 +103,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
         this.observersState = state;
         this.observersList = state.values;
         this.anyObservers = state.values.length > 0;
-      })
+      });
   }
   private handleObserversCountData() {
     this.observersCountSubscription = this.store
@@ -128,11 +128,11 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.observersService.deleteObserver(observer.id).subscribe((data) => {
       this.loadObservers(1);
       this.loadObserversCount();
-      this.toastrService.warning("Success!", 'User has been removed');
-    })
+      this.toastrService.warning('Success!', 'User has been removed');
+    });
   }
 
-  onObserverResetPassword(observer:Observer) {
+  onObserverResetPassword(observer: Observer) {
     this.observerToEdit = observer;
     this.newPassword = '';
     this.modalRef = this.modalService.show(this.editObserverModal, this.modalOptions);
@@ -153,7 +153,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   resetPassword() {
     this.observersService.resetPasswordObserver(this.observerToEdit.phone, this.newPassword).subscribe((data) => {
-      this.toastrService.success("Success!", 'Password has been reset for the observer.');
+      this.toastrService.success('Success!', 'Password has been reset for the observer.');
       this.modalRef.hide();
     }, () => {
       this.toastrService.error('Could not reset password', 'Error!');

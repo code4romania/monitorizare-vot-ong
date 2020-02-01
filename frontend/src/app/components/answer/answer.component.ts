@@ -29,8 +29,8 @@ export class AnswerComponent implements OnInit {
     toTime: string;
 
     constructor(private store: Store<AppState>,
-        private answersService: AnswersService,
-        private translate: TranslateService) { }
+                private answersService: AnswersService,
+                private translate: TranslateService) { }
 
     ngOnInit() {
         this.formState = this.store.select(state => state.form).pipe(distinctUntilChanged());
@@ -57,15 +57,15 @@ export class AnswerComponent implements OnInit {
         // take the current state of the answerState, and do a reloaded
         this.store.select(state => state.answer).pipe(take(1),
             map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters)),
-            map(a => this.store.dispatch(a)),)
-            .subscribe()
+            map(a => this.store.dispatch(a)), )
+            .subscribe();
     }
 
     redoAnswerDetailsAction() {
         // take the current state of the answerState, and do a reloaded
         this.store.select(state => state.answer).pipe(take(1),
             map(s => new LoadAnswerDetailsAction(s.observerId, s.sectionId)),
-            map(a => this.store.dispatch(a)),)
+            map(a => this.store.dispatch(a)), )
             .subscribe();
     }
 
@@ -73,8 +73,8 @@ export class AnswerComponent implements OnInit {
         this.store.select(s => s.answer).pipe(take(1),
             map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
             map(a => {
-                this.store.dispatch(a)
-            }),)
+                this.store.dispatch(a);
+            }), )
             .subscribe();
     }
 
@@ -91,7 +91,7 @@ export class AnswerComponent implements OnInit {
     }
 
     downloadAnswers() {
-        if (!confirm(this.translate.instant("ANSWERS_DOWNLOAD_CONFIRMATION"))) {
+        if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
             return;
         }
 

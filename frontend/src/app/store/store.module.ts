@@ -26,10 +26,10 @@ export class AppState {
     statistics: StatisticsState;
     observers: ObserversState;
     observersCount: ObserversCountState;
-    note: NoteState
+    note: NoteState;
 }
 
-let moduleImports = [
+const moduleImports = [
     StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer}),
     EffectsModule.forRoot([
       FormEffects,
@@ -44,7 +44,7 @@ if (!environment.production) {
     moduleImports.push(StoreDevtoolsModule.instrument({
       maxAge: 50,
       logOnly: false
-    }))
+    }));
 }
 
 @NgModule({
@@ -53,7 +53,7 @@ if (!environment.production) {
 export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {
         tokenService.tokenStream.subscribe((token) => {
-            let clearForms = !token;
+            const clearForms = !token;
             store.select(s => s.form).pipe(take(1)).subscribe(s => {
                 if (clearForms || s.items.length > 0) {
                     store.dispatch(new FormClearAll());
@@ -61,7 +61,7 @@ export class AppStoreModule {
                 if (!clearForms) {
                     store.dispatch(new FormLoadAction());
                 }
-            })
+            });
         });
     }
 }

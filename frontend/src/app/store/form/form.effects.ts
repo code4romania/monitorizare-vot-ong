@@ -24,15 +24,15 @@ export class FormEffects {
     loadFormAction = this.actions
         .pipe(ofType(FormActionTypes.LOAD)).pipe(
         switchMap(_ => this.getAvailableForms()),
-        switchMap(r=>r.formVersions),
-        map(f=>{
-         return { id:f.id,description: f.description};
+        switchMap(r => r.formVersions),
+        map(f => {
+         return { id: f.id, description: f.description};
         }),
         concatMap((x: { id: number, description: string }) => this.getForm(x.id, x.description)),
         map(form => new FormLoadCompletedAction([form])),
-        catchError(() => observableOf(new FormErrorAction())),);
+        catchError(() => observableOf(new FormErrorAction())), );
 
-    private getForm(id: number,description: string): Observable<Form> {
+    private getForm(id: number, description: string): Observable<Form> {
         const formsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${id}`);
 
         return this.http.get<FormSection[]>(formsUrl).pipe(
@@ -42,7 +42,7 @@ export class FormEffects {
                 form.sections = sections;
                 form.description = description;
                 return form;
-            }))
+            }));
     }
     private getAvailableForms(): Observable<FormInfo> {
         const formsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/form/');

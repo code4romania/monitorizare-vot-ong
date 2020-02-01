@@ -52,16 +52,16 @@ export class NotificationsComponent implements OnInit {
 
   submitNotification() {
     // TODO: change channel and from
-    const notification: NotificationModel ={
-      channel: "Firebase",
-      from: "Monitorizare Vot",
+    const notification: NotificationModel = {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
       message: this.message,
       title: this.notificationTitle,
       recipients: this.selectedObserversIds
-    }
+    };
 
     if (this.isValid(notification)) {
-      this.notificationsService.pushNotification(notification).subscribe(x=>console.log(x));
+      this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
     } else {
       alert('Not all fields have been completed');
     }
@@ -93,7 +93,7 @@ export class NotificationsComponent implements OnInit {
       const selectedCounty: any = this.selectedCounties[0];
       const countyDetails: CountyPollingStationInfo = this.counties.find(x => x.code === selectedCounty.code);
       if (countyDetails) {
-        for (var i = 1; i <= countyDetails.limit; i++) {
+        for (let i = 1; i <= countyDetails.limit; i++) {
           this.pollingStations.push(i);
         }
       }
@@ -128,7 +128,7 @@ export class NotificationsComponent implements OnInit {
 
   selectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x=>{
+    this.filteredObservers.forEach(x => {
       x.isSelected = true;
       this.selectedObserversIds.push(x.id);
     });
@@ -136,10 +136,10 @@ export class NotificationsComponent implements OnInit {
 
   deselectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x=>{
+    this.filteredObservers.forEach(x => {
       x.isSelected = false;
     });
-  
+
   }
   resetFilter(){
     this.pollingStationFrom = [];

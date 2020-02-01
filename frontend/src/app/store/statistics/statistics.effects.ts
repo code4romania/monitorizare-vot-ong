@@ -27,7 +27,7 @@ export class StatisticsEffects {
     @Effect()
     loadStats = this.actions
         .pipe(ofType(StatisticsActions.LOAD)).pipe(
-        map(a => <LoadStatisticAction>a),
+        map(a => a as LoadStatisticAction),
         filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length)),
         groupBy(a => a.payload.key),
         mergeMap((obs) =>
@@ -47,9 +47,9 @@ export class StatisticsEffects {
                     return {
                         key: a.payload.key,
                         json: res
-                    }
+                    };
                 }));
             }))
         ),
-        map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems)),)
+        map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems)), );
 }

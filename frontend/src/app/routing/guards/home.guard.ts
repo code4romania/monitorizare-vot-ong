@@ -4,13 +4,13 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 @Injectable()
 export class HomeGuard implements CanActivate
 {
-    constructor(private router:Router) { }
+    constructor(private router: Router) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.router.navigate(['/urgents'],{
+        this.router.navigate(['/urgents'], {
             queryParams: {
                 urgente: true
             }
-        })
+        });
         return false;
     }
 }

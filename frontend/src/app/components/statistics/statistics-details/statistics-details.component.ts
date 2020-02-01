@@ -22,15 +22,15 @@ export class StatisticsDetailsComponent implements OnInit, OnDestroy {
   subs: Subscription[];
 
   currentValues() {
-    let startPage = this.state.page - 1,
+    const startPage = this.state.page - 1,
       pageSize = this.state.pageSize,
       startIndex = startPage * pageSize,
-      endIndex = startIndex + pageSize
+      endIndex = startIndex + pageSize;
 
-    return this.state.values.slice(startIndex, endIndex)
+    return this.state.values.slice(startIndex, endIndex);
   }
   rowIndex(index, listIndex) {
-    let offset = (this.state.page - 1) * this.state.pageSize;
+    const offset = (this.state.page - 1) * this.state.pageSize;
     if (listIndex === 0) {
       return offset + index + 1;
     }
@@ -39,11 +39,11 @@ export class StatisticsDetailsComponent implements OnInit, OnDestroy {
   }
 
   splitList() {
-    let list = this.currentValues();
+    const list = this.currentValues();
     return [
       list.slice(0, list.length / 2),
       list.slice(list.length / 2, list.length)
-    ]
+    ];
   }
 
   retry() {
@@ -59,8 +59,8 @@ export class StatisticsDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subs = [this.route.params.pipe(
       map(p => p['key']),
-      mergeMap(key => this.store.select(s => s.statistics).pipe(map(s => s[key]))),)
-      .subscribe(s => this.state = s)]
+      mergeMap(key => this.store.select(s => s.statistics).pipe(map(s => s[key]))), )
+      .subscribe(s => this.state = s)];
 
   }
   ngOnDestroy() {

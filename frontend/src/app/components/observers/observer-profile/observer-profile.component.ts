@@ -62,7 +62,7 @@ export class ObserverProfileComponent implements OnInit {
 
   onFileChange(event) {
     if (event.target.files.length > 0) {
-      let file = event.target.files[0];
+      const file = event.target.files[0];
       this.observerProfileUploadForm.get('csv').setValue(file);
     }
   }

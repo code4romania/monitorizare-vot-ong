@@ -74,7 +74,7 @@ export class ApiService {
   }
 
   private normalizeRequest<T>(url: string, method: string, options?: HttpOptions, body?: any): Observable<T> {
-    let requestOptions = options || {};
+    const requestOptions = options || {};
     requestOptions.headers = requestOptions.headers || new HttpHeaders();
     requestOptions.responseType = requestOptions.responseType || 'json';
     if (body) {

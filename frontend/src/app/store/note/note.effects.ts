@@ -24,5 +24,5 @@ export class NoteEffects {
 
             return this.http.get<Note[]>(notesUrl, { body: a.payload });
         }),
-        map(notes => new LoadNotesDoneAction(notes)),)
+        map(notes => new LoadNotesDoneAction(notes)), );
 }

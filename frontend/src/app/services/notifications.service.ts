@@ -42,9 +42,9 @@ export class NotificationsService {
 }
 
 export interface CountyPollingStationInfo {
-  id: number,
-  name: string,
-  code: string,
-  limit: number
+  id: number;
+  name: string;
+  code: string;
+  limit: number;
 }
 

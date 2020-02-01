@@ -15,7 +15,7 @@ export class StatisticsValueComponent implements OnInit {
 
     @Input()
     index: number;
-    
+
 
     constructor() { }
 

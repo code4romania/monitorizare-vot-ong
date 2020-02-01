@@ -28,7 +28,7 @@ export class CoreModule {
     if (core) {
       throw new Error(
         'CoreModule was already imported. It cannot be imported twice'
-      )
+      );
     }
   }
 }

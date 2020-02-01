@@ -3,8 +3,8 @@ import { Input, Output, EventEmitter } from '@angular/core';
 
 export class BaseObserverCrudComponent {
     @Input() observer: Observer;
-    @Input() enableEdit: boolean = false;
-    @Input() selectionEnabled: boolean = false;
+    @Input() enableEdit = false;
+    @Input() selectionEnabled = false;
 
     @Output() onSelect: EventEmitter<Partial<Observer>> = new EventEmitter();
     @Output() onDelete: EventEmitter<Observer> = new EventEmitter();
@@ -19,7 +19,7 @@ export class BaseObserverCrudComponent {
 
 
     deleteObserver() {
-        if (confirm("Are you sure to delete " + this.observer.name)) {
+        if (confirm('Are you sure to delete ' + this.observer.name)) {
             this.onDelete.emit(this.observer);
         }
     }

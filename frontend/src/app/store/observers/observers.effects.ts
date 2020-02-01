@@ -29,7 +29,7 @@ export class ObserversEffects {
   private baseUrl: string;
 
   constructor(private http: ApiService, private actions: Actions, private store: Store<AppState>) {
-    store.select(s => s.observers).subscribe(s => this.state = s)
+    store.select(s => s.observers).subscribe(s => this.state = s);
     this.baseUrl = environment.apiUrl;
   }
 
@@ -37,7 +37,7 @@ export class ObserversEffects {
   @Effect()
   loadStats = this.actions
     .pipe(ofType(ObserversActions.LOAD)).pipe(
-    map(a => <LoadObserversAction>a),
+    map(a => a as LoadObserversAction),
     filter((a: LoadObserversAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length)),
     groupBy(a => a.payload.key),
     mergeMap((obs) =>
@@ -52,7 +52,7 @@ export class ObserversEffects {
           return {
             key: a.payload.key,
             json: res
-          }
+          };
         }));
       }
       ))
@@ -61,13 +61,13 @@ export class ObserversEffects {
       return new LoadObserversCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems);
     }
     ),
-    catchError((err) => observableOf(new LoadObserversErrorAction(err))),);
+    catchError((err) => observableOf(new LoadObserversErrorAction(err))), );
 
 
   @Effect()
   deleteObserver = this.actions
     .pipe(ofType(ObserversActions.DELETE)).pipe(
-    map(a => <DeleteObserverAction>a),
+    map(a => a as DeleteObserverAction),
     groupBy(a => a.payload.key),
     mergeMap((obs) =>
       obs.pipe(switchMap((a) => {
@@ -81,13 +81,13 @@ export class ObserversEffects {
           return {
             key: a.payload.key,
             json: res
-          }
+          };
         }));
       }
       ))
     ),
     mapTo(new LoadObserversAction('observers', 1, 1000)),
-    catchError((err) => observableOf(new LoadObserversErrorAction(err))),);
+    catchError((err) => observableOf(new LoadObserversErrorAction(err))), );
 }
 
 @Injectable()
@@ -96,7 +96,7 @@ export class ObserversCountEffects {
   private baseUrl: string;
 
   constructor(private http: ApiService, private actions: Actions, private store: Store<AppState>) {
-    store.select(s => s.observersCount).subscribe(s => this.state = s)
+    store.select(s => s.observersCount).subscribe(s => this.state = s);
     this.baseUrl = environment.apiUrl;
   }
 
@@ -104,7 +104,7 @@ export class ObserversCountEffects {
   @Effect()
   loadStats = this.actions
     .pipe(ofType(ObserversActions.LOADOBSERVERSTOTALCOUNT)).pipe(
-    switchMap((obs) =>{
+    switchMap((obs) => {
         const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/observer/count`);
 
         return this.http.get<number>(url).pipe(map(res => res));
@@ -114,5 +114,5 @@ export class ObserversCountEffects {
       return new LoadObserversCountCompleteAction(value);
     }
     ),
-    catchError((err) => observableOf(new LoadObserversErrorAction(err))),);
+    catchError((err) => observableOf(new LoadObserversErrorAction(err))), );
 }

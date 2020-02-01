@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
 
     private static authObservable: Observable<boolean>;
 
-    constructor(private tokenService: TokenService, private router:Router) { }
+    constructor(private tokenService: TokenService, private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.checkForLogin();
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
         if (this.tokenService.token) {
             return true;
         }
-        this.router.navigate(['/login'])
+        this.router.navigate(['/login']);
         return false;
     }
 }

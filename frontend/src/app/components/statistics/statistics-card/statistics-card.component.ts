@@ -11,14 +11,14 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StatisticsCardComponent implements OnInit {
 
   @Input()
-  item: StatisticsStateItem
+  item: StatisticsStateItem;
 
 
   get itemValues(){
-    if(!this.item.values){
-      return []
+    if (!this.item.values){
+      return [];
     }
-    return this.item.values.slice(0,5)
+    return this.item.values.slice(0, 5);
   }
 
 

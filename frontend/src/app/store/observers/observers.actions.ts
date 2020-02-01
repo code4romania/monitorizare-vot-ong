@@ -36,7 +36,7 @@ export class LoadObserversAction implements Action {
       refresh,
       searchParamName,
       searchParamPhone
-    }
+    };
 
   }
 }
@@ -50,7 +50,7 @@ export class LoadObserversErrorAction implements Action {
   constructor(key: string) {
     this.payload = {
       key
-    }
+    };
   }
 }
 
@@ -65,7 +65,7 @@ export class DeleteObserverAction implements Action {
     this.payload = {
       key,
       id
-    }
+    };
   }
 }
 
@@ -85,7 +85,7 @@ export class LoadObserversCompleteAction implements Action {
       items,
       totalPages,
       totalItems
-    }
+    };
   }
 }
 
@@ -96,7 +96,7 @@ export class LoadObserversCountCompleteAction implements Action {
   };
 
   constructor(count: number) {
-    this.payload = { count: count };
+    this.payload = { count };
   }
 
 }
