@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NotificationsService, CountyPollingStationInfo } from '../../services/notifications.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { NotificationModel } from '../../models/notification.model';
+import {GlobalNotificationModel, NotificationModel} from '../../models/notification.model';
 import { Observer } from 'app/models/observer.model';
 
 @Component({
@@ -67,7 +67,34 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
+  submitNotificationGlobally() {
+    const notification: GlobalNotificationModel = {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
+      message: this.message,
+      title: this.notificationTitle
+    };
+
+    if (this.isValidGlobally(notification)) {
+      this.notificationsService.pushNotificationGlobally(notification).subscribe(x => console.log(x));
+    } else {
+      alert('Not all fields have been completed');
+    }
+  }
+
   private isValid(notification: NotificationModel): boolean {
+    if (!this.isValidGlobally(notification)) {
+      return false;
+    }
+
+    if (!notification.recipients || !(notification.recipients.length > 0)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private isValidGlobally(notification: GlobalNotificationModel): boolean {
     if (!notification.message || notification.message === '') {
       return false;
     }
@@ -80,10 +107,6 @@ export class NotificationsComponent implements OnInit {
     if (!notification.from || notification.from === '') {
       return false;
     }
-    if (!notification.recipients || !(notification.recipients.length > 0)) {
-      return false;
-    }
-
     return true;
   }
 

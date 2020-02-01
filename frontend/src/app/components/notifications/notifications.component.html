@@ -47,6 +47,8 @@
       <button (click)="submitNotification()" class="btn btn-default">{{'SEND_NOTIFICATIONS_TO' | translate}}
         {{selectedObserversIds?.length}}
         {{'NOTIFICATION_OBSERVERS' | translate}}</button>
+
+      <button (click)="submitNotificationGlobally()" class="btn btn-default to-right">{{'SEND_NOTIFICATIONS_TO_ALL' | translate }}</button>
     </div>
   </div>
   <div class="row" *ngIf="filteredObservers.length >0">

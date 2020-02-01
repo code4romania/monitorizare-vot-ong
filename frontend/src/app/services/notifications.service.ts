@@ -3,7 +3,7 @@ import {take} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 import { Observable } from 'rxjs';
-import { NotificationModel } from '../models/notification.model';
+import {GlobalNotificationModel, NotificationModel} from '../models/notification.model';
 import { environment } from 'environments/environment';
 import { Location } from '@angular/common';
 import {Observer} from '../models/observer.model';
@@ -19,6 +19,11 @@ export class NotificationsService {
 
   public pushNotification(notification: NotificationModel): Observable<any> {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send');
+    return this.http.post(url, notification).pipe(take(1));
+  }
+
+  public pushNotificationGlobally(notification: GlobalNotificationModel): Observable<any> {
+    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send/all');
     return this.http.post(url, notification).pipe(take(1));
   }
 

@@ -40,6 +40,7 @@
   "DESELECT_ALL": "Deselect all",
   "SELECTED_OBSERVERS_COUNT":"Number of active observers:",
   "SEND_NOTIFICATIONS_TO": "Send notification to",
+  "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all",
   "RESET": "Clear filter",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
