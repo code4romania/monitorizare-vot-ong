@@ -52,13 +52,7 @@ export class NotificationsComponent implements OnInit {
 
   submitNotification() {
     // TODO: change channel and from
-    const notification: NotificationModel = {
-      channel: 'Firebase',
-      from: 'Monitorizare Vot',
-      message: this.message,
-      title: this.notificationTitle,
-      recipients: this.selectedObserversIds
-    };
+    const notification: NotificationModel = this.createNotification();
 
     if (this.isValid(notification)) {
       this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
@@ -68,18 +62,17 @@ export class NotificationsComponent implements OnInit {
   }
 
   submitNotificationGlobally() {
-    const notification: GlobalNotificationModel = {
-      channel: 'Firebase',
-      from: 'Monitorizare Vot',
-      message: this.message,
-      title: this.notificationTitle
-    };
+    const notification: GlobalNotificationModel = this.createGlobalNotification();
 
     if (this.isValidGlobally(notification)) {
       this.notificationsService.pushNotificationGlobally(notification).subscribe(x => console.log(x));
     } else {
       alert('Not all fields have been completed');
     }
+  }
+
+  private isValidNoArg(): boolean {
+    return this.isValid(this.createNotification());
   }
 
   private isValid(notification: NotificationModel): boolean {
@@ -92,6 +85,10 @@ export class NotificationsComponent implements OnInit {
     }
 
     return true;
+  }
+
+  private isValidGloballyNoArg(): boolean {
+    return this.isValidGlobally(this.createGlobalNotification());
   }
 
   private isValidGlobally(notification: GlobalNotificationModel): boolean {
@@ -108,6 +105,25 @@ export class NotificationsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  private createNotification(): NotificationModel {
+    return {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
+      message: this.message,
+      title: this.notificationTitle,
+      recipients: this.selectedObserversIds
+    };
+  }
+
+  private createGlobalNotification(): GlobalNotificationModel {
+    return {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
+      message: this.message,
+      title: this.notificationTitle
+    };
   }
 
   private fillPollingStations(): void {
