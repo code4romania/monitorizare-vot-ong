@@ -1,4 +1,5 @@
-import * as _ from 'lodash';
+import {isString, isDate} from 'lodash';
+
 export interface AnswerExtraConstructorData {
     lastModified: string;
     urbanArea: boolean;
@@ -13,8 +14,8 @@ export class AnswerExtra {
     observerLeaveTime: Date;
     isPollingStationPresidentFemale = false;
 
-    constructor(formInfo?: AnswerExtraConstructorData){
-        if (!formInfo){
+    constructor(formInfo?: AnswerExtraConstructorData) {
+        if (!formInfo) {
             return;
         }
         checkForPropValue(formInfo.lastModified, val => this.lastModified = val);
@@ -23,15 +24,15 @@ export class AnswerExtra {
         this.urbanArea = formInfo.urbanArea;
         this.isPollingStationPresidentFemale = formInfo.isPollingStationPresidentFemale;
 
-        function checkForPropValue(value, setPropertyFn : (val: Date) => void){
-            if (!value){
+        function checkForPropValue(value, setPropertyFn: (val: Date) => void) {
+            if (!value) {
                 return;
             }
-            if (_.isString(value)) {
+            if (isString(value)) {
                 value = new Date(value);
             }
 
-            if (_.isDate(value)){
+            if (isDate(value)) {
                 setPropertyFn(value);
             }
         }

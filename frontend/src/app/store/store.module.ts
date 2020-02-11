@@ -14,7 +14,7 @@ import { FormEffects } from './form/form.effects';
 import { formReducer, FormState } from './form/form.reducer';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
+import {select, Store, StoreModule} from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ObserversState, ObserversCountState } from './observers/observers.state';
 import {ObserversEffects, ObserversCountEffects} from './observers/observers.effects';
@@ -30,7 +30,9 @@ export class AppState {
 }
 
 const moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer}),
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer,
+                                  statistics: statisticsReducer, observers: observersReducer,
+                                  note: noteReducer , observersCount: observersCountReducer}),
     EffectsModule.forRoot([
       FormEffects,
       AnswerEffects,
@@ -54,7 +56,7 @@ export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {
         tokenService.tokenStream.subscribe((token) => {
             const clearForms = !token;
-            store.select(s => s.form).pipe(take(1)).subscribe(s => {
+            store.pipe(select(s => s.form), take(1)).subscribe(s => {
                 if (clearForms || s.items.length > 0) {
                     store.dispatch(new FormClearAll());
                 }

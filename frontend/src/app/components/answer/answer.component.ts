@@ -6,7 +6,7 @@ import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
 import { AnswersService, AnswersPackFilter } from '../../services/answers.service';
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,8 +33,8 @@ export class AnswerComponent implements OnInit {
                 private translate: TranslateService) { }
 
     ngOnInit() {
-        this.formState = this.store.select(state => state.form).pipe(distinctUntilChanged());
-        this.answerState = this.store.select(state => state.answer).pipe(distinctUntilChanged());
+        this.formState = this.store.pipe(select(state => state.form), distinctUntilChanged());
+        this.answerState = this.store.pipe(select(state => state.answer), distinctUntilChanged());
 
         this.answerState.subscribe(value => {
             this.isUrgent = value.urgent || false;
@@ -55,22 +55,21 @@ export class AnswerComponent implements OnInit {
 
     redoAnswerListAction() {
         // take the current state of the answerState, and do a reloaded
-        this.store.select(state => state.answer).pipe(take(1),
+        this.store.pipe(select(state => state.answer), take(1),
             map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters)),
-            map(a => this.store.dispatch(a)), )
-            .subscribe();
+            map(a => this.store.dispatch(a)), ).subscribe();
     }
 
     redoAnswerDetailsAction() {
         // take the current state of the answerState, and do a reloaded
-        this.store.select(state => state.answer).pipe(take(1),
+        this.store.pipe(select(state => state.answer), take(1),
             map(s => new LoadAnswerDetailsAction(s.observerId, s.sectionId)),
             map(a => this.store.dispatch(a)), )
             .subscribe();
     }
 
     pageChanged(event) {
-        this.store.select(s => s.answer).pipe(take(1),
+        this.store.pipe(select(s => s.answer), take(1),
             map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
             map(a => {
                 this.store.dispatch(a);

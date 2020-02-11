@@ -1,7 +1,7 @@
 import { statisticsConfig, StatisticsStateConfig } from './statistics.config';
 
 import { LabelValueModel } from '../../models/labelValue.model';
-import * as _ from 'lodash';
+import {keyBy} from 'lodash';
 
 export class StatisticsStateItem {
     key: string;
@@ -31,4 +31,5 @@ export class StatisticsStateItem {
 export class StatisticsState {
     [key: string]: StatisticsStateItem
 }
-export let statisticsInitialState: StatisticsState = _.keyBy<StatisticsStateItem>(statisticsConfig.map<StatisticsStateItem>((config) => new StatisticsStateItem(config)), value => value.key);
+export let statisticsInitialState: StatisticsState = keyBy<StatisticsStateItem>(
+  statisticsConfig.map<StatisticsStateItem>((config) => new StatisticsStateItem(config)), value => value.key);

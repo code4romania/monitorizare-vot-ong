@@ -18,11 +18,11 @@ export class NoteEffects {
 
     @Effect()
     notesStream = this.actions
-        .pipe(ofType(NoteActionTypes.LOAD)).pipe(
-        switchMap((a: LoadNotesAction) => {
-            const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v2/note');
+        .pipe(ofType(NoteActionTypes.LOAD),
+          switchMap((a: LoadNotesAction) => {
+              const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v2/note');
 
-            return this.http.get<Note[]>(notesUrl, { body: a.payload });
-        }),
-        map(notes => new LoadNotesDoneAction(notes)), );
+              return this.http.get<Note[]>(notesUrl, { body: a.payload });
+          }),
+          map(notes => new LoadNotesDoneAction(notes)), );
 }

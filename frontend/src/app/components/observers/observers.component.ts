@@ -4,7 +4,7 @@ import {from as observableFrom,  Subscription ,  Observable } from 'rxjs';
 import {concatMap, take,  map } from 'rxjs/operators';
 import { ObserversStateItem } from '../../store/observers/observers.state';
 import { AppState } from '../../store/store.module';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import { ApiService } from '../../core/apiService/api.service';
 import { Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { LoadObserversAction, LoadObserversCountAction } from '../../store/observers/observers.actions';
@@ -79,19 +79,23 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   private loadObservers(pageNo) {
     this.store
-      .select(s => s.observers).pipe(
-      take(1),
-      map(data => values(data)),
-      concatMap(s => observableFrom(s)),
-      map((storeItem: ObserversStateItem) => new LoadObserversAction(storeItem.key, pageNo, 100, true, this.observersFilterForm.get('name').value, this.observersFilterForm.get('phone').value)), )
+      .pipe(
+        select(s => s.observers),
+        take(1),
+        map(data => values(data)),
+        concatMap(s => observableFrom(s)),
+        map((storeItem: ObserversStateItem) => new LoadObserversAction(
+          storeItem.key, pageNo, 100, true, this.observersFilterForm.get('name').value,
+          this.observersFilterForm.get('phone').value)), )
       .subscribe(action => this.store.dispatch(action));
   }
 
   private loadObserversCount() {
     this.store
-      .select(s => s.observersCount).pipe(
-      take(1),
-      map(x => new LoadObserversCountAction()), )
+      .pipe(
+        select(s => s.observersCount),
+        take(1),
+        map(x => new LoadObserversCountAction()), )
       .subscribe(action => this.store.dispatch(action));
   }
 

@@ -19,7 +19,7 @@ export class BaseObserverCrudComponent {
 
 
     deleteObserver() {
-        if (confirm('Are you sure to delete ' + this.observer.name)) {
+        if (confirm(`Are you sure to delete ${this.observer.name}`)) {
             this.onDelete.emit(this.observer);
         }
     }

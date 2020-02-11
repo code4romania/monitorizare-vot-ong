@@ -26,30 +26,31 @@ export class StatisticsEffects {
 
     @Effect()
     loadStats = this.actions
-        .pipe(ofType(StatisticsActions.LOAD)).pipe(
-        map(a => a as LoadStatisticAction),
-        filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length)),
-        groupBy(a => a.payload.key),
-        mergeMap((obs) =>
-            obs.pipe(switchMap((a) => {
-                const statisticsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/statistics/${statisticsConfig.find(value => value.key === a.payload.key).method}`);
+        .pipe(ofType(StatisticsActions.LOAD),
+          map(a => a as LoadStatisticAction),
+          filter((a: LoadStatisticAction) => shouldLoadPage(a.payload.page, a.payload.pageSize, this.state[a.payload.key].values.length)),
+          groupBy(a => a.payload.key),
+          mergeMap((obs) =>
+              obs.pipe(switchMap((a) => {
+                  const statisticsUrl: string = Location.joinWithSlash(this.baseUrl,
+                    `/api/v1/statistics/${statisticsConfig.find(value => value.key === a.payload.key).method}`);
 
-                return this.http.get<{
-                    data: LabelValueModel[],
-                    totalPages: number,
-                    totalItems: number
-                }>(statisticsUrl, {
-                    body: {
-                        page: a.payload.page,
-                        pageSize: a.payload.pageSize
-                    }
-                }).pipe(map(res => {
-                    return {
-                        key: a.payload.key,
-                        json: res
-                    };
-                }));
-            }))
-        ),
-        map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems)), );
+                  return this.http.get<{
+                      data: LabelValueModel[],
+                      totalPages: number,
+                      totalItems: number
+                  }>(statisticsUrl, {
+                      body: {
+                          page: a.payload.page,
+                          pageSize: a.payload.pageSize
+                      }
+                  }).pipe(map(res => {
+                      return {
+                          key: a.payload.key,
+                          json: res
+                      };
+                  }));
+              }))
+          ),
+          map(value => new LoadStatisticsCompleteAction(value.key, value.json.data, value.json.totalPages, value.json.totalItems)), );
 }
