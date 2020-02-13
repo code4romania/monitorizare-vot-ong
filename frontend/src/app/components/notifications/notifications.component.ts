@@ -4,6 +4,7 @@ import { NotificationsService, CountyPollingStationInfo } from '../../services/n
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {GlobalNotificationModel, NotificationModel} from '../../models/notification.model';
 import { Observer } from 'app/models/observer.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notifications',
@@ -23,7 +24,8 @@ export class NotificationsComponent implements OnInit {
   itemsShowLimit = 10;
   filteredObservers: Observer[] = [];
 
-  constructor(private notificationsService: NotificationsService) {
+  constructor(private notificationsService: NotificationsService,
+    private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -55,6 +57,10 @@ export class NotificationsComponent implements OnInit {
     const notification: NotificationModel = this.createNotification();
 
     if (this.isValid(notification)) {
+      const message = this.translate.instant("NOTIFICATION_SEND_CONFIRMATION");
+      if (!confirm(message.replace('%d',this.selectedObserversIds.length))) {
+        return;
+      }
       this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
     } else {
       alert('Not all fields have been completed');
@@ -180,7 +186,7 @@ export class NotificationsComponent implements OnInit {
     });
 
   }
-  resetFilter(){
+  resetFilter() {
     this.pollingStationFrom = [];
     this.pollingStationTo = [];
     this.selectedCounties = [];
