@@ -77,11 +77,11 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  private isValidNoArg(): boolean {
+  isValidNoArg(): boolean {
     return this.isValid(this.createNotification());
   }
 
-  private isValid(notification: NotificationModel): boolean {
+  isValid(notification: NotificationModel): boolean {
     if (!this.isValidGlobally(notification)) {
       return false;
     }
@@ -93,11 +93,11 @@ export class NotificationsComponent implements OnInit {
     return true;
   }
 
-  private isValidGloballyNoArg(): boolean {
+  isValidGloballyNoArg(): boolean {
     return this.isValidGlobally(this.createGlobalNotification());
   }
 
-  private isValidGlobally(notification: GlobalNotificationModel): boolean {
+  isValidGlobally(notification: GlobalNotificationModel): boolean {
     if (!notification.message || notification.message === '') {
       return false;
     }
