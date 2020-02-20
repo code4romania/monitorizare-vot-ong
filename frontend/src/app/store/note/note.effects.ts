@@ -1,6 +1,8 @@
+
+import {map, switchMap} from 'rxjs/operators';
 import { Note } from '../../models/note.model';
 import { LoadNotesAction, LoadNotesDoneAction, NoteActionTypes } from './note.actions';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -16,11 +18,11 @@ export class NoteEffects {
 
     @Effect()
     notesStream = this.actions
-        .ofType(NoteActionTypes.LOAD)
-        .switchMap((a: LoadNotesAction) => {
-            const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v2/note');
+        .pipe(ofType(NoteActionTypes.LOAD),
+          switchMap((a: LoadNotesAction) => {
+              const notesUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v2/note');
 
-            return this.http.get<Note[]>(notesUrl, { body: a.payload });
-        })
-        .map(notes => new LoadNotesDoneAction(notes))
+              return this.http.get<Note[]>(notesUrl, { body: a.payload });
+          }),
+          map(notes => new LoadNotesDoneAction(notes)), );
 }

@@ -8,7 +8,7 @@ export function statisticsReducer(state = statisticsInitialState, action: Statis
     switch (action.type) {
         case StatisticsActions.LOAD:
         case StatisticsActions.LOADED:
-            let reducedItem = statisticsItemReducer(state[action.payload.key], action);
+            const reducedItem = statisticsItemReducer(state[action.payload.key], action);
             if (reducedItem === state[action.payload.key]) {
                 return state;
             }
@@ -26,15 +26,15 @@ export function statisticsReducer(state = statisticsInitialState, action: Statis
 export function statisticsItemReducer(state: StatisticsStateItem, action: any) {
     switch (action.type) {
         case StatisticsActions.LOAD:
-                let newList = action.payload.refresh,
-                shouldLoadList = shouldLoadPage(action.payload.page,action.payload.pageSize,state.values.length);
-            return Object.assign({}, state, {
+                const newList = action.payload.refresh,
+                shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.values.length);
+                return Object.assign({}, state, {
                 loading: shouldLoadList,
                 error: false,
                 page: action.payload.page,
                 pageSize: action.payload.pageSize,
                 values: newList ? [] : state.values
-            })
+            });
         case StatisticsActions.LOADED:
             return Object.assign({}, state, {
                 loading: false,
@@ -42,12 +42,12 @@ export function statisticsItemReducer(state: StatisticsStateItem, action: any) {
                 values: state.values.concat(action.payload.items),
                 totalPages: action.payload.totalPages,
                 totalItems: action.payload.totalItems
-            })
+            });
         case StatisticsActions.ERROR:
             return Object.assign({}, state, {
                 error: true,
                 loading: false
-            })
+            });
         default:
             return state;
 

@@ -7,7 +7,7 @@ export function observersReducer(state = observersInitialState, action: Observer
   switch (action.type) {
     case ObserversActions.LOAD:
     case ObserversActions.LOADED:
-      let reducedItem = observersItemReducer(state[action.payload.key], action);
+      const reducedItem = observersItemReducer(state[action.payload.key], action);
       if (reducedItem === state[action.payload.key]) {
         return state;
       }
@@ -23,7 +23,7 @@ export function observersReducer(state = observersInitialState, action: Observer
 }
 export function observersCountReducer(state = observersCountInitialState, action: ObserversActionTypes) {
   switch (action.type) {
-    
+
     case ObserversActions.LOADEDOBSERVERSTOTALCOUNT:
       return Object.assign({}, state, action.payload);
 
@@ -37,7 +37,7 @@ export function observersCountReducer(state = observersCountInitialState, action
 export function observersItemReducer(state: ObserversStateItem, action: any) {
   switch (action.type) {
     case ObserversActions.LOAD:
-      let newList = action.payload.refresh,
+      const newList = action.payload.refresh,
         shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.values.length);
       return Object.assign({}, state, {
         loading: shouldLoadList,

@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { TokenService } from '../../core/token/token.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/apiService/api.service';
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
             this.loginSubscription.unsubscribe();
         }
         const authUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/access/authorize');
-        this.loginSubscription = this.http.post<{access_token: string, expires_in:number}>(authUrl, {
+        this.loginSubscription = this.http.post<{access_token: string, expires_in: number}>(authUrl, {
             user: this.user,
             password: this.password
         })
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/urgents']);
             }, () => {
                 this.invalid = true;
-            })
+            });
     }
 
     ngOnInit() {

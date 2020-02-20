@@ -20,16 +20,16 @@ export class AnswerFormListComponent implements OnInit {
   completedQuestions: CompletedQuestion[];
 
   @Input()
-  notes: Note[]
+  notes: Note[];
 
   answersForQuestion(question: BaseQuestion) {
     return _.find(this.completedQuestions, value => value.id === question.id);
   }
   notesForQuestion(question: BaseQuestion) {
-    if(!this.notes || !this.notes.length){
+    if (!this.notes || !this.notes.length){
       return undefined;
     }
-    return this.notes.filter(note => note.questionId === question.id)
+    return this.notes.filter(note => note.questionId === question.id);
   }
 
   constructor() { }

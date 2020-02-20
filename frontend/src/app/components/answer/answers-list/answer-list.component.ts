@@ -24,25 +24,25 @@ export class AnswerListComponent implements OnInit {
     this.reload.emit();
   }
   answerLinkPrefix(){
-    return this.state.urgent ? '/urgents/details' : '/answers/details'
+    return this.state.urgent ? '/urgents/details' : '/answers/details';
   }
   get answers() {
-    let start = this.state.page * this.state.pageSize,
-      end = start + this.state.pageSize
+    const start = this.state.page * this.state.pageSize,
+      end = start + this.state.pageSize;
     return this.state.threads.slice(start, end);
   }
 
   answerList(){
-    let startPage = this.state.page - 1,
+    const startPage = this.state.page - 1,
       pageSize = this.state.pageSize,
       startIndex = startPage * pageSize,
-      endIndex = startIndex + pageSize
+      endIndex = startIndex + pageSize;
 
-    return this.state.threads.slice(startIndex, endIndex)
+    return this.state.threads.slice(startIndex, endIndex);
   }
 
   pageChangedEvent(event){
-    this.pageChanged.emit(event)
+    this.pageChanged.emit(event);
   }
 }
 

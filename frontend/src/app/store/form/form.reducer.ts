@@ -4,11 +4,11 @@ import * as _ from 'lodash';
 
 
 export class FormState {
-    items: Form[]
+    items: Form[];
 }
-let formsInitialState: FormState = {
-    items: []    
-}
+const formsInitialState: FormState = {
+    items: []
+};
 export function formReducer(state = formsInitialState, $action: FormActions) {
     switch ($action.type) {
         case FormActionTypes.LOAD_COMPLETE:
@@ -18,7 +18,7 @@ export function formReducer(state = formsInitialState, $action: FormActions) {
         case FormActionTypes.CLEAR:
             return {
                 items: []
-            }
+            };
         default:
             return state;
     }

@@ -87,4 +87,4 @@ export let appRoutes: Routes = [
         component: NotificationsComponent,
         canActivate: [AuthGuard]
     },
-]
+];

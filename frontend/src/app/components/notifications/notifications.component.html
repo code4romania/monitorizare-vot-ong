@@ -37,17 +37,22 @@
         </div>
       </div>
       <div class="margin-top">
-        <button (click)="searchForObservers()"
-          class="btn btn-success">{{'SEARCH' | translate}}</button>
-        <button (click)="resetFilter()"
-          class="btn btn-secondary">{{'RESET' | translate}}</button>
+        <button (click)="searchForObservers()" class="btn btn-success">{{'SEARCH' | translate}}</button>
+        <button (click)="resetFilter()" class="btn btn-success to-right">{{'RESET' | translate}}</button>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 form-group">
       <button (click)="submitNotification()"
-        class="btn btn-success">{{'SEND_NOTIFICATIONS_TO' | translate}} {{selectedObserversIds?.length}}</button>
+              [ngClass]="{'btn-success': isValidNoArg(), 'btn-default': !isValidNoArg()}"
+              class="btn">{{'SEND_NOTIFICATIONS_TO' | translate}}
+        {{selectedObserversIds?.length}}
+        {{'NOTIFICATION_OBSERVERS' | translate}}</button>
+
+      <button (click)="submitNotificationGlobally()"
+              [ngClass]="{'btn-success': isValidGloballyNoArg(), 'btn-default': !isValidGloballyNoArg()}"
+              class="btn to-right">{{'SEND_NOTIFICATIONS_TO_ALL' | translate }}</button>
     </div>
   </div>
   <div class="row" *ngIf="filteredObservers.length >0">

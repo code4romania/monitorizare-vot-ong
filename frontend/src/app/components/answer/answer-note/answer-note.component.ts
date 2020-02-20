@@ -14,11 +14,11 @@ export class AnswerNoteComponent implements OnInit {
   note: Note;
 
   @Input()
-  question: BaseQuestion
-  
+  question: BaseQuestion;
+
 
   get canShow(){
-    return this.note && this.question
+    return this.note && this.question;
   }
 
 

@@ -3,8 +3,8 @@ export interface FormInfo {
 }
 
 export interface FormDetails {
-    id: number,
-    code: string,
-    description: string,
-    ver: number,
+    id: number;
+    code: string;
+    description: string;
+    ver: number;
 }

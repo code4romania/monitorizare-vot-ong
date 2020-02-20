@@ -5,6 +5,6 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angul
 export class AnonGuard implements CanActivate {
     constructor(private tokenService: TokenService) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return !this.tokenService.token; 
+        return !this.tokenService.token;
     }
 }

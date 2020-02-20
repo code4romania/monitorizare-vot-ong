@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NotificationsService, CountyPollingStationInfo } from '../../services/notifications.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { NotificationModel } from '../../models/notification.model';
+import {GlobalNotificationModel, NotificationModel} from '../../models/notification.model';
 import { Observer } from 'app/models/observer.model';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -54,13 +54,7 @@ export class NotificationsComponent implements OnInit {
 
   submitNotification() {
     // TODO: change channel and from
-    const notification: NotificationModel = {
-      channel: "Firebase",
-      from: "Monitorizare Vot",
-      message: this.message,
-      title: this.notificationTitle,
-      recipients: this.selectedObserversIds
-    }
+    const notification: NotificationModel = this.createNotification();
 
     if (this.isValid(notification)) {
       const message = this.translate.instant("NOTIFICATION_SEND_CONFIRMATION");
@@ -73,7 +67,37 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  private isValid(notification: NotificationModel): boolean {
+  submitNotificationGlobally() {
+    const notification: GlobalNotificationModel = this.createGlobalNotification();
+
+    if (this.isValidGlobally(notification)) {
+      this.notificationsService.pushNotificationGlobally(notification).subscribe(x => console.log(x));
+    } else {
+      alert('Not all fields have been completed');
+    }
+  }
+
+  isValidNoArg(): boolean {
+    return this.isValid(this.createNotification());
+  }
+
+  isValid(notification: NotificationModel): boolean {
+    if (!this.isValidGlobally(notification)) {
+      return false;
+    }
+
+    if (!notification.recipients || !(notification.recipients.length > 0)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  isValidGloballyNoArg(): boolean {
+    return this.isValidGlobally(this.createGlobalNotification());
+  }
+
+  isValidGlobally(notification: GlobalNotificationModel): boolean {
     if (!notification.message || notification.message === '') {
       return false;
     }
@@ -86,11 +110,26 @@ export class NotificationsComponent implements OnInit {
     if (!notification.from || notification.from === '') {
       return false;
     }
-    if (!notification.recipients || !(notification.recipients.length > 0)) {
-      return false;
-    }
-
     return true;
+  }
+
+  private createNotification(): NotificationModel {
+    return {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
+      message: this.message,
+      title: this.notificationTitle,
+      recipients: this.selectedObserversIds
+    };
+  }
+
+  private createGlobalNotification(): GlobalNotificationModel {
+    return {
+      channel: 'Firebase',
+      from: 'Monitorizare Vot',
+      message: this.message,
+      title: this.notificationTitle
+    };
   }
 
   private fillPollingStations(): void {
@@ -99,7 +138,7 @@ export class NotificationsComponent implements OnInit {
       const selectedCounty: any = this.selectedCounties[0];
       const countyDetails: CountyPollingStationInfo = this.counties.find(x => x.code === selectedCounty.code);
       if (countyDetails) {
-        for (var i = 1; i <= countyDetails.limit; i++) {
+        for (let i = 1; i <= countyDetails.limit; i++) {
           this.pollingStations.push(i);
         }
       }

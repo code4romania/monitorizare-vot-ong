@@ -8,15 +8,15 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 export class PaginationComponent implements OnInit, OnChanges {
 
   @Input()
-  page: number
+  page: number;
   @Input()
-  pageSize: number
+  pageSize: number;
 
   @Input()
-  totalItems: number
+  totalItems: number;
 
   @Input()
-  nextEnabled = true
+  nextEnabled = true;
 
   @Output()
   pageChanged: EventEmitter<any> = new EventEmitter();
@@ -31,9 +31,9 @@ export class PaginationComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['page'] || changes['pageSize'] || changes['totalItems']) {
       this.startingindex = (this.page - 1) * this.pageSize + 1;
-      this.endingIndex = this.startingindex + this.pageSize - 1
+      this.endingIndex = this.startingindex + this.pageSize - 1;
 
-      if(this.endingIndex > this.totalItems){
+      if (this.endingIndex > this.totalItems){
         this.endingIndex = this.totalItems;
       }
     }
@@ -50,7 +50,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     return true;
   }
   canPrevPage(){
-    if(this.page === 1){
+    if (this.page === 1){
       return false;
     }
     return true;
@@ -60,15 +60,15 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.pageChanged.emit({
         page: this.page + 1,
         pageSize: this.pageSize
-      })
+      });
     }
   }
   prevPage() {
-    if(this.canPrevPage()){
+    if (this.canPrevPage()){
       this.pageChanged.emit({
         page: this.page - 1,
         pageSize: this.pageSize
-      })
+      });
     }
   }
 

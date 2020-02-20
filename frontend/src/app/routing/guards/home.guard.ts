@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 @Injectable()
 export class HomeGuard implements CanActivate
 {
-    constructor(private router:Router) { }
+    constructor(private router: Router) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.router.navigate(['/urgents'],{
+        this.router.navigate(['/urgents'], {
             queryParams: {
                 urgente: true
             }
-        })
+        });
         return false;
     }
 }

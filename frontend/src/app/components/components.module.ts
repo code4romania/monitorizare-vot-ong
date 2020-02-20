@@ -21,7 +21,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 export let components = [
-    AnswerComponent, 
+    AnswerComponent,
     AnswerListComponent,
     AnswerDetailsComponent,
     AnswerFormListComponent,
@@ -39,14 +39,14 @@ export let components = [
     StatisticsValueComponent,
     NotificationsComponent,
     LoginComponent
-] 
+];
 
 @NgModule({
-    declarations:components,
+    declarations: components,
     exports: components,
-    imports:[SharedModule, NgMultiSelectDropDownModule.forRoot()]
+    imports: [SharedModule, NgMultiSelectDropDownModule.forRoot()]
 })
 export  class ComponentsModule {
-    
+
 }
 

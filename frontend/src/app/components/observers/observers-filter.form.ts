@@ -1,4 +1,4 @@
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl } from '@angular/forms';
 
 export class ObserversFilterForm extends FormGroup {
     constructor() {

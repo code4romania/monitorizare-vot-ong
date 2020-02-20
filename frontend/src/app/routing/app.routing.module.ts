@@ -8,7 +8,7 @@ import { HomeGuard } from './guards/home.guard';
 import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes,{
+        RouterModule.forRoot(appRoutes, {
             enableTracing: false
             // enableTracing: !environment.production
         })

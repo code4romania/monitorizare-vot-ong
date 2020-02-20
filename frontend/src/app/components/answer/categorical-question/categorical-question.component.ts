@@ -4,7 +4,7 @@ import {BaseAnswer} from '../../../models/base.answer.model';
 import {CompletedAnswer} from '../../../models/completed.answer.model';
 import {FormQuestion} from '../../../models/form.question.model';
 
-import * as _ from 'lodash';
+import {keyBy, reject, some, values} from 'lodash';
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
@@ -23,7 +23,7 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = _.keyBy(value, value => value.idOption)
+      this.completedAnswers = keyBy(value, v => v.idOption);
     } else {
       this.completedAnswers = undefined;
     }
@@ -46,14 +46,13 @@ export class CategoricalQuestionComponent implements OnInit {
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
       if (this.isSingle && answers && answers.length > 1) {
-        console.log(`Multiple answers on question with id ${this.question.id}`)
+        console.log(`Multiple answers on question with id ${this.question.id}`);
       }
-    }
-    catch (ex) { }
+    } catch (ex) { }
   }
   validateTextQuestion(answers: CompletedAnswer[]) {
     try {
-      if (this.isTextQuestion && answers && _.reject(answers, a => a.isFreeText || !!a.value).length > 1) {
+      if (this.isTextQuestion && answers && reject(answers, a => a.isFreeText || !!a.value).length > 1) {
         console.log(`Multiple text answers on question with id ${this.question.id}`);
       }
     } catch (ex) { }
@@ -63,11 +62,11 @@ export class CategoricalQuestionComponent implements OnInit {
     return this.notes && this.notes.length;
   }
   get isFlagged() {
-    return _.some(_.values(this.completedAnswers), a => a.flagged);
+    return some(values(this.completedAnswers), a => a.flagged);
   }
 
   get isTextQuestion() {
-    return this.question.questionType === 2 || this.question.questionType === 3
+    return this.question.questionType === 2 || this.question.questionType === 3;
   }
   get isSingle() {
     return this.question.questionType === 0 || this.question.questionType === 4;
@@ -81,7 +80,7 @@ export class CategoricalQuestionComponent implements OnInit {
   }
 
   isFlaggedAnswer(answer: BaseAnswer) {
-    return _.some(_.values(this.completedAnswers), a => a.flagged && a.idOption === answer.idOption);
+    return some(values(this.completedAnswers), a => a.flagged && a.idOption === answer.idOption);
   }
 
   answerTextValue(answer: BaseAnswer) {

@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { TokenService } from '../core/token/token.service';
 import { NoteEffects } from './note/note.effects';
@@ -12,7 +14,7 @@ import { FormEffects } from './form/form.effects';
 import { formReducer, FormState } from './form/form.reducer';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
+import {select, Store, StoreModule} from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ObserversState, ObserversCountState } from './observers/observers.state';
 import {ObserversEffects, ObserversCountEffects} from './observers/observers.effects';
@@ -24,11 +26,13 @@ export class AppState {
     statistics: StatisticsState;
     observers: ObserversState;
     observersCount: ObserversCountState;
-    note: NoteState
+    note: NoteState;
 }
 
-let moduleImports = [
-    StoreModule.forRoot({ form: formReducer, answer: answerReducer, statistics: statisticsReducer, observers: observersReducer, note: noteReducer , observersCount: observersCountReducer}),
+const moduleImports = [
+    StoreModule.forRoot({ form: formReducer, answer: answerReducer,
+                                  statistics: statisticsReducer, observers: observersReducer,
+                                  note: noteReducer , observersCount: observersCountReducer}),
     EffectsModule.forRoot([
       FormEffects,
       AnswerEffects,
@@ -42,7 +46,7 @@ if (!environment.production) {
     moduleImports.push(StoreDevtoolsModule.instrument({
       maxAge: 50,
       logOnly: false
-    }))
+    }));
 }
 
 @NgModule({
@@ -51,15 +55,15 @@ if (!environment.production) {
 export class AppStoreModule {
     constructor(store: Store<AppState>, tokenService: TokenService) {
         tokenService.tokenStream.subscribe((token) => {
-            let clearForms = !token;
-            store.select(s => s.form).take(1).subscribe(s => {
+            const clearForms = !token;
+            store.pipe(select(s => s.form), take(1)).subscribe(s => {
                 if (clearForms || s.items.length > 0) {
                     store.dispatch(new FormClearAll());
                 }
                 if (!clearForms) {
                     store.dispatch(new FormLoadAction());
                 }
-            })
+            });
         });
     }
 }
