@@ -17,6 +17,12 @@ steps:
   inputs:
     command: 'custom'
     workingDir: 'frontend'
+    customCommand: 'install node-sass'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'frontend'
     customCommand: 'run-script build-token'
 
 - task: CopyFiles@2
