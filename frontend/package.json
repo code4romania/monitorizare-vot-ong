@@ -39,7 +39,7 @@
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "frow": "^1.4.6",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "ng-multiselect-dropdown": "^0.2.6",
     "ngx-bootstrap": "^2.0.5",
