@@ -20,9 +20,9 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 Help us out by testing this project in the [staging environment](http://mv-ong-test.azurewebsites.net/). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
-If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements. 
+If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
-Also, this is [the workflow we follow](.github/WORKFLOW.md). 
+Also, this is [the workflow we follow](.github/WORKFLOW.md).
 
 ## Built With
 
@@ -30,7 +30,7 @@ Angular 8.2.14
 
 Typescript 3.5.3
 
- Swagger docs for the API are available [here](https://mv-mobile-test.azurewebsites.net/swagger/index.html).
+Swagger docs for the API are available [here](https://app-vmon-api-dev.azurewebsites.net/swagger/index.html).
 
 ## Repos and projects
 
@@ -49,7 +49,7 @@ MV related repos:
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
 
 #### Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Run `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA. Run `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod. If you also have the backend app running locally, you can run `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
 
 #### Code scaffolding
 
@@ -67,22 +67,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
-
-#### Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
-#### Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-#### Build instructions (Cristi)
-
-Run
-- `npm install -g @angular/cli@latest`
-- `npm install`
-- `ng run build --prod`
-- enjoy
 
 ## Feedback
 

@@ -31,6 +31,23 @@
             ]
           },
           "configurations": {
+            "local": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
+            },
             "qa": {
               "optimization": true,
               "outputHashing": "all",
@@ -90,6 +107,9 @@
             "browserTarget": "monitorizare-vot:build"
           },
           "configurations": {
+            "local": {
+              "browserTarget": "monitorizare-vot:build:local"
+            },
             "qa": {
               "browserTarget": "monitorizare-vot:build:qa"
             },
