@@ -18,7 +18,7 @@ The app also has a web version, available for every citizen who wants to report 
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-aw7z8ch8m.vercel.app/). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
@@ -44,29 +44,32 @@ MV related repos:
 
 ## Deployment
 
-### Frontend app
-
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
 
-#### Development server
+### Development server
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Run `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA. Run `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod. If you also have the backend app running locally, you can run `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
 
-#### Code scaffolding
+### Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
 
-#### Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-#### Running unit tests
+### Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-#### Running end-to-end tests
+### Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+
+### Staging environment
+
+- preview environments available automatically on each PR powered by [Vercel](https://vercel.com/). Preview environment for `develop` branch: https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login
 
 ## Feedback
 
