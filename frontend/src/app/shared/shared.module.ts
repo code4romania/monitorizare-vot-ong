@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
-import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
 @NgModule({
     imports: [
       FormsModule,
