@@ -1,6 +1,7 @@
 import { Observer } from '../../models/observer.model';
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Input, Output, EventEmitter, Directive } from '@angular/core';
 
+@Directive()
 export class BaseObserverCrudComponent {
     @Input() observer: Observer;
     @Input() enableEdit = false;

@@ -22,7 +22,7 @@ import { ModalOptions, BsModalRef, BsModalService } from 'ngx-bootstrap';
   styleUrls: ['./observers.component.scss']
 })
 export class ObserversComponent implements OnInit, OnDestroy {
-  @ViewChild('editObserverModalTemplate', {static: false}) editObserverModal: TemplateRef<any>;
+  @ViewChild('editObserverModalTemplate') editObserverModal: TemplateRef<any>;
 
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
