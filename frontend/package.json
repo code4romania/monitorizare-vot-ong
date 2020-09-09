@@ -52,8 +52,8 @@
     "rxjs-compat": "^6.0.0-rc.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.24",
-    "@angular/cli": "^8.3.24",
+    "@angular-devkit/build-angular": "~0.803.29",
+    "@angular/cli": "^8.3.29",
     "@types/jasmine": "^2.8.16",
     "@types/node": "^6.14.7",
     "codelyzer": "^5.0.1",
