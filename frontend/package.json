@@ -50,7 +50,7 @@
     "symbol-observable": "^1.2.0",
     "ts-helpers": "^1.1.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.8.3",
+    "typescript": ">=3.8.3 <3.9",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
