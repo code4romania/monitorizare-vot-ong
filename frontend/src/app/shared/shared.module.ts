@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TabsModule, CollapseModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslateModule } from '@ngx-translate/core';
+import {CollapseModule} from 'ngx-bootstrap/collapse';
 @NgModule({
     imports: [
       FormsModule,
