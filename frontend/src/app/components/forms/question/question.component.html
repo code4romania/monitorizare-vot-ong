@@ -1,0 +1,42 @@
+
+<div class="col-md-12 question-component">
+  <div class="field icon-holder" (click)="toggleOptions()">
+    <span *ngIf="!showOptions">
+      &#9654;
+    </span>
+    <span *ngIf="showOptions">
+      &#9660;
+    </span>
+  </div>
+
+  <div class="expandable-container">
+    <div class="main-fields-container">
+      <div class="field col-md-2">
+        <input class="form-control" [(ngModel)]="currentQuestion.code" placeholder="{{'QUESTION_CODE' | translate}}">
+      </div>
+      <div class="field col-md-6">
+        <input class="form-control" [(ngModel)]="currentQuestion.text" placeholder="{{'QUESTION_TEXT' | translate}}">
+      </div>
+      <div class="field col-md-2">
+        <select class="form-control">
+          <option *ngFor="let questionType of questionTypes" value="{{questionType.id}}">{{questionType.name}}</option>
+        </select>
+      </div>
+      <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">
+        <img src="/assets/forms/icon-delete.png">
+      </div>
+    </div>
+
+    <div [hidden]="!showOptions"  class="options-panel" (drop)="onReorder($event)">
+      <ng-template #option mdbSortable>
+
+      </ng-template>
+
+      <div class="col-md-12 add-option-button" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
+    </div>
+  </div>
+
+  <div class="field icon-holder">
+    <img src="/assets/forms/icon-reorder.png">
+  </div>
+</div>

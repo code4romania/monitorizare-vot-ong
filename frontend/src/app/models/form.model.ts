@@ -1,6 +1,7 @@
 import { FormSection } from './form.section.model';
 export class Form {
     idFormular: number;
-    sections: FormSection[];
+    formSections: FormSection[];
     description: string;
+    code: string;
 }

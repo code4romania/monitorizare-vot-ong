@@ -1,0 +1,45 @@
+.question-component {
+
+  display: flex;
+  flex-direction: row;
+
+  .add-option-button {
+    color: rebeccapurple;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .options-panel {
+    background-color: #EDEDED;
+    padding: 8px;
+  }
+
+  .expandable-container {
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+
+    padding: 4px;
+  }
+
+  .main-fields-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+    border: 1px solid #EDEDED;
+  }
+
+  .icon-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    cursor: pointer;
+  }
+
+  .field {
+    margin: 16px auto;
+  }
+}

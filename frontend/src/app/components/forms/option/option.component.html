@@ -1,0 +1,18 @@
+
+<div class="col-md-8 option-container">
+  <input type="text" class="form-control" placeholder="" [(ngModel)]="currentOption.text">
+
+  <div class="icon-holder" (click)="toggleTextField()">
+    <img src="/assets/forms/icon-text-disabled.png" *ngIf="!currentOption.isFreeText">
+    <img src="/assets/forms/icon-text-enabled.png" *ngIf="currentOption.isFreeText">
+  </div>
+
+  <div class="icon-holder" (click)="optionDeleteEventEmitter.emit()">
+    <img src="/assets/forms/icon-delete.png">
+  </div>
+
+  <div class="icon-holder">
+    <img src="/assets/forms/icon-reorder.png">
+  </div>
+</div>
+

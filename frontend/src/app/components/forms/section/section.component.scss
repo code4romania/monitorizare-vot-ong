@@ -1,0 +1,29 @@
+.section-create {
+  .add-question-button {
+    color: rebeccapurple;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .form-labeled-field {
+    margin-bottom: 10px;
+  }
+
+  .header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .header-text {
+      margin: auto 0;
+      font-size: larger;
+      font-weight: bold;
+    }
+
+    .btn-delete {
+      border: 1px solid;
+      color: red;
+    }
+  }
+}

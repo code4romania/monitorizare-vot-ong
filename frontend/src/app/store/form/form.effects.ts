@@ -39,7 +39,7 @@ export class FormEffects {
             map(sections => {
                 const form = new Form();
                 form.idFormular = id;
-                form.sections = sections;
+                form.formSections = sections;
                 form.description = description;
                 return form;
             }));

@@ -14,6 +14,30 @@
   "IS_URBAN_AREA": "Este zona urbana",
   "STATION": "Sectia",
   "FORM": "Formular",
+  "FORM_SAVE_DRAFT": "Salvează ca draft",
+  "FORM_PUBLISH": "Publică",
+  "FORM_EDIT": "Editare formular",
+  "FORMS": "Formulare",
+  "FORM_TITLE": "Titlu formular",
+  "FORM_TITLE_PLACEHOLDER": "Introdu titlu formular",
+  "FORM_CODE": "Cod formular",
+  "FORM_CODE_PLACEHOLDER": "Introdu cod formular",
+  "FORM_DESCRIPTION": "Descriere formular",
+  "FORM_DESCRIPTION_PLACEHOLDER": "Descrie acest formular",
+
+  "SECTION_ADD": "Adaugă o secţiune",
+  "SECTION_DELETE": "Şterge secţiune",
+  "SECTION_TITLE": "Titlu secţiune",
+  "SECTION_TITLE_PLACEHOLDER": "Introdu titlu secţiune",
+  "SECTION_CODE": "Cod secţiune",
+  "SECTION_CODE_PLACEHOLDER": "Introdu cod secţiune",
+  "SECTION_DESCRIPTION": "Introdu descriere secţiune",
+  "SECTION_DESCRIPTION_PLACEHOLDER": "Descrie această secţiune",
+
+  "QUESTION_ADD": "Adaugă o întrebare",
+
+  "OPTION_ADD": "Adaugă o opţiune",
+
   "NOTHING_SELECTED": "Nu ati selectat nimic",
   "SHOW": "Vezi",
   "HIDE": "Ascunde",
@@ -30,5 +54,6 @@
   "FROM": "De la",
   "TO": "Pana la",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Esti sigur ca vrei sa lansezi cererea de descarcare a datelor?",
-  "NOTIFICATION_SEND_CONFIRMATION": "Esti sigur ca vrei sa trimiti notificarea la %d observator(i)?"
+  "NOTIFICATION_SEND_CONFIRMATION": "Esti sigur ca vrei sa trimiti notificarea la %d observator(i)?",
+  "BACK": "Înapoi"
 }
