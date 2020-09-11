@@ -1,19 +1,15 @@
-import { ApiService } from '../core/apiService/api.service';
-import { Injectable } from '@angular/core';
-import { FormInfo, FormDetails } from '../models/form.info.model';
-import { Location } from '@angular/common';
-import { ApiListResponse } from '../models/api-list-response.model';
-import { Form } from '../models/form.model';
-import { FormSection } from '../models/form.section.model';
-import { environment } from '../../environments/environment';
+import {ApiService} from '../core/apiService/api.service';
+import {Injectable} from '@angular/core';
+import {FormInfo} from '../models/form.info.model';
+import {Location} from '@angular/common';
+import {Form} from '../models/form.model';
+import {FormSection} from '../models/form.section.model';
+import {environment} from '../../environments/environment';
 
 
 @Injectable()
 export class FormsService {
   private baseUrl: string;
-  selectedForm: FormDetails;
-  form: Form;
-  continueEditing: boolean;
 
   constructor(private http: ApiService) {
     this.baseUrl = environment.apiUrl;
@@ -42,6 +38,8 @@ export class FormsService {
   }
 
   public saveForm(form: Form) {
+    console.log(form);
+
     const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form`);
     return this.http.post(url, form);
   }

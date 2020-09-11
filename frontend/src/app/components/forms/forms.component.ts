@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormDetails} from '../../models/form.info.model';
-import {FormsService} from '../../services/forms.service';
-import {Router} from '@angular/router';
+import {AppState} from '../../store/store.module';
+import {select, Store} from '@ngrx/store';
+import {map, take} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
+import {FormState} from '../../store/form/form.reducer';
+import {FormDeleteAction, FormLoadAction} from '../../store/form/form.actions';
 
 @Component({
   selector: 'app-forms',
@@ -14,25 +18,32 @@ export class FormsComponent implements OnInit {
   totalCount = 0;
   page = 1;
 
-  constructor(private formsService: FormsService, private router: Router) { }
+  formsSubscription: Subscription;
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.loadForms(1, this.pageSize);
+    this.handleFormsData();
   }
 
   private loadForms(pageNo: number, pageSize: number) {
-    this.formsService.searchForms('', pageNo, pageSize).subscribe((result) => {
-      this.formsList = result.formVersions;
-      console.log(this.formsList);
-      this.totalCount = this.formsList.length;
-    });
+    this.store
+      .pipe(
+        select(s => s.form),
+        take(1),
+        map((storeItem: FormState) => new FormLoadAction())
+      )
+      .subscribe(action => this.store.dispatch(action));
   }
 
-  public search(value: string) {
-    this.formsService.searchForms(value, this.page, this.pageSize).subscribe((result) => {
-      this.formsList = result.formVersions;
-      this.totalCount = this.formsList.length;
-    });
+  private handleFormsData() {
+    this.formsSubscription = this.store
+      .select(state => state.form)
+      .subscribe(formState => {
+        this.formsList = formState.items;
+        this.totalCount = this.formsList.length;
+      });
   }
 
   pageChanged(event) {
@@ -43,18 +54,8 @@ export class FormsComponent implements OnInit {
     this.loadForms(this.page, this.pageSize);
   }
 
-  public async formSelected(form: FormDetails): Promise<void> {
-    console.log(form);
-    this.formsService.selectedForm = form;
-  }
-
-  public async addForm(): Promise<void> {
-    this.formsService.selectedForm = null;
-  }
-
   public deleteForm(form: FormDetails) {
-    this.formsService.deleteForm(form.id);
-    this.formsList = this.formsList.filter(f => f !== form);
+    this.store.dispatch(new FormDeleteAction(form.id));
   }
 
 }

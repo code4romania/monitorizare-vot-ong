@@ -1,11 +1,12 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import { Router } from '@angular/router';
-import {FormsService} from '../../../services/forms.service';
+import {Router} from '@angular/router';
 import {Form} from '../../../models/form.model';
 import {Location} from '@angular/common';
 import {FormSection} from '../../../models/form.section.model';
-import {BaseAnswer} from '../../../models/base.answer.model';
 import {SectionComponent} from '../section/section.component';
+import {AppState} from '../../../store/store.module';
+import {Store} from '@ngrx/store';
+import {FormUploadAction} from '../../../store/form/form.actions';
 
 @Component({
   selector: 'app-form-create',
@@ -21,10 +22,10 @@ export class FormCreateComponent implements OnInit {
   showOptions: boolean;
   currentSection: FormSection;
 
-  constructor(private formsService: FormsService,
-              private location: Location,
+  constructor(private location: Location,
               private router: Router,
-              private cfr: ComponentFactoryResolver) { }
+              private cfr: ComponentFactoryResolver,
+              private store: Store<AppState>) { }
 
   ngOnInit() {
     this.title = 'Adauga formular nou';
@@ -32,14 +33,9 @@ export class FormCreateComponent implements OnInit {
     this.form.description = '';
   }
 
-  public async openSectionPage(): Promise<void> {
-    this.formsService.form = this.form;
-  }
-
   public onBackPressed() {
     this.location.back();
   }
-
 
   addFormSection() {
     this.showOptions = false;
@@ -66,21 +62,8 @@ export class FormCreateComponent implements OnInit {
     if (!isReady) {
       return ;
     }
-    this.formsService.saveForm(this.form).subscribe((result) => {
-      console.log(result);
-      this.router.navigate(['/formulare']).then(r => {});
-    });
-  }
 
-  saveAndPublishForm() {
-    const isReady = this.prepareForm();
-    if (!isReady) {
-      return ;
-    }
-    this.formsService.saveAndPublishForm(this.form).subscribe((result) => {
-      console.log(result);
-      this.router.navigate(['/formulare']).then(r => {});
-    });
+    this.store.dispatch(new FormUploadAction(this.form));
   }
 
   async loadSectionComponent(section: FormSection) {

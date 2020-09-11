@@ -1,4 +1,12 @@
 <div class="container-fluid forms-component">
+
+  <div class="header-row">
+    <span class="header-text col-md-2">{{'FORMS' | translate }}</span>
+    <div class="buttons-pane">
+      <button class="btn-primary btn" [routerLink]="['/formulare/nou']">+ {{'NEW_FORM' | translate}}</button>
+    </div>
+  </div>
+
   <div class="table-responsive">
     <table class="table align-items-center table-flush">
       <thead class="thead-light">

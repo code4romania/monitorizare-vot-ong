@@ -14,7 +14,7 @@
         <tabset>
           <tab *ngFor="let form of formState.items">
             <ng-template tabHeading>{{form.description}}</ng-template>
-            <app-answer-form-list [notes]="formNotes(form.idFormular)" [form]="form"
+            <app-answer-form-list [notes]="formNotes(form.id)" [form]="form"
                                   [completedQuestions]="formAnswers()">
             </app-answer-form-list>
           </tab>

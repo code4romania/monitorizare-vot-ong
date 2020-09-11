@@ -1,8 +1,11 @@
 import { FormSection } from './form.section.model';
-export class Form {
-    idFormular: number;
+import {FormDetails} from './form.info.model';
+
+export class Form implements FormDetails {
+    id: number;
     formSections: FormSection[];
     description: string;
     code: string;
     diaspora: boolean;
+    currentVersion: number;
 }

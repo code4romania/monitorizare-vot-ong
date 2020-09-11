@@ -25,6 +25,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit() {
     this.questionTypes = QUESTION_TYPES;
+    this.showOptions = true;
   }
 
   addOption() {
