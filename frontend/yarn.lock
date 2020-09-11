@@ -1720,11 +1720,6 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-bootstrap-md@^9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/angular-bootstrap-md/-/angular-bootstrap-md-9.4.0.tgz#3b02d62a181ae3a2db0a5ce47e29b742f1067afe"
-  integrity sha512-HqP8XIR7TeHi9Ofg2F1AJff5ucIcIg0r5A6ko68ZLhqE0LZhoAsqXBhlq61VBrkKKKcepMKSIdqxf2rsWYMNDA==
-
 ansi-colors@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.1.tgz#cbb9ae256bf750af1eab344f229aa27fe94ba348"
@@ -5970,11 +5965,6 @@ ngx-bootstrap@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-6.1.0.tgz#f1f923c7d3879b80b9501a45b3d21f2589967fff"
   integrity sha512-IDHPO3WE7YYhLZ7jnrH1wmMORhthoyHn6Gbl27FvXksG0OlTm5x8CyK5+EQfnDfxBEElju8n4Tfb8ga3aJYFTA==
-
-ngx-sortable@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ngx-sortable/-/ngx-sortable-1.0.3.tgz#eb46373881cbcf7586dbc30630561e7ea95ae020"
-  integrity sha512-zjl2VwZlKR2JS1c+fACESNkS+jatNNr3EfxBBqiZ7Ewaeeodx03ZJKy4pyemBjgxzbtEw1Dud6bfBSbL8d3sog==
 
 ngx-toastr@^12.1.0:
   version "12.1.0"

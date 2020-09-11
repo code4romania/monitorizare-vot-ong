@@ -7,4 +7,5 @@ export interface FormDetails {
     code: string;
     description: string;
     ver: number;
+    diaspora: string;
 }

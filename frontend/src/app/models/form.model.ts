@@ -4,4 +4,5 @@ export class Form {
     formSections: FormSection[];
     description: string;
     code: string;
+    diaspora: boolean;
 }

@@ -55,5 +55,8 @@
   "TO": "Pana la",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Esti sigur ca vrei sa lansezi cererea de descarcare a datelor?",
   "NOTIFICATION_SEND_CONFIRMATION": "Esti sigur ca vrei sa trimiti notificarea la %d observator(i)?",
-  "BACK": "Înapoi"
+  "BACK": "Înapoi",
+
+  "INDEX": "Nr.",
+  "ACTIONS": "Acţiuni"
 }

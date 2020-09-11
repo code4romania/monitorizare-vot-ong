@@ -73,5 +73,8 @@
   "TO": "To",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
   "NOTIFICATION_SEND_CONFIRMATION": "Are you sure you want to notify %d observer(s)?",
-  "BACK": "Back"
+  "BACK": "Back",
+
+  "INDEX": "Index",
+  "ACTIONS": "Actions"
 }

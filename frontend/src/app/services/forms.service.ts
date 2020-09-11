@@ -49,4 +49,9 @@ export class FormsService {
   public saveAndPublishForm(form: Form) {
     return this.saveForm(form);
   }
+
+  public deleteForm(formId: number) {
+    const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${formId}`);
+    return this.http.delete(url);
+  }
 }

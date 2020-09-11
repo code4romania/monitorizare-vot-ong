@@ -52,4 +52,9 @@ export class FormsComponent implements OnInit {
     this.formsService.selectedForm = null;
   }
 
+  public deleteForm(form: FormDetails) {
+    this.formsService.deleteForm(form.id);
+    this.formsList = this.formsList.filter(f => f !== form);
+  }
+
 }
