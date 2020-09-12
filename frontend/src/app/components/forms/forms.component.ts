@@ -6,6 +6,8 @@ import {map, take} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {FormState} from '../../store/form/form.reducer';
 import {FormDeleteAction, FormLoadAction} from '../../store/form/form.actions';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {cloneDeep} from 'lodash';
 
 @Component({
   selector: 'app-forms',
@@ -41,7 +43,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.formsSubscription = this.store
       .select(state => state.form)
       .subscribe(formState => {
-        this.formsList = formState.items;
+        this.formsList = cloneDeep(formState.items);
         this.totalCount = this.formsList.length;
       });
   }
@@ -54,4 +56,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.formsSubscription.unsubscribe();
   }
 
+  onReorder(event: CdkDragDrop<FormDetails[]>) {
+    moveItemInArray(this.formsList, event.previousIndex, event.currentIndex);
+  }
 }

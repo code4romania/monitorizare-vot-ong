@@ -12,6 +12,21 @@
   .options-panel {
     background-color: #EDEDED;
     padding: 8px;
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+
+      .option-line {
+        display: flex;
+        flex-direction: row;
+
+        .option {
+          flex-grow: 1;
+        }
+      }
+
+    }
   }
 
   .expandable-container {

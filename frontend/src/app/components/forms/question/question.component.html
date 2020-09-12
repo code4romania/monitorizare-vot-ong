@@ -27,18 +27,24 @@
       </div>
     </div>
 
-    <div [hidden]="hideOptions" class="options-panel" (drop)="onReorder($event)">
-      <app-option *ngFor="let option of currentQuestion.optionsToQuestions"
-                  [currentOption]="option"
-                  (optionDeleteEventEmitter)="onOptionDelete(option)">
+    <div [hidden]="hideOptions" class="options-panel">
 
-      </app-option>
+      <div cdkDropList
+           class="options-list"
+           (cdkDropListDropped)="onReorder($event)">
+        <div *ngFor="let option of currentQuestion.optionsToQuestions" cdkDrag class="option-line">
+          <app-option [currentOption]="option"
+                      (optionDeleteEventEmitter)="onOptionDelete(option)"
+                      class="option">
+          </app-option>
+
+          <div class="icon-holder icon-reorder" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png">
+          </div>
+        </div>
+      </div>
 
       <div class="col-md-12 add-option-button" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
     </div>
-  </div>
-
-  <div class="field icon-holder">
-    <img src="/assets/forms/icon-reorder.png">
   </div>
 </div>

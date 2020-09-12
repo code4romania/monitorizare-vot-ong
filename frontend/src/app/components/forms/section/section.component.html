@@ -10,7 +10,7 @@
   </div>
 
   <div class="panel panel-default">
-    <div class="panel-body">
+    <div class="panel-body section-details">
       <div class="col-md-6">
         <div class="form-labeled-field">
           <div>
@@ -40,10 +40,17 @@
 <!--        </div>-->
       </div>
 
-      <app-question *ngFor="let question of section.questions"
-                    [currentQuestion]="question"
-                    (questionDeleteEventEmitter)="onQuestionDelete(question)"></app-question>
+      <div class="question-list" cdkDropList (cdkDropListDropped)="onReorder($event)">
+        <div *ngFor="let question of section.questions" cdkDrag class="question-line">
+          <app-question [currentQuestion]="question"
+                        (questionDeleteEventEmitter)="onQuestionDelete(question)" class="question">
+          </app-question>
 
+          <div class="field icon-holder" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png">
+          </div>
+        </div>
+      </div>
       <div class="col-md-12 add-question-button" (click)="addQuestion()">+ {{'QUESTION_ADD' | translate}}</div>
     </div>
   </div>

@@ -41,10 +41,14 @@
       </div>
     </div>
   </div>
-  <app-section *ngFor="let section of form.formSections"
-               [section]="section"
-               (sectionDeleteEventEmitter)="onSectionDelete(section)">
-  </app-section>
+
+  <div class="section-list" cdkDropList (cdkDropListDropped)="onReorder($event)">
+    <div *ngFor="let section of form.formSections" cdkDrag class="section">
+      <app-section [section]="section"
+                   (sectionDeleteEventEmitter)="onSectionDelete(section)">
+      </app-section>
+    </div>
+  </div>
 
   <div class="add-section-button" (click)="addFormSection()">+ {{'SECTION_ADD' | translate}}</div>
 </div>

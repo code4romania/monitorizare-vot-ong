@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormQuestion, QUESTION_TYPES, QuestionType} from '../../../models/form.question.model';
 import {BaseAnswer} from '../../../models/base.answer.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-question',
@@ -37,7 +38,7 @@ export class QuestionComponent implements OnInit {
     this.currentQuestion.optionsToQuestions = this.currentQuestion.optionsToQuestions.filter(o => o !== option);
   }
 
-  onReorder(event: DragEvent) {
-
+  onReorder(event: CdkDragDrop<BaseAnswer[]>) {
+    moveItemInArray(this.currentQuestion.optionsToQuestions, event.previousIndex, event.currentIndex);
   }
 }

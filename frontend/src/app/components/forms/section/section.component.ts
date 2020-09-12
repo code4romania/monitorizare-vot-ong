@@ -12,6 +12,7 @@ import {
 import {FormSection} from '../../../models/form.section.model';
 import {FormQuestion} from '../../../models/form.question.model';
 import {QuestionComponent} from '../question/question.component';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-section',
@@ -34,5 +35,9 @@ export class SectionComponent {
 
   onQuestionDelete(question: FormQuestion) {
     this.section.questions = this.section.questions.filter(q => q !== question);
+  }
+
+  onReorder(event: CdkDragDrop<FormQuestion[]>) {
+    moveItemInArray(this.section.questions, event.previousIndex, event.currentIndex);
   }
 }

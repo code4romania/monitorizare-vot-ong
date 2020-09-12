@@ -7,6 +7,8 @@ import {AppState} from '../../../store/store.module';
 import {Store} from '@ngrx/store';
 import {FormUploadAction, FullyLoadFormAction} from '../../../store/form/form.actions';
 import {Subscription} from 'rxjs';
+import {cloneDeep} from 'lodash';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-form-create',
@@ -59,7 +61,7 @@ export class FormCreateComponent implements OnInit, OnDestroy {
           return ;
         }
 
-        this.form = correspondingForm;
+        this.form = cloneDeep(correspondingForm);
       });
   }
 
@@ -102,5 +104,9 @@ export class FormCreateComponent implements OnInit, OnDestroy {
     if (this.formDataSubscription) {
       this.formDataSubscription.unsubscribe();
     }
+  }
+
+  onReorder(event: CdkDragDrop<FormSection[]>) {
+    moveItemInArray(this.form.formSections, event.previousIndex, event.currentIndex);
   }
 }

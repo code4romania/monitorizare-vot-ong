@@ -1,4 +1,10 @@
 .section-create {
+
+  .section-details {
+    display: flex;
+    flex-direction: column;
+  }
+
   .add-question-button {
     color: rebeccapurple;
     cursor: pointer;
@@ -25,5 +31,33 @@
       border: 1px solid;
       color: red;
     }
+  }
+
+  .question-list {
+    display: flex;
+    flex-direction: column;
+
+    .question-line {
+      display: flex;
+      flex-direction: row;
+
+      .question {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .icon-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    cursor: pointer;
+
+    margin: auto 4px;
+  }
+
+  .icon-reorder {
+    cursor: move;
   }
 }
