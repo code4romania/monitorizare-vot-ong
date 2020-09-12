@@ -62,9 +62,10 @@ export class FormEffects {
     formUpload = this.actions
       .pipe(
         ofType(FormActionTypes.UPLOAD),
-        take(1),
-        map((a: FormUploadAction) => this.formsService.saveForm(a.form)),
-        map(_ => new FormUploadCompleteAction()),
+        switchMap((a: FormUploadAction) =>
+          this.formsService.saveForm(a.form).pipe(
+            map(_ => new FormUploadCompleteAction())
+          )),
         catchError(() => observableOf(new FormErrorAction()))
       );
 
