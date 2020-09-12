@@ -1,10 +1,10 @@
 
 <div class="col-md-12 question-component">
   <div class="field icon-holder" (click)="toggleOptions()">
-    <span *ngIf="!showOptions">
+    <span *ngIf="hideOptions">
       &#9654;
     </span>
-    <span *ngIf="showOptions">
+    <span *ngIf="!hideOptions">
       &#9660;
     </span>
   </div>
@@ -27,10 +27,12 @@
       </div>
     </div>
 
-    <div [hidden]="!showOptions"  class="options-panel" (drop)="onReorder($event)">
-      <ng-template #option mdbSortable>
+    <div [hidden]="hideOptions" class="options-panel" (drop)="onReorder($event)">
+      <app-option *ngFor="let option of currentQuestion.optionsToQuestions"
+                  [currentOption]="option"
+                  (optionDeleteEventEmitter)="onOptionDelete(option)">
 
-      </ng-template>
+      </app-option>
 
       <div class="col-md-12 add-option-button" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
     </div>

@@ -90,6 +90,11 @@ export let appRoutes: Routes = [
       canActivate: [AuthGuard]
     },
     {
+      path: 'formulare/:formId',
+      component: FormCreateComponent,
+      canActivate: [AuthGuard]
+    },
+    {
         path: 'login',
         canActivate: [AnonGuard],
         component: LoginComponent

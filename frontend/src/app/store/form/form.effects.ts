@@ -1,31 +1,31 @@
 import {of as observableOf} from 'rxjs';
 
 import {catchError, map, switchMap, take, tap} from 'rxjs/operators';
-import {Form} from '../../models/form.model';
 import {
-  FormActionTypes, FormClearAll, FormDeleteAction,
-  FormErrorAction, FormLoadAction,
+  FormActionTypes,
+  FormClearAll,
+  FormDeleteAction,
+  FormErrorAction,
+  FormLoadAction,
   FormLoadCompletedAction,
-  FormUploadAction, FormUploadCompleteAction,
+  FormUploadAction,
+  FormUploadCompleteAction,
   FullyLoadFormAction,
   FullyLoadFormCompleteAction
 } from './form.actions';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {FormSection} from '../../models/form.section.model';
-import {environment} from 'environments/environment';
 import {FormsService} from '../../services/forms.service';
 import {Router} from '@angular/router';
+import {Form} from '../../models/form.model';
 
 @Injectable()
 export class FormEffects {
-    private baseUrl: string;
 
     constructor(private formsService: FormsService,
                 private actions: Actions,
-                private router: Router) {
-        this.baseUrl = environment.apiUrl;
-    }
+                private router: Router) {}
 
     @Effect()
     loadFormAction = this.actions
@@ -38,23 +38,19 @@ export class FormEffects {
     fullyLoadFormAction = this.actions
       .pipe(
         ofType(FormActionTypes.FULLY_LOAD),
-        map((a: FullyLoadFormAction) => a.formDetails),
-        map(formDetails => {
-          return {
-            details: formDetails,
-            formSections: this.formsService.getForm(formDetails.id)
-          };
-        }),
-        map(helper =>
-          helper.formSections.pipe(
-            tap((sections: FormSection[]) => {
-              const form = new Form();
-              Object.keys(helper.details).forEach(key => form[key] = helper.details[key]);
-              form.formSections = sections;
-              return form;
-            })
-          ),
-        map((form: Form) => new FullyLoadFormCompleteAction(form))),
+        map((a: FullyLoadFormAction) => a.formId),
+        switchMap(formId =>
+          this.formsService.getForm(formId)
+            .pipe(
+              map((sections: FormSection[]) => {
+                const form = new Form();
+                form.id = formId;
+                form.formSections = sections;
+
+                return new FullyLoadFormCompleteAction(form);
+              })
+            )
+        ),
         catchError(() => observableOf(new FormErrorAction()))
       );
 
@@ -82,8 +78,10 @@ export class FormEffects {
       .pipe(
         ofType(FormActionTypes.DELETE),
         take(1),
-        switchMap((a: FormDeleteAction) => this.formsService.deleteForm(a.formId)),
-        map(_ => [new FormClearAll(), new FormLoadAction()]),
+        switchMap((a: FormDeleteAction) =>
+          this.formsService.deleteForm(a.formId).pipe(
+            map(_ => [new FormClearAll(), new FormLoadAction()]),
+          )),
         catchError(() => observableOf(new FormErrorAction()))
       );
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormDetails} from '../../models/form.info.model';
 import {AppState} from '../../store/store.module';
 import {select, Store} from '@ngrx/store';
@@ -12,7 +12,7 @@ import {FormDeleteAction, FormLoadAction} from '../../store/form/form.actions';
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
-export class FormsComponent implements OnInit {
+export class FormsComponent implements OnInit, OnDestroy {
   formsList: FormDetails[];
   pageSize = 10;
   totalCount = 0;
@@ -46,16 +46,12 @@ export class FormsComponent implements OnInit {
       });
   }
 
-  pageChanged(event) {
-    if (event.page && event.pageSize) {
-      this.page = event.page;
-      this.pageSize = event.pageSize;
-    }
-    this.loadForms(this.page, this.pageSize);
-  }
-
   public deleteForm(form: FormDetails) {
     this.store.dispatch(new FormDeleteAction(form.id));
+  }
+
+  ngOnDestroy(): void {
+    this.formsSubscription.unsubscribe();
   }
 
 }

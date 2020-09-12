@@ -1,6 +1,7 @@
 import {FormActions, FormActionTypes} from './form.actions';
 import {Form} from '../../models/form.model';
 import {FormDetails} from '../../models/form.info.model';
+import {cloneDeep} from 'lodash';
 
 export class FormState {
     items: FormDetails[];
@@ -24,13 +25,23 @@ export function formReducer(state = formsInitialState, $action: FormActions) {
                 fullyLoaded: [],
                 items: []
             };
-        case FormActionTypes.FULLY_LOAD_COMPLETE:
-            const fullyLoaded = this.state.fullyLoaded;
-            const loadedForm: Form = $action.payload;
-            fullyLoaded[loadedForm.id] = loadedForm;
+      case FormActionTypes.FULLY_LOAD_COMPLETE:
+            const fullyLoaded = state.fullyLoaded;
+            const loadedForm = $action.payload;
+            const formDetails = state.items.find(f => f.id === loadedForm.id);
+
+            const mutableLoadedForm: Form = cloneDeep(loadedForm);
+
+            mutableLoadedForm.description = formDetails.description;
+            mutableLoadedForm.code = formDetails.code;
+            mutableLoadedForm.diaspora = formDetails.diaspora;
+            mutableLoadedForm.currentVersion = formDetails.currentVersion;
+
+            const allFullyLoadedForms = {...fullyLoaded};
+            allFullyLoadedForms[mutableLoadedForm.id] = mutableLoadedForm;
             return {
               ...state,
-              fullyLoaded
+              fullyLoaded: allFullyLoadedForms
             };
         default:
             return state;

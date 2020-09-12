@@ -1,36 +1,66 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Form} from '../../../models/form.model';
 import {Location} from '@angular/common';
 import {FormSection} from '../../../models/form.section.model';
-import {SectionComponent} from '../section/section.component';
 import {AppState} from '../../../store/store.module';
 import {Store} from '@ngrx/store';
-import {FormUploadAction} from '../../../store/form/form.actions';
+import {FormUploadAction, FullyLoadFormAction} from '../../../store/form/form.actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
   styleUrls: ['./form-create.component.scss']
 })
-export class FormCreateComponent implements OnInit {
+export class FormCreateComponent implements OnInit, OnDestroy {
+
+  readonly FORM_ID_URL_PARAM = 'formId';
+
   title: string;
   form: Form;
-  @ViewChild('section', {read: ViewContainerRef}) section: ViewContainerRef;
 
   showSection: boolean;
   showOptions: boolean;
-  currentSection: FormSection;
+
+  formDataSubscription: Subscription;
 
   constructor(private location: Location,
-              private router: Router,
-              private cfr: ComponentFactoryResolver,
-              private store: Store<AppState>) { }
+              private store: Store<AppState>,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.title = 'Adauga formular nou';
     this.form = new Form();
     this.form.description = '';
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      const hasFormId = params.has(this.FORM_ID_URL_PARAM);
+      if (!hasFormId) {
+        return ;
+      }
+
+      const targetFormId = +params.get(this.FORM_ID_URL_PARAM);
+      this.loadFormForEditing(targetFormId);
+      this.handleLoadedFormData(targetFormId);
+    });
+  }
+
+  private loadFormForEditing(formId: number) {
+    this.store.dispatch(new FullyLoadFormAction(formId));
+  }
+
+  private handleLoadedFormData(formId: number) {
+    this.formDataSubscription = this.store
+      .select(state => state.form.fullyLoaded)
+      .subscribe(loadedForms => {
+        const correspondingForm = loadedForms[formId];
+        if (!correspondingForm) {
+          return ;
+        }
+
+        this.form = correspondingForm;
+      });
   }
 
   public onBackPressed() {
@@ -44,8 +74,6 @@ export class FormCreateComponent implements OnInit {
       this.form.formSections = [];
     }
     this.form.formSections.push(new FormSection());
-    this.currentSection = this.form.formSections[this.form.formSections.length - 1];
-    this.loadSectionComponent(this.currentSection);
   }
 
   private prepareForm(): boolean {
@@ -66,21 +94,13 @@ export class FormCreateComponent implements OnInit {
     this.store.dispatch(new FormUploadAction(this.form));
   }
 
-  async loadSectionComponent(section: FormSection) {
-    const component: any = SectionComponent;
-
-    const comp = this.section.createComponent(this.cfr.resolveComponentFactory<SectionComponent>(component));
-
-    comp.instance.section = section;
-    comp.instance.sectionDeleteEventEmitter.subscribe(_ => {
-      this.onSectionDelete(section);
-      comp.destroy();
-    });
-
-    return comp;
-  }
-
   onSectionDelete(deletedSection: FormSection) {
     this.form.formSections = this.form.formSections.filter(s => s !== deletedSection);
+  }
+
+  ngOnDestroy(): void {
+    if (this.formDataSubscription) {
+      this.formDataSubscription.unsubscribe();
+    }
   }
 }

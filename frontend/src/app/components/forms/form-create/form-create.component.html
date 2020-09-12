@@ -41,8 +41,10 @@
       </div>
     </div>
   </div>
-  <ng-template #section>
-  </ng-template>
+  <app-section *ngFor="let section of form.formSections"
+               [section]="section"
+               (sectionDeleteEventEmitter)="onSectionDelete(section)">
+  </app-section>
 
   <div class="add-section-button" (click)="addFormSection()">+ {{'SECTION_ADD' | translate}}</div>
 </div>

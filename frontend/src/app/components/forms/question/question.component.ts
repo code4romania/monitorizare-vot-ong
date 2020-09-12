@@ -1,7 +1,6 @@
-import {Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormQuestion, QUESTION_TYPES, QuestionType} from '../../../models/form.question.model';
 import {BaseAnswer} from '../../../models/base.answer.model';
-import {OptionComponent} from '../option/option.component';
 
 @Component({
   selector: 'app-question',
@@ -10,54 +9,28 @@ import {OptionComponent} from '../option/option.component';
 })
 
 export class QuestionComponent implements OnInit {
-  @ViewChild('option', {read: ViewContainerRef}) option: ViewContainerRef;
-  showOptions: boolean;
+  hideOptions = false;
 
   @Input() currentQuestion: FormQuestion;
   @Output() questionDeleteEventEmitter = new EventEmitter<any>();
 
-  currentOption: BaseAnswer;
-
   questionTypes: QuestionType[];
-
-  constructor(private cfr: ComponentFactoryResolver) {
-  }
 
   ngOnInit() {
     this.questionTypes = QUESTION_TYPES;
-    this.showOptions = true;
   }
 
   addOption() {
-    console.log(this.currentQuestion);
-
     if (!this.currentQuestion.optionsToQuestions) {
       console.log('Options array was uninitialized');
       this.currentQuestion.optionsToQuestions = [];
     }
 
-    this.currentOption = new BaseAnswer();
-    this.currentOption.isFreeText = false;
-    this.currentQuestion.optionsToQuestions.push(this.currentOption);
-    this.loadOptionComponent(this.currentOption);
-  }
-
-  async loadOptionComponent(option: BaseAnswer) {
-    const component: any = OptionComponent;
-
-    const comp = this.option.createComponent(this.cfr.resolveComponentFactory<OptionComponent>(component));
-
-    comp.instance.currentOption = option;
-    comp.instance.optionDeleteEventEmitter.subscribe(_ => {
-      this.onOptionDelete(option);
-      comp.destroy();
-    });
-
-    return comp;
+    this.currentQuestion.optionsToQuestions.push(new BaseAnswer());
   }
 
   toggleOptions() {
-    this.showOptions = !this.showOptions;
+    this.hideOptions = !this.hideOptions;
   }
 
   onOptionDelete(option: BaseAnswer) {

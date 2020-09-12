@@ -54,11 +54,7 @@ export class FormDeleteAction implements Action {
 export class FullyLoadFormAction implements Action {
   readonly type = FormActionTypes.FULLY_LOAD;
 
-  formDetails: FormDetails;
-
-  constructor(formDetails: FormDetails) {
-    this.formDetails = formDetails;
-  }
+  constructor(public formId: number) {}
 }
 
 export class FullyLoadFormCompleteAction implements Action {

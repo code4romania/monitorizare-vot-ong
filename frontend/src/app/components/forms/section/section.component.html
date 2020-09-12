@@ -40,9 +40,9 @@
 <!--        </div>-->
       </div>
 
-      <ng-template #question>
-
-      </ng-template>
+      <app-question *ngFor="let question of section.questions"
+                    [currentQuestion]="question"
+                    (questionDeleteEventEmitter)="onQuestionDelete(question)"></app-question>
 
       <div class="col-md-12 add-question-button" (click)="addQuestion()">+ {{'QUESTION_ADD' | translate}}</div>
     </div>
