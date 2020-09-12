@@ -47,23 +47,5 @@
       </tbody>
     </table>
   </div>
-  <div class="card-footer py-4">
-    <nav aria-label="...">
-      <div class="align-items-center justify-content-xl-between">
-        <div class="col-md-6">
-          <div>
-            <p>Arata </p>&nbsp;&nbsp;
-            <input type="number" class="form-control" style="width: 60px; padding-top: 5px; padding-bottom: 5px; height: 30px;" value="{{ pageSize }}" name="pageSize" [(ngModel)]="pageSize" (change)="pageChanged($event)">
-            &nbsp;&nbsp; <p>intrari </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <app-pagination [page]="page" [pageSize]="pageSize"
-                          [totalItems]="totalCount" (pageChanged)="pageChanged($event)">
-          </app-pagination>
-        </div>
-      </div>
-    </nav>
-  </div>
 </div>
 
