@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import {Form} from '../models/form.model';
 import {FormSection} from '../models/form.section.model';
 import {environment} from '../../environments/environment';
+import {cloneDeep} from 'lodash';
 
 
 @Injectable()
@@ -38,14 +39,26 @@ export class FormsService {
   }
 
   public saveForm(form: Form) {
-    console.log(form);
+    const formClone = cloneDeep(form);
+    formClone.draft = true;
 
-    const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form`);
-    return this.http.post(url, form);
+    return this.uploadForm(formClone);
   }
 
   public saveAndPublishForm(form: Form) {
-    return this.saveForm(form);
+    const formClone = cloneDeep(form);
+    formClone.draft = false;
+
+    return this.uploadForm(form);
+  }
+
+  private uploadForm(form: Form) {
+    if (!form.currentVersion) {
+      form.currentVersion = 1;
+    }
+
+    const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form`);
+    return this.http.post(url, form);
   }
 
   public deleteForm(formId: number) {

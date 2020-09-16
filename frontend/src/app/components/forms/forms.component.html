@@ -15,6 +15,7 @@
         <th scope="col" style="color: #3468EF;">{{'FORM_CODE' | translate}}</th>
         <th scope="col" style="color: #3468EF;">{{'FORM_TITLE' | translate}}</th>
         <th scope="col" style="color: #3468EF;">{{'DIASPORA' | translate}}</th>
+        <th scope="col" style="color: #3468EF;">{{'DRAFT' | translate}}</th>
         <th scope="col" style="color: #3468EF;">{{'ACTION' | translate}}</th>
       </tr>
       </thead>
@@ -31,6 +32,9 @@
           </td>
           <td>
             <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora">
+          </td>
+          <td>
+            <img src="/assets/forms/diaspora-check.png" *ngIf="form.draft">
           </td>
           <td>
             <div class="dropdown">

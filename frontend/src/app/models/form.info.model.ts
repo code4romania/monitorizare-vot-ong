@@ -8,4 +8,5 @@ export interface FormDetails {
     description: string;
     currentVersion: number;
     diaspora: boolean;
+    draft: boolean;
 }

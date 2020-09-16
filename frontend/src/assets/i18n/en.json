@@ -24,6 +24,7 @@
   "FORM_CODE_PLACEHOLDER": "Type form code",
   "FORM_DESCRIPTION": "Form description",
   "FORM_DESCRIPTION_PLACEHOLDER": "Describe this form",
+  "FORM_ONLY_DIASPORA": "Only for diaspora",
 
   "SECTION_ADD": "Add section",
   "SECTION_DELETE": "Delete section",
@@ -77,5 +78,7 @@
 
   "INDEX": "Index",
   "ACTIONS": "Actions",
-  "NEW_FORM": "New form"
+  "NEW_FORM": "New form",
+  "DIASPORA": "Diaspora",
+  "DRAFT": "Draft"
 }

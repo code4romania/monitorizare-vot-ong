@@ -13,6 +13,20 @@
 
   .form-labeled-field {
     margin-bottom: 10px;
+
+    &-checkbox {
+      @extend .form-labeled-field;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .checkbox-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+    }
   }
 
   .header-row {

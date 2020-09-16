@@ -5,7 +5,7 @@ import {Location} from '@angular/common';
 import {FormSection} from '../../../models/form.section.model';
 import {AppState} from '../../../store/store.module';
 import {Store} from '@ngrx/store';
-import {FormUploadAction, FullyLoadFormAction} from '../../../store/form/form.actions';
+import {FormUploadAction, FormUploadPublishAction, FullyLoadFormAction} from '../../../store/form/form.actions';
 import {Subscription} from 'rxjs';
 import {cloneDeep} from 'lodash';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
@@ -94,6 +94,15 @@ export class FormCreateComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(new FormUploadAction(this.form));
+  }
+
+  saveAndPublishForm() {
+    const isReady = this.prepareForm();
+    if (!isReady) {
+      return ;
+    }
+
+    this.store.dispatch(new FormUploadPublishAction(this.form));
   }
 
   onSectionDelete(deletedSection: FormSection) {

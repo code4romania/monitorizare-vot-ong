@@ -24,6 +24,7 @@
   "FORM_CODE_PLACEHOLDER": "Introdu cod formular",
   "FORM_DESCRIPTION": "Descriere formular",
   "FORM_DESCRIPTION_PLACEHOLDER": "Descrie acest formular",
+  "FORM_ONLY_DIASPORA": "Doar pentru Diaspora",
 
   "SECTION_ADD": "Adaugă o secţiune",
   "SECTION_DELETE": "Şterge secţiune",
@@ -59,5 +60,7 @@
 
   "INDEX": "Nr.",
   "ACTIONS": "Acţiuni",
-  "NEW_FORM": "Formular nou"
+  "NEW_FORM": "Formular nou",
+  "DIASPORA": "Diaspora",
+  "DRAFT": "Draft"
 }

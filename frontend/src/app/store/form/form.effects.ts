@@ -65,6 +65,17 @@ export class FormEffects {
         catchError(() => observableOf(new FormErrorAction()))
       );
 
+  @Effect()
+  formUploadPublish = this.actions
+    .pipe(
+      ofType(FormActionTypes.UPLOAD_PUBLISH),
+      switchMap((a: FormUploadAction) =>
+        this.formsService.saveAndPublishForm(a.form).pipe(
+          map(_ => new FormUploadCompleteAction())
+        )),
+      catchError(() => observableOf(new FormErrorAction()))
+    );
+
     @Effect()
     formUploadSuccess = this.actions
       .pipe(

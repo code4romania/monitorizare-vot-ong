@@ -7,5 +7,6 @@ export class Form implements FormDetails {
     description: string;
     code: string;
     diaspora: boolean;
+    draft: boolean;
     currentVersion: number;
 }
