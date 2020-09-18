@@ -35,6 +35,7 @@ export class FormCreateComponent implements OnInit, OnDestroy {
     this.title = 'Adauga formular nou';
     this.form = new Form();
     this.form.description = '';
+    this.form.diaspora = false;
 
     this.activatedRoute.paramMap.subscribe(params => {
       const hasFormId = params.has(this.FORM_ID_URL_PARAM);

@@ -1,17 +1,11 @@
 import {
-  AfterViewInit,
   Component,
-  ComponentFactoryResolver,
   EventEmitter,
   Input,
-  OnInit,
   Output,
-  ViewChild,
-  ViewContainerRef
 } from '@angular/core';
 import {FormSection} from '../../../models/form.section.model';
-import {FormQuestion} from '../../../models/form.question.model';
-import {QuestionComponent} from '../question/question.component';
+import {FormQuestion, QUESTION_TYPES} from '../../../models/form.question.model';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
@@ -30,7 +24,11 @@ export class SectionComponent {
     if (!this.section.questions) {
       this.section.questions = [];
     }
-    this.section.questions.push(new FormQuestion());
+
+    const createdQuestion = new FormQuestion();
+    createdQuestion.questionType = QUESTION_TYPES[0].id;
+
+    this.section.questions.push(createdQuestion);
   }
 
   onQuestionDelete(question: FormQuestion) {

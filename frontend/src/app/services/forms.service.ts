@@ -49,7 +49,7 @@ export class FormsService {
     const formClone = cloneDeep(form);
     formClone.draft = false;
 
-    return this.uploadForm(form);
+    return this.uploadForm(formClone);
   }
 
   private uploadForm(form: Form) {
