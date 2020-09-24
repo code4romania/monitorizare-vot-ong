@@ -91,7 +91,7 @@ export class FormEffects {
         take(1),
         switchMap((a: FormDeleteAction) =>
           this.formsService.deleteForm(a.formId).pipe(
-            map(_ => [new FormClearAll(), new FormLoadAction()]),
+            map(_ => new FormLoadAction()),
           )),
         catchError(() => observableOf(new FormErrorAction()))
       );
