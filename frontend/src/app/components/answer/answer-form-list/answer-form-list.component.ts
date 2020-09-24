@@ -4,6 +4,7 @@ import {CompletedQuestion} from '../../../models/completed.question.model';
 import {Component, Input, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 import {FormDetails} from '../../../models/form.info.model';
+import {Form} from '../../../models/form.model';
 
 @Component({
   selector: 'app-answer-form-list',
@@ -13,7 +14,7 @@ import {FormDetails} from '../../../models/form.info.model';
 export class AnswerFormListComponent implements OnInit {
 
   @Input()
-  form: FormDetails;
+  form: Form;
 
   @Input()
   completedQuestions: CompletedQuestion[];

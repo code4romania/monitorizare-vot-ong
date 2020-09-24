@@ -31,11 +31,7 @@ export function formReducer(state = formsInitialState, $action: FormActions) {
             const formDetails = state.items.find(f => f.id === loadedForm.id);
 
             const mutableLoadedForm: Form = cloneDeep(loadedForm);
-
-            mutableLoadedForm.description = formDetails.description;
-            mutableLoadedForm.code = formDetails.code;
-            mutableLoadedForm.diaspora = formDetails.diaspora;
-            mutableLoadedForm.currentVersion = formDetails.currentVersion;
+            mutableLoadedForm.inheritMetaData(formDetails);
 
             const allFullyLoadedForms = {...fullyLoaded};
             allFullyLoadedForms[mutableLoadedForm.id] = mutableLoadedForm;

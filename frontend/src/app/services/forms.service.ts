@@ -1,6 +1,6 @@
 import {ApiService} from '../core/apiService/api.service';
 import {Injectable} from '@angular/core';
-import {FormInfo} from '../models/form.info.model';
+import {FormDetails, FormInfo} from '../models/form.info.model';
 import {Location} from '@angular/common';
 import {Form} from '../models/form.model';
 import {FormSection} from '../models/form.section.model';
