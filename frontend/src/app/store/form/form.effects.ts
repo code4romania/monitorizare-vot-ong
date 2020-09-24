@@ -29,7 +29,7 @@ export class FormEffects {
 
     @Effect()
     loadFormAction = this.actions
-        .pipe(ofType(FormActionTypes.LOAD)).pipe(
+        .pipe(ofType(FormActionTypes.LOAD_ALL_FORMS_META)).pipe(
         switchMap(_ => this.formsService.loadForms()),
         map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
         catchError(() => observableOf(new FormErrorAction())), );
@@ -37,7 +37,7 @@ export class FormEffects {
     @Effect()
     fullyLoadFormAction = this.actions
       .pipe(
-        ofType(FormActionTypes.FULLY_LOAD),
+        ofType(FormActionTypes.LOAD_ONE_FORM_FULLY),
         map((a: FullyLoadFormAction) => a.formId),
         switchMap(formId =>
           this.formsService.getForm(formId)

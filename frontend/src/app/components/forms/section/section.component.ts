@@ -19,8 +19,6 @@ export class SectionComponent {
   @Output() sectionDeleteEventEmitter = new EventEmitter<any>();
 
   addQuestion() {
-    console.log(this.section);
-
     if (!this.section.questions) {
       this.section.questions = [];
     }

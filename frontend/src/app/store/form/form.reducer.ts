@@ -15,7 +15,7 @@ const formsInitialState: FormState = {
 };
 export function formReducer(state = formsInitialState, $action: FormActions) {
     switch ($action.type) {
-        case FormActionTypes.LOAD_COMPLETE:
+        case FormActionTypes.LOAD_ALL_FORMS_META_COMPLETE:
             return {
                 ...state,
                 items: $action.payload
@@ -25,7 +25,7 @@ export function formReducer(state = formsInitialState, $action: FormActions) {
                 fullyLoaded: [],
                 items: []
             };
-      case FormActionTypes.FULLY_LOAD_COMPLETE:
+      case FormActionTypes.LOAD_ONE_FORM_FULLY_COMPLETE:
             const fullyLoaded = state.fullyLoaded;
             const loadedForm = $action.payload;
             const formDetails = state.items.find(f => f.id === loadedForm.id);

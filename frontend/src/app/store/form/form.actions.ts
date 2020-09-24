@@ -4,10 +4,10 @@ import {Action} from '@ngrx/store';
 import {FormDetails} from '../../models/form.info.model';
 
 export class FormActionTypes {
-    static readonly LOAD = actionType('[Form] LOAD');
-    static readonly FULLY_LOAD = actionType('[Form] FULLY_LOAD');
-    static readonly FULLY_LOAD_COMPLETE = actionType('[Form] FULLY_LOAD_COMPLETE');
-    static readonly LOAD_COMPLETE = actionType('[Form] LOAD_COMPLETE');
+    static readonly LOAD_ALL_FORMS_META = actionType('[Form] LOAD_ALL_FORMS_META');
+    static readonly LOAD_ONE_FORM_FULLY = actionType('[Form] LOAD_ONE_FORM_FULLY');
+    static readonly LOAD_ONE_FORM_FULLY_COMPLETE = actionType('[Form] LOAD_ONE_FORM_FULLY_COMPLETE');
+    static readonly LOAD_ALL_FORMS_META_COMPLETE = actionType('[Form] LOAD_ALL_FORMS_META_COMPLETE');
     static readonly ERROR = actionType('form/error');
     static readonly CLEAR = actionType('form/clear all');
     static readonly UPLOAD = actionType('[Form] UPLOAD');
@@ -16,7 +16,7 @@ export class FormActionTypes {
     static readonly DELETE = actionType('[Form] DELETE');
 }
 export class FormLoadAction implements Action {
-    readonly type = FormActionTypes.LOAD;
+    readonly type = FormActionTypes.LOAD_ALL_FORMS_META;
 
     constructor() {
     }
@@ -25,7 +25,7 @@ export class FormErrorAction implements Action {
     readonly type = FormActionTypes.ERROR;
 }
 export class FormLoadCompletedAction implements Action {
-    readonly type = FormActionTypes.LOAD_COMPLETE;
+    readonly type = FormActionTypes.LOAD_ALL_FORMS_META_COMPLETE;
     payload: FormDetails[];
 
     constructor(forms: FormDetails[]) {
@@ -59,13 +59,13 @@ export class FormDeleteAction implements Action {
 }
 
 export class FullyLoadFormAction implements Action {
-  readonly type = FormActionTypes.FULLY_LOAD;
+  readonly type = FormActionTypes.LOAD_ONE_FORM_FULLY;
 
   constructor(public formId: number) {}
 }
 
 export class FullyLoadFormCompleteAction implements Action {
-  readonly type = FormActionTypes.FULLY_LOAD_COMPLETE;
+  readonly type = FormActionTypes.LOAD_ONE_FORM_FULLY_COMPLETE;
 
   constructor(public payload: Form) {}
 }
