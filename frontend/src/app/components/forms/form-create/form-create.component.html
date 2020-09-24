@@ -11,49 +11,51 @@
 
   <div class="panel panel-default">
     <div class="panel-body">
-      <div class="col-md-6">
-        <div class="form-labeled-field">
-          <div>
-            <span>{{'FORM_TITLE' | translate}}</span>
+      <form [formGroup]="formDetailsFormGroup">
+        <div class="col-md-6">
+          <div class="form-labeled-field">
+            <div>
+              <span>{{'FORM_TITLE' | translate}}</span>
+            </div>
+            <div>
+              <input class="form-control" formControlName="description" placeholder="{{'FORM_TITLE_PLACEHOLDER' | translate}}">
+            </div>
           </div>
-          <div>
-            <input class="form-control" [(ngModel)]="form.description" placeholder="{{'FORM_TITLE_PLACEHOLDER' | translate}}">
+          <div class="form-labeled-field">
+            <div>
+              <span>{{'FORM_CODE' | translate}}</span>
+            </div>
+            <div>
+              <input class="form-control" formControlName="code" placeholder="{{'FORM_CODE_PLACEHOLDER' | translate}}">
+            </div>
+          </div>
+          <div class="form-labeled-field-checkbox">
+            <div class="checkbox-label">
+              <span>{{'FORM_ONLY_DIASPORA' | translate}}</span>
+            </div>
+            <div class="checkbox-field">
+              <input type="checkbox" class="form-control" formControlName="diaspora">
+            </div>
           </div>
         </div>
-        <div class="form-labeled-field">
-          <div>
-            <span>{{'FORM_CODE' | translate}}</span>
-          </div>
-          <div>
-            <input class="form-control" [(ngModel)]="form.code" placeholder="{{'FORM_CODE_PLACEHOLDER' | translate}}">
-          </div>
-        </div>
-        <div class="form-labeled-field-checkbox">
-          <div class="checkbox-label">
-            <span>{{'FORM_ONLY_DIASPORA' | translate}}</span>
-          </div>
-          <div class="checkbox-field">
-            <input type="checkbox" class="form-control" [(ngModel)]="form.diaspora">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-<!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
+        <div class="col-md-6">
+  <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
 
-<!--        <div>-->
-<!--          <span>{{'FORM_DESCRIPTION' | translate}}</span>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <textarea rows="4" class="form-control" [(ngModel)]="form.description" placeholder="{{'FORM_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
-<!--        </div>-->
-      </div>
+  <!--        <div>-->
+  <!--          <span>{{'FORM_DESCRIPTION' | translate}}</span>-->
+  <!--        </div>-->
+  <!--        <div>-->
+  <!--          <textarea rows="4" class="form-control" [(ngModel)]="form.description" placeholder="{{'FORM_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
+  <!--        </div>-->
+        </div>
+      </form>
     </div>
   </div>
 
   <div class="section-list" cdkDropList (cdkDropListDropped)="onReorder($event)">
-    <div *ngFor="let section of form.formSections" cdkDrag class="section">
-      <app-section [section]="section"
-                   (sectionDeleteEventEmitter)="onSectionDelete(section)">
+    <div *ngFor="let section of sectionFormGroupsArray; let i = index" cdkDrag class="section">
+      <app-section [sectionFormGroup]="section"
+                   (sectionDeleteEventEmitter)="onSectionDelete(i)">
       </app-section>
     </div>
   </div>

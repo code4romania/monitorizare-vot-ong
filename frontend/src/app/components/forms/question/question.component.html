@@ -10,31 +10,33 @@
   </div>
 
   <div class="expandable-container">
-    <div class="main-fields-container">
-      <div class="field col-md-2">
-        <input class="form-control" [(ngModel)]="currentQuestion.code" placeholder="{{'QUESTION_CODE' | translate}}">
+    <form [formGroup]="questionFormGroup">
+      <div class="main-fields-container">
+        <div class="field col-md-2">
+          <input class="form-control" formControlName="code" placeholder="{{'QUESTION_CODE' | translate}}">
+        </div>
+        <div class="field col-md-6">
+          <input class="form-control" formControlName="text" placeholder="{{'QUESTION_TEXT' | translate}}">
+        </div>
+        <div class="field col-md-2">
+          <select class="form-control" formControlName="questionType">
+            <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name}}</option>
+          </select>
+        </div>
+        <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">
+          <img src="/assets/forms/icon-delete.png">
+        </div>
       </div>
-      <div class="field col-md-6">
-        <input class="form-control" [(ngModel)]="currentQuestion.text" placeholder="{{'QUESTION_TEXT' | translate}}">
-      </div>
-      <div class="field col-md-2">
-        <select class="form-control" [(ngModel)]="currentQuestion.questionType">
-          <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name}}</option>
-        </select>
-      </div>
-      <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">
-        <img src="/assets/forms/icon-delete.png">
-      </div>
-    </div>
+    </form>
 
     <div [hidden]="hideOptions" class="options-panel">
 
       <div cdkDropList
            class="options-list"
            (cdkDropListDropped)="onReorder($event)">
-        <div *ngFor="let option of currentQuestion.optionsToQuestions" cdkDrag class="option-line">
-          <app-option [currentOption]="option"
-                      (optionDeleteEventEmitter)="onOptionDelete(option)"
+        <div *ngFor="let option of optionFormGroupsArray; let i = index" cdkDrag class="option-line">
+          <app-option [optionFormGroup]="option"
+                      (optionDeleteEventEmitter)="onOptionDelete(i)"
                       class="option">
           </app-option>
 

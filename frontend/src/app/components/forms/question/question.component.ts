@@ -1,7 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormQuestion, QUESTION_TYPES, QuestionType} from '../../../models/form.question.model';
+import {QUESTION_TYPES, QuestionType} from '../../../models/form.question.model';
 import {BaseAnswer} from '../../../models/base.answer.model';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {initOptionFormGroup} from '../form-groups-builder';
+import {moveItemInFormArray} from '../../utils';
 
 @Component({
   selector: 'app-question',
@@ -12,33 +15,39 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 export class QuestionComponent implements OnInit {
   hideOptions = false;
 
-  @Input() currentQuestion: FormQuestion;
+  @Input() questionFormGroup: FormGroup;
   @Output() questionDeleteEventEmitter = new EventEmitter<any>();
 
   questionTypes: QuestionType[];
+
+  constructor(private formBuilder: FormBuilder) {}
+
 
   ngOnInit() {
     this.questionTypes = QUESTION_TYPES;
   }
 
-  addOption() {
-    if (!this.currentQuestion.optionsToQuestions) {
-      console.log('Options array was uninitialized');
-      this.currentQuestion.optionsToQuestions = [];
-    }
+  get optionsArray(): FormArray {
+    return this.questionFormGroup.controls.optionsToQuestions as FormArray;
+  }
 
-    this.currentQuestion.optionsToQuestions.push(new BaseAnswer());
+  get optionFormGroupsArray(): FormGroup[] {
+    return this.optionsArray.controls as FormGroup[];
+  }
+
+  addOption() {
+    this.optionsArray.push(initOptionFormGroup(this.formBuilder));
   }
 
   toggleOptions() {
     this.hideOptions = !this.hideOptions;
   }
 
-  onOptionDelete(option: BaseAnswer) {
-    this.currentQuestion.optionsToQuestions = this.currentQuestion.optionsToQuestions.filter(o => o !== option);
+  onOptionDelete(index: number) {
+    this.optionsArray.removeAt(index);
   }
 
   onReorder(event: CdkDragDrop<BaseAnswer[]>) {
-    moveItemInArray(this.currentQuestion.optionsToQuestions, event.previousIndex, event.currentIndex);
+    moveItemInFormArray(this.optionsArray, event.previousIndex, event.currentIndex);
   }
 }

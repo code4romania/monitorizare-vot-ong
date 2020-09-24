@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BaseAnswer} from '../../../models/base.answer.model';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-option',
@@ -8,13 +9,9 @@ import {BaseAnswer} from '../../../models/base.answer.model';
 })
 
 export class OptionComponent {
-  @Input() currentOption: BaseAnswer;
+  @Input() optionFormGroup: FormGroup;
 
   @Output() optionDeleteEventEmitter = new EventEmitter<any>();
 
   constructor() { }
-
-  toggleTextField() {
-    this.currentOption.isFreeText = !this.currentOption.isFreeText;
-  }
 }
