@@ -66,8 +66,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
       this.store.select(s => s.answer).subscribe(s => this.answerState = s),
       this.store.select(s => s.form).subscribe(s => {
         this.formState = s;
-        // If we have metadata for forms, but the first form is not yet fully loaded, launch load action
-        if (s.items.length > 0 && !s.fullyLoaded[s.items[0].id]) {
+        if (s.items.length > 0) {
           this.onTabSelected(s.items[0]);
         }
       }),
