@@ -73,6 +73,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
       this.store.select(s => s.note).subscribe(s => this.noteState = s)
     ];
   }
+
   ngOnDestroy() {
     _.map(this.subs, sub => sub.unsubscribe());
   }
@@ -82,6 +83,11 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
   }
 
   onTabSelected(form: FormDetails) {
+    // if the form is already loaded don't launch another action
+    if (this.formState.fullyLoaded[form.id]) {
+      return ;
+    }
+
     this.store.dispatch(new FullyLoadFormAction(form.id));
   }
 
