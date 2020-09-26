@@ -7,7 +7,7 @@
     "start": "ng serve --proxyConfig proxy.conf.json",
     "start-qa": "ng serve --configuration=qa",
     "start-prod": "ng serve --configuration=prod",
-    "build": "ng build --prod --sourcemap false",
+    "build": "ng build --prod --sourceMap false",
     "build-token": "ng build --configuration=token",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
