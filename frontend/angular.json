@@ -14,7 +14,7 @@
             "outputPath": "./dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.json",
+            "tsConfig": "tsconfig.json",
             "assets": [
               "src/assets",
               "src/favicon.ico"

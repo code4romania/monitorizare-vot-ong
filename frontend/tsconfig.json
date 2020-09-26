@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "baseUrl": "",
+    "baseUrl": "src",
     "declaration": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["es6", "dom"],
-    "mapRoot": "./",
+    "mapRoot": "src/",
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "../dist/out-tsc",
+    "outDir": "dist/out-tsc",
     "sourceMap": true,
     "target": "es2015",
     "typeRoots": [
-      "../node_modules/@types"
+      "node_modules/@types"
     ]
-  }
+  },
+  "files": ["src/main.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.d.ts"]
 }
