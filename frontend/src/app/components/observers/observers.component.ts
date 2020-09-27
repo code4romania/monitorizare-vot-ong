@@ -147,7 +147,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   }
 
   isPasswordValid(): boolean {
-    return this.newPassword && this.newPassword.length === 4;
+    return this.newPassword && (this.newPassword.length === 4 || this.newPassword.length === 6);
   }
 
   resetPassword() {
