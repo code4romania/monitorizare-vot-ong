@@ -116,7 +116,7 @@ export class AnswerComponent implements OnInit {
         }
 
         return this.answersService.downloadAnswers(filter).subscribe(res => {
-            FileSaver.saveAs(res, 'anwsers.xlsx');
+            FileSaver.saveAs(res, 'answsers.xlsx');
         });
     }
 
