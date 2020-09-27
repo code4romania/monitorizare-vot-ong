@@ -116,8 +116,11 @@ export class AnswerComponent implements OnInit {
         }
 
         return this.answersService.downloadAnswers(filter).subscribe(res => {
-            let blob:any = new Blob([res])
-            FileSaver.saveAs(blob, 'anwsers.xlsx');
+            FileSaver.saveAs(res, 'anwsers.xlsx');
+
+            const blob = new Blob([res], { type: 'application/octet-stream' });
+            const url= window.URL.createObjectURL(blob);
+            window.open(url);
         });
     }
 
