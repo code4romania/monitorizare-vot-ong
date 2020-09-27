@@ -116,7 +116,8 @@ export class AnswerComponent implements OnInit {
         }
 
         return this.answersService.downloadAnswers(filter).subscribe(res => {
-            FileSaver.saveAs(res, 'anwsers.xlsx');
+            let blob:any = new Blob([res])
+            FileSaver.saveAs(blob, 'anwsers.xlsx');
         });
     }
 
