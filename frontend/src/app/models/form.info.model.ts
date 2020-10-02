@@ -6,5 +6,7 @@ export interface FormDetails {
     id: number;
     code: string;
     description: string;
-    ver: number;
+    currentVersion: number;
+    diaspora: boolean;
+    draft: boolean;
 }

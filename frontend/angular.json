@@ -187,6 +187,9 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    },
+    "@nrwl/schematics:component": {
+      "styleext": "scss"
     }
   },
   "cli": {

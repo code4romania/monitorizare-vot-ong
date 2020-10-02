@@ -14,6 +14,31 @@
   "IS_URBAN_AREA": "Is it an urban area",
   "STATION": "Polling Station",
   "FORM": "Form",
+  "FORM_EDIT": "Edit form",
+  "FORM_SAVE_DRAFT": "Save as draft",
+  "FORM_PUBLISH": "Publish",
+  "FORMS": "Forms",
+  "FORM_TITLE": "Form title",
+  "FORM_TITLE_PLACEHOLDER": "Type form title",
+  "FORM_CODE": "Form code",
+  "FORM_CODE_PLACEHOLDER": "Type form code",
+  "FORM_DESCRIPTION": "Form description",
+  "FORM_DESCRIPTION_PLACEHOLDER": "Describe this form",
+  "FORM_ONLY_DIASPORA": "Only for diaspora",
+
+  "SECTION_ADD": "Add section",
+  "SECTION_DELETE": "Delete section",
+  "SECTION_TITLE": "Section title",
+  "SECTION_TITLE_PLACEHOLDER": "Type section title",
+  "SECTION_CODE": "Section code",
+  "SECTION_CODE_PLACEHOLDER": "Type section code",
+  "SECTION_DESCRIPTION": "Section description",
+  "SECTION_DESCRIPTION_PLACEHOLDER": "Describe this section",
+
+  "QUESTION_ADD": "Add question",
+
+  "OPTION_ADD": "Add option",
+
   "NOTHING_SELECTED": "Nothing selected.",
   "SHOW": "Show",
   "HIDE": "Hide",
@@ -48,5 +73,12 @@
   "FROM": "From",
   "TO": "To",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
-  "NOTIFICATION_SEND_CONFIRMATION": "Are you sure you want to notify %d observer(s)?"
+  "NOTIFICATION_SEND_CONFIRMATION": "Are you sure you want to notify %d observer(s)?",
+  "BACK": "Back",
+
+  "INDEX": "Index",
+  "ACTIONS": "Actions",
+  "NEW_FORM": "New form",
+  "DIASPORA": "Diaspora",
+  "DRAFT": "Draft"
 }

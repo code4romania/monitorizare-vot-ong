@@ -12,9 +12,9 @@
         <app-answer-extra-questions *ngIf="!answerState.answerExtraError" [answerExtra]="answerState?.answerExtra">
         </app-answer-extra-questions>
         <tabset>
-          <tab *ngFor="let form of formState.items">
+          <tab *ngFor="let form of formState.items" (selectTab)="onTabSelected(form)">
             <ng-template tabHeading>{{form.description}}</ng-template>
-            <app-answer-form-list [notes]="formNotes(form.idFormular)" [form]="form"
+            <app-answer-form-list [notes]="formNotes(form.id)" [form]="getDataForForm(form)"
                                   [completedQuestions]="formAnswers()">
             </app-answer-form-list>
           </tab>

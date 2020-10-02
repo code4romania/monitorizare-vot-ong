@@ -44,7 +44,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
   };
   observerToEdit: Observer;
 
-  constructor(private http: ApiService, private store: Store<AppState>,
+  constructor(private http: ApiService,
+              private store: Store<AppState>,
               private observersService: ObserversService,
               private toastrService: ToastrService,
               private modalService: BsModalService) {

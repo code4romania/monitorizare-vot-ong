@@ -1,0 +1,22 @@
+.forms-component {
+  .footer-pagination {
+    margin: 8px auto;
+  }
+
+  .dropdown-item {
+    margin: 4px;
+  }
+
+  .header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .header-text {
+      margin: auto 0;
+      font-size: larger;
+      font-weight: bold;
+    }
+  }
+}
