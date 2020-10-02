@@ -8,6 +8,10 @@ import {AnswerState} from '../../../store/answer/answer.reducer';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 import {CompletedQuestion} from '../../../models/completed.question.model';
+import {TabDirective} from 'ngx-bootstrap/tabs';
+import {FormDetails} from '../../../models/form.info.model';
+import {FullyLoadFormAction} from '../../../store/form/form.actions';
+import {Form} from '../../../models/form.model';
 
 @Component({
   selector: 'app-answer-details',
@@ -60,15 +64,35 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
 
     this.subs = [
       this.store.select(s => s.answer).subscribe(s => this.answerState = s),
-      this.store.select(s => s.form).subscribe(s => this.formState = s),
+      this.store.select(s => s.form).subscribe(s => {
+        this.formState = s;
+        if (s.items.length > 0) {
+          this.onTabSelected(s.items[0]);
+        }
+      }),
       this.store.select(s => s.note).subscribe(s => this.noteState = s)
     ];
   }
+
   ngOnDestroy() {
     _.map(this.subs, sub => sub.unsubscribe());
   }
 
   retry() {
     this.store.dispatch(new LoadAnswerDetailsAction(this.answerState.observerId, this.answerState.sectionId));
+  }
+
+  onTabSelected(form: FormDetails) {
+    // if the form is already loaded don't launch another action
+    if (this.formState.fullyLoaded[form.id]) {
+      return ;
+    }
+
+    this.store.dispatch(new FullyLoadFormAction(form.id));
+  }
+
+  getDataForForm(form: FormDetails): Form {
+    const fullyLoaded = this.formState.fullyLoaded[form.id];
+    return fullyLoaded ? fullyLoaded : Form.fromMetaData(form);
   }
 }

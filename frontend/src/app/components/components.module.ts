@@ -19,6 +19,12 @@ import { OberverRowComponent } from './observers/oberver-row/oberver-row.compone
 import { ObserverProfileComponent } from './observers/observer-profile/observer-profile.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {FormCreateComponent} from './forms/form-create/form-create.component';
+import {SectionComponent} from './forms/section/section.component';
+import {QuestionComponent} from './forms/question/question.component';
+import {OptionComponent} from './forms/option/option.component';
+import {FormsComponent} from './forms/forms.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 export let components = [
     AnswerComponent,
@@ -32,19 +38,28 @@ export let components = [
     ObserverCardComponent,
     OberverRowComponent,
     ObserverProfileComponent,
+    FormsComponent,
+    FormCreateComponent,
+    SectionComponent,
+    QuestionComponent,
+    OptionComponent,
     HeaderComponent,
     StatisticsComponent,
     StatisticsCardComponent,
     StatisticsDetailsComponent,
     StatisticsValueComponent,
     NotificationsComponent,
-    LoginComponent
+    LoginComponent,
 ];
 
 @NgModule({
     declarations: components,
     exports: components,
-    imports: [SharedModule, NgMultiSelectDropDownModule.forRoot()]
+    imports: [
+      SharedModule,
+      NgMultiSelectDropDownModule.forRoot(),
+      DragDropModule
+    ]
 })
 export  class ComponentsModule {
 

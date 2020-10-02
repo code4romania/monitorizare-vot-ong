@@ -1,53 +1,98 @@
+import {of as observableOf} from 'rxjs';
 
-import {of as observableOf,  Observable } from 'rxjs';
-
-import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
-import { Form } from '../../models/form.model';
-import { FormActionTypes, FormErrorAction, FormLoadAction, FormLoadCompletedAction } from './form.actions';
+import {catchError, map, switchMap, take, tap} from 'rxjs/operators';
+import {
+  FormActionTypes,
+  FormClearAll,
+  FormDeleteAction,
+  FormErrorAction,
+  FormLoadAction,
+  FormLoadCompletedAction,
+  FormUploadAction,
+  FormUploadCompleteAction,
+  FullyLoadFormAction,
+  FullyLoadFormCompleteAction
+} from './form.actions';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import { ApiService } from '../../core/apiService/api.service';
-import { Injectable } from '@angular/core';
-import { FormSection } from '../../models/form.section.model';
-import { Location } from '@angular/common';
-import { environment } from 'environments/environment';
-import { FormInfo } from 'app/models/form.info.model';
+import {Injectable} from '@angular/core';
+import {FormSection} from '../../models/form.section.model';
+import {FormsService} from '../../services/forms.service';
+import {Router} from '@angular/router';
+import {Form} from '../../models/form.model';
 
 @Injectable()
 export class FormEffects {
-    private baseUrl: string;
 
-    constructor(private http: ApiService, private actions: Actions) {
-        this.baseUrl = environment.apiUrl;
-    }
+    constructor(private formsService: FormsService,
+                private actions: Actions,
+                private router: Router) {}
 
     @Effect()
     loadFormAction = this.actions
-        .pipe(ofType(FormActionTypes.LOAD)).pipe(
-        switchMap(_ => this.getAvailableForms()),
-        switchMap(r => r.formVersions),
-        map(f => {
-         return { id: f.id, description: f.description};
-        }),
-        concatMap((x: { id: number, description: string }) => this.getForm(x.id, x.description)),
-        map(form => new FormLoadCompletedAction([form])),
+        .pipe(ofType(FormActionTypes.LOAD_ALL_FORMS_META)).pipe(
+        switchMap(_ => this.formsService.loadForms()),
+        map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
         catchError(() => observableOf(new FormErrorAction())), );
 
-    private getForm(id: number, description: string): Observable<Form> {
-        const formsUrl: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/${id}`);
-
-        return this.http.get<FormSection[]>(formsUrl).pipe(
-            map(sections => {
+    @Effect()
+    fullyLoadFormAction = this.actions
+      .pipe(
+        ofType(FormActionTypes.LOAD_ONE_FORM_FULLY),
+        map((a: FullyLoadFormAction) => a.formId),
+        switchMap(formId =>
+          this.formsService.getForm(formId)
+            .pipe(
+              map((sections: FormSection[]) => {
                 const form = new Form();
-                form.idFormular = id;
-                form.sections = sections;
-                form.description = description;
-                return form;
-            }));
-    }
-    private getAvailableForms(): Observable<FormInfo> {
-        const formsUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/form/');
+                form.id = formId;
+                form.formSections = sections;
 
-        return this.http.get<FormInfo>(formsUrl);
-    }
+                return new FullyLoadFormCompleteAction(form);
+              })
+            )
+        ),
+        catchError(() => observableOf(new FormErrorAction()))
+      );
 
+    @Effect()
+    formUpload = this.actions
+      .pipe(
+        ofType(FormActionTypes.UPLOAD),
+        switchMap((a: FormUploadAction) =>
+          this.formsService.saveForm(a.form).pipe(
+            map(_ => new FormUploadCompleteAction())
+          )),
+        catchError(() => observableOf(new FormErrorAction()))
+      );
+
+  @Effect()
+  formUploadPublish = this.actions
+    .pipe(
+      ofType(FormActionTypes.UPLOAD_PUBLISH),
+      switchMap((a: FormUploadAction) =>
+        this.formsService.saveAndPublishForm(a.form).pipe(
+          map(_ => new FormUploadCompleteAction())
+        )),
+      catchError(() => observableOf(new FormErrorAction()))
+    );
+
+    @Effect()
+    formUploadSuccess = this.actions
+      .pipe(
+        ofType(FormActionTypes.UPLOAD_COMPLETE),
+        take(1),
+        tap(_ => this.router.navigate(['formulare']))
+      );
+
+    @Effect()
+    formDelete = this.actions
+      .pipe(
+        ofType(FormActionTypes.DELETE),
+        take(1),
+        switchMap((a: FormDeleteAction) =>
+          this.formsService.deleteForm(a.formId).pipe(
+            map(_ => new FormLoadAction()),
+          )),
+        catchError(() => observableOf(new FormErrorAction()))
+      );
 }

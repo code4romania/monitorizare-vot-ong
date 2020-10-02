@@ -5,8 +5,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TabsModule, CollapseModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslateModule } from '@ngx-translate/core';
+import {CollapseModule} from 'ngx-bootstrap/collapse';
+import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
 @NgModule({
     imports: [
       FormsModule,
@@ -18,18 +20,19 @@ import { TranslateModule } from '@ngx-translate/core';
       TranslateModule
     ],
     exports: [
-      FormsModule,
-      ReactiveFormsModule,
-      CommonModule,
-      CollapseModule,
-      TabsModule,
-      RouterModule,
-      PaginationComponent,
-      LoadingIndicatorComponent,
-      ErrorIndicatorComponent,
-      TranslateModule
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        CollapseModule,
+        TabsModule,
+        RouterModule,
+        PaginationComponent,
+        LoadingIndicatorComponent,
+        ErrorIndicatorComponent,
+        TranslateModule,
+        IconToggleInputComponent
     ],
-    declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent],
+    declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent, IconToggleInputComponent],
     providers: []
 })
 export class SharedModule {
