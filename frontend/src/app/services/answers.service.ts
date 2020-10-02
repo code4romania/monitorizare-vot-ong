@@ -29,6 +29,7 @@ export class AnswersService {
 export interface AnswersPackFilter {
 	idNgo?: number;
 	idObserver?: number;
+	phoneObserver?: number;
 	pollingStationNumber?: number;
 	county?: string;
 	from?: string;

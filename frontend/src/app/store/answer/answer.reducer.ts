@@ -29,7 +29,7 @@ export class AnswerState {
     answerExtraLoading = false;
     answerExtraError = false;
 
-    answerFilters: AnswerFilters = { observerId: null, pollingStationNumber: null, county: null };
+    answerFilters: AnswerFilters = { observerPhone: null, pollingStationNumber: null, county: null };
 }
 export let initialAnswerState: AnswerState = new AnswerState();
 
