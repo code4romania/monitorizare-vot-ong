@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NotificationsService } from './services/notifications.service';
 import { AnswersService } from './services/answers.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {FormsService} from './services/forms.service';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
