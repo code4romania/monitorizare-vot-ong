@@ -35,7 +35,12 @@
   <div class="list-header col-md-12">
     <h3>{{((answerState | async)?.urgent ? 'URGENT_HEADER' : 'NOT_URGENT_HEADER') | translate}}</h3>
     <h5>{{((answerState | async)?.urgent ? 'URGENT_SUBHEADER' : 'NOT_URGENT_SUBHEADER') | translate}}</h5>
-    <button (click)="downloadAnswers()" class="btn btn-default mb-2">{{'DOWNLOAD_ANSWERS' | translate }}</button>
+    <button (click)="downloadAnswers()" class="btn btn-default mb-2">
+      <ng-container *ngIf="isLoading">
+        <i class="fa fa-circle-o-notch fa-spin" style="font-size:14px"></i>
+      </ng-container >
+      {{'DOWNLOAD_ANSWERS' | translate }}
+    </button>
   </div>
   <div class="col-md-3">
     <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()"
