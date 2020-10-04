@@ -151,8 +151,8 @@ export class NotificationsComponent implements OnInit {
   }
 
   searchForObservers() {
-    const to = this.pollingStationTo[0].id;
-    const from = this.pollingStationFrom[0].id;
+    const to = this.pollingStationTo[0];
+    const from = this.pollingStationFrom[0];
 
     this.notificationsService.getActiveObserversInCounties(this.selectedCounties.map(x => x.code), from, to).subscribe(res => {
       this.filteredObservers = res;
