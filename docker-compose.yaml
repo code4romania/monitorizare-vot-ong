@@ -6,4 +6,6 @@ services:
     working_dir: /app
     ports:
       - "4200:4200"
-    command: yarn && npm start -- --host 0.0.0.0
+    command: "sh -c 'yarn && npm start -- --host 0.0.0.0'"
+    volumes:
+      - ./:/app
