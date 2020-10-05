@@ -1,5 +1,5 @@
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Observer} from 'app/models/observer.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observer } from '../../../models/observer.model';
 
 export class ObserverProfileForm extends FormGroup {
   constructor() {
@@ -7,7 +7,7 @@ export class ObserverProfileForm extends FormGroup {
       name: new FormControl('', Validators.required),
       phone: new FormControl('', [Validators.required]),
       password: new FormControl(''),
-      sendSMS: new FormControl(false)
+      sendSMS: new FormControl(false),
     });
   }
 

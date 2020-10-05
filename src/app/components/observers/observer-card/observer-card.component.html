@@ -1,4 +1,11 @@
-<div class="observer-tile" [ngClass]="{'selected': observer.isSelected,'cursor-pointer': selectionEnabled}" (click)="toggleSelectedState()">
+<div
+  class="observer-tile"
+  [ngClass]="{
+    selected: observer.isSelected,
+    'cursor-pointer': selectionEnabled
+  }"
+  (click)="toggleSelectedState()"
+>
   <div class="content">
     <div class="check-icon-container" *ngIf="selectionEnabled">
       <i class="fa fa-check check-icon"></i>
@@ -6,35 +13,61 @@
 
     <div class="card-header">
       <div class="card-header-contents">
-        <span class="observe-name">{{observer.name}}</span>
+        <span class="observe-name">{{ observer.name }}</span>
       </div>
     </div>
     <div class="card-content">
       <div class="card-row">
-        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-        <div class="phone-number">{{observer.phone}}</div>
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-telephone-fill"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z"
+          />
+        </svg>
+        <div class="phone-number">{{ observer.phone }}</div>
       </div>
     </div>
     <div class="card-footer">
       <div>
-        <div class="card-footer-header">
-          Last login
-        </div>
+        <div class="card-footer-header">Last login</div>
         <div class="card-footer-details">
-          {{observer.lastSeen | date:'shortTime'}}
+          {{ observer.lastSeen | date: "shortTime" }}
         </div>
       </div>
       <div *ngIf="enableEdit">
         <div class="btn-group dropup pull-right">
-          <button type="button" class="btn btn-default" [routerLink]="['profil/edit/', observer.phone]">Edit</button>
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+          <button
+            type="button"
+            class="btn btn-default"
+            [routerLink]="['profil/edit/', observer.phone]"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li class="cursor-pointer"><a (click)="deleteObserver()">Delete</a></li>
-            <li class="cursor-pointer"><a (click)="openResetPasswordModal()">{{'RESET_PASSWORD'| translate}}</a>
+            <li class="cursor-pointer">
+              <a (click)="deleteObserver()">Delete</a>
+            </li>
+            <li class="cursor-pointer">
+              <a (click)="openResetPasswordModal()">{{
+                "RESET_PASSWORD" | translate
+              }}</a>
             </li>
           </ul>
         </div>

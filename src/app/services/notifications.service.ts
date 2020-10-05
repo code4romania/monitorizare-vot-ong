@@ -1,40 +1,55 @@
-
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 import { Observable } from 'rxjs';
-import {GlobalNotificationModel, NotificationModel} from '../models/notification.model';
-import { environment } from 'environments/environment';
+import {
+  GlobalNotificationModel,
+  NotificationModel,
+} from '../models/notification.model';
+import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
-import {Observer} from '../models/observer.model';
+import { Observer } from '../models/observer.model';
 
 @Injectable()
 export class NotificationsService {
   private baseUrl: string;
-
 
   constructor(private http: ApiService) {
     this.baseUrl = environment.apiUrl;
   }
 
   public pushNotification(notification: NotificationModel): Observable<any> {
-    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send');
+    const url: string = Location.joinWithSlash(
+      this.baseUrl,
+      '/api/v1/notification/send'
+    );
     return this.http.post(url, notification).pipe(take(1));
   }
 
-  public pushNotificationGlobally(notification: GlobalNotificationModel): Observable<any> {
-    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send/all');
+  public pushNotificationGlobally(
+    notification: GlobalNotificationModel
+  ): Observable<any> {
+    const url: string = Location.joinWithSlash(
+      this.baseUrl,
+      '/api/v1/notification/send/all'
+    );
     return this.http.post(url, notification).pipe(take(1));
   }
 
   public getCounties(): Observable<CountyPollingStationInfo[]> {
-    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/polling-station');
+    const url: string = Location.joinWithSlash(
+      this.baseUrl,
+      '/api/v1/polling-station'
+    );
     return this.http.get<CountyPollingStationInfo[]>(url).pipe(take(1));
   }
 
-  public getActiveObserversInCounties(counties: string[], fromPollingStationNumber: number, toPollingStationNumber: number): Observable<Observer[]> {
-    const urlWithParams = QueryParamBuilder
-      .Instance('/api/v1/observer/active')
+  public getActiveObserversInCounties(
+    counties: string[],
+    fromPollingStationNumber: number,
+    toPollingStationNumber: number
+  ): Observable<Observer[]> {
+    const urlWithParams = QueryParamBuilder.Instance('/api/v1/observer/active')
       .withParam('countyCodes', counties)
       .withParam('fromPollingStationNumber', fromPollingStationNumber)
       .withParam('toPollingStationNumber', toPollingStationNumber)
@@ -52,4 +67,3 @@ export interface CountyPollingStationInfo {
   code: string;
   limit: number;
 }
-

@@ -1,4 +1,4 @@
-@import '~variables.scss';
+@import "../../../../variables";
 
 .cell-text {
   margin-bottom: 10px;
@@ -9,7 +9,7 @@
     margin-left: 10px;
   }
 
-  &.phone-number{
-      color: $color-secondary;
+  &.phone-number {
+    color: $secondary;
   }
 }

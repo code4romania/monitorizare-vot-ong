@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { NotificationsService, CountyPollingStationInfo } from '../../services/notifications.service';
+import {
+  NotificationsService,
+  CountyPollingStationInfo,
+} from '../../services/notifications.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import {GlobalNotificationModel, NotificationModel} from '../../models/notification.model';
-import { Observer } from 'app/models/observer.model';
+import {
+  GlobalNotificationModel,
+  NotificationModel,
+} from '../../models/notification.model';
+import { Observer } from '../../models/observer.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+  styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
   notificationTitle: string;
@@ -18,18 +23,21 @@ export class NotificationsComponent implements OnInit {
   pollingStations = [];
   pollingStationFrom = [];
   pollingStationTo = [];
-  selectedCounties: { code: string, name: string }[] = [];
+  selectedCounties: { code: string; name: string }[] = [];
   dropdownSettings: IDropdownSettings = {};
   countyDropdownSettings: IDropdownSettings = {};
   itemsShowLimit = 10;
   filteredObservers: Observer[] = [];
 
-  constructor(private notificationsService: NotificationsService,
-    private translate: TranslateService) {
-  }
+  constructor(
+    private notificationsService: NotificationsService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
-    this.notificationsService.getCounties().subscribe(res => this.counties = res);
+    this.notificationsService
+      .getCounties()
+      .subscribe((res) => (this.counties = res));
 
     this.countyDropdownSettings = {
       singleSelection: true,
@@ -37,13 +45,13 @@ export class NotificationsComponent implements OnInit {
       textField: 'name',
       itemsShowLimit: this.itemsShowLimit,
       allowSearchFilter: true,
-      closeDropDownOnSelection: true
+      closeDropDownOnSelection: true,
     };
     this.dropdownSettings = {
       singleSelection: true,
       itemsShowLimit: this.itemsShowLimit,
       allowSearchFilter: true,
-      closeDropDownOnSelection: true
+      closeDropDownOnSelection: true,
     };
   }
 
@@ -57,11 +65,13 @@ export class NotificationsComponent implements OnInit {
     const notification: NotificationModel = this.createNotification();
 
     if (this.isValid(notification)) {
-      const message = this.translate.instant("NOTIFICATION_SEND_CONFIRMATION");
-      if (!confirm(message.replace('%d',this.selectedObserversIds.length))) {
+      const message = this.translate.instant('NOTIFICATION_SEND_CONFIRMATION');
+      if (!confirm(message.replace('%d', this.selectedObserversIds.length))) {
         return;
       }
-      this.notificationsService.pushNotification(notification).subscribe(x => console.log(x));
+      this.notificationsService
+        .pushNotification(notification)
+        .subscribe((x) => console.log(x));
     } else {
       alert('Not all fields have been completed');
     }
@@ -71,7 +81,9 @@ export class NotificationsComponent implements OnInit {
     const notification: GlobalNotificationModel = this.createGlobalNotification();
 
     if (this.isValidGlobally(notification)) {
-      this.notificationsService.pushNotificationGlobally(notification).subscribe(x => console.log(x));
+      this.notificationsService
+        .pushNotificationGlobally(notification)
+        .subscribe((x) => console.log(x));
     } else {
       alert('Not all fields have been completed');
     }
@@ -119,7 +131,7 @@ export class NotificationsComponent implements OnInit {
       from: 'Monitorizare Vot',
       message: this.message,
       title: this.notificationTitle,
-      recipients: this.selectedObserversIds
+      recipients: this.selectedObserversIds,
     };
   }
 
@@ -128,7 +140,7 @@ export class NotificationsComponent implements OnInit {
       channel: 'Firebase',
       from: 'Monitorizare Vot',
       message: this.message,
-      title: this.notificationTitle
+      title: this.notificationTitle,
     };
   }
 
@@ -136,7 +148,9 @@ export class NotificationsComponent implements OnInit {
     this.pollingStations = [];
     if (this.selectedCounties && this.selectedCounties.length > 0) {
       const selectedCounty: any = this.selectedCounties[0];
-      const countyDetails: CountyPollingStationInfo = this.counties.find(x => x.code === selectedCounty.code);
+      const countyDetails: CountyPollingStationInfo = this.counties.find(
+        (x) => x.code === selectedCounty.code
+      );
       if (countyDetails) {
         for (let i = 1; i <= countyDetails.limit; i++) {
           this.pollingStations.push(i);
@@ -154,9 +168,15 @@ export class NotificationsComponent implements OnInit {
     const to = this.pollingStationTo[0];
     const from = this.pollingStationFrom[0];
 
-    this.notificationsService.getActiveObserversInCounties(this.selectedCounties.map(x => x.code), from, to).subscribe(res => {
-      this.filteredObservers = res;
-    });
+    this.notificationsService
+      .getActiveObserversInCounties(
+        this.selectedCounties.map((x) => x.code),
+        from,
+        to
+      )
+      .subscribe((res) => {
+        this.filteredObservers = res;
+      });
   }
 
   selectedObserversIds: string[] = [];
@@ -164,16 +184,17 @@ export class NotificationsComponent implements OnInit {
   onObserverSelect(selectedObserver: Partial<Observer>) {
     if (selectedObserver.isSelected) {
       this.selectedObserversIds.push(selectedObserver.id);
-    }
-    else {
-      const index = this.selectedObserversIds.findIndex((observerId) => observerId === selectedObserver.id);
+    } else {
+      const index = this.selectedObserversIds.findIndex(
+        (observerId) => observerId === selectedObserver.id
+      );
       this.selectedObserversIds.splice(index, 1);
     }
   }
 
   selectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x => {
+    this.filteredObservers.forEach((x) => {
       x.isSelected = true;
       this.selectedObserversIds.push(x.id);
     });
@@ -181,10 +202,9 @@ export class NotificationsComponent implements OnInit {
 
   deselectAll() {
     this.selectedObserversIds = [];
-    this.filteredObservers.forEach(x => {
+    this.filteredObservers.forEach((x) => {
       x.isSelected = false;
     });
-
   }
   resetFilter() {
     this.pollingStationFrom = [];
@@ -192,4 +212,3 @@ export class NotificationsComponent implements OnInit {
     this.selectedCounties = [];
   }
 }
-
