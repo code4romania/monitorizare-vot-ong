@@ -10,7 +10,7 @@ import { ApiService } from '../../core/apiService/api.service';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { LabelValueModel } from '../../models/labelValue.model';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 @Injectable()
 export class StatisticsEffects {

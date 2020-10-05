@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { NotificationsService, CountyPollingStationInfo } from '../../services/notifications.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {GlobalNotificationModel, NotificationModel} from '../../models/notification.model';
-import { Observer } from 'app/models/observer.model';
+import { Observer } from '../../models/observer.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

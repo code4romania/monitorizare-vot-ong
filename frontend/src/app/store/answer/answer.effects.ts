@@ -23,12 +23,12 @@ import {
   LoadAnswerPreviewErorrAction
 } from './answer.actions';
 import { HttpParams } from '@angular/common/http';
-import { AnswerFilters } from 'app/models/answer.filters.model';
+import { AnswerFilters } from '../../models/answer.filters.model';
 import {isNil} from 'lodash';
 import { Injectable } from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import { AnswerThread } from '../../models/answer.thread.model';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 
 @Injectable()

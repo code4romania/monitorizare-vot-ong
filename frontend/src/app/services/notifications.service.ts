@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 import { Observable } from 'rxjs';
 import {GlobalNotificationModel, NotificationModel} from '../models/notification.model';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { Location } from '@angular/common';
 import {Observer} from '../models/observer.model';
 

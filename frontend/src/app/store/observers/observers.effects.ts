@@ -21,7 +21,7 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Observer } from '../../models/observer.model';
 import { Location } from '@angular/common';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ObserversEffects {

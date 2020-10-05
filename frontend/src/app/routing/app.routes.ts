@@ -11,8 +11,8 @@ import { HomeGuard } from './guards/home.guard';
 import { StatisticsComponent } from '..//components/statistics/statistics.component';
 import { AnswerComponent } from '..//components/answer/answer.component';
 import { Routes } from '@angular/router';
-import { ObserverProfileComponent } from 'app/components/observers/observer-profile/observer-profile.component';
-import { NotificationsComponent } from 'app/components/notifications/notifications.component';
+import { ObserverProfileComponent } from '../components/observers/observer-profile/observer-profile.component';
+import { NotificationsComponent } from '../components/notifications/notifications.component';
 import {FormsComponent} from '../components/forms/forms.component';
 import {FormCreateComponent} from '../components/forms/form-create/form-create.component';
 

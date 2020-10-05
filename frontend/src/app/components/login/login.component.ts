@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../core/apiService/api.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
     templateUrl: './login.component.html',
