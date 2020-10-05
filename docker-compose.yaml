@@ -2,7 +2,8 @@ version: "2.4"
 
 services:
   frontend:
-    build: .
-    ports: 
+    image: node:14
+    working_dir: /app
+    ports:
       - "4200:4200"
-    command: ng serve --host 0.0.0.0
+    command: yarn && npm start -- --host 0.0.0.0

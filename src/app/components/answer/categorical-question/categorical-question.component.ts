@@ -1,19 +1,18 @@
-import {environment} from '../../../../environments/environment';
-import {Note} from '../../../models/note.model';
-import {BaseAnswer} from '../../../models/base.answer.model';
-import {CompletedAnswer} from '../../../models/completed.answer.model';
-import {FormQuestion} from '../../../models/form.question.model';
+import { environment } from 'src/environments/environment';
+import { Note } from '../../../models/note.model';
+import { BaseAnswer } from '../../../models/base.answer.model';
+import { CompletedAnswer } from '../../../models/completed.answer.model';
+import { FormQuestion } from '../../../models/form.question.model';
 
-import {keyBy, reject, some, values} from 'lodash';
-import {Component, Input, OnInit} from '@angular/core';
+import { keyBy, reject, some, values } from 'lodash';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-categorical-question',
   templateUrl: './categorical-question.component.html',
-  styleUrls: ['./categorical-question.component.scss']
+  styleUrls: ['./categorical-question.component.scss'],
 })
 export class CategoricalQuestionComponent implements OnInit {
-
   @Input() question: FormQuestion;
 
   @Input('completedAnswers')
@@ -23,7 +22,7 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = keyBy(value, v => v.idOption);
+      this.completedAnswers = keyBy(value, (v) => v.idOption);
     } else {
       this.completedAnswers = undefined;
     }
@@ -35,34 +34,35 @@ export class CategoricalQuestionComponent implements OnInit {
 
   showNotes = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
-
-
+  ngOnInit() {}
 
   validateSingleQuestion(answers: CompletedAnswer[]) {
     try {
       if (this.isSingle && answers && answers.length > 1) {
         console.log(`Multiple answers on question with id ${this.question.id}`);
       }
-    } catch (ex) { }
+    } catch (ex) {}
   }
   validateTextQuestion(answers: CompletedAnswer[]) {
     try {
-      if (this.isTextQuestion && answers && reject(answers, a => a.isFreeText || !!a.value).length > 1) {
-        console.log(`Multiple text answers on question with id ${this.question.id}`);
+      if (
+        this.isTextQuestion &&
+        answers &&
+        reject(answers, (a) => a.isFreeText || !!a.value).length > 1
+      ) {
+        console.log(
+          `Multiple text answers on question with id ${this.question.id}`
+        );
       }
-    } catch (ex) { }
-
+    } catch (ex) {}
   }
   get hasNotes() {
     return this.notes && this.notes.length;
   }
   get isFlagged() {
-    return some(values(this.completedAnswers), a => a.flagged);
+    return some(values(this.completedAnswers), (a) => a.flagged);
   }
 
   get isTextQuestion() {
@@ -80,16 +80,17 @@ export class CategoricalQuestionComponent implements OnInit {
   }
 
   isFlaggedAnswer(answer: BaseAnswer) {
-    return some(values(this.completedAnswers), a => a.flagged && a.idOption === answer.idOption);
+    return some(
+      values(this.completedAnswers),
+      (a) => a.flagged && a.idOption === answer.idOption
+    );
   }
 
   answerTextValue(answer: BaseAnswer) {
-    return this.completedAnswers && this.completedAnswers[answer.idOption] && this.completedAnswers[answer.idOption].value;
+    return (
+      this.completedAnswers &&
+      this.completedAnswers[answer.idOption] &&
+      this.completedAnswers[answer.idOption].value
+    );
   }
-
-
-
-
-
-
 }

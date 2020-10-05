@@ -1,6 +1,6 @@
-@import '~variables.scss';
+@import "../../../../variables";
 .card-header {
-  background: $color-light-gray;
+  background: $gray;
   padding: 10px 25px;
   height: 100px;
   display: flex;
@@ -10,7 +10,7 @@
 }
 .card-row {
   &:nth-child(2n) {
-    background: $color-light-gray;
+    background: $gray;
   }
 }
 .card-footer {

@@ -1,19 +1,17 @@
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  get observerGuideUrl(){
+  get observerGuideUrl() {
     return environment.observerGuideUrl;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

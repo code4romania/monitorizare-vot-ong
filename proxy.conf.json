@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://mv-mobile-test.azurewebsites.net/",
+    "target": "http://api.votemonitor.org/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
