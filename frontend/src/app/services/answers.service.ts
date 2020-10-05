@@ -1,7 +1,7 @@
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { ApiService, QueryParamBuilder } from 'app/core/apiService/api.service';
+import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 
 @Injectable()
 export class AnswersService {

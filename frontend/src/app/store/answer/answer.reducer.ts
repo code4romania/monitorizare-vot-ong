@@ -4,7 +4,7 @@ import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import { AnswerActions, AnswerActionTypes } from './answer.actions';
-import { AnswerFilters } from 'app/models/answer.filters.model';
+import { AnswerFilters } from '../../models/answer.filters.model';
 export class AnswerState {
     threads: AnswerThread[] = [];
     urgent: boolean = undefined;

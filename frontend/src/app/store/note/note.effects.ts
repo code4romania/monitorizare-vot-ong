@@ -5,7 +5,7 @@ import { LoadNotesAction, LoadNotesDoneAction, NoteActionTypes } from './note.ac
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 
 @Injectable()

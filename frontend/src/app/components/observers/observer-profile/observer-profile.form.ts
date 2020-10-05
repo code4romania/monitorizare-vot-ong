@@ -1,5 +1,5 @@
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Observer} from 'app/models/observer.model';
+import {Observer} from '../../../models/observer.model';
 
 export class ObserverProfileForm extends FormGroup {
   constructor() {

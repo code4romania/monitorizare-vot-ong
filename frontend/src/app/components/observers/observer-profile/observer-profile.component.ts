@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ObserverProfileForm} from './observer-profile.form';
-import {ObserversService} from 'app/services/observers.service';
+import {ObserversService} from '../../../services/observers.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageState} from 'app/models/page-state.model';
+import {PageState} from '../../../models/page-state.model';
 import {Observer} from '../../../models/observer.model';
 import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserverProfileUploadForm} from './observers-profile-upload.form';
-import { ApiListResponse } from 'app/models/api-list-response.model';
+import { ApiListResponse } from '../../../models/api-list-response.model';
 
 @Component({
   selector: 'app-observer-profile',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from 'app/core/apiService/api.service';
+import { ApiService } from '../core/apiService/api.service';
 import { Observer } from '../models/observer.model';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { Location } from '@angular/common';
 
 @Injectable()
