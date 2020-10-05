@@ -27,6 +27,7 @@ export class AnswerComponent implements OnInit {
     isUrgent: boolean;
     fromTime: string;
     toTime: string;
+    isLoading: boolean;
 
     constructor(private store: Store<AppState>,
                 private answersService: AnswersService,
@@ -115,8 +116,12 @@ export class AnswerComponent implements OnInit {
             filter.to = this.toTime;
         }
 
+        this.isLoading = true;
         return this.answersService.downloadAnswers(filter).subscribe(res => {
+          this.isLoading = false;
             FileSaver.saveAs(res, 'answsers.xlsx');
+        }, error => {
+          this.isLoading = false;
         });
     }
 
