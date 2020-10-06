@@ -9,6 +9,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 @NgModule({
     imports: [
       FormsModule,
@@ -32,7 +33,12 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
         TranslateModule,
         IconToggleInputComponent
     ],
-    declarations: [PaginationComponent, LoadingIndicatorComponent, ErrorIndicatorComponent, IconToggleInputComponent],
+    declarations: [
+      PaginationComponent,
+      LoadingIndicatorComponent,
+      ErrorIndicatorComponent,
+      IconToggleInputComponent,
+      ConfirmationModalComponent],
     providers: []
 })
 export class SharedModule {

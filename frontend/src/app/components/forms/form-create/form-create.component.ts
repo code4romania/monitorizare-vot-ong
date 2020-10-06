@@ -13,6 +13,8 @@ import {moveItemInFormArray} from '../../utils';
 import {initFormFormGroup, initOptionFormGroup, initQuestionFormGroup, initSectionFormGroup} from '../form-groups-builder';
 import {FormQuestion} from '../../../models/form.question.model';
 import {BaseAnswer} from '../../../models/base.answer.model';
+import { ConfirmationModalComponent } from 'app/shared/confirmation-modal/confirmation-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-form-create',
@@ -32,7 +34,8 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   constructor(private location: Location,
               private store: Store<AppState>,
               private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private modalService: BsModalService) { }
 
   ngOnInit() {
     this.formDetailsFormGroup = initFormFormGroup(this.formBuilder);
@@ -133,7 +136,16 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   }
 
   onSectionDelete(index: number) {
-    this.sectionsArray.removeAt(index);
+    this.modalService.show(ConfirmationModalComponent, {
+      initialState: {
+        prompt: 'Are you sure you want to delete this record?',
+        callback: (result) => {
+          if (result === 'yes') {
+            this.sectionsArray.removeAt(index);
+          }
+        },
+      },
+    });
   }
 
   ngOnDestroy(): void {
