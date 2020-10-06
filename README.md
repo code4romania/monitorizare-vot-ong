@@ -20,13 +20,13 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
-If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
+If you would like to suggest new functionality, open an Issue and mark it as a **[Feature request]**. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
 Also, this is [the workflow we follow](.github/WORKFLOW.md).
 
 ## Built With
 
-Angular 8.2.14
+Angular 9
 
 Typescript 3.5.3
 
@@ -44,11 +44,13 @@ MV related repos:
 
 ## Deployment
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.21.
+This project was generated with [angular-cli](https://github.com/angular/angular-cli).
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Run `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA. Run `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod. If you also have the backend app running locally, you can run `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+Run `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA. Run `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod. If you also have the backend app running locally, you can run `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
 
 ### Code scaffolding
 
@@ -73,10 +75,10 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Feedback
 
-* Request a new feature on GitHub.
-* Vote for popular feature requests.
-* File a bug in GitHub Issues.
-* Email us with other feedback contact@code4.ro
+- Request a new feature on GitHub.
+- Vote for popular feature requests.
+- File a bug in GitHub Issues.
+- Email us with other feedback contact@code4.ro
 
 ## License
 

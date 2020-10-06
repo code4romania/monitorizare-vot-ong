@@ -1,0 +1,52 @@
+
+<div class="col-md-12 question-component">
+  <div class="field icon-holder" (click)="toggleOptions()">
+    <span *ngIf="hideOptions">
+      &#9654;
+    </span>
+    <span *ngIf="!hideOptions">
+      &#9660;
+    </span>
+  </div>
+
+  <div class="expandable-container">
+    <form [formGroup]="questionFormGroup">
+      <div class="main-fields-container">
+        <div class="field col-md-2">
+          <input class="form-control" formControlName="code" placeholder="{{'QUESTION_CODE' | translate}}">
+        </div>
+        <div class="field col-md-6">
+          <input class="form-control" formControlName="text" placeholder="{{'QUESTION_TEXT' | translate}}">
+        </div>
+        <div class="field col-md-2">
+          <select class="form-control" formControlName="questionType">
+            <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name}}</option>
+          </select>
+        </div>
+        <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">
+          <img src="/assets/forms/icon-delete.png" alt="">
+        </div>
+      </div>
+    </form>
+
+    <div [hidden]="hideOptions" class="options-panel">
+
+      <div cdkDropList
+           class="options-list"
+           (cdkDropListDropped)="onReorder($event)">
+        <div *ngFor="let option of optionFormGroupsArray; let i = index" cdkDrag class="option-line">
+          <app-option [optionFormGroup]="option"
+                      (optionDeleteEventEmitter)="onOptionDelete(i)"
+                      class="option">
+          </app-option>
+
+          <div class="icon-holder icon-reorder" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 add-option-button" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
+    </div>
+  </div>
+</div>

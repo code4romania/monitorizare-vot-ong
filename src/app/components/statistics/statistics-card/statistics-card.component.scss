@@ -1,0 +1,22 @@
+@import "../../../../variables";
+.card-header {
+  background: $gray;
+  padding: 10px 25px;
+  height: 100px;
+  display: flex;
+}
+.card-header-contents {
+  margin: auto 0;
+}
+.card-row {
+  &:nth-child(2n) {
+    background: $gray;
+  }
+}
+.card-footer {
+  padding: 10px 25px;
+  a {
+    text-decoration: underline;
+    color: blue;
+  }
+}

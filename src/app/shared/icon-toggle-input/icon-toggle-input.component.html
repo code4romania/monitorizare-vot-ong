@@ -1,0 +1,4 @@
+<div (click)="toggleValue()">
+  <img [src]="disabledIcon" *ngIf="!value" alt="">
+  <img [src]="enabledIcon" *ngIf="value" alt="">
+</div>

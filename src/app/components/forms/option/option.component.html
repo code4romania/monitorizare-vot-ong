@@ -1,0 +1,18 @@
+<form [formGroup]="optionFormGroup">
+
+  <div class="col-md-8 option-container">
+      <input type="text" class="form-control" placeholder="" formControlName="text">
+
+      <div class="icon-holder">
+        <app-icon-toggle-input enabledIcon="/assets/forms/icon-text-enabled.png"
+                               disabledIcon="/assets/forms/icon-text-disabled.png"
+                               formControlName="isFreeText">
+        </app-icon-toggle-input>
+      </div>
+
+      <div class="icon-holder" (click)="optionDeleteEventEmitter.emit()">
+        <img src="/assets/forms/icon-delete.png" alt="">
+      </div>
+  </div>
+</form>
+
