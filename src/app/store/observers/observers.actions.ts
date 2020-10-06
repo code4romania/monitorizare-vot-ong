@@ -1,4 +1,3 @@
-import { LabelValueModel } from '../../models/labelValue.model';
 import { Action } from '@ngrx/store';
 import { actionType } from '../util';
 import { Observer } from '../../models/observer.model';

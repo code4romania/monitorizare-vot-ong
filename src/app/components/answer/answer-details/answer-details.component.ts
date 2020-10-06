@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { FormState } from '../../../store/form/form.reducer';
 import { AnswerState } from '../../../store/answer/answer.reducer';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+import { map } from 'lodash';
 import { CompletedQuestion } from '../../../models/completed.question.model';
 import { FormDetails } from '../../../models/form.info.model';
 import { FullyLoadFormAction } from '../../../store/form/form.actions';
@@ -87,7 +87,7 @@ export class AnswerDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    _.map(this.subs, (sub) => sub.unsubscribe());
+    map(this.subs, (sub) => sub.unsubscribe());
   }
 
   retry() {

@@ -31,16 +31,16 @@
             {{ form.description }}
           </td>
           <td>
-            <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora">
+            <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora" alt="">
           </td>
           <td>
-            <img src="/assets/forms/diaspora-check.png" *ngIf="form.draft">
+            <img src="/assets/forms/diaspora-check.png" *ngIf="form.draft" alt="">
           </td>
           <td>
             <div class="dropdown">
               <button class="btn btn-secondary" type="button" [routerLink]="[form.id]">{{'EDIT' | translate}}</button>
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="/assets/forms/down.png">
+                <img src="/assets/forms/down.png" alt="">
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" (click)="deleteForm(form)">{{'DELETE' | translate}}</a>

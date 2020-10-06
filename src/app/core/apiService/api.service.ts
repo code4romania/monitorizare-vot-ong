@@ -1,12 +1,11 @@
+import { throwError as observableThrowError, Observable } from 'rxjs';
 
-import {throwError as observableThrowError, Observable} from 'rxjs';
-
-import {catchError} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {TokenService} from '../token/token.service';
-import {Injectable} from '@angular/core';
-import * as _ from 'lodash';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { TokenService } from '../token/token.service';
+import { Injectable } from '@angular/core';
+import { each } from 'lodash';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export interface HttpOptions {
   body?: any;
@@ -30,19 +29,20 @@ export const HttpMethod = {
 
 export class QueryParamBuilder {
   private params: string[] = [];
-  private constructor(private methodUrl: string) {
-  }
+  private constructor(private methodUrl: string) {}
 
   public static Instance(methodUrl: string): QueryParamBuilder {
     return new QueryParamBuilder(methodUrl);
   }
 
-  public withParam(paramName: string, value: number | boolean | string | string[]): QueryParamBuilder {
+  public withParam(
+    paramName: string,
+    value: number | boolean | string | string[]
+  ): QueryParamBuilder {
     if (value instanceof Array) {
-      value.forEach(x => {
+      value.forEach((x) => {
         this.params.push(`${paramName}=${x}`);
       });
-
     } else {
       this.params.push(`${paramName}=${value}`);
     }
@@ -57,23 +57,39 @@ export class QueryParamBuilder {
 
 @Injectable()
 export class ApiService {
+  constructor(
+    private httpClient: HttpClient,
+    private tokenService: TokenService,
+    private router: Router
+  ) {}
 
-  constructor(private httpClient: HttpClient, private tokenService: TokenService, private router: Router) {
+  private request<T>(
+    url: string,
+    method: string,
+    options?: HttpOptions
+  ): Observable<T> {
+    options.headers = options.headers.append(
+      'Authorization',
+      `Bearer ${this.tokenService.token}`
+    );
+
+    return this.httpClient.request<T>(method, url, options).pipe(
+      catchError((err: any) => {
+        if (err.status === 401) {
+          this.tokenService.token = undefined;
+          this.router.navigateByUrl('/login');
+        }
+        return observableThrowError(err);
+      })
+    );
   }
 
-  private request<T>(url: string, method: string, options?: HttpOptions): Observable<T> {
-    options.headers = options.headers.append('Authorization', `Bearer ${this.tokenService.token}`);
-
-    return this.httpClient.request<T>(method, url, options).pipe(catchError((err: any) => {
-      if (err.status === 401) {
-        this.tokenService.token = undefined;
-        this.router.navigateByUrl('/login');
-      }
-      return observableThrowError(err);
-    }));
-  }
-
-  private normalizeRequest<T>(url: string, method: string, options?: HttpOptions, body?: any): Observable<T> {
+  private normalizeRequest<T>(
+    url: string,
+    method: string,
+    options?: HttpOptions,
+    body?: any
+  ): Observable<T> {
     const requestOptions = options || {};
     requestOptions.headers = requestOptions.headers || new HttpHeaders();
     requestOptions.responseType = requestOptions.responseType || 'json';
@@ -86,9 +102,7 @@ export class ApiService {
   get<T>(url: string, options?: HttpOptions): Observable<T> {
     if (options && options.body && !options.params) {
       let params = new HttpParams();
-      _.each(options.body, (value, key) => (
-        params = params.append(key, value)
-      ));
+      each(options.body, (value, key) => (params = params.append(key, value)));
       options.params = params;
     }
     return this.normalizeRequest(url, HttpMethod.GET, options);
@@ -99,15 +113,19 @@ export class ApiService {
   }
 
   untypedPost(url: string, body: any): Observable<string> {
-    return this.httpClient.post(url, body, {
-      responseType: 'text'
-    }).pipe(catchError((err: any) => {
-      if (err.status === 401) {
-        this.tokenService.token = undefined;
-        this.router.navigateByUrl('/login');
-      }
-      return observableThrowError(err);
-    }));
+    return this.httpClient
+      .post(url, body, {
+        responseType: 'text',
+      })
+      .pipe(
+        catchError((err: any) => {
+          if (err.status === 401) {
+            this.tokenService.token = undefined;
+            this.router.navigateByUrl('/login');
+          }
+          return observableThrowError(err);
+        })
+      );
   }
 
   put<T>(url: string, body: any, options?: HttpOptions): Observable<T> {

@@ -1,4 +1,4 @@
-import { of as observableOf, Observable } from 'rxjs';
+import { of as observableOf} from 'rxjs';
 
 import {
   mapTo,
@@ -20,7 +20,6 @@ import {
   LoadObserversCompleteAction,
   LoadObserversErrorAction,
   ObserversActions,
-  LoadObserversCountAction,
   LoadObserversCountCompleteAction,
 } from './observers.actions';
 import { ApiService } from '../../core/apiService/api.service';
