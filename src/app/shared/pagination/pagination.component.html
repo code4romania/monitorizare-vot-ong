@@ -1,20 +1,12 @@
-<div class="row text-center">
-  <div
-    class="col-4 pointer"
-    (click)="prevPage()"
-    [class.disabled]="!canPrevPage()"
-  >
+<div class="container-fluid row text-center mt-5">
+  <div class="col-4" (click)="prevPage()" [class.text-muted]="!canPrevPage()">
     <span> Newer </span>
   </div>
   <div class="col-4">
-    <span>{{ startingindex }}-{{ endingIndex }}</span>
+    <span>{{ startingindex }}-{{ endingIndex }} </span>
     <span *ngIf="totalItems !== undefined"> din {{ totalItems }}</span>
   </div>
-  <div
-    class="col-4 pointer"
-    [class.disabled]="!canNextPage()"
-    (click)="nextPage()"
-  >
+  <div class="col-4" [class.text-muted]="!canNextPage()" (click)="nextPage()">
     <span> Older </span>
   </div>
 </div>

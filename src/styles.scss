@@ -1,13 +1,7 @@
 @import "variables";
-@import "./styles/shared.scss";
 @import "./styles/toastr.scss";
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-
-.nav-tabs > li > a.active {
-  color: $secondary !important;
-  font-weight: bold;
-}
 
 .cursor-pointer {
   cursor: pointer;

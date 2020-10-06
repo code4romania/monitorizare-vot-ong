@@ -1,12 +1,10 @@
 
 import {map} from 'rxjs/operators';
 import { StatisticsStateItem } from '../../store/statistics/statistics.state';
-import { LoadStatisticAction } from '../../store/statistics/statistics.actions';
 import { AppState } from '../../store/store.module';
 import {select, Store} from '@ngrx/store';
-import { LabelValueModel } from '../../models/labelValue.model';
 import { ApiService } from '../../core/apiService/api.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {values} from 'lodash';
 

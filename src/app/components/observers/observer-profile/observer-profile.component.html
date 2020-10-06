@@ -1,89 +1,121 @@
 <div class="container-fluid">
-  <div class="page-title">
-    <span *ngIf="pageState === 'new'">Add observer</span>
-    <span *ngIf="pageState === 'edit'">Edit observer</span>
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4" *ngIf="pageState === 'new'">Add observer</h2>
+      <h2 class="d-inline h4" *ngIf="pageState === 'edit'">Edit observer</h2>
+    </div>
+    <div class="ml-auto">
+      <button class="btn btn-primary" [routerLink]="['/observatori']">
+        Back
+      </button>
+    </div>
+  </div>
 
-    <div class="actions">
-      <button class="btn btn-success back-button" [routerLink]="['/observatori']">Back</button>
+  <div class="card" *ngIf="pageState !== 'new'">
+    <div class="card-body">
+      <h4 class="card-title">{{ observer?.name }}</h4>
+      <p>
+        Last login:
+        {{ observer?.lastSeen ? (observer.lastSeen | date: "short") : "never" }}
+        <br />
+        Device registration date:
+        {{
+          observer?.deviceRegisterDate
+            ? (observer.deviceRegisterDate | date: "short")
+            : "never"
+        }}
+      </p>
+
+      <form novalidate [formGroup]="observerProfileForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            formControlName="name"
+            type="text"
+            id="name"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone number *</label>
+          <input
+            formControlName="phone"
+            type="tel"
+            id="phone"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group" *ngIf="pageState === 'new'">
+          <label for="password">Password *</label>
+          <input
+            formControlName="password"
+            type="password"
+            id="password"
+            class="form-control"
+          />
+        </div>
+        <div *ngIf="pageState !== 'view'" class="d-flex">
+          <div>
+            <button
+              *ngIf="pageState === 'edit'"
+              type="button"
+              class="btn btn-link text-danger"
+              (click)="deleteObserver()"
+            >
+              Delete Account
+            </button>
+          </div>
+          <div class="ml-auto">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [routerLink]="['/observatori']"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary ml-2"
+              [disabled]="observerProfileForm.invalid"
+              (click)="saveObserver()"
+            >
+              <span *ngIf="pageState === 'new'">Add observer</span>
+              <span *ngIf="pageState === 'edit'">Save changes</span>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="profile-panel">
-        <div *ngIf="pageState !== 'new'" class="profile-header">
-          <h4 class="observer-name">{{ observer?.name }} </h4>
-          <p class="last-login">Last login: {{ observer?.lastSeen ? (observer.lastSeen | date:'short'): 'never' }}</p>
-          <p class="last-login">Device registration date: {{ observer?.deviceRegisterDate? (observer.deviceRegisterDate| date:'short' ): 'never' }}</p>
+
+  <div class="card" *ngIf="pageState === 'new'">
+    <div class="card-body">
+      <h4 class="card-title">Import observers</h4>
+      <form
+        novalidate
+        [formGroup]="observerProfileUploadForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-group">
+          <label for="idNgo">ID Ngo</label>
+          <input
+            formControlName="ongId"
+            id="idNgo"
+            type="text"
+            class="form-control"
+          />
         </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <form novalidate [formGroup]="observerProfileForm">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label>Name</label>
-                    <input
-                      formControlName="name"
-                      type="text"
-                      class="form-control"
-                    >
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label>Phone number *</label>
-                    <input
-                      formControlName="phone"
-                      type="tel"
-                      class="form-control"
-                    >
-                  </div>
-                  <div class="form-group" *ngIf="pageState === 'new'">
-                    <label>Password *</label>
-                    <input
-                      formControlName="password"
-                      type="password"
-                      class="form-control"
-                    >
-                  </div>
-                </div>
-              </div>
-              <div
-                *ngIf="pageState !== 'view'"
-                class="bottom-buttons-wrapper"
-                [class.move-right]="pageState === 'new'"
-              >
-                <button *ngIf="pageState === 'edit'" type="button" class="btn btn-danger" (click)="deleteObserver()">
-                  Delete Account
-                </button>
-                <div class="right-buttons-wrapper">
-                  <button type="button" class="btn btn-secondary" [routerLink]="['/observatori']">Cancel</button>
-                  <button type="submit" class="btn btn-success" [disabled]="observerProfileForm.invalid"
-                          (click)="saveObserver()">
-                    <span *ngIf="pageState === 'new'">Add observer</span>
-                    <span *ngIf="pageState === 'edit'">Save changes</span>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+        <div class="form-group">
+          <label for="fileSelection">Select file</label>
+          <input
+            type="file"
+            class="form-control"
+            id="fileSelection"
+            (change)="onFileChange($event)"
+          />
         </div>
-      </div>
-    </div>
-    <div class="col-md-6 pull-right" *ngIf="pageState === 'new'">
-      <div class="profile-panel">
-        <h4 class="observer-name">Import observers </h4>
-        <form novalidate [formGroup]="observerProfileUploadForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>ID Ngo</label>
-            <input formControlName="ongId" type="text" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="fileSelection">Select file</label>
-            <input type="file" class="form-control" id="fileSelection" (change)="onFileChange($event)">
-          </div>
-          <button type="submit" class="btn btn-success">Import</button>
-        </form>
-      </div>
+        <button type="submit" class="btn btn-primary">Import</button>
+      </form>
     </div>
   </div>
+</div>

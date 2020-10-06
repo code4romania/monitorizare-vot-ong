@@ -1,70 +1,54 @@
-<div class="container-fluid form-create">
-  <div class="back-button" (click)="onBackPressed()">
-    &#8592; {{ "BACK" | translate }}
-  </div>
-
-  <div class="header-row">
-    <span class="header-text col-md-2">{{ "FORM_EDIT" | translate }}</span>
-    <div class="buttons-pane">
-      <button class="btn-secondary btn" (click)="saveForm()">
-        {{ "FORM_SAVE_DRAFT" | translate }}
-      </button>
-      <button class="btn-primary btn" (click)="saveAndPublishForm()">
-        {{ "FORM_PUBLISH" | translate }}
-      </button>
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4">
+        <span (click)="onBackPressed()">&#8592;</span
+        >{{ "FORM_EDIT" | translate }}
+      </h2>
+    </div>
+    <div class="ml-auto">
+      <div class="btn-group" role="group" aria-label="Sort">
+        <button class="btn-secondary btn" (click)="saveForm()">
+          {{ "FORM_SAVE_DRAFT" | translate }}
+        </button>
+        <button class="btn-primary btn" (click)="saveAndPublishForm()">
+          {{ "FORM_PUBLISH" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-body">
       <form [formGroup]="formDetailsFormGroup">
-        <div class="col-md-6">
-          <div class="form-labeled-field">
-            <div>
-              <span>{{ "FORM_TITLE" | translate }}</span>
-            </div>
-            <div>
-              <input
-                class="form-control"
-                formControlName="description"
-                placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
-              />
-            </div>
-          </div>
-          <div class="form-labeled-field">
-            <div>
-              <span>{{ "FORM_CODE" | translate }}</span>
-            </div>
-            <div>
-              <input
-                class="form-control"
-                formControlName="code"
-                placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
-              />
-            </div>
-          </div>
-          <div class="form-labeled-field-checkbox">
-            <div class="checkbox-label">
-              <span>{{ "FORM_ONLY_DIASPORA" | translate }}</span>
-            </div>
-            <div class="checkbox-field">
-              <input
-                type="checkbox"
-                class="form-control"
-                formControlName="diaspora"
-              />
-            </div>
-          </div>
+        <div class="form-group">
+          <label for="form-title">{{ "FORM_TITLE" | translate }}</label>
+          <input
+            class="form-control"
+            id="form-title"
+            formControlName="description"
+            placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
+          />
         </div>
-        <div class="col-md-6">
-          <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
-
-          <!--        <div>-->
-          <!--          <span>{{'FORM_DESCRIPTION' | translate}}</span>-->
-          <!--        </div>-->
-          <!--        <div>-->
-          <!--          <textarea rows="4" class="form-control" [(ngModel)]="form.description" placeholder="{{'FORM_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
-          <!--        </div>-->
+        <div class="form-group">
+          <label for="form-cde">{{ "FORM_CODE" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="code"
+            id="form-code"
+            placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
+          />
+        </div>
+        <div class="form-group form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="form-diaspora"
+            formControlName="diaspora"
+          />
+          <label for="form-diaspora" class="form-check-label">{{
+            "FORM_ONLY_DIASPORA" | translate
+          }}</label>
         </div>
       </form>
     </div>
@@ -88,7 +72,7 @@
     </div>
   </div>
 
-  <div class="add-section-button" (click)="addFormSection()">
+  <button class="btn btn-light" (click)="addFormSection()">
     + {{ "SECTION_ADD" | translate }}
-  </div>
+  </button>
 </div>

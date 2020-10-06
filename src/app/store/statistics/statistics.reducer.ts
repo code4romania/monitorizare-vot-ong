@@ -1,8 +1,6 @@
 import { shouldLoadPage } from '../../shared/pagination.service';
-import { LabelValueModel } from '../../models/labelValue.model';
-import { actionType } from '../util';
 import { StatisticsActions, StatisticsActionTypes } from './statistics.actions';
-import { statisticsInitialState, StatisticsState, StatisticsStateItem } from './statistics.state';
+import { statisticsInitialState, StatisticsStateItem } from './statistics.state';
 export function statisticsReducer(state = statisticsInitialState, action: StatisticsActionTypes) {
 
     switch (action.type) {

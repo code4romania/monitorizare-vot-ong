@@ -5,10 +5,7 @@
     }}</span>
 
     <div class="buttons-pane">
-      <button
-        class="btn btn-secondary btn-delete"
-        (click)="sectionDeleteEventEmitter.emit()"
-      >
+      <button class="btn btn-danger" (click)="sectionDeleteEventEmitter.emit()">
         {{ "SECTION_DELETE" | translate }}
       </button>
     </div>
@@ -73,7 +70,7 @@
           </app-question>
 
           <div class="field icon-holder" cdkDragHandle>
-            <img src="/assets/forms/icon-reorder.png" />
+            <img src="/assets/forms/icon-reorder.png" alt="" />
           </div>
         </div>
       </div>

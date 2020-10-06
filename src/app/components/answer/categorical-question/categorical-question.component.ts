@@ -4,7 +4,7 @@ import { BaseAnswer } from '../../../models/base.answer.model';
 import { CompletedAnswer } from '../../../models/completed.answer.model';
 import { FormQuestion } from '../../../models/form.question.model';
 
-import { keyBy, reject, some, values } from 'lodash';
+import { keyBy, reject, some, values, Dictionary } from 'lodash';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -27,7 +27,7 @@ export class CategoricalQuestionComponent implements OnInit {
       this.completedAnswers = undefined;
     }
   }
-  completedAnswers: _.Dictionary<CompletedAnswer> = {};
+  completedAnswers: Dictionary<CompletedAnswer> = {};
 
   @Input()
   notes: Note[];

@@ -1,5 +1,5 @@
 
-import {of as observableOf, from as observableFrom,  Observable, Observer } from 'rxjs';
+import {of as observableOf, from as observableFrom} from 'rxjs';
 
 import {concatMap, map, take} from 'rxjs/operators';
 import { StatisticsStateItem } from '../../store/statistics/statistics.state';

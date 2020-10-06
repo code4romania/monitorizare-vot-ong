@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {BaseAnswer} from '../../../models/base.answer.model';
 import {FormGroup} from '@angular/forms';
 
 @Component({

@@ -1,4 +1,4 @@
-import { of as observableOf, Observable } from 'rxjs';
+import { of as observableOf} from 'rxjs';
 
 import { catchError, map, switchMap, filter } from 'rxjs/operators';
 import {

@@ -51,7 +51,7 @@ export function answerReducer(
           state.threads.length
         );
       const shouldUpdateFilters =
-        Object.keys(action.payload.answerFilters).length > 0 ? true : false;
+        Object.keys(action.payload.answerFilters).length > 0;
 
       let newState = Object.assign({}, state, {
         page: action.payload.page,

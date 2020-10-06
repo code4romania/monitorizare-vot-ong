@@ -1,4 +1,4 @@
-import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/answer/answer.actions';
+import { LoadAnswerDetailsAction} from '../../store/answer/answer.actions';
 import { AppState } from '../../store/store.module';
 import { Store } from '@ngrx/store';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';

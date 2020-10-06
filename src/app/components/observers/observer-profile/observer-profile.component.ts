@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ObserverProfileUploadForm } from './observers-profile-upload.form';
 import { ApiListResponse } from '../../../models/api-list-response.model';
 
 @Component({

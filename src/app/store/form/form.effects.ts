@@ -3,7 +3,6 @@ import {of as observableOf} from 'rxjs';
 import {catchError, map, switchMap, take, tap} from 'rxjs/operators';
 import {
   FormActionTypes,
-  FormClearAll,
   FormDeleteAction,
   FormErrorAction,
   FormLoadAction,
