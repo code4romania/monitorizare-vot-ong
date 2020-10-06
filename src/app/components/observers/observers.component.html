@@ -1,119 +1,118 @@
 <div class="container-fluid">
-  <div class="page-title">
-    <span>Observers</span> &middot; {{ totalCount }} total &middot; Sorted by
-    <a>Last login - Ascending</a>
-    <div class="actions">
-      <button
-        class="btn"
-        [ngClass]="listType === 'CARD' ? 'btn-success' : 'btn-secondary'"
-        (click)="changeListType('CARD')"
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4">Observers</h2>
+      <span class="text-muted"
+        >&middot; {{ totalCount }} total &middot; Sorted by
+        <em>Last login - Ascending</em></span
       >
-        <svg
-          width="1em"
-          height="1em"
-          viewBox="0 0 16 16"
-          class="bi bi-grid-fill"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
+    </div>
+    <div class="ml-auto">
+      <div class="btn-group" role="group" aria-label="Sort">
+        <button
+          class="btn"
+          [ngClass]="listType === 'CARD' ? 'btn-primary' : 'btn-light'"
+          (click)="changeListType('CARD')"
         >
-          <path
-            fill-rule="evenodd"
-            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"
-          />
-        </svg>
-      </button>
-      <button
-        class="btn"
-        [ngClass]="listType === 'LIST' ? 'btn-success' : 'btn-secondary'"
-        (click)="changeListType('LIST')"
-      >
-        <svg
-          width="1em"
-          height="1em"
-          viewBox="0 0 16 16"
-          class="bi bi-list"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
+          <svg
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            class="bi bi-grid-fill"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"
+            />
+          </svg>
+        </button>
+        <button
+          class="btn"
+          [ngClass]="listType === 'LIST' ? 'btn-primary' : 'btn-light'"
+          (click)="changeListType('LIST')"
         >
-          <path
-            fill-rule="evenodd"
-            d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-          />
-        </svg>
-      </button>
-
-      <button class="btn btn-success" [routerLink]="['profil/new']">
-        <svg
-          width="1em"
-          height="1em"
-          viewBox="0 0 16 16"
-          class="bi bi-plus-circle-fill"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-          />
-        </svg>
-        add observer/s
-      </button>
+          <svg
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            class="bi bi-list"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+            />
+          </svg>
+        </button>
+        <button class="btn btn-primary" [routerLink]="['profil/new']">
+          <svg
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            class="bi bi-plus-circle-fill"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+            />
+          </svg>
+          add observer/s
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="card  filters-panel">
+  <div class="card">
     <div class="card-body">
-      <form novalidate [formGroup]="observersFilterForm">
-        <div class="row">
-          <div class="col-sm-2">
-            <div class="form-group">
-              <label for="form-name">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="form-name"
-                class="form-control"
-                formControlName="name"
-              />
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="form-group">
-              <label for="form-county">Phone</label>
-              <input
-                type="text"
-                name="phone"
-                id="form-county"
-                class="form-control"
-                formControlName="phone"
-              />
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="form-group action-buttons">
-              <button
-                class="btn btn-success"
-                [disabled]="observersFilterForm.isEmpty()"
-                (click)="applyFilters()"
-              >
-                filter
-              </button>
-              <button
-                class="btn btn-secondary"
-                [disabled]="observersFilterForm.isEmpty()"
-                (click)="resetFilters()"
-              >
-                reset
-              </button>
-            </div>
+      <form novalidate [formGroup]="observersFilterForm" class="row">
+        <div class="form-group col-auto">
+          <label for="form-name">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="form-name"
+            class="form-control"
+            formControlName="name"
+          />
+        </div>
+        <div class="form-group col-auto">
+          <label for="form-county">Phone</label>
+          <input
+            type="text"
+            name="phone"
+            id="form-county"
+            class="form-control"
+            formControlName="phone"
+          />
+        </div>
+        <div class="col-auto form-group align-self-end">
+          <div class="btn-group" role="group" aria-label="Filter">
+            <button
+              class="btn btn-primary"
+              [disabled]="observersFilterForm.isEmpty()"
+              (click)="applyFilters()"
+            >
+              filter
+            </button>
+            <button
+              class="btn btn-secondary"
+              [disabled]="observersFilterForm.isEmpty()"
+              (click)="resetFilters()"
+            >
+              reset
+            </button>
           </div>
         </div>
       </form>
     </div>
   </div>
-
-  <div class="observer-list" *ngIf="listType === listTypes.CARD">
-    <div class="observer-data" *ngFor="let item of observersList">
+  <div class="row row-cols-6 mt-4" *ngIf="listType === listTypes.CARD">
+    <div class="col" *ngFor="let item of observersList">
       <app-observers-card
         [observer]="item"
         [enableEdit]="true"
@@ -123,29 +122,28 @@
       ></app-observers-card>
     </div>
   </div>
-  <div class="observer-grid" *ngIf="listType === listTypes.LIST">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Last login</th>
-          <th class="text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let observer of observersList"
-          app-oberver-row
-          [observer]="observer"
-          [enableEdit]="true"
-          (onSelect)="onObserverSelect($event)"
-          (onDelete)="onObserverDelete($event)"
-          (onResetPassword)="onObserverResetPassword($event)"
-        ></tr>
-      </tbody>
-    </table>
-  </div>
+
+  <table class="table table-hover" *ngIf="listType === listTypes.LIST">
+    <thead class="thead-light">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Last login</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let observer of observersList"
+        app-oberver-row
+        [observer]="observer"
+        [enableEdit]="true"
+        (onSelect)="onObserverSelect($event)"
+        (onDelete)="onObserverDelete($event)"
+        (onResetPassword)="onObserverResetPassword($event)"
+      ></tr>
+    </tbody>
+  </table>
 
   <ng-template #editObserverModalTemplate>
     <div class="modal-header" data-backdrop="static">

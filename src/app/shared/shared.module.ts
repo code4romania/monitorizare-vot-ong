@@ -5,7 +5,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgbCollapseModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCollapseModule,
+  NgbNavModule,
+  NgbDropdownModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
 @NgModule({
@@ -14,6 +18,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     ReactiveFormsModule,
     CommonModule,
     NgbCollapseModule,
+    NgbDropdownModule,
     NgbNavModule,
     RouterModule,
     TranslateModule,
@@ -24,6 +29,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     CommonModule,
     NgbCollapseModule,
     NgbNavModule,
+    NgbDropdownModule,
     RouterModule,
     PaginationComponent,
     LoadingIndicatorComponent,
