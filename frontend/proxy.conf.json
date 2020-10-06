@@ -1,8 +1,0 @@
-{
-  "/api/*": {
-    "target": "https://mv-mobile-test.azurewebsites.net/",
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}

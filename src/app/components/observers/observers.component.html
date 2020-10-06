@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <span>Observers</span> &middot; {{ totalCount }} total &middot; Sorted by
+    <a>Last login - Ascending</a>
+    <div class="actions">
+      <button
+        class="btn"
+        [ngClass]="listType === 'CARD' ? 'btn-success' : 'btn-secondary'"
+        (click)="changeListType('CARD')"
+      >
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-grid-fill"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"
+          />
+        </svg>
+      </button>
+      <button
+        class="btn"
+        [ngClass]="listType === 'LIST' ? 'btn-success' : 'btn-secondary'"
+        (click)="changeListType('LIST')"
+      >
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-list"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+          />
+        </svg>
+      </button>
+
+      <button class="btn btn-success" [routerLink]="['profil/new']">
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-plus-circle-fill"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+          />
+        </svg>
+        add observer/s
+      </button>
+    </div>
+  </div>
+
+  <div class="card  filters-panel">
+    <div class="card-body">
+      <form novalidate [formGroup]="observersFilterForm">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="form-name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="form-name"
+                class="form-control"
+                formControlName="name"
+              />
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="form-county">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                id="form-county"
+                class="form-control"
+                formControlName="phone"
+              />
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group action-buttons">
+              <button
+                class="btn btn-success"
+                [disabled]="observersFilterForm.isEmpty()"
+                (click)="applyFilters()"
+              >
+                filter
+              </button>
+              <button
+                class="btn btn-secondary"
+                [disabled]="observersFilterForm.isEmpty()"
+                (click)="resetFilters()"
+              >
+                reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="observer-list" *ngIf="listType === listTypes.CARD">
+    <div class="observer-data" *ngFor="let item of observersList">
+      <app-observers-card
+        [observer]="item"
+        [enableEdit]="true"
+        (onSelect)="onObserverSelect($event)"
+        (onDelete)="onObserverDelete($event)"
+        (onResetPassword)="onObserverResetPassword($event)"
+      ></app-observers-card>
+    </div>
+  </div>
+  <div class="observer-grid" *ngIf="listType === listTypes.LIST">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Last login</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let observer of observersList"
+          app-oberver-row
+          [observer]="observer"
+          [enableEdit]="true"
+          (onSelect)="onObserverSelect($event)"
+          (onDelete)="onObserverDelete($event)"
+          (onResetPassword)="onObserverResetPassword($event)"
+        ></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #editObserverModalTemplate>
+    <div class="modal-header" data-backdrop="static">
+      <h4 class="modal-title pull-left">
+        {{ "ENTER_NEW_PASSWORD" | translate }} {{ observerToEdit.name }}
+      </h4>
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input
+        type="text"
+        name="password"
+        placeholder="pin"
+        [(ngModel)]="newPassword"
+        #pin="ngModel"
+        maxlength="6"
+        minlength="4"
+      />
+      <p>&nbsp;</p>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="resetPassword()"
+        [disabled]="!isPasswordValid()"
+      >
+        {{ "RESET_PASSWORD" | translate }}
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<app-pagination
+  [page]="observersState.page"
+  [pageSize]="observersState.pageSize"
+  [totalItems]="observersState.totalItems"
+  [nextEnabled]="!observersState.loading"
+  (pageChanged)="pageChanged($event)"
+>
+</app-pagination>
+
+<app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
+<div *ngIf="observersState.error">
+  <app-error-indicator></app-error-indicator>
+</div>

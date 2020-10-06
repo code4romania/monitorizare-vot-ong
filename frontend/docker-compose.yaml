@@ -1,8 +1,0 @@
-version: "2.4"
-
-services:
-  frontend:
-    build: .
-    ports: 
-      - "4200:4200"
-    command: ng serve --host 0.0.0.0
