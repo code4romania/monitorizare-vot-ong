@@ -14,11 +14,16 @@
         >
         </app-answer-extra-questions>
 
-        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <ul
+          ngbNav
+          #nav="ngbNav"
+          (navChange)="onTabSelected($event)"
+          class="nav-tabs mb-4"
+        >
           <li
             ngbNavItem
+            [ngbNavItem]="form.id"
             *ngFor="let form of formState.items"
-            (selectTab)="onTabSelected(form)"
           >
             <a ngbNavLink>{{ form.description }}</a>
             <ng-template ngbNavContent
@@ -30,8 +35,8 @@
               </app-answer-form-list
             ></ng-template>
           </li>
-          <div [ngbNavOutlet]="nav"></div>
         </ul>
+        <div [ngbNavOutlet]="nav"></div>
       </div>
       <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
         {{ "NOTHING_SELECTED" | translate }}
