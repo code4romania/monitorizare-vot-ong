@@ -86,9 +86,12 @@
       class="btn btn-light mb-2"
       [disabled]="isLoading"
     >
-      <ng-container *ngIf="isLoading">
-        <i class="fa fa-circle-o-notch fa-spin" style="font-size: 14px"></i>
-      </ng-container>
+      <span
+        *ngIf="isLoading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
       {{ "DOWNLOAD_ANSWERS" | translate }}
     </button>
   </div>
