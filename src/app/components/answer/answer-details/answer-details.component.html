@@ -1,27 +1,40 @@
 <div *ngIf="hasError()">
-  <app-error-indicator (retry)="retry()">
-  </app-error-indicator>
+  <app-error-indicator (retry)="retry()"> </app-error-indicator>
 </div>
 <div *ngIf="!hasError()">
   <div *ngIf="isLoading()">
     <app-loading-indicator></app-loading-indicator>
   </div>
-  <div *ngIf="!isLoading()" class="panel panel-default">
-    <div class="panel-body">
+  <div *ngIf="!isLoading()" class="card">
+    <div class="card-body">
       <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
-        <app-answer-extra-questions *ngIf="!answerState.answerExtraError" [answerExtra]="answerState?.answerExtra">
+        <app-answer-extra-questions
+          *ngIf="!answerState.answerExtraError"
+          [answerExtra]="answerState?.answerExtra"
+        >
         </app-answer-extra-questions>
-        <tabset>
-          <tab *ngFor="let form of formState.items" (selectTab)="onTabSelected(form)">
-            <ng-template tabHeading>{{form.description}}</ng-template>
-            <app-answer-form-list [notes]="formNotes(form.id)" [form]="getDataForForm(form)"
-                                  [completedQuestions]="formAnswers()">
-            </app-answer-form-list>
-          </tab>
-        </tabset>
+
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li
+            ngbNavItem
+            *ngFor="let form of formState.items"
+            (selectTab)="onTabSelected(form)"
+          >
+            <a ngbNavLink>{{ form.description }}</a>
+            <ng-template ngbNavContent
+              ><app-answer-form-list
+                [notes]="formNotes(form.id)"
+                [form]="getDataForForm(form)"
+                [completedQuestions]="formAnswers()"
+              >
+              </app-answer-form-list
+            ></ng-template>
+          </li>
+          <div [ngbNavOutlet]="nav"></div>
+        </ul>
       </div>
       <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
-        {{'NOTHING_SELECTED' | translate}}
+        {{ "NOTHING_SELECTED" | translate }}
       </div>
     </div>
   </div>

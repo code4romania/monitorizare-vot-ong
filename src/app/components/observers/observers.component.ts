@@ -1,40 +1,36 @@
-import { from as observableFrom, Subscription } from "rxjs";
+import { from as observableFrom, Subscription } from 'rxjs';
 
-import { concatMap, take, map } from "rxjs/operators";
-import { ObserversStateItem } from "../../store/observers/observers.state";
-import { AppState } from "../../store/store.module";
-import { select, Store } from "@ngrx/store";
-import { ApiService } from "../../core/apiService/api.service";
+import { concatMap, take, map } from 'rxjs/operators';
+import { ObserversStateItem } from '../../store/observers/observers.state';
+import { AppState } from '../../store/store.module';
+import { select, Store } from '@ngrx/store';
+import { ApiService } from '../../core/apiService/api.service';
 import {
   Component,
   OnDestroy,
   OnInit,
   ViewChild,
   TemplateRef,
-} from "@angular/core";
+} from '@angular/core';
 import {
   LoadObserversAction,
   LoadObserversCountAction,
-} from "../../store/observers/observers.actions";
-import { values } from "lodash";
-import { Observer } from "../../models/observer.model";
-import { ListType } from "../../models/list.type.model";
-import { ObserversFilterForm } from "./observers-filter.form";
-import { ObserversService } from "../../services/observers.service";
-import { ToastrService } from "ngx-toastr";
-import {
-  NgbModalRef,
-  NgbModal,
-  NgbModalOptions,
-} from "@ng-bootstrap/ng-bootstrap";
+} from '../../store/observers/observers.actions';
+import { values } from 'lodash';
+import { Observer } from '../../models/observer.model';
+import { ListType } from '../../models/list.type.model';
+import { ObserversFilterForm } from './observers-filter.form';
+import { ObserversService } from '../../services/observers.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-observers",
-  templateUrl: "./observers.component.html",
-  styleUrls: ["./observers.component.scss"],
+  selector: 'app-observers',
+  templateUrl: './observers.component.html',
+  styleUrls: ['./observers.component.scss'],
 })
 export class ObserversComponent implements OnInit, OnDestroy {
-  @ViewChild("editObserverModalTemplate") editObserverModal: TemplateRef<any>;
+  @ViewChild('editObserverModalTemplate') editObserverModal: TemplateRef<any>;
 
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
@@ -48,10 +44,10 @@ export class ObserversComponent implements OnInit, OnDestroy {
   pageSize = 9;
   totalCount = 0;
 
-  newPassword = "";
+  newPassword = '';
   modalRef: NgbModalRef;
   modalOptions: NgbModalOptions = {
-    backdrop: "static",
+    backdrop: 'static',
     keyboard: false,
   };
   observerToEdit: Observer;
@@ -86,7 +82,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   }
 
   resetFilters() {
-    this.observersFilterForm.reset({ name: "", phone: "" });
+    this.observersFilterForm.reset({ name: '', phone: '' });
     this.loadObservers(1);
   }
 
@@ -104,8 +100,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
               pageNo,
               100,
               true,
-              this.observersFilterForm.get("name").value,
-              this.observersFilterForm.get("phone").value
+              this.observersFilterForm.get('name').value,
+              this.observersFilterForm.get('phone').value
             )
         )
       )
@@ -159,13 +155,13 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.observersService.deleteObserver(observer.id).subscribe((_) => {
       this.loadObservers(1);
       this.loadObserversCount();
-      this.toastrService.warning("Success!", "User has been removed");
+      this.toastrService.warning('Success!', 'User has been removed');
     });
   }
 
   onObserverResetPassword(observer: Observer) {
     this.observerToEdit = observer;
-    this.newPassword = "";
+    this.newPassword = '';
     this.modalRef = this.modalService.open(
       this.editObserverModal,
       this.modalOptions
@@ -190,13 +186,13 @@ export class ObserversComponent implements OnInit, OnDestroy {
       .subscribe(
         (_) => {
           this.toastrService.success(
-            "Success!",
-            "Password has been reset for the observer."
+            'Success!',
+            'Password has been reset for the observer.'
           );
           this.modalRef.close();
         },
         (_) => {
-          this.toastrService.error("Could not reset password", "Error!");
+          this.toastrService.error('Could not reset password', 'Error!');
         }
       );
   }
