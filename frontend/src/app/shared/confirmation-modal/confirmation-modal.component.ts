@@ -8,6 +8,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ConfirmationModalComponent implements OnInit {
 
+  public prompt: string;
+
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit() {
