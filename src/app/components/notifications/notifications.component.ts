@@ -98,11 +98,9 @@ export class NotificationsComponent implements OnInit {
       return false;
     }
 
-    if (!notification.recipients || !(notification.recipients.length > 0)) {
-      return false;
-    }
+    return !(!notification.recipients || !(notification.recipients.length > 0));
 
-    return true;
+
   }
 
   isValidGloballyNoArg(): boolean {
@@ -119,10 +117,8 @@ export class NotificationsComponent implements OnInit {
     if (!notification.channel || notification.channel === '') {
       return false;
     }
-    if (!notification.from || notification.from === '') {
-      return false;
-    }
-    return true;
+    return !(!notification.from || notification.from === '');
+
   }
 
   private createNotification(): NotificationModel {

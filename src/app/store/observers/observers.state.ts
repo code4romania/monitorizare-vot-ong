@@ -1,8 +1,7 @@
-import {observersConfig, ObserversStateConfig} from './observers.config';
+import { observersConfig, ObserversStateConfig } from './observers.config';
 
-import {LabelValueModel} from '../../models/labelValue.model';
-import * as _ from 'lodash';
-import {Observer} from '../../models/observer.model';
+import { keyBy } from 'lodash';
+import { Observer } from '../../models/observer.model';
 
 export class ObserversStateItem {
   key: string;
@@ -31,11 +30,16 @@ export class ObserversStateItem {
 }
 
 export class ObserversState {
-  [key: string]: ObserversStateItem
+  [key: string]: ObserversStateItem;
 }
 
-export class ObserversCountState{
+export class ObserversCountState {
   count: number;
 }
-export let observersInitialState: ObserversState = _.keyBy<ObserversStateItem>(observersConfig.map<ObserversStateItem>((config) => new ObserversStateItem(config)), value => value.key);
+export let observersInitialState: ObserversState = keyBy<ObserversStateItem>(
+  observersConfig.map<ObserversStateItem>(
+    (config) => new ObserversStateItem(config)
+  ),
+  (value) => value.key
+);
 export let observersCountInitialState: ObserversCountState = { count: 0 };

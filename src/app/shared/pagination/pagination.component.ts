@@ -29,7 +29,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['page'] || changes['pageSize'] || changes['totalItems']) {
+    if (changes.page || changes.pageSize || changes.totalItems) {
       this.startingindex = (this.page - 1) * this.pageSize + 1;
       this.endingIndex = this.startingindex + this.pageSize - 1;
 
@@ -44,16 +44,12 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.nextEnabled === false) {
       return false;
     }
-    if (this.totalItems !== undefined && this.pageSize * this.page >= this.totalItems) {
-      return false;
-    }
-    return true;
+    return !(this.totalItems !== undefined && this.pageSize * this.page >= this.totalItems);
+
   }
   canPrevPage(){
-    if (this.page === 1){
-      return false;
-    }
-    return true;
+    return this.page !== 1;
+
   }
   nextPage() {
     if (this.canNextPage()) {

@@ -1,59 +1,49 @@
-<div
-  *ngIf="question"
-  class="form-group question-wrapper"
-  [ngClass]="{ 'flagged-question': isFlagged }"
->
-  <div class="frow row-start">
-    <p class="col-md-1-1" class="question-title" font-size="24px">
-      <strong> {{ question.code }}: {{ question.text }} ? </strong>
-    </p>
-  </div>
-  <div class="question-answers">
-    <div
-      class="frow row-start"
-      *ngFor="let answer of question.optionsToQuestions"
-      style="margin-left: 10px; margin-top: 3px"
-      [ngClass]="{ 'flagged-answer': isFlaggedAnswer(answer) }"
-    >
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          [checked]="isChecked(answer)"
-        />
-        <label class="form-check-label">
-          {{ answer.text }}
-        </label>
-      </div>
-
-      <div style="margin-left: 10px">
-        <input
-          style="display: inline-block"
-          type="text"
-          readonly
-          *ngIf="isTextAnswer(answer) && isChecked(answer)"
-          [value]="answerTextValue(answer)"
-        />
-      </div>
+<div *ngIf="question" [ngClass]="{ 'flagged-question': isFlagged }">
+  <p class="font-weight-bold mb-1">
+    {{ question.code }}: {{ question.text }} ?
+  </p>
+</div>
+<div class="question-answers">
+  <div
+    *ngFor="let answer of question.optionsToQuestions"
+    [ngClass]="{ 'flagged-answer': isFlaggedAnswer(answer) }"
+  >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="isChecked(answer)"
+      />
+      <label class="form-check-label">
+        {{ answer.text }}
+      </label>
     </div>
-  </div>
-  <div class="show-note-button-wrapper">
-    <button
-      *ngIf="notes && notes.length"
-      (click)="showNotes = !showNotes"
-      class="show-note-button btn"
-      [ngClass]="{ 'btn-success': !isFlagged, 'btn-danger': isFlagged }"
-    >
-      {{ (showNotes ? "HIDE" : "SHOW") | translate }}
-      {{ (notes.length === 1 ? "NOTE" : "NOTES") | translate }}
-    </button>
-  </div>
 
-  <hr *ngIf="notes && notes.length && showNotes" />
-  <div [collapse]="!showNotes" class="frow" *ngIf="notes && notes.length">
-    <div class="col-md-1-1" *ngFor="let note of notes; let isLast = last">
-      <app-answer-note [question]="question" [note]="note"> </app-answer-note>
-      <hr *ngIf="!isLast" />
-    </div>
+    <input
+      style="display: inline-block"
+      type="text"
+      readonly
+      *ngIf="isTextAnswer(answer) && isChecked(answer)"
+      [value]="answerTextValue(answer)"
+    />
+  </div>
+</div>
+<div class="text-right">
+  <button
+    *ngIf="notes && notes.length"
+    (click)="showNotes = !showNotes"
+    class="btn"
+    [ngClass]="{ 'btn-success': !isFlagged, 'btn-danger': isFlagged }"
+  >
+    {{ (showNotes ? "HIDE" : "SHOW") | translate }}
+    {{ (notes.length === 1 ? "NOTE" : "NOTES") | translate }}
+  </button>
+</div>
+
+<hr *ngIf="notes && notes.length && showNotes" />
+<div [collapse]="!showNotes" *ngIf="notes && notes.length">
+  <div *ngFor="let note of notes; let isLast = last">
+    <app-answer-note [question]="question" [note]="note"> </app-answer-note>
+    <hr *ngIf="!isLast" />
   </div>
 </div>

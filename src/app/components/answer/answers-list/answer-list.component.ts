@@ -1,13 +1,11 @@
-import { AnswerThread } from '../../../models/answer.thread.model';
 import { AnswerState } from '../../../store/answer/answer.reducer';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-answer-list',
   templateUrl: './answer-list.component.html',
-  styleUrls: ['./answer-list.component.scss']
+  styleUrls: ['./answer-list.component.scss'],
 })
 export class AnswerListComponent implements OnInit {
-
   @Input('answerState')
   state: AnswerState;
 
@@ -17,13 +15,12 @@ export class AnswerListComponent implements OnInit {
   @Output()
   reload: EventEmitter<{}> = new EventEmitter();
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   retry() {
     this.reload.emit();
   }
-  answerLinkPrefix(){
+  answerLinkPrefix() {
     return this.state.urgent ? '/urgents/details' : '/answers/details';
   }
   get answers() {
@@ -32,7 +29,7 @@ export class AnswerListComponent implements OnInit {
     return this.state.threads.slice(start, end);
   }
 
-  answerList(){
+  answerList() {
     const startPage = this.state.page - 1,
       pageSize = this.state.pageSize,
       startIndex = startPage * pageSize,
@@ -41,8 +38,7 @@ export class AnswerListComponent implements OnInit {
     return this.state.threads.slice(startIndex, endIndex);
   }
 
-  pageChangedEvent(event){
+  pageChangedEvent(event) {
     this.pageChanged.emit(event);
   }
 }
-

@@ -1,6 +1,6 @@
 export class AnswerThread {
-    public pollingStationName: String;
-    public observerName: String;
-    public idPollingStation: number;
-    public idObserver: number;
+  public pollingStationName: string;
+  public observerName: string;
+  public idPollingStation: number;
+  public idObserver: number;
 }

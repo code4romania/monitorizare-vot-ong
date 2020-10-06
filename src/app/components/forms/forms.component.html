@@ -1,49 +1,90 @@
-<div class="container-fluid forms-component">
-
-  <div class="header-row">
-    <span class="header-text col-md-2">{{'FORMS' | translate }}</span>
-    <div class="buttons-pane">
-      <button class="btn-primary btn" [routerLink]="['/formulare/nou']">+ {{'NEW_FORM' | translate}}</button>
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4">{{ "FORMS" | translate }}</h2>
+    </div>
+    <div class="ml-auto">
+      <div class="btn-group" role="group" aria-label="Sort">
+        <button class="btn-primary btn" [routerLink]="['/formulare/nou']">
+          + {{ "NEW_FORM" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="table-responsive">
     <table class="table align-items-center table-flush">
       <thead class="thead-light">
-      <tr>
-        <th scope="col" style="color: #3468EF;">{{'INDEX' | translate}}</th>
-        <th scope="col" style="color: #3468EF;">{{'FORM_CODE' | translate}}</th>
-        <th scope="col" style="color: #3468EF;">{{'FORM_TITLE' | translate}}</th>
-        <th scope="col" style="color: #3468EF;">{{'DIASPORA' | translate}}</th>
-        <th scope="col" style="color: #3468EF;">{{'DRAFT' | translate}}</th>
-        <th scope="col" style="color: #3468EF;">{{'ACTION' | translate}}</th>
-      </tr>
+        <tr>
+          <th scope="col">
+            {{ "INDEX" | translate }}
+          </th>
+          <th scope="col">
+            {{ "FORM_CODE" | translate }}
+          </th>
+          <th scope="col">
+            {{ "FORM_TITLE" | translate }}
+          </th>
+          <th scope="col">
+            {{ "DIASPORA" | translate }}
+          </th>
+          <th scope="col">
+            {{ "DRAFT" | translate }}
+          </th>
+          <th scope="col" class="text-right">
+            {{ "ACTION" | translate }}
+          </th>
+        </tr>
       </thead>
       <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
         <tr *ngFor="let form of formsList" cdkDrag>
-          <td style="width: 5%;">
+          <td>
             {{ (page - 1) * pageSize + formsList.indexOf(form) + 1 }}
           </td>
           <td>
             {{ form.code }}
           </td>
-          <td class="col-md-6">
+          <td>
             {{ form.description }}
           </td>
           <td>
-            <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora">
+            <img
+              src="/assets/forms/diaspora-check.png"
+              *ngIf="form.diaspora"
+              alt=""
+            />
           </td>
           <td>
-            <img src="/assets/forms/diaspora-check.png" *ngIf="form.draft">
+            <img
+              src="/assets/forms/diaspora-check.png"
+              *ngIf="form.draft"
+              alt=""
+            />
           </td>
-          <td>
-            <div class="dropdown">
-              <button class="btn btn-secondary" type="button" [routerLink]="[form.id]">{{'EDIT' | translate}}</button>
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="/assets/forms/down.png">
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                [routerLink]="[form.id]"
+              >
+                {{ "EDIT" | translate }}
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" (click)="deleteForm(form)">{{'DELETE' | translate}}</a>
+              <div
+                class="btn-group"
+                ngbDropdown
+                role="group"
+                aria-label="Button group with nested dropdown"
+              >
+                <button
+                  class="btn btn-secondary dropdown-toggle-split"
+                  ngbDropdownToggle
+                ></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="deleteForm(form)">
+                    {{ "DELETE" | translate }}
+                  </button>
+                </div>
               </div>
             </div>
           </td>
@@ -52,4 +93,3 @@
     </table>
   </div>
 </div>
-

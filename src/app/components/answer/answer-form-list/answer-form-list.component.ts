@@ -2,7 +2,7 @@ import { Note } from '../../../models/note.model';
 import { BaseQuestion } from '../../../models/base.question.model';
 import { CompletedQuestion } from '../../../models/completed.question.model';
 import { Component, Input } from '@angular/core';
-import * as _ from 'lodash';
+import { find } from 'lodash';
 import { Form } from '../../../models/form.model';
 
 @Component({
@@ -21,7 +21,7 @@ export class AnswerFormListComponent {
   notes: Note[];
 
   answersForQuestion(question: BaseQuestion) {
-    return _.find(this.completedQuestions, (value) => value.id === question.id);
+    return find(this.completedQuestions, (value) => value.id === question.id);
   }
   notesForQuestion(question: BaseQuestion) {
     if (!this.notes || !this.notes.length) {

@@ -32,17 +32,4 @@
       }
     }
   }
-
-  .header-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 20px;
-
-    .header-text {
-      margin: auto 0;
-      font-size: larger;
-      font-weight: bold;
-    }
-  }
 }
