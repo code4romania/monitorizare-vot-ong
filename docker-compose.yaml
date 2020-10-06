@@ -1,0 +1,11 @@
+version: "2.4"
+
+services:
+  frontend:
+    image: node:14
+    working_dir: /app
+    ports:
+      - "4200:4200"
+    command: "sh -c 'yarn && npm start -- --host 0.0.0.0'"
+    volumes:
+      - ./:/app

@@ -1,0 +1,94 @@
+<div class="container-fluid form-create">
+  <div class="back-button" (click)="onBackPressed()">
+    &#8592; {{ "BACK" | translate }}
+  </div>
+
+  <div class="header-row">
+    <span class="header-text col-md-2">{{ "FORM_EDIT" | translate }}</span>
+    <div class="buttons-pane">
+      <button class="btn-secondary btn" (click)="saveForm()">
+        {{ "FORM_SAVE_DRAFT" | translate }}
+      </button>
+      <button class="btn-primary btn" (click)="saveAndPublishForm()">
+        {{ "FORM_PUBLISH" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="formDetailsFormGroup">
+        <div class="col-md-6">
+          <div class="form-labeled-field">
+            <div>
+              <span>{{ "FORM_TITLE" | translate }}</span>
+            </div>
+            <div>
+              <input
+                class="form-control"
+                formControlName="description"
+                placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+          </div>
+          <div class="form-labeled-field">
+            <div>
+              <span>{{ "FORM_CODE" | translate }}</span>
+            </div>
+            <div>
+              <input
+                class="form-control"
+                formControlName="code"
+                placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+          </div>
+          <div class="form-labeled-field-checkbox">
+            <div class="checkbox-label">
+              <span>{{ "FORM_ONLY_DIASPORA" | translate }}</span>
+            </div>
+            <div class="checkbox-field">
+              <input
+                type="checkbox"
+                class="form-control"
+                formControlName="diaspora"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
+
+          <!--        <div>-->
+          <!--          <span>{{'FORM_DESCRIPTION' | translate}}</span>-->
+          <!--        </div>-->
+          <!--        <div>-->
+          <!--          <textarea rows="4" class="form-control" [(ngModel)]="form.description" placeholder="{{'FORM_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
+          <!--        </div>-->
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="section-list"
+    cdkDropList
+    (cdkDropListDropped)="onReorder($event)"
+  >
+    <div
+      *ngFor="let section of sectionFormGroupsArray; let i = index"
+      cdkDrag
+      class="section"
+    >
+      <app-section
+        [sectionFormGroup]="section"
+        (sectionDeleteEventEmitter)="onSectionDelete(i)"
+      >
+      </app-section>
+    </div>
+  </div>
+
+  <div class="add-section-button" (click)="addFormSection()">
+    + {{ "SECTION_ADD" | translate }}
+  </div>
+</div>

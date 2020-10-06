@@ -1,0 +1,15 @@
+@import "../../../../variables";
+
+.cell-text {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  display: flex;
+
+  div {
+    margin-left: 10px;
+  }
+
+  &.phone-number {
+    color: $secondary;
+  }
+}
