@@ -80,5 +80,9 @@
   "ACTIONS": "Actions",
   "NEW_FORM": "New form",
   "DIASPORA": "Diaspora",
-  "DRAFT": "Draft"
+  "DRAFT": "Draft",
+  "MARK_AS_FREE_TEXT": "Mark as free text",
+  "MARK_AS_REGULAR": "Mark as regular",
+  "FLAG_OPTION": "Flag option",
+  "UNFLAG_OPTION": "Unflag option"
 }

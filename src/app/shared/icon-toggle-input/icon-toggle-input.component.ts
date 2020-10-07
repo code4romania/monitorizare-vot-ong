@@ -19,6 +19,8 @@ export class IconToggleInputComponent implements ControlValueAccessor {
 
   @Input() enabledIcon: string;
   @Input() disabledIcon: string;
+  @Input() enabledIconTooltip: string;
+  @Input() disabledIconTooltip: string;
 
   onChange = (value: boolean) => {};
   onTouched = () => {};

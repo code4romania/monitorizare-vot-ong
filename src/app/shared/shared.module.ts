@@ -9,6 +9,7 @@ import {
   NgbCollapseModule,
   NgbNavModule,
   NgbDropdownModule,
+  NgbTooltipModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
@@ -22,6 +23,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     NgbNavModule,
     RouterModule,
     TranslateModule,
+    NgbTooltipModule
   ],
   exports: [
     FormsModule,
@@ -36,6 +38,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     ErrorIndicatorComponent,
     TranslateModule,
     IconToggleInputComponent,
+    NgbTooltipModule
   ],
   declarations: [
     PaginationComponent,
