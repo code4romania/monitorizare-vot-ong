@@ -53,10 +53,9 @@ export class FormsComponent implements OnInit, OnDestroy {
   public deleteForm(form: FormDetails) {
     const modalRef = this._modalService.open(ConfirmationModalComponent)
     modalRef.componentInstance.message = 'Are you sure you want to delete this record?';
-    modalRef.result.then(() => {
-      this.store.dispatch(new FormDeleteAction(form.id)))
-      .catch(() => { });
-
+    modalRef.result
+    .then(() => this.store.dispatch(new FormDeleteAction(form.id)))
+    .catch(() => { });
   }
 
   ngOnDestroy(): void {
