@@ -10,6 +10,13 @@
         </app-icon-toggle-input>
       </div>
 
+      <div class="icon-holder">
+        <app-icon-toggle-input enabledIcon="/assets/forms/icon-flag-enabled.png"
+                               disabledIcon="/assets/forms/icon-flag-disabled.png"
+                               formControlName="flagged">
+        </app-icon-toggle-input>
+      </div>
+
       <div class="icon-holder" (click)="optionDeleteEventEmitter.emit()">
         <img src="/assets/forms/icon-delete.png" alt="">
       </div>
