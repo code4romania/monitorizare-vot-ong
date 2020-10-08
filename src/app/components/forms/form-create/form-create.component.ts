@@ -13,6 +13,8 @@ import {moveItemInFormArray} from '../../utils';
 import {initFormFormGroup, initOptionFormGroup, initQuestionFormGroup, initSectionFormGroup} from '../form-groups-builder';
 import {FormQuestion} from '../../../models/form.question.model';
 import {BaseAnswer} from '../../../models/base.answer.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-form-create',
@@ -30,9 +32,10 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   formDataSubscription: Subscription;
 
   constructor(private location: Location,
-              private store: Store<AppState>,
-              private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder) { }
+    private store: Store<AppState>,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private _modalService: NgbModal) { }
 
   ngOnInit() {
     this.formDetailsFormGroup = initFormFormGroup(this.formBuilder);
@@ -133,7 +136,10 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   }
 
   onSectionDelete(index: number) {
-    this.sectionsArray.removeAt(index);
+    const modalRef = this._modalService.open(ConfirmationModalComponent)
+    modalRef.componentInstance.message = 'Are you sure you want to delete this record?';
+    modalRef.result.then(() => this.sectionsArray.removeAt(index))
+      .catch(() => { });
   }
 
   ngOnDestroy(): void {
