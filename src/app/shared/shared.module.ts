@@ -12,6 +12,8 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -42,6 +44,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     LoadingIndicatorComponent,
     ErrorIndicatorComponent,
     IconToggleInputComponent,
+    ConfirmationModalComponent
   ],
   providers: [],
 })
