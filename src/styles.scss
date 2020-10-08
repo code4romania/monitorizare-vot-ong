@@ -6,3 +6,13 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.custom-tooltip {
+  .tooltip-inner {
+    background-color: white;
+    color: black;
+  }
+  .arrow::before {
+    border-bottom-color: white;
+  }
+}
