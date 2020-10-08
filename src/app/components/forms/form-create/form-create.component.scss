@@ -1,4 +1,6 @@
-.form-create {
+
+
+.form-create { //? this isn't on the form
   .back-button {
     font-weight: bold;
     cursor: pointer;
@@ -32,4 +34,23 @@
       }
     }
   }
+}
+
+
+.control-container {
+  width: 100%;
+}
+
+
+.section-add {
+  color: rebeccapurple;
+    cursor: pointer;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+textarea {
+  min-height: 124px; // aligns to 2 inputs in a column layout
 }
