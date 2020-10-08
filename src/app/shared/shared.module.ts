@@ -9,6 +9,7 @@ import {
   NgbCollapseModule,
   NgbNavModule,
   NgbDropdownModule,
+  NgbTooltipModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
@@ -24,6 +25,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     NgbNavModule,
     RouterModule,
     TranslateModule,
+    NgbTooltipModule
   ],
   exports: [
     FormsModule,
@@ -38,6 +40,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     ErrorIndicatorComponent,
     TranslateModule,
     IconToggleInputComponent,
+    NgbTooltipModule
   ],
   declarations: [
     PaginationComponent,

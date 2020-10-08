@@ -5,14 +5,18 @@
 
       <div class="icon-holder">
         <app-icon-toggle-input enabledIcon="/assets/forms/icon-text-enabled.png"
+                               enabledIconTooltip="{{'MARK_AS_FREE_TEXT' | translate}}"
                                disabledIcon="/assets/forms/icon-text-disabled.png"
+                               disabledIconTooltip="{{'MARK_AS_REGULAR' | translate}}"
                                formControlName="isFreeText">
         </app-icon-toggle-input>
       </div>
 
       <div class="icon-holder">
         <app-icon-toggle-input enabledIcon="/assets/forms/icon-flag-enabled.png"
+                               enabledIconTooltip="{{'FLAG_OPTION' | translate}}"
                                disabledIcon="/assets/forms/icon-flag-disabled.png"
+                               disabledIconTooltip="{{'UNFLAG_OPTION' | translate}}"
                                formControlName="flagged">
         </app-icon-toggle-input>
       </div>
