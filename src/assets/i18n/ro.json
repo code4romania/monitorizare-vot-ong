@@ -36,6 +36,13 @@
   "SECTION_DESCRIPTION_PLACEHOLDER": "Descrie această secţiune",
 
   "QUESTION_ADD": "Adaugă o întrebare",
+  "QUESTION_CODE": "Întrebare Cod",
+  "QUESTION_TEXT": "Întrebare Text",
+
+  "MULTIPLE_CHOICE": "Multiplu Alegere",
+  "SINGLE_CHOICE": "Singur Alegere",
+  "MULTIPLE_CHOICE_TEXT": "Multiplu Alegere Text",
+  "SINGLE_CHOICE_TEXT": "Singur Alegere Text",
 
   "OPTION_ADD": "Adaugă o opţiune",
 

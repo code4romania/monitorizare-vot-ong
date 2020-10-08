@@ -16,7 +16,7 @@
   "FORM": "Form",
   "FORM_EDIT": "Edit form",
   "FORM_SAVE_DRAFT": "Save as draft",
-  "FORM_PUBLISH": "Publish",
+  "FORM_PUBLISH": "Publish form",
   "FORMS": "Forms",
   "FORM_TITLE": "Form title",
   "FORM_TITLE_PLACEHOLDER": "Type form title",
@@ -36,6 +36,13 @@
   "SECTION_DESCRIPTION_PLACEHOLDER": "Describe this section",
 
   "QUESTION_ADD": "Add question",
+  "QUESTION_CODE": "Question Code",
+  "QUESTION_TEXT": "Question text",
+
+  "MULTIPLE_CHOICE": "Multiple Choice",
+  "SINGLE_CHOICE": "Single Choice",
+  "MULTIPLE_CHOICE_TEXT": "Multiple Choice Text",
+  "SINGLE_CHOICE_TEXT": "Single Choice Text",
 
   "OPTION_ADD": "Add option",
 

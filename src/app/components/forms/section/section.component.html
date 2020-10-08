@@ -1,11 +1,11 @@
 <div class="section-create">
   <div class="header-row">
-    <span class="header-text">{{
+    <h4 class="header-text">{{
       sectionFormGroup.controls.description.value
-    }}</span>
+    }}</h4>
 
     <div class="buttons-pane">
-      <button class="btn btn-danger" (click)="sectionDeleteEventEmitter.emit()">
+      <button class="btn btn-outline-danger" (click)="sectionDeleteEventEmitter.emit()">
         {{ "SECTION_DELETE" | translate }}
       </button>
     </div>
