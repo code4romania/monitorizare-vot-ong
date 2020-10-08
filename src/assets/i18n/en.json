@@ -36,6 +36,13 @@
   "SECTION_DESCRIPTION_PLACEHOLDER": "Describe this section",
 
   "QUESTION_ADD": "Add question",
+  "QUESTION_CODE": "Question Code",
+  "QUESTION_TEXT": "Question text",
+
+  "MULTIPLE_CHOICE": "Multiple Choice",
+  "SINGLE_CHOICE": "Single Choice",
+  "MULTIPLE_CHOICE_TEXT": "Multiple Choice Text",
+  "SINGLE_CHOICE_TEXT": "Single Choice Text",
 
   "OPTION_ADD": "Add option",
 

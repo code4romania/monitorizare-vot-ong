@@ -20,7 +20,7 @@
         </div>
         <div class="field col-md-2">
           <select class="form-control" formControlName="questionType">
-            <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name}}</option>
+            <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name | translate}}</option>
           </select>
         </div>
         <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">

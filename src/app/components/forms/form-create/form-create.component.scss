@@ -46,3 +46,11 @@
   color: rebeccapurple;
     cursor: pointer;
 }
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+textarea {
+  min-height: 124px; // aligns to 2 inputs in a column layout
+}

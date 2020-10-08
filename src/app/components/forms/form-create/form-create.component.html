@@ -19,23 +19,37 @@
   <div class="card">
     <div class="card-body">
       <form [formGroup]="formDetailsFormGroup">
-        <div class="form-group">
-          <label for="form-title">{{ "FORM_TITLE" | translate }}</label>
-          <input
-            class="form-control"
-            id="form-title"
-            formControlName="description"
-            placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
-          />
-        </div>
-        <div class="form-group">
-          <label for="form-cde">{{ "FORM_CODE" | translate }}</label>
-          <input
-            class="form-control"
-            formControlName="code"
-            id="form-code"
-            placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
-          />
+        <div class="d-flex flex-row ">
+          <div class="d-flex flex-column grow-1">
+            <div class="form-group">
+              <label for="form-title">{{ "FORM_TITLE" | translate }}</label>
+              <input
+                class="form-control"
+                id="form-title"
+                formControlName="description"
+                placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="form-cde">{{ "FORM_CODE" | translate }}</label>
+              <input
+                class="form-control"
+                formControlName="code"
+                id="form-code"
+                placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+          </div>          
+          <div class="d-flex flex-column grow-1 ml-4">
+            <div class="form-group">
+              <label for="form-cde">{{ "FORM_DESCRIPTION" | translate }}</label>
+              <textarea
+                class="form-control"
+                formControlName="description"
+                id="form-description"
+                placeholder="{{ 'FORM_DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
+            </div>
+          </div>
         </div>
         <div class="form-group form-check">
           <input
