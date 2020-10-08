@@ -2,7 +2,7 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-[See the project live](https://app-vmon-api-dev.azurewebsites.net)
+[See the project live](https://app.votemonitor.org/)
 
 Monitorizare Vot is a mobile app for monitoring elections by authorized observers. They can use the app in order to offer a real-time snapshot on what is going on at polling stations and they can report on any noticeable irregularities.
 
@@ -16,13 +16,13 @@ The app also has a web version, available for every citizen who wants to report 
 
 ## Contributing
 
-This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
+This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](https://github.com/code4romania/.github/blob/master/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
 Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a **[Feature request]**. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
-Also, this is [the workflow we follow](.github/WORKFLOW.md).
+Also, this is [the workflow we follow](https://github.com/code4romania/.github/blob/master/WORKFLOW.md).
 
 ## Built With
 
@@ -30,11 +30,11 @@ Angular 9
 
 Typescript 3.5.3
 
-Swagger docs for the API are available [here](https://app-vmon-api-dev.azurewebsites.net/swagger/index.html).
+Swagger docs for the API are available [here](https://api.votemonitor.org/swagger/index.html).
 
 ## Repos and projects
 
-![MV diagram](https://raw.githubusercontent.com/code4romania/monitorizare-vot-ong/master/vote_monitor_diagram.png)
+You can find out more info & docs about the project in [this wiki](https://github.com/code4romania/monitorizare-vot/wiki).
 
 MV related repos:
 
