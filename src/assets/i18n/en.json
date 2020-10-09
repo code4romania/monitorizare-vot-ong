@@ -1,4 +1,5 @@
 {
+  "LOGIN": "Login",
   "PHONE_NUMBER": "Phone Number",
   "ARRIVAL_TIME": "Arrival Time",
   "DEPARTURE_TIME": "Departure Time",
@@ -74,9 +75,11 @@
   "SEND_NOTIFICATIONS_TO": "Send notification to",
   "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all",
   "RESET": "Clear filter",
+  "PASSWORD": "Password",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
   "DOWNLOAD_ANSWERS": "Download answers",
+  "CREDENTIALS_INVALID": "Credentials are invalid",
   "FROM": "From",
   "TO": "To",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
