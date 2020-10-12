@@ -77,5 +77,6 @@
   "UNFLAG_OPTION": "Opțiunea Unflag",
 
   "PASSWORD": "Parola",
-  "CREDENTIALS_INVALID": "Acreditările sunt nevalide"
+  "CREDENTIALS_INVALID": "Acreditările sunt nevalide",
+  "LOGOUT": "Deconectare"
 }
