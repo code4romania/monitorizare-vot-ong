@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  isHamburgerClicked = false;
+  
   constructor(private tokenService: TokenService, private router: Router) {}
 
   get observerGuideUrl() {
