@@ -73,5 +73,7 @@
   "MARK_AS_FREE_TEXT": "Marcați ca text liber",
   "MARK_AS_REGULAR": "Marcați ca obișnuit",
   "FLAG_OPTION": "Opțiunea de semnalizare",
-  "UNFLAG_OPTION": "Opțiunea Unflag"
+  "UNFLAG_OPTION": "Opțiunea Unflag",
+
+  "LOGOUT": "Deconectare"
 }

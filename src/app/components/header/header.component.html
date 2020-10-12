@@ -82,5 +82,14 @@
         </a>
       </li>
     </ul>
+
+    <div *ngIf="isLoggedIn()" class="nav-item" ngbDropdown>
+      <span class="nav-link cursor-pointer" tabindex="0" ngbDropdownToggle id="navbarDropdown2" role="button">
+        {{ userName | titlecase }}
+      </span>
+      <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
+        <a ngbDropdownItem class="cursor-pointer" (click)="logout()">{{ "LOGOUT" | translate }}</a>
+      </div>
+    </div>
   </div>
 </nav>
