@@ -1,4 +1,5 @@
 {
+  "LOGIN": "Autentificare",
   "PHONE_NUMBER": "Numar de telefon",
   "ARRIVAL_TIME": "Ora sosirii",
   "DEPARTURE_TIME": "Ora plecarii",
@@ -75,5 +76,7 @@
   "FLAG_OPTION": "Opțiunea de semnalizare",
   "UNFLAG_OPTION": "Opțiunea Unflag",
 
+  "PASSWORD": "Parola",
+  "CREDENTIALS_INVALID": "Acreditările sunt nevalide",
   "LOGOUT": "Deconectare"
 }
