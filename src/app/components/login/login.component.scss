@@ -1,4 +1,4 @@
-.container {    
+.container {
     .header{
         height: 70vh;
         h4 {
@@ -7,8 +7,11 @@
         .logo {
             background: #fbd844;
             border-radius: 50%;
-            height:100px;
-            width:100px;
+            height:200px;
+            width:200px;
+            img {
+                width:200px;
+            }
         }
     }
     form {
@@ -29,6 +32,6 @@
             color:rgba(0, 0, 0, 0.7);
         }
 
-        
+
     }
 }
