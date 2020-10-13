@@ -1,69 +1,46 @@
 <div class="container-fluid">
-  <div class="d-flex mb-4">
-    <div>
-      <h2 class="d-inline h4">Observers</h2>
-      <span class="text-muted"
-        >&middot; {{ totalCount }} total &middot; Sorted by
-        <em>Last login - Ascending</em></span
-      >
+  
+  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2">
+    <div class="d-flex align-items-center">
+      <h3 class="mb-0">Observers</h3>
+      <i class="h-vertical-line"></i>
+      <span class="font-weight-bold h-is-muted">{{ totalCount }} total</span>
     </div>
-    <div class="ml-auto">
-      <div class="btn-group" role="group" aria-label="Sort">
-        <button
-          class="btn"
-          [ngClass]="listType === 'CARD' ? 'btn-primary' : 'btn-light'"
-          (click)="changeListType('CARD')"
-        >
-          <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            class="bi bi-grid-fill"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"
-            />
-          </svg>
-        </button>
-        <button
-          class="btn"
-          [ngClass]="listType === 'LIST' ? 'btn-primary' : 'btn-light'"
-          (click)="changeListType('LIST')"
-        >
-          <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            class="bi bi-list"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-            />
-          </svg>
-        </button>
-        <button class="btn btn-primary" [routerLink]="['profil/new']">
-          <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            class="bi bi-plus-circle-fill"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-            />
-          </svg>
-          add observer/s
-        </button>
-      </div>
+
+    <div class="btn-group" role="group" aria-label="Sort">
+      <app-base-button>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.1666 5.83301L5.83331 14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M14.1666 14.1663H5.83331V5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span class="content">Import</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </app-base-button>
+      
+      <app-base-button>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.83337 5.83301H14.1667V14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span class="content">Export</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </app-base-button>
+      
+      <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['profil/new']">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="content">Add Observer</span>
+      </app-base-button>
     </div>
   </div>
 
