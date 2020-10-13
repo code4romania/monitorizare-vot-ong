@@ -1,0 +1,21 @@
+@import "../../../variables";
+
+$base-foreground-color: #707070;
+
+$bg-yellow: #FFD628;
+$bg-yellow-foreground: #464646;
+
+button {
+  color: $base-foreground-color;
+  font-weight: bold;
+  border: 1px solid $base-gray;
+  background: transparent;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.55rem;
+}
+
+:host.is-bg-yellow button {
+  background: $yellow;
+  color: $bg-yellow-foreground;
+  border: none;
+}
