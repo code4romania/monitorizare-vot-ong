@@ -3,8 +3,12 @@
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+html, body {
+  height: 100%;
+}
+
 body {
-  background-color:#f6f6f6;
+  background-color: $bg-global;
 }
 
 .cursor-pointer {
@@ -19,4 +23,17 @@ body {
   .arrow::before {
     border-bottom-color: white;
   }
+}
+
+.h-vertical-line {
+  width: 1px;
+  height: 25px;
+  background: $muted-gray;
+  display: inline-block;
+  margin: 0 .9rem;
+  vertical-align: top;
+}
+
+.h-is-muted {
+  color: $muted-gray;
 }
