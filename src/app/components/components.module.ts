@@ -26,6 +26,8 @@ import {OptionComponent} from './forms/option/option.component';
 import {FormsComponent} from './forms/forms.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
+import { TableModule } from '../table/table.module'
+
 export let components = [
     AnswerComponent,
     AnswerListComponent,
@@ -58,7 +60,8 @@ export let components = [
     imports: [
       SharedModule,
       NgMultiSelectDropDownModule.forRoot(),
-      DragDropModule
+      DragDropModule,
+      TableModule,
     ]
 })
 export  class ComponentsModule {

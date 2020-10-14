@@ -1,0 +1,43 @@
+<ng-content selector="[header-area]"></ng-content>
+
+<table class="c-table">
+  <thead>
+    <app-base-checkbox 
+      (checkboxChanged)="toggleAll()"
+      [forceCheck]="allSelected"
+      name="all"
+      class="c-table__row-check"
+    ></app-base-checkbox>
+    
+    <tr>
+      <th
+        *ngFor="let col of columns;"
+      >
+        {{ col.name }}
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <ng-container *ngFor="let r of rows;">
+      <app-base-checkbox 
+        (checkboxChanged)="toggleRow(r[idKey])"
+        [forceCheck]="allSelected"
+        [name]="r[idKey]"
+        class="c-table__row-check"
+      ></app-base-checkbox>
+
+      <tr [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected">
+        <td
+          *ngFor="let col of columns"
+        >
+          <ng-template [ngTemplateOutlet]="tdContent" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<div [ngClass]="{ 'c-selected-zone': true, 'is-shown': !!this.nrSelectedRows}">
+  selected {{ nrSelectedRows }}
+</div>
