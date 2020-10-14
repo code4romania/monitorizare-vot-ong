@@ -1,4 +1,4 @@
-import { Component, HostBinding, InjectionToken, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, InjectionToken, Input, OnInit } from '@angular/core';
 
 export const BASE_BUTTON_VARIANTS = new InjectionToken('BASE_BUTTON_VARIANTS', {
   providedIn: 'root',
@@ -13,7 +13,8 @@ export enum Variants {
 @Component({
   selector: 'app-base-button',
   templateUrl: './base-button.component.html',
-  styleUrls: ['./base-button.component.scss']
+  styleUrls: ['./base-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseButtonComponent implements OnInit {
   
