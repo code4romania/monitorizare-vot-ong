@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { BaseButtonComponent } from './base-button/base-button.component';
+import { BaseCheckboxComponent } from './base-checkbox/base-checkbox.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { BaseButtonComponent } from './base-button/base-button.component';
     TranslateModule,
     IconToggleInputComponent,
     NgbTooltipModule,
-    BaseButtonComponent
+    BaseButtonComponent,
+    BaseCheckboxComponent
   ],
   declarations: [
     PaginationComponent,
@@ -50,7 +52,8 @@ import { BaseButtonComponent } from './base-button/base-button.component';
     ErrorIndicatorComponent,
     IconToggleInputComponent,
     ConfirmationModalComponent,
-    BaseButtonComponent
+    BaseButtonComponent,
+    BaseCheckboxComponent
   ],
   providers: [],
 })
