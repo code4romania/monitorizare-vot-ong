@@ -1,15 +1,10 @@
-.option-container {
+.icon-holder {
   display: flex;
-  flex-direction: row;
-  margin: 4px auto;
+  flex-direction: column;
+  justify-content: space-around;
 
-  .icon-holder {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  cursor: pointer;
 
-    cursor: pointer;
-
-    margin: auto 4px;
-  }
+  margin: auto 4px;
 }
+
