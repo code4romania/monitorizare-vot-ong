@@ -14,41 +14,43 @@
   <div class="card">
     <div class="card-body section-details">
       <form [formGroup]="sectionFormGroup">
-        <div class="col-md-6">
-          <div class="form-labeled-field">
-            <div>
-              <span>{{ "SECTION_TITLE" | translate }}</span>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-labeled-field">
+              <div>
+                <span>{{ "SECTION_TITLE" | translate }}</span>
+              </div>
+              <div>
+                <input
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="{{ 'SECTION_TITLE_PLACEHOLDER' | translate }}"
+                />
+              </div>
             </div>
-            <div>
-              <input
-                class="form-control"
-                formControlName="description"
-                placeholder="{{ 'SECTION_TITLE_PLACEHOLDER' | translate }}"
-              />
+            <div class="form-labeled-field">
+              <div>
+                <span>{{ "SECTION_CODE" | translate }}</span>
+              </div>
+              <div>
+                <input
+                  class="form-control"
+                  formControlName="code"
+                  placeholder="{{ 'SECTION_CODE_PLACEHOLDER' | translate }}"
+                />
+              </div>
             </div>
           </div>
-          <div class="form-labeled-field">
-            <div>
-              <span>{{ "SECTION_CODE" | translate }}</span>
-            </div>
-            <div>
-              <input
-                class="form-control"
-                formControlName="code"
-                placeholder="{{ 'SECTION_CODE_PLACEHOLDER' | translate }}"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
+          <div class="col-lg-6">
+            <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
 
-          <!--        <div>-->
-          <!--          <span>{{'SECTION_DESCRIPTION' | translate}}</span>-->
-          <!--        </div>-->
-          <!--        <div>-->
-          <!--          <textarea rows="4" class="form-control" [(ngModel)]="section.description" placeholder="{{'SECTION_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
-          <!--        </div>-->
+            <!--        <div>-->
+            <!--          <span>{{'SECTION_DESCRIPTION' | translate}}</span>-->
+            <!--        </div>-->
+            <!--        <div>-->
+            <!--          <textarea rows="4" class="form-control" [(ngModel)]="section.description" placeholder="{{'SECTION_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
+            <!--        </div>-->
+          </div>
         </div>
       </form>
 
