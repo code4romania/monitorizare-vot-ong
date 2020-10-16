@@ -44,7 +44,11 @@
     </div>
   </div>
 
-  <app-table-container [columns]="tableColumns" [rows]="observersList.slice(0, 7)">
+  <app-table-container 
+    (selectedZoneEvent)="onSelectedZoneEvent($event)"
+    [columns]="tableColumns" 
+    [rows]="observersList.slice(0, 7)"
+  >
     <div header-area>
       <div class="card-body">
         <form novalidate [formGroup]="observersFilterForm" class="row">

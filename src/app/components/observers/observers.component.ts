@@ -27,7 +27,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { TableColumn } from 'src/app/table/table-container/table-container.component';
+import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -106,6 +106,10 @@ export class ObserversComponent implements OnInit, OnDestroy {
   resetFilters() {
     this.observersFilterForm.reset({ name: '', phone: '' });
     this.loadObservers(1);
+  }
+
+  onSelectedZoneEvent (ev: SelectedZoneEvents) {
+    console.warn('TO BE IMPLEMENTED', ev);
   }
 
   private loadObservers(pageNo) {
