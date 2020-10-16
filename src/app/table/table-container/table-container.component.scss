@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 $selected-row-color: #F9F9FA;
 $text-color: #636363;
 $border-color: #EDEDED;
@@ -58,29 +60,45 @@ $delete-color: #F16359;
   right: 0;
   left: 0;
   background: #fff;
-  // transform: translateY(100%);
+  transform: translateY(100%);
   transition: transform .3s;
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
+  box-shadow: 0px -4px 28px rgba(0, 0, 0, 0.1);
 
   &__item:not(:first-child) {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
   }
 
   &__item--stats {
-    color: $delete-color;
+    color: $readable-dark-gray;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
   }
 
-  &__item--stats, &__item--notifications {
+  &__button {
     font-size: 1.2rem;
     display: flex;
     align-items: center;
 
     span {
       font-weight: normal;
-      transform: translateX(5px);
     }
+
+    &--delete {
+      color: $delete-color;
+    }
+  }
+
+  &__cell {
+    background-color: $primary-purple;
+    color: #fff;
+  }
+
+  svg {
+    transform: scale(1.3);
   }
 }
 
