@@ -1,6 +1,7 @@
 $selected-row-color: #F9F9FA;
 $text-color: #636363;
 $border-color: #EDEDED;
+$delete-color: #F16359;
 
 :host {
   display: block;
@@ -49,20 +50,38 @@ $border-color: #EDEDED;
   tbody tr {
     border-top: 1px solid $border-color;
   }
-
-  th:last-child,
-  td:last-child {
-    transform: translateX(7rem);
-  }
 }
 
 .c-selected-zone {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  right: 0;
+  left: 0;
   background: #fff;
-  transform: translateY(100%);
+  // transform: translateY(100%);
   transition: transform .3s;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+
+  &__item:not(:first-child) {
+    margin-left: 2rem;
+  }
+
+  &__item--stats {
+    color: $delete-color;
+  }
+
+  &__item--stats, &__item--notifications {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-weight: normal;
+      transform: translateX(5px);
+    }
+  }
 }
 
 .c-selected-zone.is-shown {

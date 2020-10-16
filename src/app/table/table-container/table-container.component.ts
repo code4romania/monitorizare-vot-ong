@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Inject, Input, OnInit, TemplateRef } from '@angular/core';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
 export interface TableColumn {
   name: string;
@@ -23,7 +24,7 @@ export class TableContainerComponent implements OnInit {
   allSelected = false;
   nrSelectedRows = 0;
 
-  constructor() { }
+  constructor(@Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,) { }
 
   ngOnInit(): void {
   }
