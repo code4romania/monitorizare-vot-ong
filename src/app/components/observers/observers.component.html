@@ -44,50 +44,37 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
-      <form novalidate [formGroup]="observersFilterForm" class="row">
-        <div class="form-group col-auto">
-          <label for="form-name">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="form-name"
-            class="form-control"
-            formControlName="name"
-          />
-        </div>
-        <div class="form-group col-auto">
-          <label for="form-county">Phone</label>
-          <input
-            type="text"
-            name="phone"
-            id="form-county"
-            class="form-control"
-            formControlName="phone"
-          />
-        </div>
-        <div class="col-auto form-group align-self-end">
-          <div class="btn-group" role="group" aria-label="Filter">
-            <button
-              class="btn btn-primary"
-              [disabled]="observersFilterForm.isEmpty()"
-              (click)="applyFilters()"
-            >
-              filter
-            </button>
-            <button
-              class="btn btn-secondary"
-              [disabled]="observersFilterForm.isEmpty()"
-              (click)="resetFilters()"
-            >
-              reset
-            </button>
+  <app-table-container [columns]="tableColumns" [rows]="observersList.slice(0, 7)">
+    <div header-area>
+      <div class="card-body">
+        <form novalidate [formGroup]="observersFilterForm" class="row">
+          <div class="form-group col-auto">
+            <label for="form-name">Name</label>
+            <input type="text" name="name" id="form-name" class="form-control" formControlName="name" />
           </div>
-        </div>
-      </form>
+          <div class="form-group col-auto">
+            <label for="form-county">Phone</label>
+            <input type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
+          </div>
+          <div class="col-auto form-group align-self-end">
+            <div class="btn-group" role="group" aria-label="Filter">
+              <button class="btn btn-primary" [disabled]="observersFilterForm.isEmpty()" (click)="applyFilters()">
+                filter
+              </button>
+              <button class="btn btn-secondary" [disabled]="observersFilterForm.isEmpty()" (click)="resetFilters()">
+                reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+    
+    <ng-template let-r="row" let-c="column">
+      <span>{{ r[c.propertyName] || 'not specified' }}</span>
+    </ng-template>
+  </app-table-container>  
+<!-- 
   <div class="row row-cols-6 mt-4" *ngIf="listType === listTypes.CARD">
     <div class="col" *ngFor="let item of observersList">
       <app-observers-card
@@ -98,9 +85,9 @@
         (onResetPassword)="onObserverResetPassword($event)"
       ></app-observers-card>
     </div>
-  </div>
+  </div> -->
 
-  <table class="table table-hover" *ngIf="listType === listTypes.LIST">
+  <!-- <table class="table table-hover" *ngIf="listType === listTypes.LIST">
     <thead class="thead-light">
       <tr>
         <th>Name</th>
@@ -157,16 +144,16 @@
       </button>
     </div>
   </ng-template>
-</div>
+</div> -->
 
-<app-pagination
+<!-- <app-pagination
   [page]="observersState.page"
   [pageSize]="observersState.pageSize"
   [totalItems]="observersState.totalItems"
   [nextEnabled]="!observersState.loading"
   (pageChanged)="pageChanged($event)"
 >
-</app-pagination>
+</app-pagination> -->
 
 <app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
 <div *ngIf="observersState.error">

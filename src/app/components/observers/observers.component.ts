@@ -11,6 +11,8 @@ import {
   OnInit,
   ViewChild,
   TemplateRef,
+  Inject,
+  InjectionToken,
 } from '@angular/core';
 import {
   LoadObserversAction,
@@ -23,6 +25,23 @@ import { ObserversFilterForm } from './observers-filter.form';
 import { ObserversService } from '../../services/observers.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { TableColumn } from 'src/app/table/table-container/table-container.component';
+
+const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
+  providedIn: 'root',
+  factory: () => {
+    const columns: TableColumn[] = [
+      { name: 'Name', propertyName: 'name', },
+      { name: 'Phone', propertyName: 'phone', },
+      { name: 'Last Login', propertyName: 'lastSeen', canBeSorted: true },
+      { name: 'Actions', },
+    ];
+
+    return columns;
+  }
+});
 
 @Component({
   selector: 'app-observers',
@@ -57,7 +76,10 @@ export class ObserversComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private observersService: ObserversService,
     private toastrService: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private client: HttpClient,
+    @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
+    @Inject(TABLE_COLUMNS) public tableColumns: TableColumn[]
   ) {
     this.observersFilterForm = new ObserversFilterForm();
   }
