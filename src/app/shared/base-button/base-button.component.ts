@@ -7,7 +7,9 @@ export const BASE_BUTTON_VARIANTS = new InjectionToken('BASE_BUTTON_VARIANTS', {
 
 export enum Variants {
   DEFAULT,
-  BGYELLOW
+  BGYELLOW,
+  BGGRAY,
+  ALLTRANSPARENT,
 };
 
 @Component({
@@ -18,11 +20,21 @@ export enum Variants {
 })
 export class BaseButtonComponent implements OnInit {
   
-  @HostBinding('class.is-bg-yellow') isBgYellow = false;;
+  @HostBinding('class.is-bg-yellow') isBgYellow = false;
+  @HostBinding('class.is-bg-gray') isBgGray = false;
+  @HostBinding('class.is-all-transparent') isAllTransparent = false;
 
   @Input() set variant (v: Variants) {
-    if (v === Variants.BGYELLOW) {
-      this.isBgYellow = true;
+    switch(true) {
+      case v === Variants.BGYELLOW:
+        this.isBgYellow = true;
+        break;
+      case v === Variants.BGGRAY:
+        this.isBgGray = true;
+        break;
+      case v === Variants.ALLTRANSPARENT:
+        this.isAllTransparent = true;
+        break;
     }
   }
 
