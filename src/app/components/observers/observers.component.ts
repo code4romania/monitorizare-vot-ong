@@ -28,6 +28,9 @@ import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstr
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
+import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
+
+const ACTIONS_COLUMN_NAME = 'Actions';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -36,12 +39,18 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
       { name: 'Name', propertyName: 'name', },
       { name: 'Phone', propertyName: 'phone', },
       { name: 'Last Login', propertyName: 'lastSeen', canBeSorted: true },
-      { name: 'Actions', },
+      { name: ACTIONS_COLUMN_NAME, },
     ];
 
     return columns;
   }
 });
+
+enum DROPDOWN_EVENTS {
+  EDIT,
+  DELETE,
+  NOTIFICATION
+};
 
 @Component({
   selector: 'app-observers',
@@ -70,6 +79,13 @@ export class ObserversComponent implements OnInit, OnDestroy {
     keyboard: false,
   };
   observerToEdit: Observer;
+  
+  actionsColumnName = ACTIONS_COLUMN_NAME;
+  dropdownConfig: DropdownConfigItem[] = [
+    { name: 'Edit', isMain: true, eventType: DROPDOWN_EVENTS.EDIT  },
+    { name: 'Delete', eventType: DROPDOWN_EVENTS.DELETE  },
+    { name: 'Notification', eventType: DROPDOWN_EVENTS.NOTIFICATION  },
+  ];
 
   constructor(
     private http: ApiService,
@@ -110,6 +126,10 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   onSelectedZoneEvent (ev: SelectedZoneEvents) {
     console.warn('TO BE IMPLEMENTED', ev);
+  }
+
+  onDropdownEvent (ev: DROPDOWN_EVENTS) {
+    console.log(ev)
   }
 
   private loadObservers(pageNo) {

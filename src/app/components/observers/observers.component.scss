@@ -1,15 +1,31 @@
+@import '../../../variables';
+
+$notif-color: #707070;
+
 span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
 }
 
-app-base-button:not(:last-child) {
-  margin-right: 1rem;
+.c-observers__header {
+  app-base-button:not(:last-child) {
+    margin-right: 1rem;
+  }
+  
+  app-base-button svg:first-child {
+    margin-right: .5rem;
+  }
+  
+  app-base-button .content ~ svg {
+    margin-left: .5rem;
+  }
 }
 
-app-base-button svg:first-child {
-  margin-right: .5rem;
-}
+.c-dropdown-button {
+  &--delete {
+    color: $delete-color;
+  }
 
-app-base-button .content ~ svg {
-  margin-left: .5rem;
+  &--notification {
+    color: $notif-color;
+  }
 }
