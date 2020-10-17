@@ -49,3 +49,24 @@ body {
   width: 1px;
   white-space: nowrap;
 }
+
+.is-base-cell {
+  display: inline-flex;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: $light-gray;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+button {
+  &.is-base-cell {
+    border: none;
+
+    &:focus:active {
+      border: none;
+      outline: none;
+    }
+  }
+}

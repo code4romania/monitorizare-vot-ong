@@ -16,7 +16,6 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { BaseButtonComponent } from './base-button/base-button.component';
 import { BaseCheckboxComponent } from './base-checkbox/base-checkbox.component';
-import { BaseCellComponent } from './base-cell/base-cell.component';
 
 @NgModule({
   imports: [
@@ -46,7 +45,6 @@ import { BaseCellComponent } from './base-cell/base-cell.component';
     NgbTooltipModule,
     BaseButtonComponent,
     BaseCheckboxComponent,
-    BaseCellComponent
   ],
   declarations: [
     PaginationComponent,
@@ -56,7 +54,6 @@ import { BaseCellComponent } from './base-cell/base-cell.component';
     ConfirmationModalComponent,
     BaseButtonComponent,
     BaseCheckboxComponent,
-    BaseCellComponent
   ],
   providers: [],
 })
