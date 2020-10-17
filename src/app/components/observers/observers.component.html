@@ -46,8 +46,8 @@
 
   <app-table-container 
     (selectedZoneEvent)="onSelectedZoneEvent($event)"
-    [columns]="tableColumns" 
-    [rows]="observersList.slice(0, 7)"
+    [columns]="tableColumns"
+    [rows]="observersList"
   >
     <div header-area>
       <div class="card-body">
@@ -77,89 +77,20 @@
     <ng-template let-r="row" let-c="column">
       <span>{{ r[c.propertyName] || 'not specified' }}</span>
     </ng-template>
+
+    <app-pagination
+      footer-area
+      [page]="observersState.page"
+      [pageSize]="observersState.pageSize"
+      [totalItems]="observersState.totalItems"
+      [nextEnabled]="!observersState.loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination> 
   </app-table-container>  
-<!-- 
-  <div class="row row-cols-6 mt-4" *ngIf="listType === listTypes.CARD">
-    <div class="col" *ngFor="let item of observersList">
-      <app-observers-card
-        [observer]="item"
-        [enableEdit]="true"
-        (onSelect)="onObserverSelect($event)"
-        (onDelete)="onObserverDelete($event)"
-        (onResetPassword)="onObserverResetPassword($event)"
-      ></app-observers-card>
-    </div>
-  </div> -->
 
-  <!-- <table class="table table-hover" *ngIf="listType === listTypes.LIST">
-    <thead class="thead-light">
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Last login</th>
-        <th class="text-right">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let observer of observersList"
-        app-oberver-row
-        [observer]="observer"
-        [enableEdit]="true"
-        (onSelect)="onObserverSelect($event)"
-        (onDelete)="onObserverDelete($event)"
-        (onResetPassword)="onObserverResetPassword($event)"
-      ></tr>
-    </tbody>
-  </table>
-
-  <ng-template #editObserverModalTemplate>
-    <div class="modal-header" data-backdrop="static">
-      <h4 class="modal-title pull-left">
-        {{ "ENTER_NEW_PASSWORD" | translate }} {{ observerToEdit.name }}
-      </h4>
-      <button
-        type="button"
-        class="close pull-right"
-        aria-label="Close"
-        (click)="modalRef.close()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <input
-        type="text"
-        name="password"
-        placeholder="pin"
-        [(ngModel)]="newPassword"
-        #pin="ngModel"
-        maxlength="6"
-        minlength="4"
-      />
-      <p>&nbsp;</p>
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="resetPassword()"
-        [disabled]="!isPasswordValid()"
-      >
-        {{ "RESET_PASSWORD" | translate }}
-      </button>
-    </div>
-  </ng-template>
-</div> -->
-
-<!-- <app-pagination
-  [page]="observersState.page"
-  [pageSize]="observersState.pageSize"
-  [totalItems]="observersState.totalItems"
-  [nextEnabled]="!observersState.loading"
-  (pageChanged)="pageChanged($event)"
->
-</app-pagination> -->
-
-<app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
-<div *ngIf="observersState.error">
-  <app-error-indicator></app-error-indicator>
+  <app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
+  <div *ngIf="observersState.error">
+    <app-error-indicator></app-error-indicator>
+  </div>
 </div>
