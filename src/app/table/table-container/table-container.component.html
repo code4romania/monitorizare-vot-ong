@@ -1,4 +1,4 @@
-<ng-content selector="[header-area]"></ng-content>
+<ng-content select="[header-area]"></ng-content>
 
 <table class="c-table">
   <thead>
@@ -38,9 +38,12 @@
   </tbody>
 </table>
 
+<ng-content select="[footer-area]"></ng-content>
+
+
 <div [ngClass]="{ 'c-selected-zone': true, 'is-shown': !!this.nrSelectedRows}">
   <div class="c-selected-zone__item c-selected-zone__item--stats">
-    <app-base-cell class="c-selected-zone__cell">{{ nrSelectedRows }}</app-base-cell>
+    <div class="c-selected-zone__cell is-base-cell">{{ nrSelectedRows }}</div>
     &nbsp;
     <span>Observers selected:</span>
   </div>

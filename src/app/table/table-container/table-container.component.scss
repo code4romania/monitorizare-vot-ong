@@ -49,8 +49,14 @@ $delete-color: #F16359;
     }
   }
 
-  tbody tr {
-    border-top: 1px solid $border-color;
+  tbody {
+    tr {
+      border-top: 1px solid $border-color;
+    }
+
+    tr:last-child {
+      border-bottom: 1px solid $border-color;
+    }
   }
 }
 
