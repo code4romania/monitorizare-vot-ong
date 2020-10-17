@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, InjectionToken, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, InjectionToken, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 export const BASE_BUTTON_VARIANTS = new InjectionToken('BASE_BUTTON_VARIANTS', {
   providedIn: 'root',
@@ -16,13 +16,15 @@ export enum Variants {
   selector: 'app-base-button',
   templateUrl: './base-button.component.html',
   styleUrls: ['./base-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BaseButtonComponent implements OnInit {
   
   @HostBinding('class.is-bg-yellow') isBgYellow = false;
   @HostBinding('class.is-bg-gray') isBgGray = false;
   @HostBinding('class.is-all-transparent') isAllTransparent = false;
+
+  @Input('custom-styles') customStyles = {};
 
   @Input() set variant (v: Variants) {
     switch(true) {
