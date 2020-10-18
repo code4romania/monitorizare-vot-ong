@@ -20,6 +20,10 @@ button {
   border-radius: 0.55rem;
   width: 100%;
   height: 100%;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
 }
 
 :host.is-bg-yellow button {
@@ -37,4 +41,12 @@ button {
 
 :host.is-all-transparent button {
   border: none;
+}
+
+:host.is-purple button {
+  border-radius: 6px;
+  border-color: $primary-purple;
+  color: $primary-purple;
+  font-weight: 500;
+  font-size: 1.1rem;
 }

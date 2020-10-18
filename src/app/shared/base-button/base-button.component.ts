@@ -10,6 +10,7 @@ export enum Variants {
   BGYELLOW,
   BGGRAY,
   ALLTRANSPARENT,
+  PURPLE,
 };
 
 @Component({
@@ -23,8 +24,10 @@ export class BaseButtonComponent implements OnInit {
   @HostBinding('class.is-bg-yellow') isBgYellow = false;
   @HostBinding('class.is-bg-gray') isBgGray = false;
   @HostBinding('class.is-all-transparent') isAllTransparent = false;
+  @HostBinding('class.is-purple') isPurple = false;
 
   @Input('custom-styles') customStyles = {};
+  @Input('disabled') isDisabled = false;
 
   @Input() set variant (v: Variants) {
     switch(true) {
@@ -37,6 +40,9 @@ export class BaseButtonComponent implements OnInit {
       case v === Variants.ALLTRANSPARENT:
         this.isAllTransparent = true;
         break;
+      case v === Variants.PURPLE:
+      this.isPurple = true;
+      break;
     }
   }
 
