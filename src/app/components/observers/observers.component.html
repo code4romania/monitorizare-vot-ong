@@ -90,7 +90,7 @@
       <app-base-dropdown 
         *ngIf="c.name === actionsColumnName"
         [configArr]="dropdownConfig"
-        (dropdownEvent)="onDropdownEvent($event)"
+        (dropdownEvent)="onDropdownEvent($event, r)"
       >
         <ng-template let-btnName>
           <ng-container [ngSwitch]="btnName">

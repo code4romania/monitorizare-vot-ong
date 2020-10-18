@@ -29,6 +29,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -94,8 +95,10 @@ export class ObserversComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private modalService: NgbModal,
     private client: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
-    @Inject(TABLE_COLUMNS) public tableColumns: TableColumn[]
+    @Inject(TABLE_COLUMNS) public tableColumns: TableColumn[],
   ) {
     this.observersFilterForm = new ObserversFilterForm();
   }
@@ -128,8 +131,20 @@ export class ObserversComponent implements OnInit, OnDestroy {
     console.warn('TO BE IMPLEMENTED', ev);
   }
 
-  onDropdownEvent (ev: DROPDOWN_EVENTS) {
-    console.log(ev)
+  onDropdownEvent (ev: DROPDOWN_EVENTS, row: any) {
+    switch (true) {
+      case ev === DROPDOWN_EVENTS.EDIT:
+        this.router.navigate(['profil/edit/', row.id], { relativeTo: this.route });
+        break;
+      case ev === DROPDOWN_EVENTS.EDIT:
+        console.warn('TO BE IMPLEMENTED');
+        break;
+      case ev === DROPDOWN_EVENTS.EDIT:
+        console.warn('TO BE IMPLEMENTED');
+        break;
+    }
+    
+    console.log(ev, row)
   }
 
   private loadObservers(pageNo) {

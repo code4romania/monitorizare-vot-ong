@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ObserverProfileForm } from './observer-profile.form';
 import { ObserversService } from '../../../services/observers.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiListResponse } from '../../../models/api-list-response.model';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
 @Component({
   selector: 'app-observer-profile',
@@ -22,7 +23,7 @@ export class ObserverProfileComponent implements OnInit {
   error: string;
   fileData: File;
 
-  observerProfileForm: ObserverProfileForm;
+  observerProfileForm: FormGroup;
   observerProfileUploadForm: FormGroup;
   observer: Observer;
   pageState: PageState;
@@ -32,14 +33,19 @@ export class ObserverProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
-    this.observerProfileForm = new ObserverProfileForm();
+    this.observerProfileForm = this.fb.group({
+      firstName: '',
+      lastName: '',
+      phoneNumber: ['', Validators.required],
+    })
 
-    this.observerProfileUploadForm = this.fb.group({
-      csv: null,
-      ongId: new FormControl('', Validators.required),
-    });
+    // this.observerProfileUploadForm = this.fb.group({
+    //   csv: null,
+    //   ongId: new FormControl('', Validators.required),
+    // });
   }
 
   ngOnInit() {
@@ -73,6 +79,10 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   onSubmit() {
+    console.warn("[submit] TO BE IMPLEMEMTED", this.observerProfileForm.value)
+    // this.saveChanges();
+
+    return;
     const formData = new FormData();
     formData.append('file', this.observerProfileUploadForm.get('csv').value);
     formData.append('ongId', this.observerProfileUploadForm.get('ongId').value);
@@ -94,6 +104,7 @@ export class ObserverProfileComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.pageState = params['state'];
       this.handleFormState();
+      this.addControlBasedOnState();
       this.getObserver(params);
     });
   }
@@ -111,7 +122,7 @@ export class ObserverProfileComponent implements OnInit {
     observerToAdd.phone = this.observerProfileForm.value.phone;
     observerToAdd.pin = this.observerProfileForm.value.password;
     observerToAdd.name = this.observerProfileForm.value.name;
-    observerToAdd.sendSMS = this.observerProfileForm.value.sendSMS;
+    // observerToAdd.sendSMS = this.observerProfileForm.value.sendSMS;
 
     this.observerService.addNewObserver(observerToAdd).subscribe((value) => {
       this.toastr.success('Success', 'Observer has been added');
@@ -138,5 +149,13 @@ export class ObserverProfileComponent implements OnInit {
           }
         });
     }
+  }
+
+  private addControlBasedOnState () {
+    if (this.pageState !== PageState.EDIT) {
+      return;
+    }
+
+    this.observerProfileForm.addControl('password', this.fb.control(''))
   }
 }
