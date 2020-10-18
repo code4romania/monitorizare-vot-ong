@@ -30,6 +30,11 @@ button {
   background: $bg-yellow;
   color: $bg-yellow-foreground;
   border: none;
+
+  &[disabled] {
+    background: lighten($bg-yellow, 10%);
+    color: lighten($bg-yellow-foreground, 15%);
+  }
 }
 
 :host.is-bg-gray button {

@@ -28,6 +28,7 @@ export class BaseButtonComponent implements OnInit {
 
   @Input('custom-styles') customStyles = {};
   @Input('disabled') isDisabled = false;
+  @Input('type') type = 'button';
 
   @Input() set variant (v: Variants) {
     switch(true) {
