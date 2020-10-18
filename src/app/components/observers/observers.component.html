@@ -53,21 +53,33 @@
       <div class="card-body">
         <form novalidate [formGroup]="observersFilterForm" class="row">
           <div class="form-group col-auto">
-            <label for="form-name">Name</label>
-            <input type="text" name="name" id="form-name" class="form-control" formControlName="name" />
+            <label for="form-name">Filter by name</label>
+            <input placeholder="type the NGO's name" type="text" name="name" id="form-name" class="form-control" formControlName="name" />
           </div>
           <div class="form-group col-auto">
-            <label for="form-county">Phone</label>
-            <input type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
+            <label for="form-county">Filter by phone no</label>
+            <input placeholder="type phone number" type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
           </div>
           <div class="col-auto form-group align-self-end">
-            <div class="btn-group" role="group" aria-label="Filter">
-              <button class="btn btn-primary" [disabled]="observersFilterForm.isEmpty()" (click)="applyFilters()">
-                filter
-              </button>
-              <button class="btn btn-secondary" [disabled]="observersFilterForm.isEmpty()" (click)="resetFilters()">
-                reset
-              </button>
+            <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+              <!-- in `height: '2.8rem'`, the value is from `.scss` file -->
+              <app-base-button
+                (click)="applyFilters()"
+                [disabled]="observersFilterForm.isEmpty()"
+                [variant]="BaseButtonVariants.PURPLE"
+                [custom-styles]="{ height: '2.8rem' }" 
+              >
+                Filter
+              </app-base-button>
+              &nbsp;
+              <app-base-button 
+                (click)="resetFilters()"
+                [disabled]="observersFilterForm.isEmpty()"
+                [variant]="BaseButtonVariants.PURPLE"
+                [custom-styles]="{ height: '2.8rem', border: 'none' }" 
+              >
+                Reset
+              </app-base-button>
             </div>
           </div>
         </form>

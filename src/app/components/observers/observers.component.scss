@@ -1,6 +1,9 @@
 @import '../../../variables';
 
 $notif-color: #707070;
+$input-text-color: #A3A3A3;
+$label-color: #454545;
+$filter-zone-height: 2.8rem;
 
 span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
@@ -27,5 +30,26 @@ span.font-weight-bold.h-is-muted {
 
   &--notification {
     color: $notif-color;
+  }
+}
+
+.form-group {
+  & > input.form-control {
+    border: 1px solid $base-gray;
+    color: $input-text-color;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    font-size: 1.1rem;
+    height: $filter-zone-height;
+
+    &::placeholder {
+      color: $input-text-color;
+    }
+  }
+
+  & > label {
+    color: $label-color;
+    font-size: 1.2rem;
+    line-height: 30px;
   }
 }
