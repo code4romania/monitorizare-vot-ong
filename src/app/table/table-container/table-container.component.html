@@ -2,7 +2,8 @@
 
 <table class="c-table">
   <thead>
-    <app-base-checkbox 
+    <app-base-checkbox
+      *ngIf="!isCheckboxDisabled"
       (checkboxChanged)="toggleAll()"
       [forceCheck]="allSelected"
       name="all"
@@ -21,6 +22,7 @@
   <tbody>
     <ng-container *ngFor="let r of rows;">
       <app-base-checkbox 
+        *ngIf="!isCheckboxDisabled"
         (checkboxChanged)="toggleRow(r[idKey])"
         [forceCheck]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
         [name]="r[idKey]"
@@ -41,7 +43,7 @@
 <ng-content select="[footer-area]"></ng-content>
 
 
-<div [ngClass]="{ 'c-selected-zone': true, 'is-shown': !!this.nrSelectedRows}">
+<div *ngIf="!isCheckboxDisabled" [ngClass]="{ 'c-selected-zone': true, 'is-shown': !!this.nrSelectedRows}">
   <div class="c-selected-zone__item c-selected-zone__item--stats">
     <div class="c-selected-zone__cell is-base-cell">{{ nrSelectedRows }}</div>
     &nbsp;

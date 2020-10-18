@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
 export interface TableColumn {
@@ -27,6 +27,10 @@ export class TableContainerComponent implements OnInit {
   @Input() columns: TableColumn[] = [];
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
+  
+  @Input('disable-checkbox') 
+  @HostBinding('class.is-checkbox-disabled')
+  isCheckboxDisabled = false; 
 
   @Output() selectedZoneEvent = new EventEmitter();
 

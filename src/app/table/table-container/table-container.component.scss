@@ -38,6 +38,10 @@ $border-color: #EDEDED;
   thead th,
   tbody tr td {
     padding-left: 3.7rem;
+
+    :host.is-checkbox-disabled & {
+      padding-left: 2rem;
+    }
   }
 
   tr {
