@@ -12,15 +12,15 @@
             <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           &nbsp;
-          <span>Back</span>
+          <span>{{ 'BACK' | translate }}</span>
         </div>
       </app-base-button>
     </div>
   </div>
 
   <div class="mb-4 mt-4 ml-3 c-profile__title">
-    <h2 class="d-inline h4" *ngIf="pageState === 'new'">Add new observer</h2>
-    <h2 class="d-inline h4" *ngIf="pageState === 'edit'">Edit observer</h2>
+    <h2 class="d-inline h4" *ngIf="pageState === 'new'">{{ 'OBSERVER_ADD' | translate }}</h2>
+    <h2 class="d-inline h4" *ngIf="pageState === 'edit'">{{ 'OBSERVER_EDIT' | translate }}</h2>
   </div>
 
   <div class="card ml-3">
@@ -32,7 +32,7 @@
       <div class="card-body">
         <div class="c-profile__form-body">
           <div class="form-group">
-            <label for="firstName">First name</label>
+            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
             <input
               formControlName="firstName"
               id="firstName"
@@ -43,7 +43,7 @@
           </div>
           
           <div class="form-group">
-            <label for="lastName">Last name</label>
+            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
             <input
               formControlName="lastName"
               id="lastName"
@@ -54,7 +54,7 @@
           </div>
           
           <div class="form-group">
-            <label for="phoneNumber">Phone number *</label>
+            <label for="phoneNumber">{{ 'PHONE_NUMBER' | translate }} *</label>
             <input
               formControlName="phoneNumber"
               id="phoneNumber"
@@ -64,10 +64,12 @@
             />
           </div>
 
-          <ng-template 
-            [ngIf]="pageState === 'edit'"
-            [ngTemplateOutlet]="editControls"
-          ></ng-template>
+          <ng-container *ngIf="pageState === 'edit'">
+            <ng-template 
+              [ngTemplateOutlet]="editControls"
+              [ngTemplateOutletContext]="{ $implicit: observerProfileForm }"
+            ></ng-template>
+          </ng-container>
         </div>
 
         <div class="c-profile__buttons">
@@ -78,7 +80,7 @@
             type="submit"
             [disabled]="observerProfileForm.invalid"
           >
-            Save
+            {{ 'SAVE' | translate }}
           </app-base-button>
 
           <app-base-button
@@ -87,13 +89,14 @@
             [custom-styles]="{ fontWeight: 'normal' }" 
             [variant]="BaseButtonVariants.DEFAULT"
           >
-            Cancel
+            {{ 'CANCEL' | translate }}
           </app-base-button>
 
-          <ng-template 
-            [ngIf]="pageState === 'edit'" 
-            [ngTemplateOutlet]="editButtons"
-          ></ng-template>
+          <ng-container *ngIf="pageState === 'edit'">
+            <ng-template 
+              [ngTemplateOutlet]="editButtons"
+            ></ng-template>
+          </ng-container>
         </div>
       </div>
     </form>
@@ -107,13 +110,13 @@
     [custom-styles]="{ fontWeight: 'normal' }" 
     [variant]="BaseButtonVariants.ALLTRANSPARENT"
   >
-    <span class="c-profile__button--delete">Delete</span>
+    <span class="c-profile__button--delete">{{ 'DELETE' | translate }}</span>
   </app-base-button>
 </ng-template>
 
-<ng-template #editControls>
-  <div class="form-group" [formGroup]="observerProfileForm">
-    <label for="password">Password</label>
+<ng-template let-formGroup #editControls>
+  <div class="form-group" [formGroup]="formGroup">
+    <label for="password">{{ 'PASSWORD' | translate }}</label>
     <input
       formControlName="password"
       id="password"

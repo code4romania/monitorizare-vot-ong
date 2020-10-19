@@ -14,7 +14,7 @@
       <th
         *ngFor="let col of columns;"
       >
-        <span>{{ col.name }}</span>
+        <span>{{ col.name | async }}</span>
       </th>
     </tr>
   </thead>

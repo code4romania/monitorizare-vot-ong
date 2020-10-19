@@ -1,4 +1,4 @@
-import { from as observableFrom, Subscription } from 'rxjs';
+import { from as observableFrom, Observable, Subscription } from 'rxjs';
 
 import { concatMap, take, map } from 'rxjs/operators';
 import { ObserversStateItem } from '../../store/observers/observers.state';
@@ -30,6 +30,7 @@ import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-
 import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -37,10 +38,10 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
   factory: () => {
     const columns: TableColumn[] = [
-      { name: 'Name', propertyName: 'name', },
-      { name: 'Phone', propertyName: 'phone', },
-      { name: 'Last Login', propertyName: 'lastSeen', canBeSorted: true },
-      { name: ACTIONS_COLUMN_NAME, },
+      { name: 'NAME', propertyName: 'name', },
+      { name: 'PHONE', propertyName: 'phone', },
+      { name: 'LAST_LOGIN', propertyName: 'lastSeen', canBeSorted: true },
+      { name: 'ACTIONS', propertyName: ACTIONS_COLUMN_NAME },
     ];
 
     return columns;
@@ -52,6 +53,8 @@ enum DROPDOWN_EVENTS {
   DELETE,
   NOTIFICATION
 };
+
+type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
 @Component({
   selector: 'app-observers',
@@ -88,6 +91,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
     { name: 'Notification', eventType: DROPDOWN_EVENTS.NOTIFICATION  },
   ];
 
+  tableColumns: TableColumnTranslated[] = [];
+
   constructor(
     private http: ApiService,
     private store: Store<AppState>,
@@ -97,10 +102,12 @@ export class ObserversComponent implements OnInit, OnDestroy {
     private client: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
-    @Inject(TABLE_COLUMNS) public tableColumns: TableColumn[],
+    @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
     this.observersFilterForm = new ObserversFilterForm();
+    this.translateColumnNames(rawTableColumns);
   }
 
   ngOnInit() {
@@ -256,5 +263,11 @@ export class ObserversComponent implements OnInit, OnDestroy {
           this.toastrService.error('Could not reset password', 'Error!');
         }
       );
+  }
+
+  private translateColumnNames (rawTableColumns: TableColumn[]) {
+    this.tableColumns = rawTableColumns.map(
+      ({ name, ...rest }) => ({ ...rest, name: this.translateService.get(name) })
+    );
   }
 }
