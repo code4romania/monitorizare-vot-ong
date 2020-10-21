@@ -1,5 +1,8 @@
 import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
 import { Component, Input, OnInit } from '@angular/core';
+import { StatisticsDetailsComponent } from '../statistics-details/statistics-details.component';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-statistics-card',
@@ -8,22 +11,34 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StatisticsCardComponent implements OnInit {
 
-  @Input()
-  item: StatisticsStateItem;
+  @Input() item: StatisticsStateItem;
+
+  @Input() sliceNumber: number
+
+  @Input() dialog: boolean;
 
 
+  constructor( private modalService: NgbModal) { }
+
+  ngOnInit() {
+  }
   get itemValues(){
     if (!this.item.values){
       return [];
     }
-    return this.item.values.slice(0, 5);
+    if (this.sliceNumber) {
+      return this.item.values.slice(0, this.sliceNumber);
+    } else {
+      return this.item.values;
+    }
+
   }
 
 
-  constructor() { }
 
-  ngOnInit() {
-
+  public openDetail(item: StatisticsStateItem): void {
+    const modalRef = this.modalService.open(StatisticsDetailsComponent);
+    modalRef.componentInstance.item = item;
   }
 
 }

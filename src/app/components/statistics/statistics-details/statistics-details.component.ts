@@ -5,8 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/store.module';
 import { StatisticsStateItem } from '../../../store/statistics/statistics.state';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-statistics-details',
@@ -15,10 +16,26 @@ import { Subscription } from 'rxjs';
 })
 export class StatisticsDetailsComponent implements OnInit, OnDestroy {
 
-  state: StatisticsStateItem;
+/*   state: StatisticsStateItem;
 
-  subs: Subscription[];
+  subs: Subscription[]; */
 
+  @Input() item: StatisticsStateItem;
+
+  constructor(private store: Store<AppState>, private route: ActivatedRoute, public activeModal: NgbActiveModal) { }
+
+  // ! This is not a dialog, there isn't a paginated list anymore.  Too new not to delete this yet.  Please REVIEW!!!
+  ngOnInit() {
+    /*  this.subs = [this.route.params.pipe(
+       map(p => p['key']),
+       mergeMap(key => this.store.select(s => s.statistics).pipe(map(s => s[key]))), )
+       .subscribe(s => this.state = s)]; */
+
+   }
+   ngOnDestroy() {
+     //this.subs.map(sub => sub.unsubscribe());
+   }
+/*
   currentValues() {
     const startPage = this.state.page - 1,
       pageSize = this.state.pageSize,
@@ -51,17 +68,7 @@ export class StatisticsDetailsComponent implements OnInit, OnDestroy {
   pageChanged(event) {
     this.store.dispatch(new LoadStatisticAction(this.state.key, event.page, event.pageSize));
   }
+ */
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.subs = [this.route.params.pipe(
-      map(p => p['key']),
-      mergeMap(key => this.store.select(s => s.statistics).pipe(map(s => s[key]))), )
-      .subscribe(s => this.state = s)];
-
-  }
-  ngOnDestroy() {
-    this.subs.map(sub => sub.unsubscribe());
-  }
 }
