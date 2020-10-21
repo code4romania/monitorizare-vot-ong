@@ -18,7 +18,7 @@ export class FormActionTypes {
 export class FormLoadAction implements Action {
     readonly type = FormActionTypes.LOAD_ALL_FORMS_META;
 
-    constructor() {
+    constructor(public draft?: boolean) {
     }
 }
 export class FormErrorAction implements Action {

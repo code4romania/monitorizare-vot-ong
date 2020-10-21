@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormDetails} from '../../models/form.info.model';
-import {AppState} from '../../store/store.module';
-import {select, Store} from '@ngrx/store';
-import {map, take} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
-import {FormState} from '../../store/form/form.reducer';
-import {FormDeleteAction, FormLoadAction} from '../../store/form/form.actions';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {cloneDeep} from 'lodash';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormDetails } from '../../models/form.info.model';
+import { AppState } from '../../store/store.module';
+import { select, Store } from '@ngrx/store';
+import { map, take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { FormState } from '../../store/form/form.reducer';
+import { FormDeleteAction, FormLoadAction } from '../../store/form/form.actions';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-forms',
@@ -19,22 +19,23 @@ export class FormsComponent implements OnInit, OnDestroy {
   pageSize = 10;
   totalCount = 0;
   page = 1;
+  draftSelected: boolean = false;
 
   formsSubscription: Subscription;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.loadForms(1, this.pageSize);
+    this.loadForms(1, this.pageSize, this.draftSelected);
     this.handleFormsData();
   }
 
-  private loadForms(pageNo: number, pageSize: number) {
+  private loadForms(pageNo: number, pageSize: number, draftSelected: boolean) {
     this.store
       .pipe(
         select(s => s.form),
         take(1),
-        map((storeItem: FormState) => new FormLoadAction())
+        map((storeItem: FormState) => new FormLoadAction(draftSelected))
       )
       .subscribe(action => this.store.dispatch(action));
   }
@@ -58,5 +59,10 @@ export class FormsComponent implements OnInit, OnDestroy {
 
   onReorder(event: CdkDragDrop<FormDetails[]>) {
     moveItemInArray(this.formsList, event.previousIndex, event.currentIndex);
+  }
+
+  public onTabSelect() {
+    this.draftSelected = !this.draftSelected;
+    this.loadForms(this.page, this.pageSize, this.draftSelected)
   }
 }

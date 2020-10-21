@@ -12,84 +12,76 @@
     </div>
   </div>
 
-  <div class="table-responsive">
-    <table class="table align-items-center table-flush">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">
-            {{ "INDEX" | translate }}
-          </th>
-          <th scope="col">
-            {{ "FORM_CODE" | translate }}
-          </th>
-          <th scope="col">
-            {{ "FORM_TITLE" | translate }}
-          </th>
-          <th scope="col">
-            {{ "DIASPORA" | translate }}
-          </th>
-          <th scope="col">
-            {{ "DRAFT" | translate }}
-          </th>
-          <th scope="col" class="text-right">
-            {{ "ACTION" | translate }}
-          </th>
-        </tr>
-      </thead>
-      <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
-        <tr *ngFor="let form of formsList" cdkDrag>
-          <td>
-            {{ (page - 1) * pageSize + formsList.indexOf(form) + 1 }}
-          </td>
-          <td>
-            {{ form.code }}
-          </td>
-          <td>
-            {{ form.description }}
-          </td>
-          <td>
-            <img
-              src="/assets/forms/diaspora-check.png"
-              *ngIf="form.diaspora"
-              alt=""
-            />
-          </td>
-          <td>
-            <img
-              src="/assets/forms/diaspora-check.png"
-              *ngIf="form.draft"
-              alt=""
-            />
-          </td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                [routerLink]="[form.id]"
-              >
-                {{ "EDIT" | translate }}
-              </button>
-              <div
-                class="btn-group"
-                ngbDropdown
-                role="group"
-                aria-label="Button group with nested dropdown"
-              >
-                <button
-                  class="btn btn-secondary dropdown-toggle-split"
-                  ngbDropdownToggle
-                ></button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="deleteForm(form)">
-                    {{ "DELETE" | translate }}
-                  </button>
+  <div class="card border-light shadow">
+    <ul class="nav pl-3">
+      <li class="nav-item pt-3">
+        <a class="nav-link cursor-pointer" [class.active]="!draftSelected" (click)="onTabSelect()">{{ "PUBLIC" | translate }}</a>
+      </li>
+      <li class="nav-item pt-3">
+        <a class="nav-link cursor-pointer" [class.active]="draftSelected" (click)="onTabSelect()">{{ "DRAFT" | translate }}</a>
+      </li>
+    </ul>
+    <div class="table-responsive">
+      <table class="table align-items-center">
+        <thead>
+          <tr>
+            <th class="w-25">
+              {{ "FORM_TITLE" | translate }}
+            </th>
+            <th class="w-10">
+              {{ "FORM_CODE" | translate }}
+            </th>
+            <th class="w-10">
+              # {{ "TOTAL_QUESTIONS" | translate }}
+            </th>
+            <th class="">
+              {{ "DIASPORA" | translate }}
+            </th>
+            <th class="w-25">
+              {{ "LAST_EDIT" | translate }}
+            </th>
+            <th class="">
+              {{ "ACTION" | translate }}
+            </th>
+            <th class=""></th>
+          </tr>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
+          <tr *ngFor="let form of formsList" cdkDrag cdkDragLockAxis="y">
+            <td  class="w-25">
+              {{ form.description }}
+            </td>
+            <td >
+              {{ form.code }}
+            </td>
+            <td >number</td>
+            <td >
+              <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora" alt="" />
+            </td>
+            <td >date</td>
+            <td >
+              <div class="btn-group">
+                <button type="button" class="btn bg-light" [routerLink]="[form.id]">
+                  {{ "EDIT" | translate }}
+                </button>
+                <div class="btn-group" ngbDropdown role="group" container="body">
+                  <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
+                  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger">
+                      <img src="/assets/forms/icon-delete.png" alt="">
+                      <span>{{ "DELETE" | translate }}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td class="cursor-move" cdkDragHandle>
+              <img src="/assets/forms/icon-reorder.png" alt="">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </div>

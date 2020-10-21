@@ -16,18 +16,18 @@ export class FormsService {
     this.baseUrl = Location.joinWithSlash(environment.apiUrl, '/api/v1/form');
   }
 
-  public loadForms() {
-    return this.http.get<FormInfo>(this.baseUrl).pipe();
+  public loadForms(draft: boolean = false) {
+    const url: string = Location.joinWithSlash(this.baseUrl, `?draft=${draft}`);
+    return this.http.get<FormInfo>(url).pipe();
   }
 
   public searchForms(name: string, pageNo?: number, pageSize?: number) {
-    // TODO: enable search forms after BE is implemented
-    // let url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/search?Description=${name}`);
-    //
-    // if (pageNo > 0 && pageSize > 0) {
-    //   url = Location.joinWithSlash(this.baseUrl, `/api/v1/form/search?Description=${name}&Page=${pageNo}&PageSize=${pageSize}`);
-    // }
-    return this.http.get<FormInfo>(this.baseUrl).pipe();
+    let url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/form/search?Description=${name}`);
+
+    if (pageNo > 0 && pageSize > 0) {
+      url = Location.joinWithSlash(this.baseUrl, `/api/v1/form/search?Description=${name}&Page=${pageNo}&PageSize=${pageSize}`);
+    }
+    return this.http.get<FormInfo>(url).pipe();
   }
 
   public getForm(formId: number) {
