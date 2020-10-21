@@ -1,9 +1,11 @@
-<div *ngIf="anyStatistics" class="row">
-    <div class="col-md-6 col-lg-4" style="margin-top:20px" [class.hidden]="!canShowItem(item)" *ngFor="let item of statisticsState">
-        <app-statistics-card *ngIf="canShowItem(item)" [item]="item">
-        </app-statistics-card>
+<div class="container-fluid">
+    <div *ngIf="anyStatistics" class="row">
+        <div class="col-md-6 col-lg-4 mb-4" [class.hidden]="!canShowItem(item)" *ngFor="let item of statisticsState">
+            <app-statistics-card *ngIf="canShowItem(item)" [item]="item">
+            </app-statistics-card>
+        </div>
     </div>
-</div>
-<div *ngIf="!anyStatistics">
-    <app-loading-indicator></app-loading-indicator>
+    <div *ngIf="!anyStatistics">
+        <app-loading-indicator></app-loading-indicator>
+    </div>
 </div>

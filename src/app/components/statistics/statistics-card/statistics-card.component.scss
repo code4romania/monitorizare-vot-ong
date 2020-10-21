@@ -1,6 +1,6 @@
 @import "../../../../variables";
 .card-header {
-  background: $gray;
+  background:#fff;
   padding: 10px 25px;
   height: 100px;
   display: flex;
@@ -9,14 +9,15 @@
   margin: auto 0;
 }
 .card-row {
-  &:nth-child(2n) {
-    background: $gray;
+  &:nth-child(odd) {
+    background:$gray-light;
   }
 }
 .card-footer {
   padding: 10px 25px;
+  background-color:#fff;
   a {
-    text-decoration: underline;
-    color: blue;
+    color: $primary;
+    cursor: pointer;
   }
 }

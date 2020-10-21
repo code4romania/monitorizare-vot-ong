@@ -1,4 +1,5 @@
 
+ @import "../../../../variables";
  span {
    &.rotate {
     img {
@@ -8,7 +9,7 @@
  }
 
  .add-option-button {
-  color: rebeccapurple;
+  color: $primary;
   cursor: pointer;
 }
 
