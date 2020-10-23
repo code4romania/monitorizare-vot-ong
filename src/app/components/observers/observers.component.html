@@ -44,11 +44,12 @@
     </div>
   </div>
 
-  <app-table-container 
+  <app-table-container
     (selectedZoneEvent)="onSelectedZoneEvent($event)"
     (sortedColumnClicked)="onSortedColumnClicked($event)"
     [columns]="tableColumns"
     [rows]="observersList"
+    [is-loading]="observersState.loading"
   >
     <div header-area>
       <div class="card-body">
@@ -140,7 +141,6 @@
     </app-pagination> 
   </app-table-container>  
 
-  <app-loading-indicator *ngIf="observersState.loading"></app-loading-indicator>
   <div *ngIf="observersState.error">
     <app-error-indicator></app-error-indicator>
   </div>
