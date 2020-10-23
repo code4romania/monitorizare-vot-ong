@@ -9,7 +9,7 @@ span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
 }
 
-.c-observers__header {
+.c-observers__buttons {
   app-base-button:not(:last-child) {
     margin-right: 1rem;
   }
@@ -20,6 +20,32 @@ span.font-weight-bold.h-is-muted {
   
   app-base-button .content ~ svg {
     margin-left: .5rem;
+  }
+
+  @media all and (max-width: 760px) {
+    & {
+     margin-top: 1.5rem;
+    }
+
+    app-base-button {
+      margin-top: .5rem;
+    }
+  }
+}
+
+.c-observers__header {
+  @media all and (max-width: 780px) {
+    & {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.c-observers__dropdown {
+  @media all and (max-width: 860px) {
+    & {
+      margin-right: .5rem;
+    }
   }
 }
 

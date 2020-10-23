@@ -11,6 +11,12 @@ $border-color: #EDEDED;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+
+  @media all and (max-width: 700px) {
+    & {
+      overflow-x: scroll;
+    }
+  }
 }
 
 .c-table {

@@ -1,13 +1,13 @@
 <div class="container-fluid">
   
-  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2">
+  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 c-observers__header">
     <div class="d-flex align-items-center">
       <h3 class="mb-0">{{ 'OBSERVERS' | translate }}</h3>
       <i class="h-vertical-line"></i>
       <span class="font-weight-bold h-is-muted">{{ totalCount }} total</span>
     </div>
 
-    <div class="c-observers__header" role="group" aria-label="Sort">
+    <div class="c-observers__buttons" role="group" aria-label="Sort">
       <app-base-button>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.1666 5.83301L5.83331 14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
@@ -88,6 +88,7 @@
     
     <ng-template let-r="row" let-c="column" >
       <app-base-dropdown 
+        class="c-observers__dropdown"
         *ngIf="c.propertyName === actionsColumnName"
         [configArr]="dropdownConfig"
         (dropdownEvent)="onDropdownEvent($event, r)"
