@@ -41,6 +41,7 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
       { name: 'NAME', propertyName: 'name', },
       { name: 'PHONE', propertyName: 'phone', },
       { name: 'LAST_LOGIN', propertyName: 'lastSeen', canBeSorted: true },
+      { name: 'OBSERVER_POLLING_STATIONS', propertyName: 'numberOfPollingStations' },
       { name: 'ACTIONS', propertyName: ACTIONS_COLUMN_NAME },
     ];
 

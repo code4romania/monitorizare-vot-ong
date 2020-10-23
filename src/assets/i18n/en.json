@@ -100,7 +100,8 @@
   "OBSERVER_GUIDE": "Observer's guide",
   "OBSERVER_ADD": "Add Observer",
   "OBSERVER_EDIT": "Edit Observer",
-
+  "OBSERVER_POLLING_STATIONS": "Visited Polling Stations",
+  
   "FIRST_NAME": "First Name",
   "LAST_NAME": "Last name",
   "PHONE": "Phone",

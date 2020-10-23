@@ -122,7 +122,9 @@
         </ng-template>
       </app-base-dropdown>
 
-      <span *ngIf="c.propertyName !== actionsColumnName">{{ r[c.propertyName] || ('UNSPECIFIED' | translate) }}</span>
+      <span *ngIf="c.propertyName !== actionsColumnName">
+        {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
+      </span>
     </ng-template>
 
     <app-pagination
