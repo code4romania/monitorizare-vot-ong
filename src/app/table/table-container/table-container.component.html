@@ -29,22 +29,24 @@
   </thead>
 
   <tbody>
-    <ng-container *ngFor="let r of rows;">
-      <app-base-checkbox 
-        *ngIf="!isCheckboxDisabled"
-        (checkboxChanged)="toggleRow(r[idKey])"
-        [forceCheck]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
-        [name]="r[idKey]"
-        class="c-table__row-check"
-      ></app-base-checkbox>
-
-      <tr [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected">
-        <td
-          *ngFor="let col of columns"
-        >
-          <ng-template [ngTemplateOutlet]="tdContent" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
-        </td>
-      </tr>
+    <ng-container *ngIf="!isLoading; else loading">
+      <ng-container *ngFor="let r of rows;">
+        <app-base-checkbox 
+          *ngIf="!isCheckboxDisabled"
+          (checkboxChanged)="toggleRow(r[idKey])"
+          [forceCheck]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
+          [name]="r[idKey]"
+          class="c-table__row-check"
+        ></app-base-checkbox>
+  
+        <tr [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected">
+          <td
+            *ngFor="let col of columns"
+          >
+            <ng-template [ngTemplateOutlet]="tdContent" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
+          </td>
+        </tr>
+      </ng-container>
     </ng-container>
   </tbody>
 </table>
@@ -92,3 +94,7 @@
     </div>
   </app-base-button>
 </div>
+
+<ng-template #loading>
+  <app-loading-indicator class="c-table--loading-indicator"></app-loading-indicator>
+</ng-template>

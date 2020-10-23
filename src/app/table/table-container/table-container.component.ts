@@ -42,6 +42,7 @@ export class TableContainerComponent implements OnInit {
   @Input() columns: TableColumn[] = [];
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
+  @Input('is-loading') isLoading = true;
   
   @Input('disable-checkbox') 
   @HostBinding('class.is-checkbox-disabled')
@@ -57,7 +58,6 @@ export class TableContainerComponent implements OnInit {
   nrSelectedRows = 0;
   crtSortDirection: SortDirection = SortDirection.DESC;
   crtSortedColumn: TableColumn;
-
 
   constructor(
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
