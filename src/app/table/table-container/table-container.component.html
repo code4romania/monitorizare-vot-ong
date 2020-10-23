@@ -12,9 +12,18 @@
     
     <tr>
       <th
+        [class.is-sorted-asc]="col.canBeSorted && crtSortedColumn === col && crtSortDirection === sortDirection.ASC"
+        [class.is-sortable]="col.canBeSorted"
+        (click)="triggerSortEvent(col)"
         *ngFor="let col of columns;"
       >
         <span>{{ col.name | async }}</span>
+        
+        <span *ngIf="col.canBeSorted">
+          <svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.44447 6.11133L0.595471 0.777994L8.29347 0.777994L4.44447 6.11133Z" />
+          </svg>
+        </span>
       </th>
     </tr>
   </thead>

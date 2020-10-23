@@ -7,6 +7,16 @@ export interface TableColumn {
   propertyName?: string;
 }
 
+export enum SortDirection {
+  ASC,
+  DESC
+}
+
+export interface SortedColumnEvent {
+  col: TableColumn;
+  sortDirection: SortDirection;
+}
+
 export enum SelectedZoneEvents {
   DELETE,
   NOTIFCATION
@@ -15,6 +25,11 @@ export enum SelectedZoneEvents {
 const SELECTED_ZONE_EVENTS = new InjectionToken('SELECTED_ZONE_EVENTS', {
   providedIn: 'root',
   factory: () => SelectedZoneEvents,
+});
+
+const SORT_DIRECTION = new InjectionToken('SORT_DIRECTION', {
+  providedIn: 'root',
+  factory: () => SortDirection,
 });
 
 @Component({
@@ -33,16 +48,21 @@ export class TableContainerComponent implements OnInit {
   isCheckboxDisabled = false; 
 
   @Output() selectedZoneEvent = new EventEmitter();
+  @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
 
   @ContentChild(TemplateRef) tdContent: TemplateRef<any>;
   
   selectedRows: { [rowId: string]: boolean } = {};
   allSelected = false;
   nrSelectedRows = 0;
+  crtSortDirection: SortDirection = SortDirection.DESC;
+  crtSortedColumn: TableColumn;
+
 
   constructor(
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
-    @Inject(SELECTED_ZONE_EVENTS) public Events: typeof SelectedZoneEvents
+    @Inject(SELECTED_ZONE_EVENTS) public Events: typeof SelectedZoneEvents,
+    @Inject(SORT_DIRECTION) public sortDirection: typeof SortDirection,
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +93,30 @@ export class TableContainerComponent implements OnInit {
   sendSelectedZoneEvent (ev: SelectedZoneEvents) {
     this.selectedZoneEvent.emit(ev);
     this.clearSelectedRows();
+  }
+
+  triggerSortEvent (col: TableColumn) {
+    if (!col.canBeSorted) {
+      return;
+    }
+    
+    let nextSortDir;
+    
+    if (this.crtSortedColumn !== col) {
+      // setting it to `ASC` because it is assumed that all
+      // columns are set to `DESC` by default
+      nextSortDir = SortDirection.ASC;
+      this.crtSortedColumn = col;
+    } else {
+      nextSortDir = this.crtSortDirection === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC; 
+    }
+    
+    this.sortedColumnClicked.emit({
+      col,
+      sortDirection: nextSortDir, 
+    });
+
+    this.crtSortDirection = nextSortDir;
   }
 
   private clearSelectedRows () {

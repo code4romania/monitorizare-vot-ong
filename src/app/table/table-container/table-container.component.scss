@@ -50,6 +50,23 @@ $border-color: #EDEDED;
     }
   }
 
+  th.is-sortable {
+    color: $primary-purple;
+    
+    & * {
+      cursor: pointer;  
+    }
+
+    svg {
+      transform: translateX(.5em) scale(1.5);
+      fill: $primary-purple;
+    }
+
+    &.is-sorted-asc svg {
+      transform: translateX(.5em) scale(1.5) rotate(180deg) translateY(25%);
+    }
+  }
+
   tr {
     height: 3.5rem;
 
