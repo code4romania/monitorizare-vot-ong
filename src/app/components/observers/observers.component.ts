@@ -27,7 +27,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
+import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -264,6 +264,12 @@ export class ObserversComponent implements OnInit, OnDestroy {
           this.toastrService.error('Could not reset password', 'Error!');
         }
       );
+  }
+
+  onSortedColumnClicked({ col, sortDirection }: SortedColumnEvent) {
+    console.log(col, sortDirection);
+
+    // TODO: call proper API
   }
 
   private translateColumnNames (rawTableColumns: TableColumn[]) {

@@ -46,6 +46,7 @@
 
   <app-table-container 
     (selectedZoneEvent)="onSelectedZoneEvent($event)"
+    (sortedColumnClicked)="onSortedColumnClicked($event)"
     [columns]="tableColumns"
     [rows]="observersList"
   >
