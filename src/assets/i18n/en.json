@@ -115,5 +115,7 @@
   "FILTER": "Filter",
   "NAME": "Name",
   "SAVE": "Save",
-  "CANCEL": "Cancel"
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
+  "TYPE": "Type"
 }

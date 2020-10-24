@@ -56,11 +56,11 @@
         <form novalidate [formGroup]="observersFilterForm" class="row">
           <div class="form-group col-auto">
             <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'NAME' | translate | lowercase }}</label>
-            <input placeholder="type the NGO's name" type="text" name="name" id="form-name" class="form-control" formControlName="name" />
+            <input [placeholder]="'TYPE' | translate" type="text" name="name" id="form-name" class="form-control" formControlName="name" />
           </div>
           <div class="form-group col-auto">
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'PHONE_NUMBER' | translate | lowercase }}</label>
-            <input placeholder="type phone number" type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
+            <input [placeholder]="'TYPE' | translate" type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
           </div>
           <div class="col-auto form-group align-self-end">
             <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
@@ -154,7 +154,7 @@
   <h4 class="c-reset-pwd__title">{{ 'ENTER_NEW_PASSWORD' | translate }} {{ crtResetPasswordRow.name }}</h4>
   
   <div class="form-group col-auto">
-    <input required ngModel #i="ngModel" placeholder="type" type="text" name="password" id="form-name" class="form-control"/>
+    <input required ngModel #i="ngModel" [placeholder]="'TYPE' | translate" type="text" name="password" id="form-name" class="form-control"/>
   </div>
 
   <div class="c-reset-pwd__buttons">

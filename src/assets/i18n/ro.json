@@ -82,7 +82,8 @@
   "OBSERVERS": "Observatori",
   "OBSERVER_ADD": "Adaugă Observator",
   "OBSERVER_EDIT": "Editaţi Observator",
-  "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate", 
+  "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate",
+  "ENTER_NEW_PASSWORD": "Introduceţi noul Pin pentru: ",
 
   "FIRST_NAME": "Prenume",
   "LAST_NAME": "Nume",
@@ -99,5 +100,8 @@
   "NAME": "Nume",
   "RESET": "Resetaţi",
   "SAVE": "Salvaţi",
-  "CANCEL": "Anulaţi"
+  "CANCEL": "Anulaţi",
+  "CONFIRM": "Confirmaţi",
+  "RESET_PASSWORD": "Resetare Parolă",
+  "TYPE": "Scrieţi"
 }
