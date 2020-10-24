@@ -10,7 +10,7 @@
 >
   <ng-template 
     [ngTemplateOutlet]="btnContent" 
-    [ngTemplateOutletContext]="{ $implicit: mainButton.name }"
+    [ngTemplateOutletContext]="{ $implicit: mainButton }"
   ></ng-template>
 </app-base-button>
 
@@ -36,7 +36,7 @@
     >
       <ng-template
         [ngTemplateOutlet]="btnContent"
-        [ngTemplateOutletContext]="{ $implicit: item.name }"
+        [ngTemplateOutletContext]="{ $implicit: item }"
       ></ng-template>
     </button>
   </div>

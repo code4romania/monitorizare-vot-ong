@@ -95,13 +95,17 @@
         [configArr]="dropdownConfig"
         (dropdownEvent)="onDropdownEvent($event, r)"
       >
-        <ng-template let-btnName>
-          <ng-container [ngSwitch]="btnName">
-            <ng-container *ngSwitchCase="'Edit'">
+        <ng-template let-btn>
+          <ng-container [ngSwitch]="btn.eventType">
+            <ng-container *ngSwitchCase="DropDownEvents.EDIT">
               {{ 'EDIT' | translate }}
             </ng-container>
 
-            <div class="d-flex align-items-center c-dropdown-button--delete" *ngSwitchCase="'Delete'">
+            <ng-container *ngSwitchCase="DropDownEvents.RESET_PASSWORD">
+              {{ 'RESET_PASSWORD' | translate }}
+            </ng-container>
+
+            <div class="d-flex align-items-center c-dropdown-button--delete" *ngSwitchCase="DropDownEvents.DELETE">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.5 5H4.16667H17.5" stroke="#F16359" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 <path
@@ -112,7 +116,7 @@
               <span>{{ 'DELETE' | translate }}</span>
             </div>
 
-            <div class="d-flex align-items-center c-dropdown-button--notification" *ngSwitchCase="'Notification'">
+            <div class="d-flex align-items-center c-dropdown-button--notification" *ngSwitchCase="DropDownEvents.NOTIFICATION">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
@@ -145,3 +149,33 @@
     <app-error-indicator></app-error-indicator>
   </div>
 </div>
+
+<ng-template #resetPasswordContent let-activeModal let-dismiss="dismiss">
+  <h4 class="c-reset-pwd__title">{{ 'ENTER_NEW_PASSWORD' | translate }} {{ crtResetPasswordRow.name }}</h4>
+  
+  <div class="form-group col-auto">
+    <input required ngModel #i="ngModel" placeholder="type" type="text" name="password" id="form-name" class="form-control"/>
+  </div>
+
+  <div class="c-reset-pwd__buttons">
+    <app-base-button 
+      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }" 
+      [variant]="BaseButtonVariants.PURPLE"
+      [disabled]="!i.valid"
+      (click)="activeModal.close(i.value)"
+      class="c-reset-pwd__button" 
+      type="button" 
+    >
+      {{ 'CONFIRM' | translate }}
+    </app-base-button>
+    
+    <app-base-button 
+      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }"
+      class="c-reset-pwd__button" 
+      type="button" 
+      (click)="dismiss()"
+    >
+      {{ 'CANCEL' | translate }}
+    </app-base-button>
+  </div>
+</ng-template>
