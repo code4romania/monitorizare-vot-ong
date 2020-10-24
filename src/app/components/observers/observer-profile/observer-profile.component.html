@@ -32,10 +32,10 @@
       <div class="card-body">
         <div class="c-profile__form-body">
           <div class="form-group">
-            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+            <label for="name">{{ 'NAME' | translate }}</label>
             <input
-              formControlName="firstName"
-              id="firstName"
+              formControlName="name"
+              id="name"
               type="text"
               class="form-control"
               placeholder="type"
@@ -43,21 +43,10 @@
           </div>
           
           <div class="form-group">
-            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+            <label for="phone">{{ 'PHONE_NUMBER' | translate }} *</label>
             <input
-              formControlName="lastName"
-              id="lastName"
-              type="text"
-              class="form-control"
-              placeholder="type"
-            />
-          </div>
-          
-          <div class="form-group">
-            <label for="phoneNumber">{{ 'PHONE_NUMBER' | translate }} *</label>
-            <input
-              formControlName="phoneNumber"
-              id="phoneNumber"
+              formControlName="phone"
+              id="phone"
               type="text"
               class="form-control"
               placeholder="type"
@@ -120,7 +109,7 @@
     <input
       formControlName="password"
       id="password"
-      type="password"
+      type="text"
       class="form-control"
       placeholder="type"
     />

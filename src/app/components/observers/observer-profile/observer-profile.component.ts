@@ -14,6 +14,8 @@ import {
 import { ApiListResponse } from '../../../models/api-list-response.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
+const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
+
 @Component({
   selector: 'app-observer-profile',
   templateUrl: './observer-profile.component.html',
@@ -37,27 +39,13 @@ export class ObserverProfileComponent implements OnInit {
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
     this.observerProfileForm = this.fb.group({
-      firstName: '',
-      lastName: '',
-      phoneNumber: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
+      phone: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
     })
-
-    // this.observerProfileUploadForm = this.fb.group({
-    //   csv: null,
-    //   ongId: new FormControl('', Validators.required),
-    // });
   }
 
   ngOnInit() {
     this.initRouteListener();
-  }
-
-  saveObserver() {
-    if (this.pageState === PageState.NEW) {
-      this.addNewObserver();
-    } else {
-      this.saveChanges();
-    }
   }
 
   deleteObserver() {
@@ -79,25 +67,13 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    console.warn("[submit] TO BE IMPLEMEMTED", this.observerProfileForm.value)
-    // this.saveChanges();
-
-    return;
-    const formData = new FormData();
-    formData.append('file', this.observerProfileUploadForm.get('csv').value);
-    formData.append('ongId', this.observerProfileUploadForm.get('ongId').value);
-
-    this.observerService.uploadCsv(formData).subscribe(
-      (res) => {
-        this.toastr.success(
-          `${res} observers have been added successfully`,
-          'Success'
-        );
-      },
-      (err) => {
-        this.toastr.error('Encountered error while uploading csv', 'Error');
-      }
-    );
+    const sanitizedValues = this.trimFormValuesOutsideAndInside(this.observerProfileForm.value);
+    
+    if (this.pageState === PageState.EDIT) {
+      this.saveChanges(sanitizedValues);
+    } else if (this.pageState === PageState.NEW) {
+      this.addNewObserver(sanitizedValues);
+    }
   }
 
   private initRouteListener() {
@@ -109,20 +85,19 @@ export class ObserverProfileComponent implements OnInit {
     });
   }
 
-  private saveChanges() {
+  private saveChanges(values: { [k: string]: string }) {
     this.observerService
-      .saveChanges(this.observerProfileForm.value, this.observer)
+      .saveChanges(values, this.observer)
       .subscribe((data) => {
         this.toastr.success('Success', 'Changes have been saved');
       });
   }
 
-  private addNewObserver() {
+  private addNewObserver(values: { [k: string]: string }) {
     const observerToAdd: Observer = new Observer({});
-    observerToAdd.phone = this.observerProfileForm.value.phone;
-    observerToAdd.pin = this.observerProfileForm.value.password;
-    observerToAdd.name = this.observerProfileForm.value.name;
-    // observerToAdd.sendSMS = this.observerProfileForm.value.sendSMS;
+    observerToAdd.phone = values.phone;
+    observerToAdd.pin = values.password;
+    observerToAdd.name = values.name;
 
     this.observerService.addNewObserver(observerToAdd).subscribe((value) => {
       this.toastr.success('Success', 'Observer has been added');
@@ -156,6 +131,15 @@ export class ObserverProfileComponent implements OnInit {
       return;
     }
 
-    this.observerProfileForm.addControl('password', this.fb.control(''))
+    this.observerProfileForm.addControl('password', this.fb.control('', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]))
+  }
+
+  private trimFormValuesOutsideAndInside (values: { [k: string]: string }) {
+    return Object.keys(values).reduce((acc, crtKey) => {
+      const val = values[crtKey];
+      const newVal = val.trim().split(' ').filter(Boolean).join(' ');
+
+      return (acc[crtKey] = newVal, acc);
+    }, {})
   }
 }
