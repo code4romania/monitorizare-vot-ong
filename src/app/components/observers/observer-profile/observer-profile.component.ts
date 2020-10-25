@@ -41,7 +41,8 @@ export class ObserverProfileComponent implements OnInit {
     this.observerProfileForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
       phone: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
-    })
+      password: ['', Validators.required],
+    });
   }
 
   ngOnInit() {
@@ -80,7 +81,6 @@ export class ObserverProfileComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.pageState = params['state'];
       this.handleFormState();
-      this.addControlBasedOnState();
       this.getObserver(params);
     });
   }
@@ -124,14 +124,6 @@ export class ObserverProfileComponent implements OnInit {
           }
         });
     }
-  }
-
-  private addControlBasedOnState () {
-    if (this.pageState !== PageState.EDIT) {
-      return;
-    }
-
-    this.observerProfileForm.addControl('password', this.fb.control('', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]))
   }
 
   private trimFormValuesOutsideAndInside (values: { [k: string]: string }) {
