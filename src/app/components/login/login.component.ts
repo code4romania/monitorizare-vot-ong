@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
     const authUrl: string = Location.joinWithSlash(
       this.baseUrl,
-      '/api/v1/access/authorize'
+      '/api/v2/access/authorize'
     );
     this.loginSubscription = this.http
       .post<{ access_token: string; expires_in: number }>(authUrl, {
