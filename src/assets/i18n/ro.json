@@ -85,6 +85,7 @@
   "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate",
   "ENTER_NEW_PASSWORD": "Introduceţi noul Pin pentru: ",
   "OBSERVERS_SELECTED": "Observatori Selectaţi",
+  "OBSERVERS_IMPORT": "Importaţi Observatori",
 
   "FIRST_NAME": "Prenume",
   "LAST_NAME": "Nume",
@@ -104,5 +105,7 @@
   "CANCEL": "Anulaţi",
   "CONFIRM": "Confirmaţi",
   "RESET_PASSWORD": "Resetare Parolă",
-  "TYPE": "Scrieţi"
+  "TYPE": "Scrieţi",
+  "SELECT_FILE": "Selectaţi fișierul",
+  "IMPORT": "Importaţi"
 }

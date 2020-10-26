@@ -102,7 +102,8 @@
   "OBSERVER_EDIT": "Edit Observer",
   "OBSERVER_POLLING_STATIONS": "Visited Polling Stations",
   "OBSERVERS_SELECTED": "Observers Selected",
-  
+  "OBSERVERS_IMPORT": "Import Observers",
+
   "FIRST_NAME": "First Name",
   "LAST_NAME": "Last name",
   "PHONE": "Phone",
@@ -118,5 +119,7 @@
   "SAVE": "Save",
   "CANCEL": "Cancel",
   "CONFIRM": "Confirm",
-  "TYPE": "Type"
+  "TYPE": "Type",
+  "SELECT_FILE": "Select file",
+  "IMPORT": "Import"
 }
