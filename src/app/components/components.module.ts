@@ -27,6 +27,7 @@ import {FormsComponent} from './forms/forms.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { TableModule } from '../table/table.module'
+import { ObserverImportComponent } from './observers/observer-import/observer-import.component';
 
 export let components = [
     AnswerComponent,
@@ -52,6 +53,7 @@ export let components = [
     StatisticsValueComponent,
     NotificationsComponent,
     LoginComponent,
+    ObserverImportComponent,
 ];
 
 @NgModule({
