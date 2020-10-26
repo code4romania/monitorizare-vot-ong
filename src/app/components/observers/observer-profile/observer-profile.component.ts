@@ -13,6 +13,10 @@ import {
 } from '@angular/forms';
 import { ApiListResponse } from '../../../models/api-list-response.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { Store } from '@ngrx/store';
+import { getSelectedObserver } from 'src/app/store/observers/observers.state';
+import { switchMap, map, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 
 const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
 
@@ -30,12 +34,15 @@ export class ObserverProfileComponent implements OnInit {
   observer: Observer;
   pageState: PageState;
 
+  private ngUnsubscribe = new Subject();
+
   constructor(
     private observerService: ObserversService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private fb: FormBuilder,
     private router: Router,
+    private store: Store,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
     this.observerProfileForm = this.fb.group({
@@ -47,6 +54,11 @@ export class ObserverProfileComponent implements OnInit {
 
   ngOnInit() {
     this.initRouteListener();
+  }
+
+  ngOnDestroy () {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   deleteObserver() {
@@ -114,16 +126,24 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   private getObserver(params) {
-    if (this.pageState !== PageState.NEW) {
-      this.observerService
-        .getObserver(params['id'])
-        .subscribe((observers: ApiListResponse<Observer>) => {
-          if (observers) {
-            this.observer = observers.data[0];
-            this.observerProfileForm.patchValue(this.observer);
-          }
-        });
+    if (this.pageState === PageState.NEW) {
+      return;
     }
+    
+    this.store.select(getSelectedObserver, params['id'])
+      .pipe(
+        switchMap(
+          obs => obs 
+            ? of(obs) 
+            : this.observerService.getObserver(params['id']).pipe(
+              map((o: ApiListResponse<Observer>) => o ? o.data[0] : {})
+            )
+        ),
+        takeUntil(this.ngUnsubscribe),
+      ).subscribe((observer: Observer) => {
+        this.observer = observer;
+        this.observerProfileForm.patchValue(this.observer);
+      })
   }
 
   private trimFormValuesOutsideAndInside (values: { [k: string]: string }) {
