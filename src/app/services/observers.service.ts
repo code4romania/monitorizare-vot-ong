@@ -20,7 +20,7 @@ export class ObserversService {
     return this.http.post(url, observer);
   }
 
-  saveChanges(observer: Observer, info: Observer) {
+  saveChanges(observer: { [k: string]: any }, info: Observer) {
     const url: string = Location.joinWithSlash(
       this.baseUrl,
       '/api/v1/observer'

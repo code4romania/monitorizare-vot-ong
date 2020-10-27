@@ -10,8 +10,6 @@
   "EMERGENCIES": "Emergencies",
   "ANSWERS": "Answers",
   "STATISTICS": "Statistics",
-  "OBSERVERS": "Observers",
-  "OBSERVER_GUIDE": "Observer's guide",
   "IS_URBAN_AREA": "Is it an urban area",
   "STATION": "Polling Station",
   "FORM": "Form",
@@ -96,5 +94,32 @@
   "FLAG_OPTION": "Flag option",
   "UNFLAG_OPTION": "Unflag option",
 
-  "LOGOUT": "Logout"
+  "LOGOUT": "Logout",
+
+  "OBSERVERS": "Observers",
+  "OBSERVER_GUIDE": "Observer's guide",
+  "OBSERVER_ADD": "Add Observer",
+  "OBSERVER_EDIT": "Edit Observer",
+  "OBSERVER_POLLING_STATIONS": "Visited Polling Stations",
+  "OBSERVERS_SELECTED": "Observers Selected",
+  "OBSERVERS_IMPORT": "Import Observers",
+
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "Last name",
+  "PHONE": "Phone",
+  "LAST_LOGIN": "Last login",
+
+  "//": "COMMON_STUFF",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
+  "SEND_NOTIF": "Send Notification",
+  "UNSPECIFIED": "Not specified",
+  "FILTER": "Filter",
+  "NAME": "Name",
+  "SAVE": "Save",
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
+  "TYPE": "Type",
+  "SELECT_FILE": "Select file",
+  "IMPORT": "Import"
 }

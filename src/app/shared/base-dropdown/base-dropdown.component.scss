@@ -1,0 +1,38 @@
+$selected-foreground-color: #707070;
+$selected-bg-color: rgba(0, 0, 0, 0.04);
+$arrow-focused-color: #E8E8E8;
+
+:host {
+  display: inline-grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 3fr 2fr;
+}
+
+.c-dropdown__container {
+  margin-left: .2rem;
+}
+
+.c-dropdown__arrow {
+  width: 100%;
+  height: 100%;
+
+  &:focus {
+    background-color: $arrow-focused-color;
+  }
+}
+
+.dropdown-menu {
+  // with the default rule `will-change: transform;`
+  // the dropdown list will be a bit blurry
+  will-change: initial !important;
+}
+
+.c-dropdown__item[class]:hover {
+  background-color: $selected-bg-color;
+}
+
+.c-dropdown__item[class] {
+  color: $selected-foreground-color;
+  padding-top: 0.6rem;
+  padding-bottom: .6rem;
+}

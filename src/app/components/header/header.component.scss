@@ -9,12 +9,14 @@
     opacity: 0;
     display: block;
     transition: max-height .2s;
+    pointer-events: none;
   }
 
   .collapse.show {
     max-height: 20rem;
     opacity: 1;
     transition: max-height .2s, opacity .2s;
+    pointer-events: all;
   }
 
   .nav-item {

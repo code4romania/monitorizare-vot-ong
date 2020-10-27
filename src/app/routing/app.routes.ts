@@ -15,6 +15,7 @@ import { ObserverProfileComponent } from '../components/observers/observer-profi
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { FormsComponent } from '../components/forms/forms.component';
 import { FormCreateComponent } from '../components/forms/form-create/form-create.component';
+import { ObserverImportComponent } from '../components/observers/observer-import/observer-import.component';
 
 export let appRoutes: Routes = [
   {
@@ -78,6 +79,11 @@ export let appRoutes: Routes = [
   {
     path: 'observatori/profil/:state/:id',
     component: ObserverProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'observatori/import',
+    component: ObserverImportComponent,
     canActivate: [AuthGuard],
   },
   {
