@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div class="mr-auto">
+      <app-base-button 
+        [custom-styles]="{ fontSize: '1.2rem' }" 
+        [variant]="BaseButtonVariants.ALLTRANSPARENT"
+        [routerLink]="['/observatori']"
+      >
+        <div class="d-flex align-items-center">
+          <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          &nbsp;
+          <span>{{ 'BACK' | translate }}</span>
+        </div>
+      </app-base-button>
+    </div>
+  </div>
+
+  <div class="mb-2 mt-4 ml-3 c-import__title">
+    <h2 class="d-inline h4">{{ 'OBSERVERS_IMPORT' | translate }}</h2>
+  </div>
+
+  <div class="card-body c-import__card-body">
+    <form
+      novalidate
+      [formGroup]="formGroup"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-group">
+        <label for="ngoId">ID Ngo</label>
+        <input
+          formControlName="ngoId"
+          id="ngoId"
+          type="text"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="file">{{ 'SELECT_FILE' | translate }}</label>
+        <input
+          type="file"
+          class="form-control"
+          id="file"
+          (change)="onFileChange($event)"
+        />
+      </div>
+
+      <app-base-button 
+        class="c-profile__button mt-3" 
+        [custom-styles]="{ fontWeight: 'normal' }"
+        [variant]="BaseButtonVariants.BGYELLOW" 
+        type="submit" 
+        [disabled]="formGroup.invalid"
+      >
+        {{ 'IMPORT' | translate }} 
+      </app-base-button>
+    </form>
+    </div>
+</div>

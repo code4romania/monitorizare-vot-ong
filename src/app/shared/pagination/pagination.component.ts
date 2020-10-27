@@ -23,21 +23,28 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   startingindex: number;
   endingIndex: number;
+  numberOfDynamicButtons = 0;
 
   constructor() { }
 
   ngOnInit() {
   }
+  
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.page || changes.pageSize || changes.totalItems) {
-      this.startingindex = (this.page - 1) * this.pageSize + 1;
-      this.endingIndex = this.startingindex + this.pageSize - 1;
-
-      if (this.endingIndex > this.totalItems){
-        this.endingIndex = this.totalItems;
-      }
+    if (!(changes.page || changes.pageSize || changes.totalItems)) {
+      return;
     }
 
+    this.startingindex = (this.page - 1) * this.pageSize + 1;
+    this.endingIndex = this.startingindex + this.pageSize - 1;
+
+    if (this.endingIndex > this.totalItems){
+      this.endingIndex = this.totalItems;
+    }
+    
+    if (this.totalItems && this.pageSize) {
+      this.numberOfDynamicButtons = Math.ceil(this.totalItems / this.pageSize);
+    }
   }
 
   canNextPage() {
@@ -68,4 +75,10 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
   }
 
+  navigateToPage (nextPage) {
+    this.pageChanged.emit({
+      page: nextPage,
+      pageSize: this.pageSize,
+    });
+  }
 }

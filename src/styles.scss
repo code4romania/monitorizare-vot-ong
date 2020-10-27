@@ -3,8 +3,13 @@
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+html, body {
+  height: 100%;
+}
+
 body {
-  background-color:#f6f6f6;
+  background-color: $bg-global;
+  // font-family: 'Poppins', sans-serif;
 }
 
 .cursor-pointer {
@@ -18,5 +23,51 @@ body {
   }
   .arrow::before {
     border-bottom-color: white;
+  }
+}
+
+.h-vertical-line {
+  width: 1px;
+  height: 25px;
+  background: $muted-gray;
+  display: inline-block;
+  margin: 0 .9rem;
+  vertical-align: top;
+}
+
+.h-is-muted {
+  color: $muted-gray;
+}
+
+.is-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.is-base-cell {
+  display: inline-flex;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: $light-gray;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+button {
+  &.is-base-cell {
+    border: none;
+
+    &:focus:active {
+      border: none;
+      outline: none;
+    }
   }
 }
