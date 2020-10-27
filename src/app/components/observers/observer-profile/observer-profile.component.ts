@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ObserverProfileForm } from './observer-profile.form';
 import { ObserversService } from '../../../services/observers.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiListResponse } from '../../../models/api-list-response.model';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { Store } from '@ngrx/store';
+import { getSelectedObserver } from 'src/app/store/observers/observers.state';
+import { switchMap, map, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+
+const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
 
 @Component({
   selector: 'app-observer-profile',
@@ -22,23 +29,26 @@ export class ObserverProfileComponent implements OnInit {
   error: string;
   fileData: File;
 
-  observerProfileForm: ObserverProfileForm;
+  observerProfileForm: FormGroup;
   observerProfileUploadForm: FormGroup;
   observer: Observer;
   pageState: PageState;
+
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private observerService: ObserversService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store,
+    @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
-    this.observerProfileForm = new ObserverProfileForm();
-
-    this.observerProfileUploadForm = this.fb.group({
-      csv: null,
-      ongId: new FormControl('', Validators.required),
+    this.observerProfileForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
+      phone: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
+      password: ['', Validators.required],
     });
   }
 
@@ -46,12 +56,9 @@ export class ObserverProfileComponent implements OnInit {
     this.initRouteListener();
   }
 
-  saveObserver() {
-    if (this.pageState === PageState.NEW) {
-      this.addNewObserver();
-    } else {
-      this.saveChanges();
-    }
+  ngOnDestroy () {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   deleteObserver() {
@@ -73,21 +80,13 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.observerProfileUploadForm.get('csv').value);
-    formData.append('ongId', this.observerProfileUploadForm.get('ongId').value);
-
-    this.observerService.uploadCsv(formData).subscribe(
-      (res) => {
-        this.toastr.success(
-          `${res} observers have been added successfully`,
-          'Success'
-        );
-      },
-      (err) => {
-        this.toastr.error('Encountered error while uploading csv', 'Error');
-      }
-    );
+    const sanitizedValues = this.trimFormValuesOutsideAndInside(this.observerProfileForm.value);
+    
+    if (this.pageState === PageState.EDIT) {
+      this.saveChanges(sanitizedValues);
+    } else if (this.pageState === PageState.NEW) {
+      this.addNewObserver(sanitizedValues);
+    }
   }
 
   private initRouteListener() {
@@ -98,20 +97,19 @@ export class ObserverProfileComponent implements OnInit {
     });
   }
 
-  private saveChanges() {
+  private saveChanges(values: { [k: string]: string }) {
     this.observerService
-      .saveChanges(this.observerProfileForm.value, this.observer)
+      .saveChanges(values, this.observer)
       .subscribe((data) => {
         this.toastr.success('Success', 'Changes have been saved');
       });
   }
 
-  private addNewObserver() {
+  private addNewObserver(values: { [k: string]: string }) {
     const observerToAdd: Observer = new Observer({});
-    observerToAdd.phone = this.observerProfileForm.value.phone;
-    observerToAdd.pin = this.observerProfileForm.value.password;
-    observerToAdd.name = this.observerProfileForm.value.name;
-    observerToAdd.sendSMS = this.observerProfileForm.value.sendSMS;
+    observerToAdd.phone = values.phone;
+    observerToAdd.pin = values.password;
+    observerToAdd.name = values.name;
 
     this.observerService.addNewObserver(observerToAdd).subscribe((value) => {
       this.toastr.success('Success', 'Observer has been added');
@@ -128,15 +126,32 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   private getObserver(params) {
-    if (this.pageState !== PageState.NEW) {
-      this.observerService
-        .getObserver(params['id'])
-        .subscribe((observers: ApiListResponse<Observer>) => {
-          if (observers) {
-            this.observer = observers.data[0];
-            this.observerProfileForm.patchValue(this.observer);
-          }
-        });
+    if (this.pageState === PageState.NEW) {
+      return;
     }
+    
+    this.store.select(getSelectedObserver, params['id'])
+      .pipe(
+        switchMap(
+          obs => obs 
+            ? of(obs) 
+            : this.observerService.getObserver(params['id']).pipe(
+              map((o: ApiListResponse<Observer>) => o ? o.data[0] : {})
+            )
+        ),
+        takeUntil(this.ngUnsubscribe),
+      ).subscribe((observer: Observer) => {
+        this.observer = observer;
+        this.observerProfileForm.patchValue(this.observer);
+      })
+  }
+
+  private trimFormValuesOutsideAndInside (values: { [k: string]: string }) {
+    return Object.keys(values).reduce((acc, crtKey) => {
+      const val = values[crtKey];
+      const newVal = val.trim().split(' ').filter(Boolean).join(' ');
+
+      return (acc[crtKey] = newVal, acc);
+    }, {})
   }
 }

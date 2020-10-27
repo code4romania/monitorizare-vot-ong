@@ -10,8 +10,6 @@
   "EMERGENCIES": "Urgente",
   "ANSWERS": "Raspunsuri",
   "STATISTICS": "Statistici",
-  "OBSERVER_GUIDE": "Ghidul observatorului",
-  "OBSERVERS": "Observatori",
   "IS_URBAN_AREA": "Este zona urbana",
   "STATION": "Sectia",
   "FORM": "Formular",
@@ -78,5 +76,36 @@
 
   "PASSWORD": "Parola",
   "CREDENTIALS_INVALID": "Acreditările sunt nevalide",
-  "LOGOUT": "Deconectare"
+  "LOGOUT": "Deconectare",
+
+  "OBSERVER_GUIDE": "Ghidul observatorului",
+  "OBSERVERS": "Observatori",
+  "OBSERVER_ADD": "Adaugă Observator",
+  "OBSERVER_EDIT": "Editaţi Observator",
+  "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate",
+  "ENTER_NEW_PASSWORD": "Introduceţi noul Pin pentru: ",
+  "OBSERVERS_SELECTED": "Observatori Selectaţi",
+  "OBSERVERS_IMPORT": "Importaţi Observatori",
+
+  "FIRST_NAME": "Prenume",
+  "LAST_NAME": "Nume",
+  "PHONE": "Telefon",
+  "LAST_LOGIN": "Ultima logare",
+  
+
+  "//": "COMMON_STUFF",
+  "EDIT": "Editaţi",
+  "DELETE": "Ștergeţi",
+  "SEND_NOTIF": "Trimiteţi Notificare",
+  "UNSPECIFIED": "Nespecificat",
+  "FILTER": "Filtraţi",
+  "NAME": "Nume",
+  "RESET": "Resetaţi",
+  "SAVE": "Salvaţi",
+  "CANCEL": "Anulaţi",
+  "CONFIRM": "Confirmaţi",
+  "RESET_PASSWORD": "Resetare Parolă",
+  "TYPE": "Scrieţi",
+  "SELECT_FILE": "Selectaţi fișierul",
+  "IMPORT": "Importaţi"
 }

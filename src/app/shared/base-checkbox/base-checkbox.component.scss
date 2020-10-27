@@ -1,0 +1,36 @@
+@import '../../../variables';
+
+$filled-unchecked-bg: $light-gray;
+$filled-checked-bg: $primary-purple;
+
+$border-color: $base-gray;
+
+label {
+  position: relative;
+  cursor: pointer;
+}
+
+label::after,
+label::before {
+  position: absolute;
+  content: '';
+}
+
+label::before {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background-color: $filled-unchecked-bg;
+}
+
+input:checked + label::before {
+  background-color: $filled-checked-bg;
+}
+
+input:checked + label::after {
+  height: 11px;
+  width: 4px;
+  border-bottom: 1.5px solid #fff;
+  border-right: 1.5px solid #fff;
+  transform: translate(200%, 30%) rotate(35deg);
+}
