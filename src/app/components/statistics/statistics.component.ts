@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {values} from 'lodash';
 
+
+
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -20,7 +22,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   anyStatistics = false;
 
-  constructor(private http: ApiService, private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { }
 
 
   canShowItem(item: StatisticsStateItem) {
@@ -41,5 +43,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+
+
 
 }
