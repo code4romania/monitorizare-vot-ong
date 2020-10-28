@@ -1,0 +1,37 @@
+.container {
+    .header{
+        height: 70vh;
+        h4 {
+            margin:2rem 0;
+        }
+        .logo {
+            background: #fbd844;
+            border-radius: 50%;
+            height:200px;
+            width:200px;
+            img {
+                width:200px;
+            }
+        }
+    }
+    form {
+        background-color:#fff;
+        -webkit-box-shadow: 0px 0px 15px 5px rgba(204,204,204,1);
+        -moz-box-shadow: 0px 0px 15px 5px rgba(204,204,204,1);
+        box-shadow: 0px 0px 15px 5px rgba(204,204,204,1);
+        border-radius: 0.5rem;
+        width:450px;
+
+        hr {
+            width: calc(100% + 3rem);
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+        }
+
+        label {
+            color:rgba(0, 0, 0, 0.7);
+        }
+
+
+    }
+}

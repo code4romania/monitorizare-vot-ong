@@ -1,0 +1,13 @@
+.flagged-question {
+  border: 1px solid red;
+}
+.flagged-question {
+  .question-title {
+    color: red;
+  }
+}
+.flagged-answer {
+  .question-answer {
+    color: red;
+  }
+}

@@ -1,0 +1,26 @@
+// the `.show` class is added when `ngbCollapse` is `true`
+// and removed when set to `false`
+
+// the value is not chosen randomly, `min-width: 992px`
+// is used in bootstrap/_navbar.scss, where the tabs are made visible
+@media (max-width: 992px) {
+  .collapse:not(.show) {
+    max-height: 0;
+    opacity: 0;
+    display: block;
+    transition: max-height .2s;
+    pointer-events: none;
+  }
+
+  .collapse.show {
+    max-height: 20rem;
+    opacity: 1;
+    transition: max-height .2s, opacity .2s;
+    pointer-events: all;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}

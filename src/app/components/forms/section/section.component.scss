@@ -1,0 +1,56 @@
+@import "../../../../variables";
+.section-create {
+  margin-top:20px; // this matches that margin on the header-row bottom
+  .section-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-question-button {
+    color: $primary;
+    cursor: pointer;
+  }
+
+  .form-labeled-field {
+    margin-bottom: 10px;
+  }
+
+  .header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .header-text {
+      margin: auto 0;
+    }
+  }
+
+  .question-list {
+    display: flex;
+    flex-direction: column;
+
+    .question-line {
+      display: flex;
+      flex-direction: row;
+
+      .question {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .icon-holder {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around; */
+
+    cursor: pointer;
+
+    margin: 12px 4px;
+  }
+
+  .icon-reorder {
+    cursor: move;
+  }
+}

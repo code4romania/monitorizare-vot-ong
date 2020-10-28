@@ -1,0 +1,30 @@
+<div *ngIf="answerExtra" class="mb-4">
+  <span *ngIf="answerExtra.observerArrivalTime">
+    {{ "ARRIVAL_TIME" | translate }}:
+    {{ answerExtra.observerArrivalTime | date: "shortTime" }}
+  </span>
+  <span *ngIf="answerExtra.observerLeaveTime">
+    {{ "DEPARTURE_TIME" | translate }}:
+    {{ answerExtra.observerLeaveTime | date: "shortTime" }}
+  </span>
+  <br />
+  <label class="form-check-label" for="defaultCheck1">
+    {{ "IS_URBAN_AREA" | translate }}:
+  </label>
+  <input
+    class="form-check-input ml-2"
+    type="checkbox"
+    id="defaultCheck1"
+    [checked]="answerExtra.urbanArea"
+  />
+  <br />
+  <label class="form-check-label" for="defaultCheck2">
+    {{ "IS_PRESIDENT_WOMAN" | translate }}:
+  </label>
+  <input
+    class="form-check-input ml-2"
+    type="checkbox"
+    id="defaultCheck2"
+    [checked]="answerExtra.isPollingStationPresidentFemale"
+  />
+</div>
