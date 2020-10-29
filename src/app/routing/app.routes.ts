@@ -16,8 +16,25 @@ import { NotificationsComponent } from '../components/notifications/notification
 import { FormsComponent } from '../components/forms/forms.component';
 import { FormCreateComponent } from '../components/forms/form-create/form-create.component';
 import { ObserverImportComponent } from '../components/observers/observer-import/observer-import.component';
+import { NgoManagementComponent } from '../components/ngo-management/ngo-management.component';
+import { NgoProfileComponent } from '../components/ngo-management/ngo-profile/ngo-profile.component'
 
 export let appRoutes: Routes = [
+  {
+    path: 'ong',
+    component: NgoManagementComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ong/:state',
+    component: NgoProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ong/:state/:id',
+    component: NgoProfileComponent,
+    canActivate: [AuthGuard],
+  },
   {
     // name: 'home',
     path: '',

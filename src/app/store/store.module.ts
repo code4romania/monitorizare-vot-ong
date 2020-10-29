@@ -1,38 +1,34 @@
+import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { select, Store, StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+
 import { TokenService } from '../core/token/token.service';
-import { NoteEffects } from './note/note.effects';
-import { noteReducer, NoteState } from './note/note.reducer';
-import { StatisticsState } from './statistics/statistics.state';
-import { StatisticsEffects } from './statistics/statistics.effects';
-import { statisticsReducer } from './statistics/statistics.reducer';
 import { AnswerEffects } from './answer/answer.effects';
 import { answerReducer, AnswerState } from './answer/answer.reducer';
 import { FormClearAll, FormLoadAction } from './form/form.actions';
 import { FormEffects } from './form/form.effects';
 import { formReducer, FormState } from './form/form.reducer';
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { select, Store, StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {
-  ObserversState,
-  ObserversCountState,
-} from './observers/observers.state';
-import {
-  ObserversEffects,
-  ObserversCountEffects,
-} from './observers/observers.effects';
-import {
-  observersReducer,
-  observersCountReducer,
-} from './observers/observers.reducer';
+import { NgosEffects } from './ngos/ngos.effects';
+import { ngosReducer } from './ngos/ngos.reducer';
+import { NgosState } from './ngos/ngos.state';
+import { NoteEffects } from './note/note.effects';
+import { noteReducer, NoteState } from './note/note.reducer';
+import { ObserversCountEffects, ObserversEffects } from './observers/observers.effects';
+import { observersCountReducer, observersReducer } from './observers/observers.reducer';
+import { ObserversCountState, ObserversState } from './observers/observers.state';
+import { StatisticsEffects } from './statistics/statistics.effects';
+import { statisticsReducer } from './statistics/statistics.reducer';
+import { StatisticsState } from './statistics/statistics.state';
 
 export class AppState {
   form: FormState;
   answer: AnswerState;
   statistics: StatisticsState;
   observers: ObserversState;
+  ngos: NgosState;
   observersCount: ObserversCountState;
   note: NoteState;
 }
@@ -45,12 +41,14 @@ const moduleImports = [
     observers: observersReducer,
     note: noteReducer,
     observersCount: observersCountReducer,
+    ngos: ngosReducer
   }),
   EffectsModule.forRoot([
     FormEffects,
     AnswerEffects,
     StatisticsEffects,
     ObserversEffects,
+    NgosEffects,
     ObserversCountEffects,
     NoteEffects,
   ]),

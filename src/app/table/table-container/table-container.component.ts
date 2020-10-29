@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ContentChild,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  InjectionToken,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
 export interface TableColumn {
@@ -43,16 +55,16 @@ export class TableContainerComponent implements OnInit {
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
   @Input('is-loading') isLoading = true;
-  
-  @Input('disable-checkbox') 
+
+  @Input()
   @HostBinding('class.is-checkbox-disabled')
-  isCheckboxDisabled = false; 
+  disableCheckbox = false;
 
   @Output() selectedZoneEvent = new EventEmitter();
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
 
   @ContentChild(TemplateRef) tdContent: TemplateRef<any>;
-  
+
   selectedRows: { [rowId: string]: boolean } = {};
   allSelected = false;
   nrSelectedRows = 0;
@@ -68,7 +80,7 @@ export class TableContainerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggleAll () {
+  toggleAll() {
     if (!this.allSelected) {
       this.allSelected = true;
       this.selectedRows = {};
@@ -78,10 +90,10 @@ export class TableContainerComponent implements OnInit {
     }
   }
 
-  toggleRow (rowId) {
-    this.selectedRows[rowId] = typeof this.selectedRows[rowId] === 'boolean' 
-      ? !this.selectedRows[rowId] 
-      : this.allSelected ? false : true; 
+  toggleRow(rowId) {
+    this.selectedRows[rowId] = typeof this.selectedRows[rowId] === 'boolean'
+      ? !this.selectedRows[rowId]
+      : this.allSelected ? false : true;
 
     this.nrSelectedRows += (this.selectedRows[rowId] ? 1 : -1);
 
@@ -90,38 +102,38 @@ export class TableContainerComponent implements OnInit {
     }
   }
 
-  sendSelectedZoneEvent (ev: SelectedZoneEvents) {
+  sendSelectedZoneEvent(ev: SelectedZoneEvents) {
     this.selectedZoneEvent.emit(ev);
     this.clearSelectedRows();
   }
 
-  triggerSortEvent (col: TableColumn) {
+  triggerSortEvent(col: TableColumn) {
     if (!col.canBeSorted) {
       return;
     }
-    
+
     let nextSortDir;
-    
+
     if (this.crtSortedColumn !== col) {
       // setting it to `ASC` because it is assumed that all
       // columns are set to `DESC` by default
       nextSortDir = SortDirection.ASC;
       this.crtSortedColumn = col;
     } else {
-      nextSortDir = this.crtSortDirection === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC; 
+      nextSortDir = this.crtSortDirection === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC;
     }
-    
+
     this.sortedColumnClicked.emit({
       col,
-      sortDirection: nextSortDir, 
+      sortDirection: nextSortDir,
     });
 
     this.crtSortDirection = nextSortDir;
   }
 
-  private clearSelectedRows () {
+  private clearSelectedRows() {
     this.allSelected = false;
     this.nrSelectedRows = 0;
     this.selectedRows = {};
   }
-} 
+}

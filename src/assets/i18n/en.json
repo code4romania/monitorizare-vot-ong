@@ -8,6 +8,7 @@
   "URGENT_SUBHEADER": "They are marked as urgent because they represent signs of fraud or serious irregularities in the reporter's polling station.",
   "NOT_URGENT_SUBHEADER": "They contain each observer's answers, including the flagged ones, which are marked accordingly.",
   "EMERGENCIES": "Emergencies",
+  "NGOS": "NGOs",
   "ANSWERS": "Answers",
   "STATISTICS": "Statistics",
   "IS_URBAN_AREA": "Is it an urban area",
