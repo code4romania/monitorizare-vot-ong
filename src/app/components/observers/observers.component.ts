@@ -260,11 +260,11 @@ export class ObserversComponent implements OnInit, OnDestroy {
   }
 
   deleteObserver(observer: Observer) {
-    if (confirm('Are you sure you want to remove this observer?')) {
+    if (confirm(this.translateService.instant('OBSERVER_DELETE_CONFIRMATION'))) {
       this.observersService
         .deleteObserver(observer.id)
         .subscribe(() => {
-          this.toastrService.warning('Success', 'Observer has been removed');
+          this.toastrService.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
           this.loadObservers(1);
         });
     }
