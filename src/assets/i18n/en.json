@@ -100,6 +100,8 @@
   "OBSERVER_GUIDE": "Observer's guide",
   "OBSERVER_ADD": "Add Observer",
   "OBSERVER_EDIT": "Edit Observer",
+  "OBSERVER_DELETE_CONFIRMATION": "Are you sure you want to remove this observer?",
+  "OBSERVER_DELETE_SUCCESS": "Observer has been removed",
   "OBSERVER_POLLING_STATIONS": "Visited Polling Stations",
   "OBSERVERS_SELECTED": "Observers Selected",
   "OBSERVERS_IMPORT": "Import Observers",
@@ -121,5 +123,6 @@
   "CONFIRM": "Confirm",
   "TYPE": "Type",
   "SELECT_FILE": "Select file",
-  "IMPORT": "Import"
+  "IMPORT": "Import",
+  "SUCCESS": "Success"
 }
