@@ -23,7 +23,7 @@ export class AnswerComponent implements OnInit {
 
     countyCode: string;
     pollingStationNumber: string;
-    observerId: number;
+    observerPhone: number;
     isUrgent: boolean;
     fromTime: string;
     toTime: string;
@@ -41,13 +41,13 @@ export class AnswerComponent implements OnInit {
             this.isUrgent = value.urgent || false;
             this.countyCode = value.answerFilters.county;
             this.pollingStationNumber = value.answerFilters.pollingStationNumber;
-            this.observerId = value.answerFilters.observerId;
+            this.observerPhone = value.answerFilters.observerPhone;
         });
     }
 
     requestFilteredData() {
         this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
-            observerId: this.observerId,
+            observerPhone: this.observerPhone,
             pollingStationNumber: this.pollingStationNumber,
             county: this.countyCode
         }));
@@ -81,7 +81,7 @@ export class AnswerComponent implements OnInit {
     resetFilters(): void {
         this.countyCode = null;
         this.pollingStationNumber = null;
-        this.observerId = null;
+        this.observerPhone = null;
         this.fromTime = null;
         this.toTime = null;
     }
@@ -104,8 +104,8 @@ export class AnswerComponent implements OnInit {
             filter.pollingStationNumber = this.pollingStationNumber as any;
         }
 
-        if (this.isValidValue(this.observerId)) {
-            filter.idObserver = this.observerId;
+        if (this.isValidValue(this.observerPhone)) {
+            filter.phoneObserver = this.observerPhone;
         }
 
         if (this.isValidValue(this.fromTime)) {
