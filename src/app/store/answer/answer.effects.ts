@@ -110,10 +110,10 @@ export class AnswerEffects {
         : params.append('county', payload.answerFilters.county);
       params = isNil(payload.answerFilters.pollingStationNumber)
         ? params
-        : params.append(
-            'pollingStationNumber',
-            payload.answerFilters.pollingStationNumber
-          );
+        : params.append('pollingStationNumber', payload.answerFilters.pollingStationNumber);
+      params = isNil(payload.answerFilters.observerPhone)
+        ? params
+        : params.append('observerPhoneNumber', payload.answerFilters.observerPhone.toString());
       params = isNil(payload.urgent)
         ? params
         : params.append('urgent', payload.urgent.toString());
