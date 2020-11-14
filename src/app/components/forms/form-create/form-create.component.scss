@@ -1,0 +1,61 @@
+
+
+
+@import "../../../../variables";
+.form-create { //? this isn't on the form
+  .back-button {
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1.2em;
+  }
+
+  .add-section-button {
+    color: $primary;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .form-labeled-field {
+    margin-bottom: 10px;
+
+    &-checkbox {
+      @extend .form-labeled-field;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .checkbox-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .checkbox-field {
+        flex-basis: 16px;
+      }
+    }
+  }
+}
+
+
+.control-container {
+  width: 100%;
+}
+
+
+.section-add {
+  color: $primary;
+    cursor: pointer;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+textarea {
+  min-height: 124px; // aligns to 2 inputs in a column layout
+}
+
+
+

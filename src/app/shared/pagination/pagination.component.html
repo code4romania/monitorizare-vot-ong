@@ -1,0 +1,59 @@
+<div class="c-pagination__buttons">
+  <button 
+    class="is-base-cell c-pagination__button c-pagination__button--direction"
+    [class.c-pagination__button--disabled]="page === 1"
+    [disabled]="page === 1"
+    (click)="navigateToPage(1)"
+  >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.16667 14.1663L5 9.99967L9.16667 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M15 14.1663L10.8333 9.99967L15 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+  </button>
+  <button 
+    class="is-base-cell c-pagination__button c-pagination__button--direction"
+    [class.c-pagination__button--disabled]="page === 1"
+    [disabled]="page === 1"
+    (click)="navigateToPage(page - 1)"
+  >
+    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 9L1 5L5 1" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>    
+  </button>
+  
+  <button
+    *ngFor="let _ of [].constructor(numberOfDynamicButtons); index as btnIdx"
+    (click)="navigateToPage(btnIdx + 1)"
+    class="is-base-cell c-pagination__button"
+    [disabled]="btnIdx + 1 === page"
+    [class.c-pagination__button--selected]="btnIdx + 1 === page"
+  >
+    {{ btnIdx + 1 }}
+  </button>
+  
+  <button 
+    class="is-base-cell c-pagination__button c-pagination__button--direction"
+    [class.c-pagination__button--disabled]="page === numberOfDynamicButtons"
+    [disabled]="page === numberOfDynamicButtons"
+    (click)="navigateToPage(page + 1)"
+  >
+    <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.5 9L5.5 5L1.5 1" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <button 
+    class="is-base-cell c-pagination__button c-pagination__button--direction"
+    [class.c-pagination__button--disabled]="page === numberOfDynamicButtons"
+    [disabled]="page === numberOfDynamicButtons"
+    (click)="navigateToPage(numberOfDynamicButtons)"
+  >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.8333 14.1663L15 9.99967L10.8333 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 14.1663L9.16667 9.99967L5 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div class="c-pagination__stats">
+  Showing {{ startingindex }} to {{ endingIndex }} of {{ totalItems }}
+</div>

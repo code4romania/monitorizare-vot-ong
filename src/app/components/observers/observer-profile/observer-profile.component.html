@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div class="mr-auto">
+      <app-base-button 
+        [custom-styles]="{ fontSize: '1.2rem' }"
+        [variant]="BaseButtonVariants.ALLTRANSPARENT" 
+        [routerLink]="['/observatori']"
+      >
+        <div class="d-flex align-items-center">
+          <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          &nbsp;
+          <span>{{ 'BACK' | translate }}</span>
+        </div>
+      </app-base-button>
+    </div>
+  </div>
+
+  <div class="mb-4 mt-4 ml-3 c-profile__title">
+    <h2 class="d-inline h4" *ngIf="pageState === 'new'">{{ 'OBSERVER_ADD' | translate }}</h2>
+    <h2 class="d-inline h4" *ngIf="pageState === 'edit'">{{ 'OBSERVER_EDIT' | translate }}</h2>
+  </div>
+
+  <div class="card ml-3">
+    <form
+      novalidate
+      [formGroup]="observerProfileForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="card-body">
+        <div class="c-profile__form-body">
+          <div class="form-group">
+            <label for="name">{{ 'NAME' | translate }}</label>
+            <input
+              formControlName="name"
+              id="name"
+              type="text"
+              class="form-control"
+              [placeholder]="'TYPE' | translate"
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">{{ 'PHONE_NUMBER' | translate }}</label>
+            <input
+              formControlName="phone"
+              id="phone"
+              type="text"
+              class="form-control"
+              [placeholder]="'TYPE' | translate"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">{{ 'PASSWORD' | translate }}</label>
+            <input formControlName="password" id="password" type="text" class="form-control" [placeholder]="'TYPE' | translate" />
+          </div>
+        </div>
+
+        <div class="c-profile__buttons">
+          <app-base-button 
+            class="c-profile__button"
+            [custom-styles]="{ fontWeight: 'normal' }" 
+            [variant]="BaseButtonVariants.BGYELLOW"
+            type="submit"
+            [disabled]="observerProfileForm.invalid"
+          >
+            {{ 'SAVE' | translate }}
+          </app-base-button>
+
+          <app-base-button
+            class="c-profile__button"
+            [routerLink]="['/observatori']"
+            [custom-styles]="{ fontWeight: 'normal' }" 
+            [variant]="BaseButtonVariants.DEFAULT"
+          >
+            {{ 'CANCEL' | translate }}
+          </app-base-button>
+
+          <ng-container *ngIf="pageState === 'edit'">
+            <ng-template 
+              [ngTemplateOutlet]="editButtons"
+            ></ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #editButtons>
+  <app-base-button
+    (click)="deleteObserver()"
+    class="c-profile__button"
+    [custom-styles]="{ fontWeight: 'normal' }" 
+    [variant]="BaseButtonVariants.ALLTRANSPARENT"
+  >
+    <span class="c-profile__button--delete">{{ 'DELETE' | translate }}</span>
+  </app-base-button>
+</ng-template>
+
+<ng-template let-formGroup #editControls>
+  <div class="form-group" [formGroup]="formGroup">
+    <label for="password">{{ 'PASSWORD' | translate }}</label>
+    <input
+      formControlName="password"
+      id="password"
+      type="text"
+      class="form-control"
+      [placeholder]="'TYPE' | translate"
+    />
+  </div>
+</ng-template>

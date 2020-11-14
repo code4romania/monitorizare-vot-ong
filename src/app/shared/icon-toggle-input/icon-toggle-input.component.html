@@ -1,0 +1,6 @@
+<div (click)="toggleValue()">
+  <img [src]="disabledIcon" *ngIf="!value" alt="" [ngbTooltip]="enabledIconTooltip" placement="bottom"
+    tooltipClass="custom-tooltip">
+  <img [src]="enabledIcon" *ngIf="value" alt="" [ngbTooltip]="disabledIconTooltip" placement="bottom"
+    tooltipClass="custom-tooltip">
+</div>

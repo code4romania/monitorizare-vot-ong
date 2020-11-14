@@ -1,0 +1,46 @@
+<div *ngIf="hasError()">
+  <app-error-indicator (retry)="retry()"> </app-error-indicator>
+</div>
+<div *ngIf="!hasError()">
+  <div *ngIf="isLoading()">
+    <app-loading-indicator></app-loading-indicator>
+  </div>
+  <div *ngIf="!isLoading()" class="card">
+    <div class="card-body">
+      <div *ngIf="formState?.items && answerState?.selectedAnswer?.length">
+        <app-answer-extra-questions
+          *ngIf="!answerState.answerExtraError"
+          [answerExtra]="answerState?.answerExtra"
+        >
+        </app-answer-extra-questions>
+
+        <ul
+          ngbNav
+          #nav="ngbNav"
+          (navChange)="onTabSelected($event)"
+          class="nav-tabs mb-4"
+        >
+          <li
+            ngbNavItem
+            [ngbNavItem]="form.id"
+            *ngFor="let form of formState.items"
+          >
+            <a ngbNavLink>{{ form.description }}</a>
+            <ng-template ngbNavContent
+              ><app-answer-form-list
+                [notes]="formNotes(form.id)"
+                [form]="getDataForForm(form)"
+                [completedQuestions]="formAnswers()"
+              >
+              </app-answer-form-list
+            ></ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
+      </div>
+      <div *ngIf="!(formState?.items && answerState?.selectedAnswer?.length)">
+        {{ "NOTHING_SELECTED" | translate }}
+      </div>
+    </div>
+  </div>
+</div>

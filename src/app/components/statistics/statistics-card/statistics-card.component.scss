@@ -1,0 +1,26 @@
+@import "../../../../variables";
+.card-header {
+  background:#fff;
+  padding: 10px 25px;
+  height: 100px;
+  display: flex;
+}
+.card-header-contents {
+  margin: auto 0;
+}
+.card-row {
+  &:nth-child(odd) {
+    background:$gray-light;
+  }
+}
+.card-footer {
+  padding: 10px 25px;
+  background-color:#fff;
+  a {
+    color: $primary;
+    cursor: pointer;
+  }
+}
+.dialog {
+  margin: -1rem;
+}

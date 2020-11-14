@@ -1,0 +1,36 @@
+<div class="card" [ngClass]="{'dialog': dialog}">
+  <div class="card-header">
+    <div class="card-header-contents">
+      <h4 *ngIf="item.subHeader" class="m-0">
+        {{ item.header }} {{ item.subHeader }}
+      </h4>
+    </div>
+  </div>
+  <div *ngIf="!item.error">
+    <div *ngIf="item.loading">
+      {{ "LOADING" | translate }}
+    </div>
+    <div *ngIf="!item.loading">
+      <div
+        *ngFor="let labelValue of itemValues; let i = index"
+        class="card-row"
+      >
+        <app-statistics-value
+          class="col-md-1-1"
+          [index]="i + 1"
+          [label]="labelValue.label"
+          [value]="labelValue.value"
+        >
+        </app-statistics-value>
+      </div>
+
+      <div class="card-footer" *ngIf="!dialog">
+        <div class="justify-content-end d-flex">
+          <a (click)="openDetail(item)">
+            {{ "SEE_COMPLETE_LIST" | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
