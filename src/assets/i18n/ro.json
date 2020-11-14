@@ -45,6 +45,30 @@
 
   "OPTION_ADD": "Adaugă o opţiune",
 
+  "PREDEFINED_OPTIONS": {
+    "CONFIRMATION": {
+      "LABEL": "Confirmari",
+      "YES": "Da",
+      "NO": "Nu",
+      "DONT_KNOW": "Nu stiu"
+    },
+    "RATING": {
+      "LABEL": "Calificative",
+      "1": "1 - Foarte slab",
+      "2": "2 - Slab",
+      "3": "3 - Mediu",
+      "4": "4 - Bine",
+      "5": "5 - Foarte bine"
+    }
+  },
+
+  "PREDEFINED_OPTIONS_MODAL": {
+    "ADD": "Alege optiuni prestabilite",
+    "TITLE": "Alege din optiunile prestabilite",
+    "NOTE": "Observatie: Optiunile selectate vor fi salvate"
+  },
+
+
   "NOTHING_SELECTED": "Nu ati selectat nimic",
   "SHOW": "Vezi",
   "HIDE": "Ascunde",
@@ -96,6 +120,7 @@
 
 
   "//": "COMMON_STUFF",
+  "ADD": "Adaugă",
   "EDIT": "Editaţi",
   "DELETE": "Ștergeţi",
   "SEND_NOTIF": "Trimiteţi Notificare",
