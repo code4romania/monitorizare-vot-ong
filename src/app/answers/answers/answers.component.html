@@ -7,7 +7,7 @@
     </div>
   
     <div class="c-answers__buttons" role="group" aria-label="Sort">
-      <app-base-button (click)="downloadAnswers()" class="c-answers__button">
+      <app-base-button (click)="downloadAnswers(f.value); f.reset()" class="c-answers__button">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />

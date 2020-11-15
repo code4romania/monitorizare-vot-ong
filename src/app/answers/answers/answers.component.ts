@@ -11,9 +11,8 @@ import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import { TranslateService } from '@ngx-translate/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { SortedColumnEvent, TableColumn, TableColumnTranslated } from 'src/app/table/table-container/table-container.component';
+import { TableColumn, TableColumnTranslated, SortedColumnEvent } from 'src/app/table/table.model';
 
-// TODO: add translations
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
   factory: () => {
@@ -21,7 +20,7 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
       { name: 'ANSWERS_POLLING_STATION', propertyName: 'pollingStationName', },
       { name: 'ANSWERS_NAME', propertyName: 'observerName', },
       { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', }, // FIXME: 
-      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'lastSeen', canBeSorted: true },
+      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'not-specified', canBeSorted: true },
       { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'not-specified', }, // FIXME: 
     ];
 
@@ -39,12 +38,6 @@ export class AnswersComponent implements OnInit {
   formState: Observable<FormState>;
   tableColumns: TableColumnTranslated[] = [];
 
-  countyCode: string;
-  pollingStationNumber: string;
-  observerPhone: number;
-  isUrgent: boolean;
-  fromTime: string;
-  toTime: string;
   isLoading: boolean;
 
   answerState: Observable<AnswerState> = this.store.pipe(select(state => state.answer));
@@ -58,26 +51,15 @@ export class AnswersComponent implements OnInit {
     @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
     this.translateColumnNames(rawTableColumns);
+    this.redoAnswerListAction();
   }
 
   ngOnInit() {
     this.formState = this.store.pipe(select(state => state.form));
-
-    this.answerState.subscribe(value => {
-      this.isUrgent = value.urgent || false;
-      this.countyCode = value.answerFilters.county;
-      this.pollingStationNumber = value.answerFilters.pollingStationNumber;
-      this.observerPhone = value.answerFilters.observerPhone;
-    });
   }
 
-  requestFilteredData() {
-    this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
-      observerPhone: this.observerPhone,
-      pollingStationNumber: this.pollingStationNumber,
-      county: this.countyCode
-    }));
-
+  requestFilteredData (filters) {
+    this.store.dispatch(new LoadAnswerPreviewAction(false, 1, 5, true, filters));
   }
 
   redoAnswerListAction() {
@@ -106,14 +88,6 @@ export class AnswersComponent implements OnInit {
       .subscribe();
   }
 
-  resetFilters(): void {
-    this.countyCode = null;
-    this.pollingStationNumber = null;
-    this.observerPhone = null;
-    this.fromTime = null;
-    this.toTime = null;
-  }
-
   onSortedColumnClicked({ col, sortDirection }: SortedColumnEvent) {
     console.log(col, sortDirection);
 
@@ -124,30 +98,26 @@ export class AnswersComponent implements OnInit {
     return value !== null && value !== '';
   }
 
-  downloadAnswers() {
+  downloadAnswers (rawFilters) {
     if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
       return;
     }
 
+    const filterWordsDict = {
+      countyCode: 'county',
+      pollingStationNumber: 'pollingStationNumber',
+      observerPhone: 'phoneObserver',
+      fromTime: 'from',
+      toTime: 'to',
+    };
+
     const filter: AnswersPackFilter = {};
-    if (this.isValidValue(this.countyCode)) {
-      filter.county = this.countyCode;
-    }
 
-    if (this.isValidValue(this.pollingStationNumber)) {
-      filter.pollingStationNumber = this.pollingStationNumber as any;
-    }
+    for (const rawKey in rawFilters) {
+      const rawValue = rawFilters[rawKey];
+      const key = filterWordsDict[rawKey];
 
-    if (this.isValidValue(this.observerPhone)) {
-      filter.phoneObserver = this.observerPhone;
-    }
-
-    if (this.isValidValue(this.fromTime)) {
-      filter.from = this.fromTime;
-    }
-
-    if (this.isValidValue(this.toTime)) {
-      filter.to = this.toTime;
+      filter[key] = this.isValidValue(rawValue) && rawValue;
     }
 
     this.isLoading = true;
