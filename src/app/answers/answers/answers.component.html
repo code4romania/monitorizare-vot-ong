@@ -21,6 +21,7 @@
 
   <app-table-container
     (sortedColumnClicked)="onSortedColumnClicked($event)"
+    (rowClicked)="onRowClicked($event)"
     [columns]="tableColumns"
     [rows]="(answers$ | async)"
     [is-loading]="(answerState | async).threadsLoading"

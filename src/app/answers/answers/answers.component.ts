@@ -12,6 +12,8 @@ import * as FileSaver from 'file-saver';
 import { TranslateService } from '@ngx-translate/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { TableColumn, TableColumnTranslated, SortedColumnEvent } from 'src/app/table/table.model';
+import { AnswerThread } from 'src/app/models/answer.thread.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -48,6 +50,8 @@ export class AnswersComponent implements OnInit {
     private store: Store<AppState>,
     private answersService: AnswersService,
     private translate: TranslateService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
     @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
@@ -94,6 +98,10 @@ export class AnswersComponent implements OnInit {
     console.log(col, sortDirection);
 
     // TODO: call proper API
+  }
+
+  onRowClicked (row: AnswerThread) {
+    this.router.navigate([row.idObserver, row.idPollingStation], { relativeTo: this.activatedRoute });
   }
 
   private isValidValue(value) {
