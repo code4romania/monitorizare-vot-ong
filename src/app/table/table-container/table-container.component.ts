@@ -14,6 +14,7 @@ export class TableContainerComponent implements OnInit {
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
   @Input('is-loading') isLoading = true;
+  @Input('no-rows-message') noRowsMessage = '';
   
   @Input('disable-checkbox') 
   @HostBinding('class.is-checkbox-disabled')
