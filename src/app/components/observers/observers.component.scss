@@ -9,6 +9,10 @@ span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
 }
 
+.c-observers__header-title {
+  color: $darker-gray;
+}
+
 .c-observers__buttons {
   app-base-button:not(:last-child) {
     margin-right: 1rem;

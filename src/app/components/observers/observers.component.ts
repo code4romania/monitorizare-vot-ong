@@ -27,7 +27,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
+import { SelectedZoneEvents, SortedColumnEvent, TableColumn, TableColumnTranslated } from 'src/app/table/table-container/table-container.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -72,8 +72,6 @@ enum DropdownEvents {
   NOTIFICATION,
   RESET_PASSWORD,
 }
-
-type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
 @Component({
   selector: 'app-observers',

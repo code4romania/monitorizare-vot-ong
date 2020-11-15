@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
 export interface TableColumn {
@@ -6,6 +7,8 @@ export interface TableColumn {
   canBeSorted?: boolean;
   propertyName?: string;
 }
+
+export type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
 export enum SortDirection {
   ASC,
