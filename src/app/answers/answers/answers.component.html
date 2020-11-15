@@ -22,8 +22,8 @@
   <app-table-container
     (sortedColumnClicked)="onSortedColumnClicked($event)"
     [columns]="tableColumns"
-    [rows]="answers$ | async"
-    [is-loading]="false"
+    [rows]="(answers$ | async)"
+    [is-loading]="(answerState | async).threadsLoading"
     [disable-checkbox]="true"
   >
     <div header-area>
@@ -104,7 +104,7 @@
               </app-base-button>
               &nbsp;
               <app-base-button 
-                (click)="f.reset()"
+                (click)="f.reset(); isShowingFilteredResults = false"
                 [disabled]="false"
                 [variant]="BaseButtonVariants.PURPLE" 
                 [custom-styles]="{ height: '2.8rem', border: 'none' }"
@@ -127,7 +127,12 @@
       [pageSize]="(answerState | async).pageSize"
       [totalItems]="(answerState | async).totalItems"
       (pageChanged)="onPageChanged($event)"
-    >
-    </app-pagination>
+    ></app-pagination>
+
+    <div no-rows-message class="c-no-msg">
+      <h4 class="text-center pb-2 c-no-msg__title">No results</h4>
+
+      <p *ngIf="isShowingFilteredResults" class="text-center pb-3 c-no-msg__content">Please make sure you've typed everything correctly and try again</p>
+    </div>
   </app-table-container>
 </div>

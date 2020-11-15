@@ -39,6 +39,7 @@ export class AnswersComponent implements OnInit {
   tableColumns: TableColumnTranslated[] = [];
 
   isLoading: boolean;
+  isShowingFilteredResults = false;
 
   answerState: Observable<AnswerState> = this.store.pipe(select(state => state.answer));
   answers$: Observable<AnswerState['threads']> = this.answerState.pipe(map(s => s.threads));
@@ -59,6 +60,7 @@ export class AnswersComponent implements OnInit {
   }
 
   requestFilteredData (filters) {
+    this.isShowingFilteredResults = true;
     this.store.dispatch(new LoadAnswerPreviewAction(false, 1, 5, true, filters));
   }
 
