@@ -27,20 +27,21 @@ export let appRoutes: Routes = [
   },
   {
     path: 'answers',
-    component: AnswerComponent,
-    canActivate: [AuthGuard, AnswerListGuard],
-    children: [
-      {
-        path: 'details/:idObserver/:idPollingStation',
-        component: AnswerDetailsComponent,
-        canActivate: [AuthGuard, AnswerDetailsGuard],
-      },
-      {
-        path: '',
-        canActivate: [AuthGuard],
-        component: AnswerDetailsComponent,
-      },
-    ],
+    // component: AnswerComponent,
+    // canActivate: [AuthGuard, AnswerListGuard],
+    // children: [
+    //   {
+    //     path: 'details/:idObserver/:idPollingStation',
+    //     component: AnswerDetailsComponent,
+    //     canActivate: [AuthGuard, AnswerDetailsGuard],
+    //   },
+    //   {
+    //     path: '',
+    //     canActivate: [AuthGuard],
+    //     component: AnswerDetailsComponent,
+    //   },
+    // ],
+    loadChildren: () => import('src/app/answers/answers.module').then(m => m.AnswersModule)
   },
   {
     path: 'urgents',

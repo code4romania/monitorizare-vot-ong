@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 flex-wrap">
+    <div class="d-flex align-items-center">
+      <h3 class="mb-0 c-answers__header-title">{{ 'ANSWERS_HEADER_TITLE' | translate }}</h3>
+      <i class="h-vertical-line"></i>
+      <span class="font-weight-bold h-is-muted">{{ (answers$ | async).length }} total</span>
+    </div>
+  
+    <div class="c-answers__buttons" role="group" aria-label="Sort">
+      <app-base-button (click)="downloadAnswers()" class="c-answers__button">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.83337 5.83301H14.1667V14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span>Export</span>
+      </app-base-button>
+    </div>
+  </div>
+
+  <app-table-container
+    (sortedColumnClicked)="onSortedColumnClicked($event)"
+    [columns]="tableColumns"
+    [rows]="answers$ | async"
+    [is-loading]="false"
+    [disable-checkbox]="true"
+  >
+    <ng-template let-r="row" let-c="column">
+      {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
+    </ng-template>
+  </app-table-container>
+
+</div>

@@ -1,0 +1,15 @@
+@import '../../../variables';
+
+span.font-weight-bold.h-is-muted {
+  font-size: 1.1rem;
+}
+
+.c-answers__header-title {
+  color: $darker-gray;
+}
+
+.c-answers__buttons {
+  .c-answers__button svg:first-child {
+    margin-right: .5rem;
+  }
+}
