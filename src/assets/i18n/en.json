@@ -149,5 +149,12 @@
   "TYPE": "Type",
   "SELECT_FILE": "Select file",
   "IMPORT": "Import",
-  "SUCCESS": "Success"
+  "SUCCESS": "Success",
+
+  "ANSWERS_POLLING_STATION": "Polling Station",
+  "ANSWERS_NAME": "Name",
+  "ANSWERS_PHONE": "Phone",
+  "ANSWERS_DATE_AND_TIME": "Date&Time",
+  "ANSWERS_LOCATION_TYPE": "Location type",
+  "ANSWERS_HEADER_TITLE": "Last responses"
 }

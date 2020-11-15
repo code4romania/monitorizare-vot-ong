@@ -49,13 +49,16 @@ export class AnswerEffects {
   @Effect()
   loadThreads = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_PREVIEW),
-    filter((a: LoadAnswerPreviewAction) =>
-      shouldLoadPage(
-        a.payload.page,
-        a.payload.pageSize,
-        this.state.threads.length
-      )
-    ),
+
+    // I'd say this is no longer needed since the validation is handled
+    // by the `pagination` component
+    // filter((a: LoadAnswerPreviewAction) =>
+    //   shouldLoadPage(
+    //     a.payload.page,
+    //     a.payload.pageSize,
+    //     this.state.threads.length
+    //   )
+    // ),
     switchMap((action: LoadAnswerPreviewAction) => {
       const answearsUrl: string = Location.joinWithSlash(
         this.baseUrl,

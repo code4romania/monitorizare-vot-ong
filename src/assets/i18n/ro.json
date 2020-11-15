@@ -136,5 +136,12 @@
   "TYPE": "Scrieţi",
   "SELECT_FILE": "Selectaţi fișierul",
   "IMPORT": "Importaţi",
-  "SUCCESS": "Succes"
+  "SUCCESS": "Succes",
+
+  "ANSWERS_POLLING_STATION": "Secție de votare",
+  "ANSWERS_NAME": "Nume",
+  "ANSWERS_PHONE": "Telefon",
+  "ANSWERS_DATE_AND_TIME": "Data&Ora",
+  "ANSWERS_LOCATION_TYPE": "Tipul locației",
+  "ANSWERS_HEADER_TITLE": "Ultimele răspunsuri"
 }
