@@ -22,6 +22,7 @@ export class TableContainerComponent implements OnInit {
 
   @Output() selectedZoneEvent = new EventEmitter();
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
+  @Output() rowClicked = new EventEmitter();
 
   @ContentChild(TemplateRef) tdContent: TemplateRef<any>;
   

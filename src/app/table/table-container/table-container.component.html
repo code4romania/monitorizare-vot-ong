@@ -39,7 +39,10 @@
           class="c-table__row-check"
         ></app-base-checkbox>
   
-        <tr [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected">
+        <tr 
+          (click)="rowClicked.emit(r)"
+          [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
+        >
           <td
             *ngFor="let col of columns"
           >

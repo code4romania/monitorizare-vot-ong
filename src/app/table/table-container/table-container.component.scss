@@ -35,6 +35,11 @@ $border-color: #EDEDED;
 
   tbody {
     font-size: 1.1rem;
+
+    :host.is-checkbox-disabled & > tr:hover {
+      background-color: $selected-row-color;
+      cursor: pointer;
+    }
   }
 
   &__row-check {
