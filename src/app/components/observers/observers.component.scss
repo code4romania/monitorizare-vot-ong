@@ -1,9 +1,12 @@
 @import '../../../variables';
 
 $notif-color: $primary-gray;
-$input-text-color: #A3A3A3;
 $label-color: $darker-gray;
 $filter-zone-height: 2.8rem;
+
+.c-observers__container {
+  margin-bottom: 2rem;
+}
 
 span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
