@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid c-answers__container">
   <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 flex-wrap">
     <div class="d-flex align-items-center">
       <h3 class="mb-0 c-answers__header-title">{{ 'ANSWERS_HEADER_TITLE' | translate }}</h3>
@@ -26,9 +26,108 @@
     [is-loading]="false"
     [disable-checkbox]="true"
   >
+    <div header-area>
+      <div class="card-body">
+        <form #f="ngForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
+          <div class="form-group col-auto">
+            <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'COUNTY_CODE' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="countyCode"
+              id="form-name"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'POLLING_STATION_NUMBER' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="pollingStationNumber"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'OBSERVER_PHONE' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="observerPhone"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+
+          <!-- FIXME: type `date` -->
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'FROM' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="fromTime"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+
+          <!-- FIXME: type `date` -->
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'TO' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="toTime"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+          
+          <div class="col-auto form-group align-self-end">
+            <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+              <!-- in `height: '2.8rem'`, the value is from `.scss` file -->
+              <app-base-button 
+                [disabled]="false"
+                [variant]="BaseButtonVariants.PURPLE" 
+                [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }"
+                type="submit"
+              >
+                {{ 'FILTER' | translate }}
+              </app-base-button>
+              &nbsp;
+              <app-base-button 
+                (click)="f.reset()"
+                [disabled]="false"
+                [variant]="BaseButtonVariants.PURPLE" 
+                [custom-styles]="{ height: '2.8rem', border: 'none' }"
+              >
+                {{ 'RESET' | translate }}
+              </app-base-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <ng-template let-r="row" let-c="column">
       {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
     </ng-template>
-  </app-table-container>
 
+    <app-pagination
+      footer-area
+      [page]="(answerState | async).page"
+      [pageSize]="(answerState | async).pageSize"
+      [totalItems]="(answerState | async).totalItems"
+      (pageChanged)="onPageChanged($event)"
+    >
+    </app-pagination>
+  </app-table-container>
 </div>

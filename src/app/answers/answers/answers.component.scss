@@ -1,5 +1,12 @@
 @import '../../../variables';
 
+$filter-zone-height: 2.8rem;
+$label-color: $darker-gray;
+
+.c-answers__container {
+  margin-bottom: 2rem;
+}
+
 span.font-weight-bold.h-is-muted {
   font-size: 1.1rem;
 }
@@ -11,5 +18,26 @@ span.font-weight-bold.h-is-muted {
 .c-answers__buttons {
   .c-answers__button svg:first-child {
     margin-right: .5rem;
+  }
+}
+
+.form-group {
+  & > input.form-control {
+    border: 1px solid $base-gray;
+    color: $input-text-color;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    font-size: 1.1rem;
+    height: $filter-zone-height;
+
+    &::placeholder {
+      color: $input-text-color;
+    }
+  }
+
+  & > label {
+    color: $label-color;
+    font-size: 1.2rem;
+    line-height: 30px;
   }
 }
