@@ -24,6 +24,15 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a
+          [routerLink]="['/ong']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "NGOS" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
           [routerLink]="['/urgents']"
           routerLinkActive="active"
           class="nav-link"

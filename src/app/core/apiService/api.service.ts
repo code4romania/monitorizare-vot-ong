@@ -137,7 +137,7 @@ export class ApiService {
   }
 
   patch<T>(url: string, body: any, options?: HttpOptions): Observable<T> {
-    return this.normalizeRequest(url, HttpMethod.PATCH, options);
+    return this.normalizeRequest(url, HttpMethod.PATCH, options, body);
   }
 
   head<T>(url: string, options?: HttpOptions): Observable<T> {

@@ -14,6 +14,7 @@ export enum CHECKBOX_VARIANTS {
 export class BaseCheckboxComponent implements OnInit {
   @Input() name: any;
   @Input() forceCheck = false;
+  @Input() readonly = false;
 
   @Output() checkboxChanged = new EventEmitter();
 
@@ -27,7 +28,12 @@ export class BaseCheckboxComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  checkBoxChanged () {
+  checkBoxChanged (checkbox: any): void {
+    if(this.readonly){
+      return;
+    }
+
+    checkbox.checked = !checkbox.checked
     this.checkboxChanged.next()
   }
 }

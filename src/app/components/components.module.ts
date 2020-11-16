@@ -28,6 +28,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { TableModule } from '../table/table.module'
 import { ObserverImportComponent } from './observers/observer-import/observer-import.component';
+import { NgoManagementComponent } from '../components/ngo-management/ngo-management.component';
+import { NgoProfileComponent } from './ngo-management/ngo-profile/ngo-profile.component';
 
 export let components = [
     AnswerComponent,
@@ -54,6 +56,8 @@ export let components = [
     NotificationsComponent,
     LoginComponent,
     ObserverImportComponent,
+    NgoManagementComponent,
+    NgoProfileComponent
 ];
 
 @NgModule({

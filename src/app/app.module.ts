@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ObserversService } from './services/observers.service';
+import { NgosService } from './services/ngos.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationsService } from './services/notifications.service';
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     ObserversService,
+    NgosService,
     NotificationsService,
     AnswersService,
     FormsService,

@@ -1,3 +1,3 @@
-<input [checked]="forceCheck" #i [id]="name" class="is-visually-hidden" type="checkbox">
+<input [checked]="forceCheck" #checkbox [id]="name" class="is-visually-hidden" type="checkbox">
 
-<label (click)="checkBoxChanged(); i.checked = !i.checked" [for]="name"></label>
+<label (click)="!readonly && checkBoxChanged(checkbox);" [for]="name" [class.readonly]="readonly"></label>

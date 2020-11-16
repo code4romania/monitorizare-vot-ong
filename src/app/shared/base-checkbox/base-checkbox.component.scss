@@ -8,6 +8,10 @@ $border-color: $base-gray;
 label {
   position: relative;
   cursor: pointer;
+  
+  &.readonly{
+    cursor: default;
+  }
 }
 
 label::after,
