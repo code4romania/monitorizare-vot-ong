@@ -2,7 +2,7 @@
   <app-base-button 
       [custom-styles]="{ fontSize: '1.2rem' }"
       [variant]="BaseButtonVariants.ALLTRANSPARENT" 
-      [routerLink]="['']"
+      [routerLink]="['../../']"
     >
       <div class="d-flex align-items-center">
         <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,10 +15,56 @@
   </app-base-button>
 
   <div class="c-answer-header d-flex justify-content-between align-items-center mt-4">
-    <h4 class="c-answer-header__title">Responses</h4>
+    <h4 class="c-answer-header__title">
+      {{ (crtPollingStation$ | async)?.observerName }} Responses
+    </h4>
     
     <app-base-button class="c-answer-header__button">
       <span class="content">Send notification</span>
     </app-base-button>
+  </div>
+
+  <div class="c-answer-stats" *ngIf="(crtPollingStation$ | async) as crtPollingStation">
+    <div class="c-answer-stats__container">
+      <div 
+        *ngFor="let stat of statsLabels"
+        class="c-answer-stats__item"
+      >
+        <span class="c-answer-stats__label">{{ stat.name }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-answer-forms">
+    <div class="c-answer-forms__tabs">
+      <div
+        *ngFor="let formTab of formTabs$ | async"
+        (click)="formTabChanged.next(formTab)"
+        [class.is-tab-selected]="crtSelectedTabId === formTab.id"
+        class="c-answer-form-tab"
+      >
+        {{ formTab.description }}
+      </div>
+    </div>
+
+    <div class="c-answer-forms__sections">
+      <div
+        *ngFor="let section of (sections$ | async) as sections"
+        class="c-answer-section"
+      >
+        <div class="c-answer-section__desc">
+          {{ section.description }}
+        </div>
+
+        <div class="c-answer-section__questions">
+          <div
+            *ngFor="let q of section.questions"
+            class="c-answer-question"
+          >
+            {{ q.code }}: &nbsp; {{ q.text }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

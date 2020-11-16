@@ -72,7 +72,8 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
             });
         case AnswerActionTypes.LOAD_PREVIEW_DONE:
             return Object.assign({}, state, {
-                threads: state.threads.concat(action.payload.threads),
+                // threads: state.threads.concat(action.payload.threads),
+                threads: action.payload.threads,
                 totalItems: action.payload.totalItems,
                 totalPages: action.payload.totalPages,
                 threadsLoading: false,

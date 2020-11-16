@@ -17,5 +17,67 @@
     display: grid;
     width: 50%;
     grid-template-columns: 1fr 1fr;
+    row-gap: 1rem;
+  }
+
+  &__label {
+    color: $dim-gray;
+    font-weight: bold;
+
+    & + span {
+      color: $readable-dark-gray;
+    }
+  }
+}
+
+.c-answer-forms {
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  background-color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow-y: auto;
+  max-height: 80vh;
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1px solid $border-color-gray;
+    padding-top: .5rem;
+    column-gap: 1.5rem;
+  }
+
+  &__sections {
+    margin-top: 1rem;
+  }
+}
+
+.c-answer-form-tab {
+  color: $dim-gray;
+  padding-bottom: .7rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  &.is-tab-selected {
+    color: $primary-purple;
+    border-bottom: 1px solid $primary-purple;
+  }
+}
+
+.c-answer-section {
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+  
+  &__desc {
+    color: $light-text-gray;
+  }
+
+  &__questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
   }
 }

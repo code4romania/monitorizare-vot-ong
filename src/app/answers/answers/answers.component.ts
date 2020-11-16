@@ -75,14 +75,6 @@ export class AnswersComponent implements OnInit {
       map(a => this.store.dispatch(a))).subscribe();
   }
 
-  redoAnswerDetailsAction() {
-    // take the current state of the answerState, and do a reloaded
-    this.store.pipe(select(state => state.answer), take(1),
-      map(s => new LoadAnswerDetailsAction(s.observerId, s.sectionId)),
-      map(a => this.store.dispatch(a)))
-      .subscribe();
-  }
-
   onPageChanged(event) {
     this.store.pipe(select(s => s.answer),
       map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
@@ -100,8 +92,9 @@ export class AnswersComponent implements OnInit {
     // TODO: call proper API
   }
 
-  onRowClicked (row: AnswerThread) {
-    this.router.navigate([row.idObserver, row.idPollingStation], { relativeTo: this.activatedRoute });
+  onRowClicked({ idObserver, idPollingStation }: AnswerThread) {
+    this.store.dispatch(new LoadAnswerDetailsAction(idObserver, idPollingStation));
+    this.router.navigate([idObserver, idPollingStation], { relativeTo: this.activatedRoute });
   }
 
   private isValidValue(value) {
