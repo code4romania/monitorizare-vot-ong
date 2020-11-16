@@ -1,0 +1,21 @@
+@import '../../../variables';
+
+.c-answer-header {
+  &__title {
+    color: $darker-gray;
+  }
+}
+
+.c-answer-stats {
+  background: #fff;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 1.2rem 1.5rem;
+  margin-top: 2rem;
+
+  &__container {
+    display: grid;
+    width: 50%;
+    grid-template-columns: 1fr 1fr;
+  }
+}
