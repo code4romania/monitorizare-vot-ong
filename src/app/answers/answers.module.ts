@@ -6,11 +6,11 @@ import { AnswersComponent } from './answers/answers.component';
 import { TableModule } from '../table/table.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { AnswerDetailComponent } from './answer-detail/answer-detail.component';
 
+import { AnswerDetailsComponent } from './answer-details/answer-details.component'
 
 @NgModule({
-  declarations: [AnswersComponent, AnswerDetailComponent],
+  declarations: [AnswersComponent, AnswerDetailsComponent],
   imports: [
     CommonModule,
     AnswersRoutingModule,

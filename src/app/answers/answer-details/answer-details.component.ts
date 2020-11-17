@@ -25,7 +25,7 @@ export class AnswerDetailsComponent implements OnInit {
 
   formTabChanged = new Subject();
 
-  crtSelectedTabId: number = null;
+  crtSelectedTabId = null;
 
   statsLabels = [
     { name: 'Station', propertyName: 'pollingStationName', },

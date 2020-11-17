@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AnswerDetailComponent } from './answer-detail/answer-detail.component';
+import { AnswerDetailsComponent } from './answer-details/answer-details.component';
 import { AnswersComponent } from './answers/answers.component';
 
 
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: ':idObserver/:idPollingStation',
-    component: AnswerDetailComponent
+    component: AnswerDetailsComponent
   }
 ];
 
