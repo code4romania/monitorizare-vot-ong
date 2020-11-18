@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div class="c-answer-forms__sections">
+    <div class="c-answer-forms__sections" *ngIf="(sectionsState$ | async) as sectionsState">
       <div
         *ngFor="let section of (sections$ | async) as sections"
         class="c-answer-section"
@@ -60,11 +60,42 @@
           <div
             *ngFor="let q of section.questions"
             class="c-answer-question"
+            [class.is-flagged]="sectionsState.flaggedQuestions[q.id]"
           >
-            {{ q.code }}: &nbsp; {{ q.text }}
+            <div class="c-answer-question__title"><b>{{ q.code }}</b>: &nbsp; {{ q.text }}</div>
+
+            <div class="c-answer-question__options">
+              <div
+                *ngFor="let o of q.optionsToQuestions"
+                class="c-answer-question__option"
+              >
+                <ng-container 
+                  *ngTemplateOutlet="
+                    o.isFreeText ? textOption : checkboxOption; 
+                    context: { question: q, option: o, checked: sectionsState.selectedAnswers[q.id] && sectionsState.selectedAnswers[q.id].answers[o.id] }
+                  "
+                ></ng-container>
+
+                <div>{{ o.text }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #checkboxOption let-q="question" let-o="option" let-checked="checked">
+  <app-base-checkbox
+    (checkboxChanged)="null"
+    [forceCheck]="checked"
+    [name]="o.id"
+    [is-transparent]="true"
+    class="c-answer-checkbox"
+  ></app-base-checkbox>
+</ng-template>
+
+<ng-template #textOption let-q="question" let-o="option">
+  text
+</ng-template>

@@ -1,16 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { asyncScheduler, concat, EMPTY, Observable, of, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, share, shareReplay, skip, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest } from 'rxjs';
+import { distinctUntilChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
 import { Form } from 'src/app/models/form.model';
+import { FormQuestion } from 'src/app/models/form.question.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
 
-import { getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
+import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
 import { form, getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
 @Component({
@@ -22,6 +23,9 @@ export class AnswerDetailsComponent implements OnInit {
   crtPollingStation$: Observable<AnswerThread>;
   formTabs$: Observable<FormDetails[]>;
   sections$: Observable<any>;
+  sectionsState$: Observable<
+    { flaggedQuestions: { [k: string]: FormQuestion }, selectedAnswers: { [k: string]: any } }
+  >;
 
   formTabChanged = new Subject();
 
@@ -57,32 +61,50 @@ export class AnswerDetailsComponent implements OnInit {
 
     this.formTabs$ = this.store.select(getFormItems).pipe(shareReplay(1));
 
-    this.sections$ = concat(
-      this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
-      this.formTabChanged
-    ).pipe(
-      distinctUntilChanged(),
-      withLatestFrom(this.store.select(getFullyLoadedForms)),
-      switchMap(([formTab, fullyLoadedForms]: [FormDetails, { [k: string]: any }]) => {
-        if (!formTab) { 
-          return EMPTY; 
-        }
-        
-        // there might be the case when `form.items` is not an empty array,
-        // but the `form.fullyLoaded[formTab.id]` is not populated yet
-        if (!fullyLoadedForms[formTab.id]) {
-          this.store.dispatch(new FullyLoadFormAction(formTab.id));
+    this.sections$ = combineLatest([
+      concat(
+        this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
+        this.formTabChanged
+      ).pipe(distinctUntilChanged()),
+      this.store.select(getFullyLoadedForms),
+    ]).pipe(
+      filter(([crtFormTab, _]) => !!crtFormTab),
+      tap(
+        ([crtFormTab, fullyLoadedForms]: [FormDetails, { [k: string]: Form }]) => 
+          !fullyLoadedForms[crtFormTab.id] && this.store.dispatch(new FullyLoadFormAction(crtFormTab.id))
+      ),
+      map(([crtFormTab, fullyLoadedForms]: [FormDetails, { [k: string]: Form }]) => fullyLoadedForms[crtFormTab.id]),
+      filter(Boolean),
+      tap((loadedForm: Form) => this.crtSelectedTabId = loadedForm.id),
+      map((loadedForm: Form) => loadedForm?.formSections ?? []),
 
-          return this.store.select(getFullyLoadedForms).pipe(
-            skip(1),
-            map(fullyLoadedForms => fullyLoadedForms[formTab.id])
-          )
-        }
+      startWith([]),
+      shareReplay(1),
+    );
 
-        return of(fullyLoadedForms[formTab.id]);        
-      }),
-      tap(loadedForm => this.crtSelectedTabId = loadedForm.id),
-      map((loadedForm: Form) => loadedForm?.formSections ?? [])
+    this.sectionsState$ = combineLatest([
+      this.sections$.pipe(filter(sections => !!sections.length)),
+      this.store.select(getSelectedAnswersAsObject).pipe(filter(Boolean)),
+    ]).pipe(
+      scan(
+        (acc, [crtSections, selectedAnswers]) => {
+          for (const section of crtSections) {
+            for (const q of section.questions) {
+              const isQuestionFlagged = q.optionsToQuestions.some(o => o.flagged && selectedAnswers[q.id]?.answers[o.id]);
+
+              if (isQuestionFlagged) {
+                acc.flaggedQuestions[q.id] = true;
+              }
+            }
+          }
+
+          return {
+            ...acc,
+            selectedAnswers
+          };
+        },
+        { flaggedQuestions: {}, selectedAnswers: {} }
+      ),
     );
   }
 }
