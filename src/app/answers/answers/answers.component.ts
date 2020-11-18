@@ -56,7 +56,7 @@ export class AnswersComponent implements OnInit {
     @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
     this.translateColumnNames(rawTableColumns);
-    this.redoAnswerListAction();
+    this.store.dispatch(new LoadAnswerPreviewAction(false));
   }
 
   ngOnInit() {
