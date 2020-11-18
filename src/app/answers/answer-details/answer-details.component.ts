@@ -7,12 +7,15 @@ import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
 import { Form } from 'src/app/models/form.model';
 import { FormQuestion } from 'src/app/models/form.question.model';
+import { Note } from 'src/app/models/note.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
 
 import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
-import { form, getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
+import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
+
+import { getNotesAsObject } from '../../store/note/note.selectors';
 
 @Component({
   selector: 'answer-details',
@@ -24,11 +27,16 @@ export class AnswerDetailsComponent implements OnInit {
   formTabs$: Observable<FormDetails[]>;
   sections$: Observable<any>;
   sectionsState$: Observable<
-    { flaggedQuestions: { [k: string]: FormQuestion }, selectedAnswers: { [k: string]: any } }
+    { 
+      flaggedQuestions: { [k: string]: FormQuestion }, 
+      selectedAnswers: { [k: string]: any },
+      formNotes: { [k: string]: Note },
+    }
   >;
 
   formTabChanged = new Subject();
 
+  shownNotes: { [k: string]: boolean } = {};
   crtSelectedTabId = null;
 
   statsLabels = [
@@ -85,9 +93,10 @@ export class AnswerDetailsComponent implements OnInit {
     this.sectionsState$ = combineLatest([
       this.sections$.pipe(filter(sections => !!sections.length)),
       this.store.select(getSelectedAnswersAsObject).pipe(filter(Boolean)),
+      this.store.select(getNotesAsObject).pipe(filter(Boolean))
     ]).pipe(
       scan(
-        (acc, [crtSections, selectedAnswers]) => {
+        (acc, [crtSections, selectedAnswers, formNotes]) => {
           for (const section of crtSections) {
             for (const q of section.questions) {
               const isQuestionFlagged = q.optionsToQuestions.some(o => o.flagged && selectedAnswers[q.id]?.answers[o.id]);
@@ -100,10 +109,11 @@ export class AnswerDetailsComponent implements OnInit {
 
           return {
             ...acc,
-            selectedAnswers
+            selectedAnswers,
+            formNotes,
           };
         },
-        { flaggedQuestions: {}, selectedAnswers: {} }
+        { flaggedQuestions: {}, selectedAnswers: {}, formNotes: {} }
       ),
     );
   }

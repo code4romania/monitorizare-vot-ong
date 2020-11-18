@@ -76,7 +76,28 @@
                   "
                 ></ng-container>
 
-                <div>{{ o.text }}</div>
+                <div class="c-answer-text">{{ o.text }}</div>
+              </div>
+            </div>
+
+            <div 
+              *ngIf="sectionsState.formNotes[q.id]"
+              class="c-answer-note"
+            >
+              <!-- TODO: translation -->
+              <app-base-button 
+                (click)="shownNotes[q.id] = !shownNotes[q.id]"
+                [disabled]="false"
+                [variant]="BaseButtonVariants.PURPLE" 
+                [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
+                class="c-answer-note__button"
+                [class.is-note-visible]="shownNotes[q.id]"
+              >
+                View Note
+              </app-base-button>
+
+              <div class="c-answer-note__content">
+                {{ sectionsState.formNotes[q.id].text }}
               </div>
             </div>
           </div>

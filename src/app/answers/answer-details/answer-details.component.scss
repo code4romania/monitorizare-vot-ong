@@ -129,3 +129,30 @@ $question-text-color: #474747;
     line-height: .5rem;
   }
 }
+
+.c-answer-note {
+  &__button {
+    width: max-content;
+    display: block;
+    margin-left: auto;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  &__content {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    
+    .c-answer-note__button.is-note-visible + & {
+      max-height: 10rem;
+      opacity: 1;
+      visibility: visible;
+      padding: .8rem;
+    }
+  }
+}
+
+.c-answer-text {
+  padding-top: .2rem;
+}
