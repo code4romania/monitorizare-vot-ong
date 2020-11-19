@@ -55,3 +55,7 @@ button {
   font-weight: 500;
   font-size: 1.1rem;
 }
+
+:host.has-color-inherited button {
+  color: inherit;
+}

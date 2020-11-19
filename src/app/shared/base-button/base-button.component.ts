@@ -29,6 +29,8 @@ export class BaseButtonComponent implements OnInit {
   @Input('custom-styles') customStyles = {};
   @Input('disabled') isDisabled = false;
   @Input('type') type = 'button';
+  @Input('has-color-inherited')
+  @HostBinding('class.has-color-inherited') hasColorInherited = false;
 
   @Input() set variant (v: Variants) {
     switch(true) {
