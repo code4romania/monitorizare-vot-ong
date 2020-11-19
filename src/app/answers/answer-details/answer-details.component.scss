@@ -137,6 +137,10 @@ $question-text-color: #474747;
     margin-left: auto;
     margin-right: 1rem;
     margin-bottom: .5rem;
+
+    &.has-question-flagged {
+      color: $delete-color;
+    }
   }
 
   &__content {

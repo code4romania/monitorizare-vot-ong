@@ -92,6 +92,8 @@
                 [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
                 class="c-answer-note__button"
                 [class.is-note-visible]="shownNotes[q.id]"
+                [has-color-inherited]="!!sectionsState.flaggedQuestions[q.id]"
+                [class.has-question-flagged]="!!sectionsState.flaggedQuestions[q.id]"
               >
                 View Note
               </app-base-button>
