@@ -137,11 +137,21 @@
   "SELECT_FILE": "Selectaţi fișierul",
   "IMPORT": "Importaţi",
   "SUCCESS": "Succes",
+  "EXPORT": "Exportați",
+  "NO_RESULTS": "Niciun rezultat",
+  "TRY_AGAIN_MSG": "Asigurați-vă că ați scris totul corect si încercați din nou",
+  "VIEW_NOTE": "Vedeți Nota",
+  "TITLE": "Titlu",
+  "MESSAGE": "Mesaj",
+  "NOTIF_DETAILS_FOR": "Detaliile notificării pentru",
 
   "ANSWERS_POLLING_STATION": "Secție de votare",
   "ANSWERS_NAME": "Nume",
   "ANSWERS_PHONE": "Telefon",
   "ANSWERS_DATE_AND_TIME": "Data&Ora",
   "ANSWERS_LOCATION_TYPE": "Tipul locației",
-  "ANSWERS_HEADER_TITLE": "Ultimele răspunsuri"
+  "ANSWERS_HEADER_TITLE": "Ultimele răspunsuri",
+  "ANSWERS_STATION": "Stație",
+  "ANSWERS_LOCATION": "Locație",
+  "ANSWERS_WHICH_BELONG_TO": "Răspunsuri ce aparțin lui"
 }

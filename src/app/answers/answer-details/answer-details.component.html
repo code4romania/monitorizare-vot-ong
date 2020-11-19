@@ -16,11 +16,11 @@
 
   <div class="c-answer-header d-flex justify-content-between align-items-center mt-4">
     <h4 class="c-answer-header__title">
-      {{ (crtPollingStation$ | async)?.observerName }} Responses
+      {{ 'ANSWERS_WHICH_BELONG_TO' | translate }} {{ (crtPollingStation$ | async)?.observerName }}
     </h4>
     
     <app-base-button class="c-answer-header__button" routerLink="notification">
-      <span class="content">Send notification</span>
+      <span class="content">{{ 'SEND_NOTIF' | translate }}</span>
     </app-base-button>
   </div>
 
@@ -30,7 +30,7 @@
         *ngFor="let stat of statsLabels"
         class="c-answer-stats__item"
       >
-        <span class="c-answer-stats__label">{{ stat.name }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+        <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
       </div>
     </div>
   </div>
@@ -84,7 +84,6 @@
               *ngIf="sectionsState.formNotes[q.id]"
               class="c-answer-note"
             >
-              <!-- TODO: translation -->
               <app-base-button 
                 (click)="shownNotes[q.id] = !shownNotes[q.id]"
                 [disabled]="false"
@@ -95,7 +94,7 @@
                 [has-color-inherited]="!!sectionsState.flaggedQuestions[q.id]"
                 [class.has-question-flagged]="!!sectionsState.flaggedQuestions[q.id]"
               >
-                View Note
+                {{ 'VIEW_NOTE' | translate }}
               </app-base-button>
 
               <div class="c-answer-note__content">

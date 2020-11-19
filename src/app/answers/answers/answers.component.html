@@ -14,7 +14,7 @@
           <path d="M5.83337 5.83301H14.1667V14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        <span>Export</span>
+        <span>{{ 'EXPORT' | translate }}</span>
       </app-base-button>
     </div>
   </div>
@@ -131,9 +131,9 @@
     ></app-pagination>
 
     <div no-rows-message class="c-no-msg">
-      <h4 class="text-center pb-2 c-no-msg__title">No results</h4>
+      <h4 class="text-center pb-2 c-no-msg__title">{{ 'NO_RESULTS' | translate }}</h4>
 
-      <p *ngIf="isShowingFilteredResults" class="text-center pb-3 c-no-msg__content">Please make sure you've typed everything correctly and try again</p>
+      <p *ngIf="isShowingFilteredResults" class="text-center pb-3 c-no-msg__content">{{ 'TRY_AGAIN_MSG' | translate }}</p>
     </div>
   </app-table-container>
 </div>

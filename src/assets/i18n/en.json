@@ -150,11 +150,20 @@
   "SELECT_FILE": "Select file",
   "IMPORT": "Import",
   "SUCCESS": "Success",
+  "EXPORT": "Export",
+  "NO_RESULTS": "No results",
+  "TRY_AGAIN_MSG": "Please make sure you've typed everything correctly and try again",
+  "VIEW_NOTE": "View Note",
+  "TITLE": "Title",
+  "NOTIF_DETAILS_FOR": "Notification details for",
 
   "ANSWERS_POLLING_STATION": "Polling Station",
   "ANSWERS_NAME": "Name",
   "ANSWERS_PHONE": "Phone",
   "ANSWERS_DATE_AND_TIME": "Date&Time",
   "ANSWERS_LOCATION_TYPE": "Location type",
-  "ANSWERS_HEADER_TITLE": "Last responses"
+  "ANSWERS_HEADER_TITLE": "Last responses",
+  "ANSWERS_STATION": "Station",
+  "ANSWERS_LOCATION": "Location",
+  "ANSWERS_WHICH_BELONG_TO": "Responses which belong to"
 }

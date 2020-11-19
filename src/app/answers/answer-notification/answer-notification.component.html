@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <h4 class="c-notif__title">Notification details for {{ observerName$ | async }}</h4>
+  <h4 class="c-notif__title">{{ 'NOTIF_DETAILS_FOR' | translate }} {{ observerName$ | async }}</h4>
 
   <div class="card mt-4">
     <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
@@ -25,14 +25,14 @@
         <div class="c-notif-body">
           <div class="form-group">
             <label for="title">
-              <!-- {{ 'NAME' | translate }} -->Title
+              {{ 'TITLE' | translate }}
             </label>
             <input ngModel required name="title" id="title" type="text" class="form-control" [placeholder]="'TYPE' | translate" />
           </div>
           
           <div class="form-group">
             <label for="message">
-              <!-- {{ 'PHONE_NUMBER' | translate }} -->Message
+              {{ 'MESSAGE' | translate }}
             </label>
             <textarea ngModel required class="form-control" name="message" id="message" cols="30" rows="10"
               [placeholder]="'TYPE' | translate"></textarea>

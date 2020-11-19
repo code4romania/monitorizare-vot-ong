@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
@@ -40,16 +41,17 @@ export class AnswerDetailsComponent implements OnInit {
   crtSelectedTabId = null;
 
   statsLabels = [
-    { name: 'Station', propertyName: 'pollingStationName', },
-    { name: 'Location', propertyName: 'not-specified', },
-    { name: 'Phone', propertyName: 'observerPhoneNumber', },
-    { name: 'Date&Time', propertyName: 'not-specified', },
+    { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
+    { name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'not-specified', },
+    { name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber', },
+    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'not-specified', },
   ];
 
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
     private router: Router,
+    private translate: TranslateService,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) { }
   

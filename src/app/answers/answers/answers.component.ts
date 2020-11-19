@@ -120,7 +120,9 @@ export class AnswersComponent implements OnInit {
       const rawValue = rawFilters[rawKey];
       const key = filterWordsDict[rawKey];
 
-      filter[key] = this.isValidValue(rawValue) && rawValue;
+      if (this.isValidValue(rawValue)) {
+        filter[key] = rawValue;
+      }
     }
 
     this.isLoading = true;
