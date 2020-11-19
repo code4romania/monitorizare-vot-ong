@@ -7,10 +7,11 @@ import { TableModule } from '../table/table.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
-import { AnswerDetailsComponent } from './answer-details/answer-details.component'
+import { AnswerDetailsComponent } from './answer-details/answer-details.component';
+import { AnswerNotificationComponent } from './answer-notification/answer-notification.component'
 
 @NgModule({
-  declarations: [AnswersComponent, AnswerDetailsComponent],
+  declarations: [AnswersComponent, AnswerDetailsComponent, AnswerNotificationComponent],
   imports: [
     CommonModule,
     AnswersRoutingModule,
