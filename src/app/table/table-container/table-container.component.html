@@ -46,7 +46,7 @@
           <td
             *ngFor="let col of columns"
           >
-            <ng-template [ngTemplateOutlet]="tdContent" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
+            <ng-template [ngTemplateOutlet]="tableColumn.templateRef" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
           </td>
         </tr>
       </ng-container>

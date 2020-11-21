@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { TableColumnDirective } from '../table-column/table-column.directive';
 
 import { SelectedZoneEvents, SortDirection, SortedColumnEvent, TableColumn, SELECTED_ZONE_EVENTS, SORT_DIRECTION } from '../table.model';
 
@@ -24,7 +25,7 @@ export class TableContainerComponent implements OnInit {
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
   @Output() rowClicked = new EventEmitter();
 
-  @ContentChild(TemplateRef) tdContent: TemplateRef<any>;
+  @ContentChild(TableColumnDirective) tableColumn: TableColumnDirective;
   
   selectedRows: { [rowId: string]: boolean } = {};
   allSelected = false;
