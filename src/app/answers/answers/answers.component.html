@@ -28,7 +28,7 @@
     [disable-checkbox]="true"
   >
     <div header-area>
-      <div class="card-body">
+      <div class="card-body" *ngIf="(filters$ | async) as filters">
         <form #f="ngForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
           <div class="form-group col-auto">
             <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'COUNTY_CODE' | translate | lowercase }}</label>
@@ -36,7 +36,7 @@
               [placeholder]="'TYPE' | translate" 
               ngModel
               type="text"
-              name="countyCode"
+              name="county"
               id="form-name"
               class="form-control"
             />
@@ -46,7 +46,7 @@
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'POLLING_STATION_NUMBER' | translate | lowercase }}</label>
             <input 
               [placeholder]="'TYPE' | translate" 
-              ngModel
+              [ngModel]="filters.pollingStationNumber"
               type="text"
               name="pollingStationNumber"
               id="form-county"
@@ -58,9 +58,9 @@
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'OBSERVER_PHONE' | translate | lowercase }}</label>
             <input 
               [placeholder]="'TYPE' | translate" 
-              ngModel
+              [ngModel]="filters.observerPhoneNumber"
               type="text"
-              name="observerPhone"
+              name="observerPhoneNumber"
               id="form-county"
               class="form-control"
             />
@@ -118,15 +118,16 @@
       </div>
     </div>
 
-    <ng-template let-r="row" let-c="column">
+    <ng-template tableColumn let-r="row" let-c="column">
       {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
     </ng-template>
 
     <app-pagination
+      *ngIf="(answerState$ | async).totalItems as totalItems"
       footer-area
       [page]="(answerState$ | async).page"
       [pageSize]="(answerState$ | async).pageSize"
-      [totalItems]="(answerState$ | async).totalItems"
+      [totalItems]="totalItems"
       (pageChanged)="onPageChanged($event)"
     ></app-pagination>
 

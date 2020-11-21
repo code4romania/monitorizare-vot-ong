@@ -1,6 +1,6 @@
 import { of as observableOf} from 'rxjs';
 
-import { catchError, map, switchMap, filter } from 'rxjs/operators';
+import { catchError, map, switchMap, filter, withLatestFrom, mergeAll } from 'rxjs/operators';
 import {
   AnswerExtra,
   AnswerExtraConstructorData,
@@ -23,6 +23,7 @@ import {
   LoadAnswerPreviewAction,
   LoadAnswerPreviewDoneAction,
   LoadAnswerPreviewErorrAction,
+  updatePageInfo,
 } from './answer.actions';
 import { HttpParams } from '@angular/common/http';
 import { AnswerFilters } from '../../models/answer.filters.model';
@@ -32,6 +33,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
+import { answer } from './answer.selectors';
 
 @Injectable()
 export class AnswerEffects {
@@ -40,7 +42,7 @@ export class AnswerEffects {
   constructor(
     private http: ApiService,
     private actions: Actions,
-    store: Store<AppState>
+    private store: Store<AppState>
   ) {
     this.baseUrl = environment.apiUrl;
     store.select((s) => s.answer).subscribe((s) => (this.state = s));
@@ -49,6 +51,20 @@ export class AnswerEffects {
   @Effect()
   loadThreads = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_PREVIEW),
+    withLatestFrom(this.store.select(answer)),
+    map(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) => {
+      const { payload: currentPayload } = action;
+      const updatedPayload = {};
+
+      for (const k in currentPayload) {
+        updatedPayload[k] = currentPayload[k] ?? crtState[k];
+      }
+
+      return {
+        ...action,
+        payload: updatedPayload,
+      };
+    }),
 
     // I'd say this is no longer needed since the validation is handled
     // by the `pagination` component
@@ -69,18 +85,24 @@ export class AnswerEffects {
         data: AnswerThread[];
         totalItems: number;
         totalPages: number;
+        page: number,
+        pageSize: number,
       }>(answearsUrl, {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload),
       });
     }),
     map(
       (json) =>
-        new LoadAnswerPreviewDoneAction(
-          json.data,
-          json.totalItems,
-          json.totalPages
-        )
+        [
+          new LoadAnswerPreviewDoneAction(
+            json.data,
+            json.totalItems,
+            json.totalPages,
+          ),
+          updatePageInfo({ page: json.page, pageSize: json.pageSize })
+        ]
     ),
+    mergeAll(),
     catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
   );
 
@@ -99,27 +121,36 @@ export class AnswerEffects {
     refresh: boolean;
     answerFilters?: AnswerFilters;
   }): HttpParams {
-    let params = new HttpParams();
+    // adding these upfront since they will always be present
+    let params = new HttpParams()
+      .append('page', payload.page + '')
+      .append('pageSize', payload.pageSize + '');
 
     if (payload && payload.answerFilters) {
-      params = isNil(payload.page)
-        ? params
-        : params.append('page', payload.page.toString());
-      params = isNil(payload.pageSize)
-        ? params
-        : params.append('pageSize', payload.pageSize.toString());
-      params = isNil(payload.answerFilters.county)
-        ? params
-        : params.append('county', payload.answerFilters.county);
-      params = isNil(payload.answerFilters.pollingStationNumber)
-        ? params
-        : params.append('pollingStationNumber', payload.answerFilters.pollingStationNumber);
-      params = isNil(payload.answerFilters.observerPhone)
-        ? params
-        : params.append('observerPhoneNumber', payload.answerFilters.observerPhone.toString());
-      params = isNil(payload.urgent)
-        ? params
-        : params.append('urgent', payload.urgent.toString());
+      for (const k in payload.answerFilters) {
+        const val = payload.answerFilters[k];
+
+        params = (!!val || val === 0) ? params.append(k, val + '') : params;
+      }
+      
+      // params = isNil(payload.page)
+      //   ? params
+      //   : params.append('page', payload.page.toString());
+      // params = isNil(payload.pageSize)
+      //   ? params
+      //   : params.append('pageSize', payload.pageSize.toString());
+      // params = isNil(payload.answerFilters.county)
+      //   ? params
+      //   : params.append('county', payload.answerFilters.county);
+      // params = isNil(payload.answerFilters.pollingStationNumber)
+      //   ? params
+      //   : params.append('pollingStationNumber', payload.answerFilters.pollingStationNumber);
+      // params = isNil(payload.answerFilters.observerPhone)
+      //   ? params
+      //   : params.append('observerPhoneNumber', payload.answerFilters.observerPhone.toString());
+      // params = isNil(payload.urgent)
+      //   ? params
+      //   : params.append('urgent', payload.urgent.toString());
     }
 
     return params;

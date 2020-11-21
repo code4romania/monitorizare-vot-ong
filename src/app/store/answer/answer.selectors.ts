@@ -30,3 +30,8 @@ export const getSelectedAnswersAsObject = createSelector(
       {}
     )
 );
+
+export const getFilters = createSelector(
+  answer,
+  (state: AnswerState) => state.answerFilters,
+);

@@ -1,6 +1,6 @@
 
 import { map, take, shareReplay } from 'rxjs/operators';
-import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/answer/answer.actions';
+import { LoadAnswerDetailsAction, LoadAnswerPreviewAction, updateFilters, updatePageInfo } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
@@ -14,6 +14,8 @@ import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-
 import { TableColumn, TableColumnTranslated, SortedColumnEvent } from 'src/app/table/table.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AnswerFilters } from 'src/app/models/answer.filters.model';
+import { getFilters } from 'src/app/store/answer/answer.selectors';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -42,9 +44,11 @@ export class AnswersComponent implements OnInit {
 
   isLoading: boolean;
   isShowingFilteredResults = false;
+  previousUsedFilters = null;
 
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
   answers$: Observable<AnswerState['threads']> = this.answerState$.pipe(map(s => s.threads));
+  filters$: Observable<AnswerFilters> = this.store.select(getFilters);
 
   constructor(
     private store: Store<AppState>,
@@ -56,7 +60,7 @@ export class AnswersComponent implements OnInit {
     @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
     this.translateColumnNames(rawTableColumns);
-    this.store.dispatch(new LoadAnswerPreviewAction(false));
+    this.store.dispatch(new LoadAnswerPreviewAction());
   }
 
   ngOnInit() {
@@ -65,25 +69,13 @@ export class AnswersComponent implements OnInit {
 
   requestFilteredData (filters) {
     this.isShowingFilteredResults = true;
-    this.store.dispatch(new LoadAnswerPreviewAction(false, 1, 5, true, filters));
-  }
-
-  redoAnswerListAction() {
-    // take the current state of the answerState, and do a reloaded
-    this.store.pipe(select(state => state.answer), take(1),
-      map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters)),
-      map(a => this.store.dispatch(a))).subscribe();
+    
+    this.store.dispatch(updateFilters(filters));
+    this.store.dispatch(new LoadAnswerPreviewAction(1));
   }
 
   onPageChanged(event) {
-    this.store.pipe(select(s => s.answer),
-      map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
-      map(a => {
-        this.store.dispatch(a);
-      }),
-      take(1),
-    )
-      .subscribe();
+    this.store.dispatch(new LoadAnswerPreviewAction(event.page, event.pageSize));
   }
 
   onSortedColumnClicked({ col, sortDirection }: SortedColumnEvent) {
@@ -93,8 +85,8 @@ export class AnswersComponent implements OnInit {
   }
 
   onRowClicked({ idObserver, idPollingStation }: AnswerThread) {
-    this.store.dispatch(new LoadAnswerDetailsAction(idObserver, idPollingStation));
     this.router.navigate([idObserver, idPollingStation], { relativeTo: this.activatedRoute });
+    this.store.dispatch(new LoadAnswerDetailsAction(idObserver, idPollingStation));
   }
 
   private isValidValue(value) {

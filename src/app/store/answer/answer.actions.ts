@@ -3,7 +3,7 @@ import { AnswerThread } from '../../models/answer.thread.model';
 import { AnswerFilters } from '../../models/answer.filters.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
 import { actionType } from '../util';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 
 
 export class AnswerActionTypes {
@@ -23,13 +23,11 @@ export class LoadAnswerPreviewAction implements Action {
     payload: {
         page: number,
         pageSize: number,
-        urgent: boolean,
         refresh: boolean,
         answerFilters?: AnswerFilters
     };
-    constructor(urgent: boolean, page = 1, pageSize = 10, refresh = false, answerFilters = {} as AnswerFilters) {
+    constructor(page = undefined, pageSize = undefined, refresh = false, answerFilters = undefined) {
         this.payload = {
-            urgent,
             page,
             pageSize,
             refresh,
@@ -45,14 +43,14 @@ export class LoadAnswerPreviewDoneAction implements Action {
     payload: {
         threads: AnswerThread[]
         totalItems: number
-        totalPages: number
+        totalPages: number,
     };
 
     constructor(threads: AnswerThread[], totalItems: number, totalPages: number) {
         this.payload = {
             threads,
             totalItems,
-            totalPages
+            totalPages,
         };
     }
 }
@@ -113,3 +111,13 @@ export type AnswerActions =
     LoadAnswerExtraAction |
     LoadAnswerExtraDoneAction |
     LoadAnswerExtraErrorAction;
+
+export const updateFilters = createAction(
+    '[Answers Page] Update Filters',
+    props<Partial<{ pollingStationNumber: number; county: string; observerPhoneNumber: string }>>()
+);
+
+export const updatePageInfo = createAction(
+    '[Answers Page] Update `page` info',
+    props<{ page: number, pageSize?: number }>()
+);

@@ -19,7 +19,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   nextEnabled = true;
 
   @Output()
-  pageChanged: EventEmitter<any> = new EventEmitter();
+  pageChanged: EventEmitter<{  page: number, pageSize: number }> = new EventEmitter();
 
   startingindex: number;
   endingIndex: number;
