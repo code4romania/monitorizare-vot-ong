@@ -105,7 +105,7 @@
               </app-base-button>
               &nbsp;
               <app-base-button 
-                (click)="f.reset(); isShowingFilteredResults = false"
+                (click)="f.reset(); onResetFilters()"
                 [disabled]="false"
                 [variant]="BaseButtonVariants.PURPLE" 
                 [custom-styles]="{ height: '2.8rem', border: 'none' }"
@@ -134,7 +134,7 @@
     <div no-rows-message class="c-no-msg">
       <h4 class="text-center pb-2 c-no-msg__title">{{ 'NO_RESULTS' | translate }}</h4>
 
-      <p *ngIf="isShowingFilteredResults" class="text-center pb-3 c-no-msg__content">{{ 'TRY_AGAIN_MSG' | translate }}</p>
+      <p class="text-center pb-3 c-no-msg__content">{{ 'TRY_AGAIN_MSG' | translate }}</p>
     </div>
   </app-table-container>
 </div>

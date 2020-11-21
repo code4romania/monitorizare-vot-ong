@@ -43,7 +43,6 @@ export class AnswersComponent implements OnInit {
   tableColumns: TableColumnTranslated[] = [];
 
   isLoading: boolean;
-  isShowingFilteredResults = false;
   previousUsedFilters = null;
 
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
@@ -68,8 +67,6 @@ export class AnswersComponent implements OnInit {
   }
 
   requestFilteredData (filters) {
-    this.isShowingFilteredResults = true;
-    
     this.store.dispatch(updateFilters(filters));
     this.store.dispatch(new LoadAnswerPreviewAction(1));
   }
@@ -82,6 +79,11 @@ export class AnswersComponent implements OnInit {
     console.log(col, sortDirection);
 
     // TODO: call proper API
+  }
+
+  onResetFilters () {
+    this.store.dispatch(updateFilters({}));
+    this.store.dispatch(new LoadAnswerPreviewAction(1));
   }
 
   onRowClicked({ idObserver, idPollingStation }: AnswerThread) {
