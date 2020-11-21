@@ -1,5 +1,5 @@
 
-import { map, take, distinctUntilChanged } from 'rxjs/operators';
+import { map, take, shareReplay } from 'rxjs/operators';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
@@ -43,8 +43,8 @@ export class AnswersComponent implements OnInit {
   isLoading: boolean;
   isShowingFilteredResults = false;
 
-  answerState: Observable<AnswerState> = this.store.pipe(select(state => state.answer));
-  answers$: Observable<AnswerState['threads']> = this.answerState.pipe(map(s => s.threads));
+  answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
+  answers$: Observable<AnswerState['threads']> = this.answerState$.pipe(map(s => s.threads));
 
   constructor(
     private store: Store<AppState>,

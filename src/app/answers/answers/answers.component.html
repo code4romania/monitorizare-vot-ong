@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center">
       <h3 class="mb-0 c-answers__header-title">{{ 'ANSWERS_HEADER_TITLE' | translate }}</h3>
       <i class="h-vertical-line"></i>
-      <span class="font-weight-bold h-is-muted">{{ (answers$ | async).length }} total</span>
+      <span class="font-weight-bold h-is-muted">{{ (answerState$ | async).totalItems }} total</span>
     </div>
   
     <div class="c-answers__buttons" role="group" aria-label="Sort">
@@ -24,7 +24,7 @@
     (rowClicked)="onRowClicked($event)"
     [columns]="tableColumns"
     [rows]="(answers$ | async)"
-    [is-loading]="(answerState | async).threadsLoading"
+    [is-loading]="(answerState$ | async).threadsLoading"
     [disable-checkbox]="true"
   >
     <div header-area>
@@ -124,9 +124,9 @@
 
     <app-pagination
       footer-area
-      [page]="(answerState | async).page"
-      [pageSize]="(answerState | async).pageSize"
-      [totalItems]="(answerState | async).totalItems"
+      [page]="(answerState$ | async).page"
+      [pageSize]="(answerState$ | async).pageSize"
+      [totalItems]="(answerState$ | async).totalItems"
       (pageChanged)="onPageChanged($event)"
     ></app-pagination>
 
