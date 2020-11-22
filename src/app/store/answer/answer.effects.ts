@@ -1,4 +1,4 @@
-import { forkJoin, of as observableOf} from 'rxjs';
+import { forkJoin, of as observableOf, of} from 'rxjs';
 
 import { catchError, map, switchMap, filter, withLatestFrom, mergeAll } from 'rxjs/operators';
 import {
@@ -93,12 +93,14 @@ export class AnswerEffects {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload),
       }).pipe(
         switchMap(
-          json => forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
-            map(extraDetailsArr => ({
-              ...json,
-              data: json.data.map((a, i) => ({ ...a, ...extraDetailsArr[i] }))
-            }))
-          )
+          json => json.data.length 
+            ? forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
+              map(extraDetailsArr => ({
+                ...json,
+                data: json.data.map((a, i) => ({ ...a, ...extraDetailsArr[i] }))
+              }))
+            )
+            : of(json)
         ),
         map(
           (json) =>
