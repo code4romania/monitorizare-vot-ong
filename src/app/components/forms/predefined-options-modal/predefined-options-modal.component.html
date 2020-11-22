@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h6 class="modal-title">{{'PREDEFINED_OPTIONS_MODAL.TITLE' | translate}}</h6>
+</div>
+<div class="modal-body">
+  <p>{{'PREDEFINED_OPTIONS_MODAL.NOTE' | translate}}</p>
+  <div *ngFor="let category of data">
+    {{ category.label | translate }}
+    <div *ngFor="let option of category.options" class="node-children">
+      <input type="checkbox" [ngModel]="option.check"
+             (ngModelChange)="check(option,$event);"/>  {{ option.label | translate }}
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">{{'CANCEL' | translate}}</button>
+  <button type="button" class="btn btn-warning" (click)="modal.close(getChecked())">{{'ADD' | translate}}</button>
+</div>

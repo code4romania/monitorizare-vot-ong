@@ -45,6 +45,29 @@
 
   "OPTION_ADD": "Add option",
 
+  "PREDEFINED_OPTIONS": {
+    "CONFIRMATION": {
+      "LABEL": "Confirmations",
+      "YES": "Yes",
+      "NO": "No",
+      "DONT_KNOW": "Don't know"
+    },
+    "RATING": {
+      "LABEL": "Ratings",
+      "1": "1 - Very Bad",
+      "2": "2 - Bad",
+      "3": "3 - Mediocre",
+      "4": "4 - Good",
+      "5": "5 - Very Good"
+    }
+  },
+
+  "PREDEFINED_OPTIONS_MODAL": {
+    "ADD": "Choose predefined options",
+    "TITLE": "Choose from predefined options",
+    "NOTE": "Note: Your selection will be remembered"
+  },
+
   "NOTHING_SELECTED": "Nothing selected.",
   "SHOW": "Show",
   "HIDE": "Hide",
@@ -113,6 +136,7 @@
   "LAST_LOGIN": "Last login",
 
   "//": "COMMON_STUFF",
+  "ADD": "Add",
   "EDIT": "Edit",
   "DELETE": "Delete",
   "SEND_NOTIF": "Send Notification",
