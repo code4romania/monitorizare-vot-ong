@@ -15,6 +15,9 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { select, Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CountyEffects } from './county/county.effects';
+import { countyReducer } from './county/county.reducer';
+
 import {
   ObserversState,
   ObserversCountState,
@@ -27,6 +30,7 @@ import {
   observersReducer,
   observersCountReducer,
 } from './observers/observers.reducer';
+import { CountyState } from './county/county.state';
 
 export class AppState {
   form: FormState;
@@ -35,6 +39,7 @@ export class AppState {
   observers: ObserversState;
   observersCount: ObserversCountState;
   note: NoteState;
+  county: CountyState;
 }
 
 const moduleImports = [
@@ -45,6 +50,7 @@ const moduleImports = [
     observers: observersReducer,
     note: noteReducer,
     observersCount: observersCountReducer,
+    county: countyReducer
   }),
   EffectsModule.forRoot([
     FormEffects,
@@ -53,6 +59,7 @@ const moduleImports = [
     ObserversEffects,
     ObserversCountEffects,
     NoteEffects,
+    CountyEffects,
   ]),
   StoreDevtoolsModule.instrument({
     maxAge: 25, // Retains last 25 states

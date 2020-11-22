@@ -55,7 +55,9 @@ export class QueryParamBuilder {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ApiService {
   constructor(
     private httpClient: HttpClient,
