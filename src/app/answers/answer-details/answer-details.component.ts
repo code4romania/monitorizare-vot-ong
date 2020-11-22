@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
 import { Form } from 'src/app/models/form.model';
@@ -24,7 +25,7 @@ import { getNotesAsObject } from '../../store/note/note.selectors';
   styleUrls: ['./answer-details.component.scss']
 })
 export class AnswerDetailsComponent implements OnInit {
-  crtPollingStation$: Observable<AnswerThread>;
+  crtPollingStation$: Observable<AnswerThread & { locationType: string }>;
   formTabs$: Observable<FormDetails[]>;
   sections$: Observable<any>;
   sectionsState$: Observable<
@@ -42,9 +43,9 @@ export class AnswerDetailsComponent implements OnInit {
 
   statsLabels = [
     { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
-    { name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'not-specified', },
+    { name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'locationType', },
     { name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber', },
-    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'not-specified', },
+    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'observerArrivalTime', },
   ];
 
   constructor(
@@ -61,6 +62,8 @@ export class AnswerDetailsComponent implements OnInit {
     this.crtPollingStation$ = this.store.select(getSpecificThreadByObserver, +idObserver)
       .pipe(
         tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
+        filter(Boolean),
+        map<AnswerThread & AnswerExtra, any>(a => ({ ...a, locationType: a.urbanArea ? 'Urban' : 'Rural' })),
         
         // data retrieval from the store is done synchronously
         // so we want to subscribe to the store after the template's subscriptions
