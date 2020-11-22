@@ -1,5 +1,5 @@
 
-import { map, take, shareReplay } from 'rxjs/operators';
+import { map, take, shareReplay, filter } from 'rxjs/operators';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction, updateFilters, updatePageInfo } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
@@ -16,6 +16,9 @@ import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerFilters } from 'src/app/models/answer.filters.model';
 import { getFilters } from 'src/app/store/answer/answer.selectors';
+import { fetchCountiesFromAnswers } from 'src/app/store/county/county.actions';
+import { County } from 'src/app/store/county/county.state';
+import { getCounties } from 'src/app/store/county/county.selectors';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -48,6 +51,9 @@ export class AnswersComponent implements OnInit {
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
   answers$: Observable<AnswerState['threads']> = this.answerState$.pipe(map(s => s.threads));
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
+  counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
+    map((counties: County[]) => [{ name: '' }, ...(counties || [])]),
+  );
 
   constructor(
     private store: Store<AppState>,
@@ -64,6 +70,8 @@ export class AnswersComponent implements OnInit {
 
   ngOnInit() {
     this.formState = this.store.pipe(select(state => state.form));
+
+    this.store.dispatch(fetchCountiesFromAnswers());
   }
 
   requestFilteredData (filters) {

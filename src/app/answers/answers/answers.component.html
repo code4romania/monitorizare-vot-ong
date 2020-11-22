@@ -32,14 +32,19 @@
         <form #f="ngForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
           <div class="form-group col-auto">
             <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'COUNTY_CODE' | translate | lowercase }}</label>
-            <input 
-              [placeholder]="'TYPE' | translate" 
-              ngModel
-              type="text"
-              name="county"
+            <select 
+              class="form-control" 
               id="form-name"
-              class="form-control"
-            />
+              [ngModel]="filters.county || ''"
+              name="county"
+            >
+              <option 
+                *ngFor="let county of (counties$ | async); first as isFirst"
+                [value]="isFirst ? '' : county.code"
+              >
+                {{ isFirst ? ('CHOOSE_COUNTY' | translate) : county.name }}
+              </option>
+            </select>
           </div>
 
           <div class="form-group col-auto">

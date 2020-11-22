@@ -32,7 +32,7 @@ span.font-weight-bold.h-is-muted {
 }
 
 .form-group {
-  & > input.form-control {
+  & > .form-control {
     border: 1px solid $base-gray;
     color: $input-text-color;
     padding-top: .8rem;
@@ -43,6 +43,10 @@ span.font-weight-bold.h-is-muted {
     &::placeholder {
       color: $input-text-color;
     }
+  }
+
+  & > select.form-control {
+    min-width: 13rem;
   }
 
   & > label {
