@@ -123,6 +123,11 @@ $question-text-color: #474747;
   &__option {
     display: flex;
     column-gap: 2rem;
+
+    &.is-option-text {
+      display: flex;
+      flex-direction: row-reverse;
+    }
   }
 
   .c-answer-checkbox {

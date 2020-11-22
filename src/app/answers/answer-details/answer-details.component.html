@@ -68,6 +68,7 @@
               <div
                 *ngFor="let o of q.optionsToQuestions"
                 class="c-answer-question__option"
+                [class.is-option-text]="o.isFreeText"
               >
                 <ng-container 
                   *ngTemplateOutlet="
@@ -111,6 +112,7 @@
 <ng-template #checkboxOption let-q="question" let-o="option" let-checked="checked">
   <app-base-checkbox
     (checkboxChanged)="null"
+    [is-disabled]="true"
     [forceCheck]="checked"
     [name]="o.id"
     [is-transparent]="true"
@@ -118,6 +120,13 @@
   ></app-base-checkbox>
 </ng-template>
 
-<ng-template #textOption let-q="question" let-o="option">
-  text
+<ng-template #textOption let-q="question" let-o="option" let-answer="checked">
+  <textarea 
+    readonly
+    [name]="q.id" 
+    [id]="q.id" 
+    class="form-control"
+  >
+    {{ answer?.text }}
+  </textarea>
 </ng-template>
