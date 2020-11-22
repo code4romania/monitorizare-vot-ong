@@ -18,6 +18,9 @@ export class BaseCheckboxComponent implements OnInit {
   @Input('is-transparent')
   @HostBinding('class.is-transparent') isTransparent = false;
 
+  @Input('is-disabled')
+  @HostBinding('class.is-disabled') isDisabled = false;
+
   @Output() checkboxChanged = new EventEmitter();
 
   @HostListener('click', ['$event'])

@@ -58,3 +58,9 @@ input:checked + label::after {
     box-shadow: 6px -9px 0px 0px #fff, inset -3px -4px 0px 0px #fff;
   }
 }
+
+:host.is-disabled {
+  label {
+    cursor: not-allowed;
+  }
+}
