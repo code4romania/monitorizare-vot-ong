@@ -1,4 +1,4 @@
-import { of as observableOf} from 'rxjs';
+import { forkJoin, of as observableOf} from 'rxjs';
 
 import { catchError, map, switchMap, filter, withLatestFrom, mergeAll } from 'rxjs/operators';
 import {
@@ -34,6 +34,7 @@ import { AnswerThread } from '../../models/answer.thread.model';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
 import { answer } from './answer.selectors';
+import { AnswersService } from 'src/app/services/answers.service';
 
 @Injectable()
 export class AnswerEffects {
@@ -42,7 +43,8 @@ export class AnswerEffects {
   constructor(
     private http: ApiService,
     private actions: Actions,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private answerService: AnswersService,
   ) {
     this.baseUrl = environment.apiUrl;
     store.select((s) => s.answer).subscribe((s) => (this.state = s));
@@ -89,21 +91,32 @@ export class AnswerEffects {
         pageSize: number,
       }>(answearsUrl, {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload),
-      });
+      }).pipe(
+        switchMap(
+          json => forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
+            map(extraDetailsArr => ({
+              ...json,
+              data: json.data.map((a, i) => ({ ...a, ...extraDetailsArr[i] }))
+            }))
+          )
+        ),
+        map(
+          (json) =>
+            [
+              new LoadAnswerPreviewDoneAction(
+                json.data,
+                json.totalItems,
+                json.totalPages,
+              ),
+              updatePageInfo({ page: json.page, pageSize: json.pageSize })
+            ]
+        ),
+        mergeAll(),
+        catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
+      )
     }),
-    map(
-      (json) =>
-        [
-          new LoadAnswerPreviewDoneAction(
-            json.data,
-            json.totalItems,
-            json.totalPages,
-          ),
-          updatePageInfo({ page: json.page, pageSize: json.pageSize })
-        ]
-    ),
-    mergeAll(),
-    catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
+    
+    // catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
   );
 
   shouldLoad(page: number, pageSize: number, arrayLen) {
@@ -117,7 +130,6 @@ export class AnswerEffects {
   private buildLoadAnswerPreviewFilterParams(payload: {
     page: number;
     pageSize: number;
-    urgent: boolean;
     refresh: boolean;
     answerFilters?: AnswerFilters;
   }): HttpParams {
@@ -187,14 +199,14 @@ export class AnswerEffects {
     )
   );
 
-  @Effect()
-  loadExtraFromAnswer = this.actions.pipe(
-    ofType(AnswerActionTypes.LOAD_DETAILS),
-    map(
-      (a: LoadAnswerDetailsAction) =>
-        new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId)
-    )
-  );
+  // @Effect()
+  // loadExtraFromAnswer = this.actions.pipe(
+  //   ofType(AnswerActionTypes.LOAD_DETAILS),
+  //   map(
+  //     (a: LoadAnswerDetailsAction) =>
+  //       new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId)
+  //   )
+  // );
 
   @Effect()
   loadExtra = this.actions.pipe(

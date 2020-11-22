@@ -19,6 +19,7 @@ import { getFilters } from 'src/app/store/answer/answer.selectors';
 import { fetchCountiesFromAnswers } from 'src/app/store/county/county.actions';
 import { County } from 'src/app/store/county/county.state';
 import { getCounties } from 'src/app/store/county/county.selectors';
+import { AnswerExtra } from 'src/app/models/answer.extra.model';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -26,9 +27,9 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
     const columns: TableColumn[] = [
       { name: 'ANSWERS_POLLING_STATION', propertyName: 'pollingStationName', },
       { name: 'ANSWERS_NAME', propertyName: 'observerName', },
-      { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', }, // FIXME: 
-      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'not-specified', canBeSorted: true },
-      { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'not-specified', }, // FIXME: 
+      { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', }, 
+      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'observerArrivalTime', canBeSorted: true },
+      { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'locationType', },  
     ];
 
     return columns;
@@ -49,7 +50,9 @@ export class AnswersComponent implements OnInit {
   previousUsedFilters = null;
 
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
-  answers$: Observable<AnswerState['threads']> = this.answerState$.pipe(map(s => s.threads));
+  answers$: Observable<(AnswerThread | AnswerExtra)[]> = this.answerState$.pipe(
+    map(s => s.threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
+  );
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
   counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
     map((counties: County[]) => [{ name: '' }, ...(counties || [])]),
