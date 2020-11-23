@@ -84,6 +84,8 @@ export class TableContainerComponent implements OnInit {
     if (!this.allSelected) {
       this.allSelected = true;
       this.selectedRows = {};
+      this.rows.forEach((row) => this.selectedRows[row[this.idKey]] = true);
+
       this.nrSelectedRows = this.rows.length;
     } else {
       this.clearSelectedRows();
@@ -97,7 +99,9 @@ export class TableContainerComponent implements OnInit {
 
     this.nrSelectedRows += (this.selectedRows[rowId] ? 1 : -1);
 
-    if (!this.nrSelectedRows) {
+    if (this.rows.length && this.nrSelectedRows === this.rows.length) {
+      this.allSelected = true;
+    } else {
       this.allSelected = false;
     }
   }

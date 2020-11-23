@@ -14,7 +14,6 @@
   }
 
   .collapse.show {
-    max-height: 20rem;
     opacity: 1;
     transition: max-height 0.2s, opacity 0.2s;
     pointer-events: all;

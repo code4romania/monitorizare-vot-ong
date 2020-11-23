@@ -8,7 +8,7 @@
         </div>
 
         <div class="c-ngos__buttons" role="group" aria-label="Sort">
-            <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/new']">
+            <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/ong/new'] ">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
@@ -55,7 +55,7 @@
 
             <span *ngIf="c.propertyName !== actionsColumnName">
                 <app-base-checkbox *ngIf="isBooleanValue(r[c.propertyName])" [name]="c.propertyName"
-                    [forceCheck]="r[c.propertyName]" [readonly]="true" class="c-table__row-check"></app-base-checkbox>
+                    [ngModel]="r[c.propertyName]" [readonly]="true" class="c-table__row-check"></app-base-checkbox>
 
                 <span
                     *ngIf="!isBooleanValue(r[c.propertyName])">{{ getValueOrDefault(r[c.propertyName], ('UNSPECIFIED' | translate)) }}</span>

@@ -12,6 +12,7 @@ export class BaseObserverCrudComponent {
     @Output() onResetPassword: EventEmitter<Observer> = new EventEmitter();
 
     toggleSelectedState() {
+        debugger;
         if (this.selectionEnabled) {
             this.observer.isSelected = !this.observer.isSelected;
             this.onSelect.emit({ id: this.observer.id, isSelected: this.observer.isSelected });

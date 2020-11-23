@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { NgosService } from '../../../services/ngos.service';
 import { PageState } from '../../../models/page-state.model';
 import { BASE_BUTTON_VARIANTS, Variants } from '../../../shared/base-button/base-button.component';
 import { getSelectedObserver } from '../../../store/observers/observers.state';
+import { TranslateService } from '@ngx-translate/core';
 
 const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
 
@@ -20,7 +21,7 @@ const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
   templateUrl: './ngo-profile.component.html',
   styleUrls: ['./ngo-profile.component.scss'],
 })
-export class NgoProfileComponent implements OnInit {
+export class NgoProfileComponent implements OnInit, OnDestroy {
   error: string;
   fileData: File;
 
@@ -37,6 +38,7 @@ export class NgoProfileComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private store: Store,
+    private translateService: TranslateService,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
     this.ngoProfileForm = this.fb.group({
@@ -57,23 +59,21 @@ export class NgoProfileComponent implements OnInit {
   }
 
   deleteNgo() {
-    if (confirm('Are you sure you want to remove this ngo?')) {
+    if (confirm(this.translateService.instant('NGO_CONFIRM_DELETE'))) {
       this.ngosService
         .deleteNgo(this.ngo.id)
         .subscribe((data) => {
-          this.toastr.warning('Success', 'Observer has been removed');
+          this.toastr.warning('Success', this.translateService.instant('NGO_REMOVED_SUCCESS'));
           this.router.navigateByUrl('/observatori');
         });
     }
   }
 
   onSubmit() {
-    const sanitizedValues = this.trimFormValuesOutsideAndInside(this.ngoProfileForm.value);
-
     if (this.pageState === PageState.EDIT) {
-      this.saveChanges(sanitizedValues);
+      this.saveChanges(this.ngoProfileForm.value);
     } else if (this.pageState === PageState.NEW) {
-      this.addNewObserver(sanitizedValues);
+      this.addNewNgo(this.ngoProfileForm.value);
     }
   }
 
@@ -85,7 +85,7 @@ export class NgoProfileComponent implements OnInit {
     });
   }
 
-  private saveChanges(values: { [k: string]: string }) {
+  private saveChanges(values: { [k: string]: any }) {
     this.ngosService
       .saveChanges(values, this.ngo)
       .subscribe((data) => {
@@ -93,7 +93,7 @@ export class NgoProfileComponent implements OnInit {
       });
   }
 
-  private addNewObserver(values: { [k: string]: string | boolean }) {
+  private addNewNgo(values: { [k: string]: any }) {
     const ngoToAdd: NgoModel = new NgoModel({});
     ngoToAdd.isActive = (values.isActive as boolean);
     ngoToAdd.organizer = (values.organizer as boolean);
@@ -101,8 +101,8 @@ export class NgoProfileComponent implements OnInit {
     ngoToAdd.name = (values.name as string);
 
     this.ngosService.addNewNgo(ngoToAdd).subscribe((value) => {
-      this.toastr.success('Success', 'Observer has been added');
-      this.router.navigateByUrl('/observatori');
+      this.toastr.success('Success', this.translateService.instant('NGO_ADD_SUCCESS'));
+      this.router.navigateByUrl('/ong');
     });
   }
 
@@ -131,14 +131,5 @@ export class NgoProfileComponent implements OnInit {
         this.ngo = ngo;
         this.ngoProfileForm.patchValue(this.ngo);
       })
-  }
-
-  private trimFormValuesOutsideAndInside(values: { [k: string]: string }) {
-    return Object.keys(values).reduce((acc, crtKey) => {
-      const val = values[crtKey];
-      const newVal = val.trim().split(' ').filter(Boolean).join(' ');
-
-      return (acc[crtKey] = newVal, acc);
-    }, {})
   }
 }

@@ -82,9 +82,15 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
   listType: ListType = ListType.CARD;
   selectedNgosIds: Array<number> = [];
   listTypes = ListType;
-  anyObservers = false;
-  pageSize = 9;
-  totalCount = 0;
+  anyNgos = false;
+
+  get totalCount(): number {
+    if (this.ngosList)
+      return this.ngosList.length;
+
+    return 0
+  }
+
 
   newPassword = '';
   modalRef: NgbModalRef;
@@ -144,7 +150,7 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
     }
   }
 
-  private deleteNgo(id: number){
+  private deleteNgo(id: number) {
     if (confirm(this.translateService.instant('CONFIRM_DELETE_NGO'))) {
       this.ngosService.deleteNgo(id).subscribe((_) => {
         this.loadNgos();
@@ -195,7 +201,7 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
       .subscribe((state) => {
         this.ngosState = state;
         this.ngosList = state.values;
-        this.anyObservers = state.values.length > 0;
+        this.anyNgos = state.values.length > 0;
       });
   }
 

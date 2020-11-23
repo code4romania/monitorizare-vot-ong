@@ -59,8 +59,11 @@
           </div>
 
           <div class="form-group">
-            <label for="isActive">{{ 'IS_ACTIVE' | translate }}</label>
-            <input formControlName="isActive" id="isActive" class="form-control" type="checkbox" />
+            <app-base-checkbox [label] ="'IS_ACTIVE' | translate" 
+            name="isActive" 
+            formControlName="isActive" id="isActive" ></app-base-checkbox>
+
+            <!-- <input formControlName="isActive" id="isActive" class="form-control" type="checkbox" /> -->
           </div>
         </div>
 

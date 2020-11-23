@@ -5,7 +5,7 @@
     <app-base-checkbox
       *ngIf="!disableCheckbox"
       (checkboxChanged)="toggleAll()"
-      [forceCheck]="allSelected"
+      [(ngModel)]="allSelected"
       name="all"
       class="c-table__row-check"
     ></app-base-checkbox>
@@ -34,7 +34,7 @@
         <app-base-checkbox 
           *ngIf="!disableCheckbox"
           (checkboxChanged)="toggleRow(r[idKey])"
-          [forceCheck]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
+          [(ngModel)]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
           [name]="r[idKey]"
           class="c-table__row-check"
         ></app-base-checkbox>
