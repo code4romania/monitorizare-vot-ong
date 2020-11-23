@@ -7,7 +7,7 @@ import { AnswerActions, AnswerActionTypes, updateFilters, updatePageInfo } from 
 import { AnswerFilters } from '../../models/answer.filters.model';
 import { ActionCreator } from '@ngrx/store';
 export class AnswerState {
-    threads: AnswerThread[] = [];
+    threads: AnswerThread[];
     urgent: boolean = undefined;
     page = 1;
     pageSize = 10;

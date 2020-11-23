@@ -76,7 +76,7 @@ export class AnswerDetailsComponent implements OnInit {
 
     this.sections$ = combineLatest([
       concat(
-        this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
+        this.formTabs$.pipe(map(tabs => tabs[0]), filter(Boolean), take(1)),
         this.formTabChanged
       ).pipe(distinctUntilChanged()),
       this.store.select(getFullyLoadedForms),

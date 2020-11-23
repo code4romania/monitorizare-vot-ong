@@ -54,6 +54,7 @@ export class AnswerEffects {
   loadThreads = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_PREVIEW),
     withLatestFrom(this.store.select(answer)),
+    filter(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) => action.payload.refresh || !!crtState.threads === false),
     map(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) => {
       const { payload: currentPayload } = action;
       const updatedPayload = {};
@@ -173,6 +174,9 @@ export class AnswerEffects {
   @Effect()
   loadDetails = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_DETAILS),
+    withLatestFrom(this.store.select(answer)),
+    filter(([, crtAnswerState]) => !!crtAnswerState.selectedAnswer === false),
+    map(([action]) => action),
     switchMap((action: LoadAnswerDetailsAction) => {
       const completedAnswears: string = Location.joinWithSlash(
         this.baseUrl,

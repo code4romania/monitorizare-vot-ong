@@ -15,11 +15,12 @@ import { TableColumn, TableColumnTranslated, SortedColumnEvent } from 'src/app/t
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerFilters } from 'src/app/models/answer.filters.model';
-import { getFilters } from 'src/app/store/answer/answer.selectors';
+import { getAnswerThreads, getFilters } from 'src/app/store/answer/answer.selectors';
 import { fetchCountiesFromAnswers } from 'src/app/store/county/county.actions';
 import { County } from 'src/app/store/county/county.state';
 import { getCounties } from 'src/app/store/county/county.selectors';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
+import { FormLoadAction } from 'src/app/store/form/form.actions';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -46,12 +47,14 @@ export class AnswersComponent implements OnInit {
   formState: Observable<FormState>;
   tableColumns: TableColumnTranslated[] = [];
 
+  f;
+
   isLoading: boolean;
   previousUsedFilters = null;
 
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
-  answers$: Observable<(AnswerThread | AnswerExtra)[]> = this.answerState$.pipe(
-    map(s => s.threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
+  answers$: Observable<(AnswerThread | AnswerExtra)[]> = this.store.select(getAnswerThreads).pipe(
+    map(threads => threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
   );
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
   counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
@@ -79,11 +82,11 @@ export class AnswersComponent implements OnInit {
 
   requestFilteredData (filters) {
     this.store.dispatch(updateFilters(filters));
-    this.store.dispatch(new LoadAnswerPreviewAction(1));
+    this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
   }
 
   onPageChanged(event) {
-    this.store.dispatch(new LoadAnswerPreviewAction(event.page, event.pageSize));
+    this.store.dispatch(new LoadAnswerPreviewAction(event.page, event.pageSize, true));
   }
 
   onSortedColumnClicked({ col, sortDirection }: SortedColumnEvent) {
@@ -94,12 +97,13 @@ export class AnswersComponent implements OnInit {
 
   onResetFilters () {
     this.store.dispatch(updateFilters({}));
-    this.store.dispatch(new LoadAnswerPreviewAction(1));
+    this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
   }
 
   onRowClicked({ idObserver, idPollingStation }: AnswerThread) {
     this.router.navigate([idObserver, idPollingStation], { relativeTo: this.activatedRoute });
     this.store.dispatch(new LoadAnswerDetailsAction(idObserver, idPollingStation));
+    this.store.dispatch(new FormLoadAction());
   }
 
   private isValidValue(value) {
@@ -107,6 +111,10 @@ export class AnswersComponent implements OnInit {
   }
 
   downloadAnswers (rawFilters) {
+    console.log(rawFilters)
+
+    return;
+    
     if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
       return;
     }

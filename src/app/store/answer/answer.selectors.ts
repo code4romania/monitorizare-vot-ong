@@ -1,13 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { CompletedQuestion } from 'src/app/models/completed.question.model';
 import { AnswerState } from './answer.reducer';
 
 export const answer = createFeatureSelector<AnswerState>('answer');
-
-export const getSpecificThreadByObserver = createSelector(
-  answer,
-  (state: AnswerState, observerId: number) => state.threads.find(thread => thread.idObserver === observerId) 
-);
 
 export const getSelectedAnswers = createSelector(
   answer,
@@ -34,4 +30,14 @@ export const getSelectedAnswersAsObject = createSelector(
 export const getFilters = createSelector(
   answer,
   (state: AnswerState) => state.answerFilters,
+);
+
+export const getAnswerThreads = createSelector(
+  answer,
+  (state: AnswerState) => state.threads ? state.threads : [],
+);
+
+export const getSpecificThreadByObserver = createSelector(
+  getAnswerThreads,
+  (threads: AnswerThread[], observerId: number) => threads.find(thread => thread.idObserver === observerId)
 );
