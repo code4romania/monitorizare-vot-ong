@@ -1,7 +1,7 @@
 import { NoteActions, NoteActionTypes } from './note.actions';
 import { Note } from '../../models/note.model';
 export class NoteState {
-    notes: Note[] = [];
+    notes: Note[];
     loading = false;
     error = false;
     idObserver: number = undefined;
@@ -13,7 +13,7 @@ export function noteReducer(state = noteInitialState, action: NoteActions) {
     switch (action.type) {
         case NoteActionTypes.LOAD:
             return {
-                notes: [],
+                ...state,
                 loading: true,
                 error: false,
                 idObserver: action.payload.idObserver,
