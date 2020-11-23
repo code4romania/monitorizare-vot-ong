@@ -19,58 +19,59 @@ import { OberverRowComponent } from './observers/oberver-row/oberver-row.compone
 import { ObserverProfileComponent } from './observers/observer-profile/observer-profile.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import {FormCreateComponent} from './forms/form-create/form-create.component';
-import {SectionComponent} from './forms/section/section.component';
-import {QuestionComponent} from './forms/question/question.component';
-import {OptionComponent} from './forms/option/option.component';
-import {FormsComponent} from './forms/forms.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-
+import { FormCreateComponent } from './forms/form-create/form-create.component';
+import { SectionComponent } from './forms/section/section.component';
+import { QuestionComponent } from './forms/question/question.component';
+import { PredefinedOptionsModalComponent } from './forms/predefined-options-modal/predefined-options-modal.component';
+import { OptionComponent } from './forms/option/option.component';
+import { FormsComponent } from './forms/forms.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TableModule } from '../table/table.module'
 import { ObserverImportComponent } from './observers/observer-import/observer-import.component';
 import { NgoManagementComponent } from '../components/ngo-management/ngo-management.component';
 import { NgoProfileComponent } from './ngo-management/ngo-profile/ngo-profile.component';
 
 export let components = [
-    AnswerComponent,
-    AnswerListComponent,
-    AnswerDetailsComponent,
-    AnswerFormListComponent,
-    AnswerNoteComponent,
-    CategoricalQuestionComponent,
-    AnswerExtraQuestionsComponent,
-    ObserversComponent,
-    ObserverCardComponent,
-    OberverRowComponent,
-    ObserverProfileComponent,
-    FormsComponent,
-    FormCreateComponent,
-    SectionComponent,
-    QuestionComponent,
-    OptionComponent,
-    HeaderComponent,
-    StatisticsComponent,
-    StatisticsCardComponent,
-    StatisticsDetailsComponent,
-    StatisticsValueComponent,
-    NotificationsComponent,
-    LoginComponent,
-    ObserverImportComponent,
-    NgoManagementComponent,
-    NgoProfileComponent
+  AnswerComponent,
+  AnswerListComponent,
+  AnswerDetailsComponent,
+  AnswerFormListComponent,
+  AnswerNoteComponent,
+  CategoricalQuestionComponent,
+  AnswerExtraQuestionsComponent,
+  ObserversComponent,
+  ObserverCardComponent,
+  OberverRowComponent,
+  ObserverProfileComponent,
+  FormsComponent,
+  FormCreateComponent,
+  SectionComponent,
+  QuestionComponent,
+  OptionComponent,
+  HeaderComponent,
+  StatisticsComponent,
+  StatisticsCardComponent,
+  StatisticsDetailsComponent,
+  StatisticsValueComponent,
+  NotificationsComponent,
+  LoginComponent,
+  ObserverImportComponent,
+  NgoManagementComponent,
+  NgoProfileComponent,
+  PredefinedOptionsModalComponent,
 ];
 
 @NgModule({
-    declarations: components,
-    exports: components,
-    imports: [
-      SharedModule,
-      NgMultiSelectDropDownModule.forRoot(),
-      DragDropModule,
-      TableModule,
-    ]
+  declarations: components,
+  exports: components,
+  imports: [
+    SharedModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    DragDropModule,
+    TableModule,
+  ]
 })
-export  class ComponentsModule {
+export class ComponentsModule {
 
 }
 
