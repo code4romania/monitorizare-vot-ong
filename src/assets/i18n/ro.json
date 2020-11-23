@@ -45,6 +45,30 @@
 
   "OPTION_ADD": "Adaugă o opţiune",
 
+  "PREDEFINED_OPTIONS": {
+    "CONFIRMATION": {
+      "LABEL": "Confirmari",
+      "YES": "Da",
+      "NO": "Nu",
+      "DONT_KNOW": "Nu stiu"
+    },
+    "RATING": {
+      "LABEL": "Calificative",
+      "1": "1 - Foarte slab",
+      "2": "2 - Slab",
+      "3": "3 - Mediu",
+      "4": "4 - Bine",
+      "5": "5 - Foarte bine"
+    }
+  },
+
+  "PREDEFINED_OPTIONS_MODAL": {
+    "ADD": "Alege optiuni prestabilite",
+    "TITLE": "Alege din optiunile prestabilite",
+    "NOTE": "Observatie: Optiunile selectate vor fi salvate"
+  },
+
+
   "NOTHING_SELECTED": "Nu ati selectat nimic",
   "SHOW": "Vezi",
   "HIDE": "Ascunde",
@@ -56,6 +80,7 @@
   "FILTER_BY": "Filtreaza după:",
   "COUNTY_CODE": "Județ:",
   "OBSERVER_ID": "Id-ul observatorului:",
+  "OBSERVER_PHONE": "Telefonul observatorului:",
   "POLLING_STATION_NUMBER": "Numărul secției de votare:",
   "DOWNLOAD_ANSWERS": "Descarca raspunsuri",
   "FROM": "De la",
@@ -82,6 +107,8 @@
   "OBSERVERS": "Observatori",
   "OBSERVER_ADD": "Adaugă Observator",
   "OBSERVER_EDIT": "Editaţi Observator",
+  "OBSERVER_DELETE_CONFIRMATION": "Sunteti sigur ca doriti sa stergeti acest observator?",
+  "OBSERVER_DELETE_SUCCESS": "Observatorul a fost sters",
   "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate",
   "ENTER_NEW_PASSWORD": "Introduceţi noul Pin pentru: ",
   "OBSERVERS_SELECTED": "Observatori Selectaţi",
@@ -91,9 +118,10 @@
   "LAST_NAME": "Nume",
   "PHONE": "Telefon",
   "LAST_LOGIN": "Ultima logare",
-  
+
 
   "//": "COMMON_STUFF",
+  "ADD": "Adaugă",
   "EDIT": "Editaţi",
   "DELETE": "Ștergeţi",
   "SEND_NOTIF": "Trimiteţi Notificare",
@@ -107,5 +135,6 @@
   "RESET_PASSWORD": "Resetare Parolă",
   "TYPE": "Scrieţi",
   "SELECT_FILE": "Selectaţi fișierul",
-  "IMPORT": "Importaţi"
+  "IMPORT": "Importaţi",
+  "SUCCESS": "Succes"
 }

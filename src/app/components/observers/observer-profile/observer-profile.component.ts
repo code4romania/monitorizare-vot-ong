@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ObserverProfileForm } from './observer-profile.form';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { ObserversService } from '../../../services/observers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageState } from '../../../models/page-state.model';
@@ -7,7 +6,6 @@ import { Observer } from '../../../models/observer.model';
 import { ToastrService } from 'ngx-toastr';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -17,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { getSelectedObserver } from 'src/app/store/observers/observers.state';
 import { switchMap, map, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
 
@@ -25,7 +24,7 @@ const NOT_ONLY_SPACE_LINE = /^(\s*\S+\s*)+$/;
   templateUrl: './observer-profile.component.html',
   styleUrls: ['./observer-profile.component.scss'],
 })
-export class ObserverProfileComponent implements OnInit {
+export class ObserverProfileComponent implements OnInit, OnDestroy {
   error: string;
   fileData: File;
 
@@ -43,6 +42,7 @@ export class ObserverProfileComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private store: Store,
+    private translateService: TranslateService,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) {
     this.observerProfileForm = this.fb.group({
@@ -62,11 +62,11 @@ export class ObserverProfileComponent implements OnInit {
   }
 
   deleteObserver() {
-    if (confirm('Are you sure you want to remove this observer?')) {
+    if (confirm(this.translateService.instant('OBSERVER_DELETE_CONFIRMATION'))) {
       this.observerService
         .deleteObserver(this.observer.id)
-        .subscribe((data) => {
-          this.toastr.warning('Success', 'Observer has been removed');
+        .subscribe(() => {
+          this.toastr.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
           this.router.navigateByUrl('/observatori');
         });
     }
@@ -81,7 +81,7 @@ export class ObserverProfileComponent implements OnInit {
 
   onSubmit() {
     const sanitizedValues = this.trimFormValuesOutsideAndInside(this.observerProfileForm.value);
-    
+
     if (this.pageState === PageState.EDIT) {
       this.saveChanges(sanitizedValues);
     } else if (this.pageState === PageState.NEW) {
@@ -91,7 +91,7 @@ export class ObserverProfileComponent implements OnInit {
 
   private initRouteListener() {
     this.route.params.subscribe((params) => {
-      this.pageState = params['state'];
+      this.pageState = params.state;
       this.handleFormState();
       this.getObserver(params);
     });
@@ -100,7 +100,7 @@ export class ObserverProfileComponent implements OnInit {
   private saveChanges(values: { [k: string]: string }) {
     this.observerService
       .saveChanges(values, this.observer)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.toastr.success('Success', 'Changes have been saved');
       });
   }
@@ -111,7 +111,7 @@ export class ObserverProfileComponent implements OnInit {
     observerToAdd.pin = values.password;
     observerToAdd.name = values.name;
 
-    this.observerService.addNewObserver(observerToAdd).subscribe((value) => {
+    this.observerService.addNewObserver(observerToAdd).subscribe(() => {
       this.toastr.success('Success', 'Observer has been added');
       this.router.navigateByUrl('/observatori');
     });
@@ -129,13 +129,13 @@ export class ObserverProfileComponent implements OnInit {
     if (this.pageState === PageState.NEW) {
       return;
     }
-    
-    this.store.select(getSelectedObserver, params['id'])
+
+    this.store.select(getSelectedObserver, params.id)
       .pipe(
         switchMap(
-          obs => obs 
-            ? of(obs) 
-            : this.observerService.getObserver(params['id']).pipe(
+          obs => obs
+            ? of(obs)
+            : this.observerService.getObserver(params.id).pipe(
               map((o: ApiListResponse<Observer>) => o ? o.data[0] : {})
             )
         ),

@@ -13,8 +13,6 @@ import {
   TemplateRef,
   Inject,
   InjectionToken,
-  ViewContainerRef,
-  ViewChildDecorator,
 } from '@angular/core';
 import {
   LoadObserversAction,
@@ -27,12 +25,12 @@ import { ObserversFilterForm } from './observers-filter.form';
 import { ObserversService } from '../../services/observers.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -54,14 +52,12 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
 const DROPDOWN_CONFIG = new InjectionToken('DROPDOWN_CONFIG', {
   providedIn: 'root',
   factory: () => {
-    const config = [
-      { name: 'Edit', isMain: true, eventType: DropdownEvents.EDIT },
-      { name: 'Delete', eventType: DropdownEvents.DELETE },
-      { name: 'Notification', eventType: DropdownEvents.NOTIFICATION },
-      { name: 'Reset Password', eventType: DropdownEvents.RESET_PASSWORD },
+    return [
+      {name: 'Edit', isMain: true, eventType: DropdownEvents.EDIT},
+      {name: 'Delete', eventType: DropdownEvents.DELETE},
+      {name: 'Notification', eventType: DropdownEvents.NOTIFICATION},
+      {name: 'Reset Password', eventType: DropdownEvents.RESET_PASSWORD},
     ];
-
-    return config;
   }
 })
 
@@ -75,7 +71,7 @@ enum DropdownEvents {
   DELETE,
   NOTIFICATION,
   RESET_PASSWORD,
-};
+}
 
 type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
@@ -107,7 +103,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
     keyboard: false,
   };
   observerToEdit: Observer;
-  
+
   actionsColumnName = ACTIONS_COLUMN_NAME;
   tableColumns: TableColumnTranslated[] = [];
   crtResetPasswordRow = null;
@@ -165,7 +161,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
         this.router.navigate(['profil/edit/', row.phone], { relativeTo: this.route });
         break;
       case DropdownEvents.DELETE:
-        console.warn('TO BE IMPLEMENTED');
+        this.deleteObserver(row);
         break;
       case DropdownEvents.NOTIFICATION:
         console.warn('TO BE IMPLEMENTED');
@@ -263,6 +259,17 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.observersCountSubscription.unsubscribe();
   }
 
+  deleteObserver(observer: Observer) {
+    if (confirm(this.translateService.instant('OBSERVER_DELETE_CONFIRMATION'))) {
+      this.observersService
+        .deleteObserver(observer.id)
+        .subscribe(() => {
+          this.toastrService.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
+          this.loadObservers(1);
+        });
+    }
+  }
+
   isPasswordValid(): boolean {
     return (
       this.newPassword &&
@@ -301,7 +308,6 @@ export class ObserversComponent implements OnInit, OnDestroy {
 
   private onResetPasswordEvent (row: any) {
     this.crtResetPasswordRow = row;
-    
     from(this.modalService.open(this.resetPasswordContent).result)
       .subscribe(
         newPassword => {

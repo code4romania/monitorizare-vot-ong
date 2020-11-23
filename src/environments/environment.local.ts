@@ -1,4 +1,4 @@
-import { EnvironmentConfig } from 'src/typings';
+import { EnvironmentConfig } from '../typings';
 
 export const environment: EnvironmentConfig = {
   production: false,

@@ -36,8 +36,9 @@
             </div>
           </div>
         </div>
-
-        <div class="col add-option-button" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
-
+        <div class="col">
+            <div class="add-option-button" style="display: inline; padding-right: 30px;" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
+            <div class="add-option-button" style="display: inline" (click)="choosePredefinedOption()">+ {{'PREDEFINED_OPTIONS_MODAL.ADD' | translate}}</div>
+        </div>
   </div>
 </div>
