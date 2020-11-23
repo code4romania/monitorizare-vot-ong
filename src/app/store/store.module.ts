@@ -78,23 +78,4 @@ if (!environment.production) {
 @NgModule({
   imports: moduleImports,
 })
-export class AppStoreModule {
-  constructor(store: Store<AppState>, tokenService: TokenService) {
-    tokenService.tokenStream.subscribe((token) => {
-      const clearForms = !token;
-      store
-        .pipe(
-          select((s) => s.form),
-          take(1)
-        )
-        .subscribe((s) => {
-          if (clearForms || s.items.length > 0) {
-            store.dispatch(new FormClearAll());
-          }
-          if (!clearForms) {
-            store.dispatch(new FormLoadAction());
-          }
-        });
-    });
-  }
-}
+export class AppStoreModule { }

@@ -1,6 +1,6 @@
 import {of as observableOf} from 'rxjs';
 
-import {catchError, map, switchMap, take, tap} from 'rxjs/operators';
+import {catchError, filter, map, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
 import {
   FormActionTypes,
   FormDeleteAction,
@@ -18,20 +18,32 @@ import {FormSection} from '../../models/form.section.model';
 import {FormsService} from '../../services/forms.service';
 import {Router} from '@angular/router';
 import {Form} from '../../models/form.model';
+import { Store } from '@ngrx/store';
+import { form, getFormItems } from './form.selectors';
 
 @Injectable()
 export class FormEffects {
 
-    constructor(private formsService: FormsService,
-                private actions: Actions,
-                private router: Router) {}
+    constructor(
+      private formsService: FormsService,
+      private actions: Actions,
+      private router: Router,
+      private store: Store
+    ) { }
 
-    @Effect()
-    loadFormAction = this.actions
-        .pipe(ofType(FormActionTypes.LOAD_ALL_FORMS_META)).pipe(
-        switchMap(_ => this.formsService.loadForms()),
-        map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
-        catchError(() => observableOf(new FormErrorAction())), );
+  @Effect()
+  loadFormAction = this.actions
+      .pipe(
+        ofType(FormActionTypes.LOAD_ALL_FORMS_META),
+        withLatestFrom(this.store.select(form)),
+        filter(([, crtFormState]) => !!crtFormState.items === false),
+        switchMap(_ =>
+          this.formsService.loadForms().pipe(
+            map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
+            catchError(() => observableOf(new FormErrorAction())),
+          )
+        ), 
+      );
 
     @Effect()
     fullyLoadFormAction = this.actions

@@ -6,7 +6,7 @@ export const form = createFeatureSelector<FormState>('form');
 
 export const getFormItems = createSelector(
   form,
-  (state: FormState) => state.items
+  (state: FormState) => state.items ? state.items : [],
 );
 
 export const getFullyLoadedForms = createSelector(
