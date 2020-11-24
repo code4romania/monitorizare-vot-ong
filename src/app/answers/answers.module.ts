@@ -8,10 +8,11 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 import { AnswerDetailsComponent } from './answer-details/answer-details.component';
-import { AnswerNotificationComponent } from './answer-notification/answer-notification.component'
+import { AnswerNotificationComponent } from './answer-notification/answer-notification.component';
+import { AnswerQuestionsComponent } from './answer-questions/answer-questions.component'
 
 @NgModule({
-  declarations: [AnswersComponent, AnswerDetailsComponent, AnswerNotificationComponent],
+  declarations: [AnswersComponent, AnswerDetailsComponent, AnswerNotificationComponent, AnswerQuestionsComponent],
   imports: [
     CommonModule,
     AnswersRoutingModule,

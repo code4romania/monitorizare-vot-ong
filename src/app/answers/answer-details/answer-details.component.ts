@@ -8,16 +8,18 @@ import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
 import { Form } from 'src/app/models/form.model';
-import { FormQuestion } from 'src/app/models/form.question.model';
-import { Note } from 'src/app/models/note.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
-
+import { SectionsState }  from '../answers.model';
 import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
 import { getNotesAsObject } from '../../store/note/note.selectors';
+
+const notesTab = { description: 'Notes' } as const;
+
+type Tab = Partial<FormDetails>
 
 @Component({
   selector: 'answer-details',
@@ -26,20 +28,14 @@ import { getNotesAsObject } from '../../store/note/note.selectors';
 })
 export class AnswerDetailsComponent implements OnInit {
   crtPollingStation$: Observable<AnswerThread & { locationType: string }>;
-  formTabs$: Observable<FormDetails[]>;
+  formTabs$: Observable<Tab[]>;
   sections$: Observable<any>;
-  sectionsState$: Observable<
-    { 
-      flaggedQuestions: { [k: string]: FormQuestion }, 
-      selectedAnswers: { [k: string]: any },
-      formNotes: { [k: string]: Note },
-    }
-  >;
+  sectionsState$: Observable<SectionsState>;
 
   formTabChanged = new Subject();
 
-  shownNotes: { [k: string]: boolean } = {};
   crtSelectedTabId = null;
+  isNotesTabShown = false;
 
   statsLabels = [
     { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
@@ -72,11 +68,15 @@ export class AnswerDetailsComponent implements OnInit {
         share(),
       );
 
-    this.formTabs$ = this.store.select(getFormItems).pipe(shareReplay(1));
+    this.formTabs$ = this.store.select(getFormItems).pipe(
+      filter(tabs => !!tabs[0]),
+      map(tabs => [...tabs, notesTab]),
+      shareReplay(1),
+    );
 
     this.sections$ = combineLatest([
       concat(
-        this.formTabs$.pipe(map(tabs => tabs[0]), filter(Boolean), take(1)),
+        this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
         this.formTabChanged
       ).pipe(distinctUntilChanged()),
       this.store.select(getFullyLoadedForms),
@@ -121,5 +121,19 @@ export class AnswerDetailsComponent implements OnInit {
         { flaggedQuestions: {}, selectedAnswers: {}, formNotes: {} }
       ),
     );
+  }
+
+  onTabClicked (tab: Tab) {
+    if (tab.description !== 'Notes') {
+      this.formTabChanged.next(tab);
+
+      return;
+    }
+
+    this.onNotesTabClicked(tab);
+  }
+
+  private onNotesTabClicked (tab) {
+    
   }
 }
