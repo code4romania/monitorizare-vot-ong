@@ -71,6 +71,19 @@
             />
           </div>
 
+          <div class="form-group c-answers-checkbox">
+            <div class="c-answers-checkbox__wrapper">
+              <label for="urgent">Urgent</label>
+              <input
+                [ngModel]="filters.urgent"
+                type="checkbox"
+                name="urgent"
+                id="urgent"
+                class="form-control"
+              />
+            </div>
+          </div>
+
           <!-- FIXME: type `date` -->
           <!-- <div class="form-group col-auto">
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'FROM' | translate | lowercase }}</label>

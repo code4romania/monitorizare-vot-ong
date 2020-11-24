@@ -47,11 +47,42 @@ span.font-weight-bold.h-is-muted {
 
   & > select.form-control {
     min-width: 13rem;
+    padding: 0.5rem;
   }
 
   & > label {
     color: $label-color;
     font-size: 1.2rem;
     line-height: 30px;
+  }
+}
+
+.c-answers-checkbox {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  
+  &__wrapper {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    transform: translateY(45%);
+    padding: 0 0.8rem;
+    font-size: 1.2rem;
+
+    label {
+      margin-bottom: 0;
+      cursor: pointer;
+      color: $darker-gray;
+    }
+
+    input[type=checkbox] {
+      display: inline-block !important;
+      height: 1rem;
+      width: 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
   }
 }
