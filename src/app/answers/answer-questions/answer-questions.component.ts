@@ -10,7 +10,7 @@ import { SectionsState } from '../answers.model';
 })
 export class AnswerQuestionsComponent implements OnInit {
   @Input() sections = [];
-  @Input() sectionsState: SectionsState = {} as SectionsState;
+  @Input() sectionsState: SectionsState;
 
   shownNotes: { [k: string]: boolean } = {};
 

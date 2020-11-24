@@ -196,14 +196,14 @@ export class AnswerEffects {
     catchError(() => observableOf(new LoadAnswerDetailsErrorAction()))
   );
 
-  @Effect()
-  loadNotes = this.actions.pipe(
-    ofType(AnswerActionTypes.LOAD_DETAILS),
-    map(
-      (a: LoadAnswerDetailsAction) =>
-        new LoadNotesAction(a.payload.sectionId, a.payload.observerId)
-    )
-  );
+  // @Effect()
+  // loadNotes = this.actions.pipe(
+  //   ofType(AnswerActionTypes.LOAD_DETAILS),
+  //   map(
+  //     (a: LoadAnswerDetailsAction) =>
+  //       new LoadNotesAction(a.payload.sectionId, a.payload.observerId)
+  //   )
+  // );
 
   // @Effect()
   // loadExtraFromAnswer = this.actions.pipe(

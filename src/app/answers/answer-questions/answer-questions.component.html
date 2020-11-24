@@ -3,9 +3,12 @@
     {{ section.description }}
   </div>
 
-  <div class="c-answer-section__questions">
-    <div *ngFor="let q of section.questions" class="c-answer-question"
-      [class.is-flagged]="sectionsState.flaggedQuestions[q.id]">
+  <div class="c-answer-section__questions" *ngIf="sectionsState">
+    <div 
+      *ngFor="let q of section.questions" 
+      class="c-answer-question"
+      [class.is-flagged]="sectionsState.flaggedQuestions[q.id]"
+    >
       <div class="c-answer-question__title"><b>{{ q.code }}</b>: &nbsp; {{ q.text }}</div>
 
       <div class="c-answer-question__options">

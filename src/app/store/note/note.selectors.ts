@@ -13,6 +13,6 @@ export const getNotes = createSelector(
 export const getNotesAsObject = createSelector(
   getNotes,
   (notes: Note[]) => !notes
-    ? undefined
+    ? {}
     : notes.reduce((acc, crt) => (acc[crt.questionId] = crt, acc), {})
 )

@@ -49,9 +49,14 @@
 
     <div class="c-answer-forms__sections">
       <app-answer-questions
+        *ngIf="!isNotesTabShown; else notes"
         [sectionsState]="sectionsState$ | async"
         [sections]="sections$ | async"
       ></app-answer-questions>
+
+      <ng-template #notes>
+        <app-notes [notes]="notes$ | async"></app-notes>
+      </ng-template>
     </div>
   </div>
 </div>

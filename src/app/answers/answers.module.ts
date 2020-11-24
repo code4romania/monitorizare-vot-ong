@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
 
 import { AnswerDetailsComponent } from './answer-details/answer-details.component';
 import { AnswerNotificationComponent } from './answer-notification/answer-notification.component';
-import { AnswerQuestionsComponent } from './answer-questions/answer-questions.component'
+import { AnswerQuestionsComponent } from './answer-questions/answer-questions.component';
+import { NotesComponent } from './notes/notes.component'
 
 @NgModule({
-  declarations: [AnswersComponent, AnswerDetailsComponent, AnswerNotificationComponent, AnswerQuestionsComponent],
+  declarations: [AnswersComponent, AnswerDetailsComponent, AnswerNotificationComponent, AnswerQuestionsComponent, NotesComponent],
   imports: [
     CommonModule,
     AnswersRoutingModule,

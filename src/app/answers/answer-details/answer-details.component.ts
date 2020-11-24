@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest } from 'rxjs';
-import { distinctUntilChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, distinctUntilKeyChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
@@ -15,9 +15,10 @@ import { SectionsState }  from '../answers.model';
 import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
-import { getNotesAsObject } from '../../store/note/note.selectors';
+import { getNotes, getNotesAsObject } from '../../store/note/note.selectors';
+import { Note } from 'src/app/models/note.model';
 
-const notesTab = { description: 'Notes' } as const;
+const notesTab = { id: -1, description: 'Notes' };
 
 type Tab = Partial<FormDetails>
 
@@ -31,8 +32,9 @@ export class AnswerDetailsComponent implements OnInit {
   formTabs$: Observable<Tab[]>;
   sections$: Observable<any>;
   sectionsState$: Observable<SectionsState>;
+  notes$: Observable<Note[]> = this.store.select(getNotes);
 
-  formTabChanged = new Subject();
+  formTabChanged = new Subject<Tab>();
 
   crtSelectedTabId = null;
   isNotesTabShown = false;
@@ -78,7 +80,7 @@ export class AnswerDetailsComponent implements OnInit {
       concat(
         this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
         this.formTabChanged
-      ).pipe(distinctUntilChanged()),
+      ).pipe(distinctUntilKeyChanged('id'), filter(tab => tab.id !== -1)),
       this.store.select(getFullyLoadedForms),
     ]).pipe(
       filter(([crtFormTab, _]) => !!crtFormTab),
@@ -124,16 +126,20 @@ export class AnswerDetailsComponent implements OnInit {
   }
 
   onTabClicked (tab: Tab) {
-    if (tab.description !== 'Notes') {
-      this.formTabChanged.next(tab);
+    if (tab.description === 'Notes') {
+      this.onNotesTabClicked(tab);
 
       return;
     }
 
-    this.onNotesTabClicked(tab);
-  }
-
-  private onNotesTabClicked (tab) {
+    this.isNotesTabShown = false;
     
+    this.formTabChanged.next(tab);
+  }
+  
+  private onNotesTabClicked (tab) {
+    this.formTabChanged.next(notesTab);
+    this.crtSelectedTabId = notesTab.id;
+    this.isNotesTabShown = true;
   }
 }
