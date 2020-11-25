@@ -1,4 +1,4 @@
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Note } from '../../models/note.model';
 import {
   LoadNotesAction,
@@ -12,6 +12,9 @@ import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { note } from './note.selectors';
+import { NoteState } from './note.reducer';
+import { concat } from 'lodash';
+import { of } from 'rxjs';
 
 @Injectable()
 export class NoteEffects {
@@ -29,7 +32,10 @@ export class NoteEffects {
   notesStream = this.actions.pipe(
     ofType(NoteActionTypes.LOAD),
     withLatestFrom(this.store.select(note)),
-    filter(([, crtNoteState]) => !!crtNoteState.notes === false),
+    distinctUntilChanged(
+      ([prevAction]: [LoadNotesAction, NoteState], [crtAction, crtState]: [LoadNotesAction, NoteState]) => 
+        prevAction.payload.idPollingStation === crtAction.payload.idPollingStation && !!crtState === true
+    ),
     map(([action]) => action),
     switchMap((a: LoadNotesAction) => {
       const notesUrl: string = Location.joinWithSlash(
@@ -37,7 +43,9 @@ export class NoteEffects {
         '/api/v2/note'
       );
 
-      return this.http.get<Note[]>(notesUrl, { body: a.payload });
+      return this.http.get<Note[]>(notesUrl, { body: a.payload }).pipe(
+        startWith([])
+      );
     }),
     map((notes) => new LoadNotesDoneAction(notes))
   );

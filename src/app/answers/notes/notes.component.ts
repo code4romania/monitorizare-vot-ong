@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Note } from 'src/app/models/note.model';
 import { LoadNotesAction } from 'src/app/store/note/note.actions';
+import { DisplayedNote } from '../answers.model';
 
 @Component({
   selector: 'app-notes',
@@ -11,16 +12,14 @@ import { LoadNotesAction } from 'src/app/store/note/note.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotesComponent implements OnInit {
-  @Input() notes: Note[] = [];
+  @Input() notes: DisplayedNote[] = [];
 
-  constructor(
-    private store: Store,
-    private activatedRoute: ActivatedRoute,
-  ) { }
+  columns = [
+    { name: 'Form&Question', },
+    { name: 'Red Flag', propertyName: 'isQuestionFlagged', },
+    { name: 'Note', propertyName: 'text' },
+  ]
 
   ngOnInit(): void {
-    const { idObserver, idPollingStation } = this.activatedRoute.snapshot.params;
-
-    this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
   }
 }

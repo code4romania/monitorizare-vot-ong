@@ -1,6 +1,6 @@
 import {actionType} from '../util';
 import {Form} from '../../models/form.model';
-import {Action} from '@ngrx/store';
+import {Action, createAction} from '@ngrx/store';
 import {FormDetails} from '../../models/form.info.model';
 
 export class FormActionTypes {
@@ -77,3 +77,7 @@ export type FormActions =
   FullyLoadFormAction |
   FullyLoadFormCompleteAction |
   FormUploadAction ;
+
+export const fetchAllFormTabs = createAction(
+  '[Answer-details Page] Fetch All Form Tabs'
+);

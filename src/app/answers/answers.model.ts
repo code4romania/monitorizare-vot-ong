@@ -6,3 +6,14 @@ export interface SectionsState {
   selectedAnswers: { [k: string]: any },
   formNotes: { [k: string]: Note },
 }
+
+export interface DisplayedNote extends Note {
+  hasCorrespondingQuestion: boolean;
+  tabName?: string;
+  questionCode?: string;
+  isQuestionFlagged?: boolean;
+}
+
+// export interface NoteWithoutQuestion extends Note {
+//   hasCorrespondingQuestion: false;
+// }
