@@ -4,7 +4,9 @@
   </div>
 
   <div class="c-answer-section__questions" *ngIf="sectionsState">
-    <div 
+    <div
+      #question
+      [attr.data-question-id]="q.id"
       *ngFor="let q of section.questions" 
       class="c-answer-question"
       [class.is-flagged]="sectionsState.flaggedQuestions[q.id]"

@@ -52,10 +52,14 @@
         *ngIf="!isNotesTabShown; else notes"
         [sectionsState]="sectionsState$ | async"
         [sections]="sections$ | async"
+        [scrolled-question-id]="scrolledQuestionId"
       ></app-answer-questions>
 
       <ng-template #notes>
-        <app-notes [notes]="notes$ | async"></app-notes>
+        <app-notes 
+          (questionLinkClicked)="onTabClicked({ id: $event.formId }); scrolledQuestionId = $event.questionId"
+          [notes]="notes$ | async"
+        ></app-notes>
       </ng-template>
     </div>
   </div>

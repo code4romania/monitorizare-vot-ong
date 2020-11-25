@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, Inject, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { SectionsState } from '../answers.model';
+import { DisplayedNote, SectionsState } from '../answers.model';
 
 @Component({
   selector: 'app-answer-questions',
@@ -8,9 +8,12 @@ import { SectionsState } from '../answers.model';
   styleUrls: ['./answer-questions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnswerQuestionsComponent implements OnInit {
+export class AnswerQuestionsComponent implements AfterViewInit {
   @Input() sections = [];
   @Input() sectionsState: SectionsState;
+  @Input('scrolled-question-id') scrolledQuestionId: number;
+
+  @ViewChildren('question') questionsDivs: QueryList<ElementRef>;
 
   shownNotes: { [k: string]: boolean } = {};
 
@@ -18,7 +21,15 @@ export class AnswerQuestionsComponent implements OnInit {
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit () {
+    if (!this.scrolledQuestionId) {
+      return;
+    }
+    let { nativeElement: divToScrollTo } = this.questionsDivs.find(item => +item.nativeElement.dataset.questionId === this.scrolledQuestionId);
+    this.scrolledQuestionId = null;
+
+    (divToScrollTo as HTMLDivElement).scrollIntoView();
+    divToScrollTo = null;
   }
 
 }

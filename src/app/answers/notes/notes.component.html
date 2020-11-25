@@ -10,7 +10,7 @@
       <div class="c-notes-row__form-details">
         <ng-container *ngIf="note.hasCorrespondingQuestion">
           <div>{{ note.tabName }}</div>
-          <div><u>{{ note.questionCode }}</u></div>
+          <div><u (click)="onQuestionLinkClicked($event, note)">{{ note.questionCode }}</u></div>
         </ng-container>
   
         <ng-container *ngIf="!note.hasCorrespondingQuestion">

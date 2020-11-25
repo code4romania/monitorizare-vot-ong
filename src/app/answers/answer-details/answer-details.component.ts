@@ -11,7 +11,7 @@ import { Form } from 'src/app/models/form.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { fetchAllFormTabs, FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
-import { SectionsState }  from '../answers.model';
+import { DisplayedNote, SectionsState }  from '../answers.model';
 import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
@@ -29,10 +29,11 @@ type Tab = Partial<FormDetails>
   styleUrls: ['./answer-details.component.scss']
 })
 export class AnswerDetailsComponent implements OnInit {
-  formTabChanged = new Subject<Tab>();
+  formTabChanged = new Subject<{ id?: number }>();
 
   crtSelectedTabId = null;
   isNotesTabShown = false;
+  scrolledQuestionId;
 
   statsLabels = [
     { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
