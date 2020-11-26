@@ -6,6 +6,7 @@ import { getAllQuestionsGroupedByTabId, getFormItems, getFormItemsById, getFully
 import { NoteState } from './note.reducer';
 
 const emptyResult = [];
+const displayedTextLenLimit = 185;
 
 export const note = createFeatureSelector<NoteState>('note');
 
@@ -37,7 +38,8 @@ export const getNotesMergedWithQuestions = createSelector(
 
       return {
         ...note,
-        ...correspondingQuestion 
+        displayedText: note.text.length > displayedTextLenLimit ? note.text.slice(0, displayedTextLenLimit + 1) + '...' : note.text,
+        ...correspondingQuestion
           ? {
             tabName: tabs[note.formId].description,
             questionCode: correspondingQuestion.code,
