@@ -50,6 +50,7 @@
     <div class="c-answer-forms__sections">
       <app-answer-questions
         *ngIf="!isNotesTabShown; else notes"
+        (showNoteClicked)="showModalWithNote($event)"
         [sectionsState]="sectionsState$ | async"
         [sections]="sections$ | async"
         [scrolled-question-id]="scrolledQuestionId"
@@ -57,7 +58,7 @@
 
       <ng-template #notes>
         <app-notes
-          (showNoteInModal)="showModalWithGivenContent($event)"
+          (showNoteInModal)="showModalWithNote($event)"
           (questionLinkClicked)="onTabClicked({ id: $event.formId }); scrolledQuestionId = $event.questionId"
           [notes]="notes$ | async"
         ></app-notes>
