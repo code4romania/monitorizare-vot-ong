@@ -145,6 +145,7 @@
   "MESSAGE": "Mesaj",
   "NOTIF_DETAILS_FOR": "Detaliile notificării pentru",
   "CHOOSE_COUNTY": "Alegeți județul",
+  "CLOSE": "Închideți",
 
   "ANSWERS_POLLING_STATION": "Secție de votare",
   "ANSWERS_NAME": "Nume",
@@ -154,5 +155,7 @@
   "ANSWERS_HEADER_TITLE": "Ultimele răspunsuri",
   "ANSWERS_STATION": "Stație",
   "ANSWERS_LOCATION": "Locație",
-  "ANSWERS_WHICH_BELONG_TO": "Răspunsuri ce aparțin lui"
+  "ANSWERS_WHICH_BELONG_TO": "Răspunsuri ce aparțin lui",
+
+  "NOTES_EMPTY_ROWS_MESSAGE": "Nu există notițe create"
 }

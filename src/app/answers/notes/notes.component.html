@@ -14,7 +14,6 @@
         </ng-container>
   
         <ng-container *ngIf="!note.hasCorrespondingQuestion">
-          <!-- TODO: what message here? -->
           /
         </ng-container>
       </div>
@@ -28,13 +27,11 @@
   
       <div class="c-notes-row__note-content">
         {{ note.text }}
-        <!-- TODO: attachment -->
       </div>
     </div>
   </div>
 </ng-container>
 
 <ng-template #noNotes>
-  <!-- TODO: translation -->
-  <p class="c-notes-empty-rows">There are any notes created.</p>
+  <p class="c-notes-empty-rows">{{ 'NOTES_EMPTY_ROWS_MESSAGE' | translate }}.</p>
 </ng-template>

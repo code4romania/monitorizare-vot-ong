@@ -90,8 +90,7 @@
       <app-base-button (click)="activeModal.close()" [disabled]="false" [variant]="BaseButtonVariants.PURPLE"
         [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
         class="c-notes-modal__close-button">
-        <!-- TODO: translation -->
-        Close
+        {{ 'CLOSE' | translate }}
       </app-base-button>
     </div>
   </div>
