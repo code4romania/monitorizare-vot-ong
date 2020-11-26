@@ -7,7 +7,7 @@
     </div>
   
     <div class="c-answers__buttons" role="group" aria-label="Sort">
-      <app-base-button (click)="downloadAnswers($any(f).value); $any(f).reset()" class="c-answers__button">
+      <app-base-button (click)="downloadAnswers(filtersForm.value);" class="c-answers__button">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />
@@ -29,13 +29,13 @@
   >
     <div header-area>
       <div class="card-body" *ngIf="(filters$ | async) as filters">
-        <form #f="ngForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
+        <form #f="ngForm" [formGroup]="filtersForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
           <div class="form-group col-auto">
             <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'COUNTY_CODE' | translate | lowercase }}</label>
             <select 
               class="form-control" 
               id="form-name"
-              [ngModel]="filters.county || ''"
+              formControlName="county"
               name="county"
             >
               <option 
@@ -51,9 +51,9 @@
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'POLLING_STATION_NUMBER' | translate | lowercase }}</label>
             <input 
               [placeholder]="'TYPE' | translate" 
-              [ngModel]="filters.pollingStationNumber"
               type="text"
               name="pollingStationNumber"
+              formControlName="pollingStationNumber"
               id="form-county"
               class="form-control"
             />
@@ -63,9 +63,9 @@
             <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'OBSERVER_PHONE' | translate | lowercase }}</label>
             <input 
               [placeholder]="'TYPE' | translate" 
-              [ngModel]="filters.observerPhoneNumber"
               type="text"
               name="observerPhoneNumber"
+              formControlName="observerPhoneNumber"
               id="form-county"
               class="form-control"
             />
@@ -75,9 +75,9 @@
             <div class="c-answers-checkbox__wrapper">
               <label for="urgent">Urgent</label>
               <input
-                [ngModel]="filters.urgent"
                 type="checkbox"
                 name="urgent"
+                formControlName="urgent"
                 id="urgent"
                 class="form-control"
               />
@@ -123,7 +123,7 @@
               </app-base-button>
               &nbsp;
               <app-base-button 
-                (click)="f.reset(); onResetFilters()"
+                (click)="f.reset({ county: '' }); onResetFilters()"
                 [disabled]="false"
                 [variant]="BaseButtonVariants.PURPLE" 
                 [custom-styles]="{ height: '2.8rem', border: 'none' }"

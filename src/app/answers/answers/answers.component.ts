@@ -21,6 +21,8 @@ import { County } from 'src/app/store/county/county.state';
 import { getCounties } from 'src/app/store/county/county.selectors';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { FormLoadAction } from 'src/app/store/form/form.actions';
+import { FormBuilder } from '@angular/forms';
+import { toFinite } from 'lodash';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -47,7 +49,12 @@ export class AnswersComponent implements OnInit {
   formState: Observable<FormState>;
   tableColumns: TableColumnTranslated[] = [];
 
-  f;
+  filtersForm = this.fb.group({
+    county: '',
+    pollingStationNumber: '',
+    observerPhoneNumber: '',
+    urgent: '',
+  });
 
   isLoading: boolean;
   previousUsedFilters = null;
@@ -67,6 +74,7 @@ export class AnswersComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
     @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
   ) {
@@ -111,18 +119,15 @@ export class AnswersComponent implements OnInit {
   }
 
   downloadAnswers (rawFilters) {
-    console.log(rawFilters)
-
-    return;
-    
     if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
       return;
     }
 
     const filterWordsDict = {
-      countyCode: 'county',
+      county: 'county',
       pollingStationNumber: 'pollingStationNumber',
-      observerPhone: 'phoneObserver',
+      observerPhoneNumber: 'phoneObserver',
+      urgent: 'urgent',
       fromTime: 'from',
       toTime: 'to',
     };
