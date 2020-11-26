@@ -18,6 +18,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CountyEffects } from './county/county.effects';
 import { countyReducer } from './county/county.reducer';
 
+import { metaReducers } from './meta-reducers/';
+
 import {
   ObserversState,
   ObserversCountState,
@@ -51,7 +53,7 @@ const moduleImports = [
     note: noteReducer,
     observersCount: observersCountReducer,
     county: countyReducer
-  }),
+  }, { metaReducers }),
   EffectsModule.forRoot([
     FormEffects,
     AnswerEffects,
