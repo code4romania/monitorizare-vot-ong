@@ -83,6 +83,8 @@
   "POLLING_STATION_NUMBER": "Polling station number:",
   "NOTIFICATIONS": "Notifications",
   "COUNTIES": "Counties",
+  "COUNTY_FILTER": "Filter by counties",
+  "POLLING_STATIONS_FILTER": "Polling stations (optional)",
   "POLLING_STATIONS_FROM": "Polling stations from",
   "POLLING_STATIONS_TO": "Polling stations to",
   "NOTIFICATION_TITLE": "Notification title",
@@ -129,6 +131,7 @@
   "OBSERVER_POLLING_STATIONS": "Visited Polling Stations",
   "OBSERVERS_SELECTED": "Observers Selected",
   "OBSERVERS_IMPORT": "Import Observers",
+  "OBSERVERS_FILTER": "Filter observers (optional)",
 
   "FIRST_NAME": "First Name",
   "LAST_NAME": "Last name",

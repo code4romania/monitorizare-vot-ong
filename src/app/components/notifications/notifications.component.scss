@@ -1,3 +1,10 @@
+@import "../../../variables";
+
+button {
+  border-color: $primary-purple;
+  color: $primary-purple;
+}
+
 textarea {
   height: 200px;
 }
@@ -21,8 +28,4 @@ textarea {
     position: relative;
     padding: 0 10px;
   }
-}
-
-.to-right {
-  float: right;
 }
