@@ -1,15 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {
-  NotificationsService,
-  CountyPollingStationInfo,
-} from '../../services/notifications.service';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import {
-  GlobalNotificationModel,
-  NotificationModel,
-} from '../../models/notification.model';
-import { Observer } from '../../models/observer.model';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, OnInit} from '@angular/core';
+import {CountyPollingStationInfo, NotificationsService,} from '../../services/notifications.service';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {GlobalNotificationModel, NotificationModel,} from '../../models/notification.model';
+import {Observer} from '../../models/observer.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notifications',
