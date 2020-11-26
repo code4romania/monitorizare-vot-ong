@@ -18,6 +18,7 @@ import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selecto
 import { getNotes, getNotesAsObject, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
 import { Note } from 'src/app/models/note.model';
 import { LoadNotesAction } from 'src/app/store/note/note.actions';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const notesTab = { id: -1, description: 'Notes' };
 
@@ -122,6 +123,7 @@ export class AnswerDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService,
+    private modalService: NgbModal,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) { }
 
@@ -140,6 +142,10 @@ export class AnswerDetailsComponent implements OnInit {
     this.formTabChanged.next(tab);
   }
   
+  showModalWithGivenContent (templateRef) {
+    this.modalService.open(templateRef, { centered: true, size: 'lg', });
+  }
+
   private onNotesTabClicked (tab) {
     const { idObserver, idPollingStation } = this.route.snapshot.params;
 
