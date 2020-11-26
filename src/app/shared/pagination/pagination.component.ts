@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -21,6 +21,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Output()
   pageChanged: EventEmitter<{  page: number, pageSize: number }> = new EventEmitter();
 
+  @HostBinding('class.is-hidden') isHidden = false;
+
   startingindex: number;
   endingIndex: number;
   numberOfDynamicButtons = 0;
@@ -42,9 +44,11 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.endingIndex = this.totalItems;
     }
     
-    if (this.totalItems && this.pageSize) {
+    if ((this.totalItems || this.totalItems === 0) && this.pageSize) {
       this.numberOfDynamicButtons = Math.ceil(this.totalItems / this.pageSize);
     }
+
+    this.isHidden = this.totalItems === 0;
   }
 
   canNextPage() {

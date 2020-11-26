@@ -141,11 +141,10 @@
     </ng-template>
 
     <app-pagination
-      *ngIf="(answerState$ | async).totalItems as totalItems"
       footer-area
       [page]="(answerState$ | async).page"
       [pageSize]="(answerState$ | async).pageSize"
-      [totalItems]="totalItems"
+      [totalItems]="(answerState$ | async).totalItems"
       (pageChanged)="onPageChanged($event)"
     ></app-pagination>
 

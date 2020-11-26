@@ -1,6 +1,6 @@
 import { forkJoin, of as observableOf, of} from 'rxjs';
 
-import { catchError, map, switchMap, filter, withLatestFrom, mergeAll } from 'rxjs/operators';
+import { catchError, map, switchMap, filter, withLatestFrom, mergeAll, startWith } from 'rxjs/operators';
 import {
   AnswerExtra,
   AnswerExtraConstructorData,
@@ -23,6 +23,7 @@ import {
   LoadAnswerPreviewAction,
   LoadAnswerPreviewDoneAction,
   LoadAnswerPreviewErorrAction,
+  setAnswersLoadingStatus,
   updatePageInfo,
 } from './answer.actions';
 import { HttpParams } from '@angular/common/http';
@@ -69,15 +70,6 @@ export class AnswerEffects {
       };
     }),
 
-    // I'd say this is no longer needed since the validation is handled
-    // by the `pagination` component
-    // filter((a: LoadAnswerPreviewAction) =>
-    //   shouldLoadPage(
-    //     a.payload.page,
-    //     a.payload.pageSize,
-    //     this.state.threads.length
-    //   )
-    // ),
     switchMap((action: LoadAnswerPreviewAction) => {
       const answearsUrl: string = Location.joinWithSlash(
         this.baseUrl,
@@ -111,11 +103,13 @@ export class AnswerEffects {
                 json.totalItems,
                 json.totalPages,
               ),
+              setAnswersLoadingStatus({ isLoading: false }),
               updatePageInfo({ page: json.page, pageSize: json.pageSize })
             ]
         ),
         mergeAll(),
-        catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
+        catchError(() => observableOf(new LoadAnswerPreviewErorrAction())),
+        startWith(setAnswersLoadingStatus({ isLoading: true }))
       )
     }),
     

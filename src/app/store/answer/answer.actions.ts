@@ -121,3 +121,8 @@ export const updatePageInfo = createAction(
     '[Answers Page] Update `page` info',
     props<{ page: number, pageSize?: number }>()
 );
+
+export const setAnswersLoadingStatus = createAction(
+    '[Answers Page] Set Answer\'s Loading Status',
+    props<{ isLoading: boolean }>()
+);

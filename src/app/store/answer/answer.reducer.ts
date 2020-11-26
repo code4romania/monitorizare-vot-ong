@@ -3,7 +3,7 @@ import { Note } from '../../models/note.model';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
-import { AnswerActions, AnswerActionTypes, updateFilters, updatePageInfo } from './answer.actions';
+import { AnswerActions, AnswerActionTypes, setAnswersLoadingStatus, updateFilters, updatePageInfo } from './answer.actions';
 import { AnswerFilters } from '../../models/answer.filters.model';
 import { ActionCreator } from '@ngrx/store';
 export class AnswerState {
@@ -37,35 +37,12 @@ export let initialAnswerState: AnswerState = new AnswerState();
 
 export function answerReducer(state = initialAnswerState, action: AnswerActions | any) {
     switch (action.type) {
-        // commenting for now so that I can see what's missing later
-        // case AnswerActionTypes.LOAD_PREVIEW:
-        //     const newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
-        //         shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.threads.length);
-        //     const shouldUpdateFilters = Object.keys(action.payload.answerFilters).length > 0 ? true : false;
-
-        //     let newState = Object.assign({}, state, {
-        //         page: action.payload.page,
-        //         answerFilters: shouldUpdateFilters ? action.payload.answerFilters : state.answerFilters,
-        //         pageSize: action.payload.pageSize,
-        //         threads: newList ? [] : state.threads,
-        //         threadsLoading: shouldLoadList || newList,
-        //         threadsError: false,
-        //         urgent: action.payload.urgent
-        //     });
-        //     // if we're loading a new list, deselect any selected answer
-        //     if (newList) {
-        //         newState = Object.assign({}, newState, {
-        //             selectedAnswer: undefined,
-        //             selectedLoading: false,
-        //             selectedError: false,
-        //             observerId: undefined,
-        //             sectionId: undefined,
-        //             answerExtra: undefined,
-        //             answerExtraLoading: false,
-        //             answerExtraError: false
-        //         });
-        //     }
-        //     return newState;
+        
+        case setAnswersLoadingStatus.type:
+            return {
+                ...state,
+                threadsLoading: action.isLoading,
+            }
 
         case updateFilters.type: {
             const { type, ...payload } = action;
