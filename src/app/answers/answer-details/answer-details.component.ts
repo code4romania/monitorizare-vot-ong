@@ -131,6 +131,9 @@ export class AnswerDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const { idObserver, idPollingStation } = this.route.snapshot.params;
+    
+    this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
   }
 
   onTabClicked (tab: Tab) {
@@ -152,10 +155,7 @@ export class AnswerDetailsComponent implements OnInit {
   }
 
   private onNotesTabClicked (tab) {
-    const { idObserver, idPollingStation } = this.route.snapshot.params;
-
     this.store.dispatch(fetchAllFormTabs());
-    this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
 
     this.formTabChanged.next(notesTab);
     this.crtSelectedTabId = notesTab.id;
