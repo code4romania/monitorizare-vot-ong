@@ -21,7 +21,6 @@ export class NotesComponent implements OnInit {
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
-  crtClickedNote: DisplayedNote;
   columns = [
     { name: 'Form&Question', },
     { name: 'Red Flag', propertyName: 'isQuestionFlagged', },
@@ -41,7 +40,6 @@ export class NotesComponent implements OnInit {
   }
 
   onRowClicked (note: DisplayedNote) {
-    this.crtClickedNote = note;
-    this.showNoteInModal.emit(this.modalContent);
+    this.showNoteInModal.emit(note);
   }
 }

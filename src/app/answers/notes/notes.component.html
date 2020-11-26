@@ -38,38 +38,3 @@
   <!-- TODO: translation -->
   <p class="c-notes-empty-rows">There are any notes created.</p>
 </ng-template>
-
-<ng-template #modalContent let-activeModal>
-  <div class="c-notes-modal">
-    <!-- This is needed because, by default, it will focus on the first `focusable` -->
-    <!-- element, which in this case is the button placed at the end -->
-    <!-- Without this `hack`, the modal will always be scrolled to that button -->
-    <input type="text" style="display:none" />
-
-    <div class="c-notes-modal__header">
-      <h4>{{ crtClickedNote.questionCode }} Note</h4>
-    </div>
-    
-    <div class="c-notes-modal__content">
-      <p>{{ crtClickedNote.text }}</p>
-
-      <div
-        class="c-notes-modal__image-container"
-        *ngFor="let attachment of crtClickedNote.attachmentsPaths"
-      >
-        <img *ngIf="attachment.isImage" [src]="attachment.src">
-      </div>
-
-      <app-base-button 
-        (click)="activeModal.close()" 
-        [disabled]="false" 
-        [variant]="BaseButtonVariants.PURPLE"
-        [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
-        class="c-notes-modal__close-button"
-      >
-        <!-- TODO: translation -->
-        Close
-      </app-base-button>
-    </div>
-  </div>
-</ng-template>

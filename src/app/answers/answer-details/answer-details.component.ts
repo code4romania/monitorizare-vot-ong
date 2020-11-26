@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -30,11 +30,14 @@ type Tab = Partial<FormDetails>
   styleUrls: ['./answer-details.component.scss']
 })
 export class AnswerDetailsComponent implements OnInit {
+  @ViewChild('modalTemplateRef') modalTemplateRef: TemplateRef<any>;
+  
   formTabChanged = new Subject<{ id?: number }>();
 
   crtSelectedTabId = null;
   isNotesTabShown = false;
   scrolledQuestionId;
+  crtClickedNote: { text: string; questionCode: string; attachmentsPaths: any[]; };
 
   statsLabels = [
     { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
@@ -142,8 +145,10 @@ export class AnswerDetailsComponent implements OnInit {
     this.formTabChanged.next(tab);
   }
   
-  showModalWithGivenContent (templateRef) {
-    this.modalService.open(templateRef, { centered: true, size: 'lg', });
+  showModalWithNote (clickedNote) {
+    this.crtClickedNote = clickedNote;
+    
+    this.modalService.open(this.modalTemplateRef, { centered: true, size: 'lg', });
   }
 
   private onNotesTabClicked (tab) {
