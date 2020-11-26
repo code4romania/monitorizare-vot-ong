@@ -3,6 +3,10 @@
 .c-notes-row, .c-notes-columns {
   display: grid;
   grid-template-columns: 1fr 2fr 3fr;
+
+  @media all and (max-width: 700px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .c-notes-column:nth-child(2) {
@@ -44,6 +48,7 @@
 
   &__note-content {
     padding: 1rem 0;
+    overflow: hidden;
   }
 
   &__flagged-status {

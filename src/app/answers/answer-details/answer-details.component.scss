@@ -15,9 +15,27 @@
 
   &__container {
     display: grid;
-    width: 50%;
-    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    grid-template-columns: 1fr 2fr;
     row-gap: 1rem;
+
+    @media all and (max-width: 920px) {
+      & {
+        width: 100%;
+      }
+    }
+
+    @media all and (max-width: 650px) {
+      & {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media all and (max-width: 380px) {
+      & {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 
   &__label {

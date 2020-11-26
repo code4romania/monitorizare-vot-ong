@@ -29,6 +29,10 @@ $question-text-color: #474747;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 1rem;
+
+    @media all and (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
