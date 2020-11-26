@@ -38,6 +38,10 @@ $question-text-color: #474747;
   color: $question-text-color;
   height: min-content;
 
+  &.is-flagged {
+    border-color: $delete-color;
+  }
+
   &__title {
     padding: 1rem;
     background-color: $question-title-background;

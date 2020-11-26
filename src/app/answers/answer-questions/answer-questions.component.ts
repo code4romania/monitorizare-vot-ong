@@ -17,8 +17,6 @@ export class AnswerQuestionsComponent implements AfterViewInit {
 
   @ViewChildren('question') questionsDivs: QueryList<ElementRef>;
 
-  shownNotes: { [k: string]: boolean } = {};
-
   constructor (
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) { }

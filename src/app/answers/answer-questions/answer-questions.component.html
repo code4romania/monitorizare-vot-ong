@@ -37,16 +37,11 @@
           [variant]="BaseButtonVariants.PURPLE"
           [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }" 
           class="c-answer-note__button"
-          [class.is-note-visible]="shownNotes[q.id]" 
           [has-color-inherited]="!!sectionsState.flaggedQuestions[q.id]"
           [class.has-question-flagged]="!!sectionsState.flaggedQuestions[q.id]"
         >
           {{ 'VIEW_NOTE' | translate }}
         </app-base-button>
-
-        <!-- <div class="c-answer-note__content">
-          {{ sectionsState.formNotes[q.id].text }}
-        </div> -->
       </div>
     </div>
   </div>
