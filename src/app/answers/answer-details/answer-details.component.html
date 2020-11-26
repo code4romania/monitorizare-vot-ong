@@ -24,15 +24,17 @@
     </app-base-button>
   </div>
 
-  <div class="c-answer-stats" *ngIf="(crtPollingStation$ | async) as crtPollingStation">
-    <div class="c-answer-stats__container">
-      <div 
-        *ngFor="let stat of statsLabels"
-        class="c-answer-stats__item"
-      >
-        <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+  <div class="c-answer-stats">
+    <ng-container *ngIf="(crtPollingStation$ | async) as crtPollingStation">
+      <div class="c-answer-stats__container">
+        <div 
+          *ngFor="let stat of statsLabels"
+          class="c-answer-stats__item"
+        >
+          <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <div class="c-answer-forms">
@@ -47,7 +49,7 @@
       </div>
     </div>
 
-    <div class="c-answer-forms__sections">
+    <div class="c-answer-forms__sections" *ngIf="(isSectionContentLoading$ | async) === false; else loading">
       <app-answer-questions
         *ngIf="!isNotesTabShown; else notes"
         (showNoteClicked)="showModalWithNote($event)"
@@ -93,4 +95,8 @@
       </app-base-button>
     </div>
   </div>
+</ng-template>
+
+<ng-template #loading>
+  <app-loading-indicator></app-loading-indicator>
 </ng-template>

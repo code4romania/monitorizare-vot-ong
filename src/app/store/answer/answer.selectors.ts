@@ -41,3 +41,8 @@ export const getSpecificThreadByObserver = createSelector(
   getAnswerThreads,
   (threads: AnswerThread[], observerId: number) => threads.find(thread => thread.idObserver === observerId)
 );
+
+export const getSelectedAnswersLoadingStatus = createSelector(
+  answer,
+  state => state.selectedLoading,
+)

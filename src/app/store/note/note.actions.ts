@@ -1,5 +1,5 @@
 import { Note } from '../../models/note.model';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 import { actionType } from '../util';
 export class NoteActionTypes {
     static readonly LOAD = actionType('[Note] Load');
@@ -27,3 +27,8 @@ export class LoadNotesDoneAction implements Action {
     }
 }
 export type NoteActions = LoadNotesAction | LoadNotesDoneAction;
+
+export const setLoadingStatusFromEffects = createAction(
+    '[Note Effects] Set Loading Status From effects',
+    props<{ isLoading: boolean }>()
+);

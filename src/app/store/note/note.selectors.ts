@@ -53,3 +53,8 @@ export const getNotesMergedWithQuestions = createSelector(
     });
   }
 );
+
+export const getNotesLoadingStatus = createSelector(
+  note,
+  state => state.loading,
+)

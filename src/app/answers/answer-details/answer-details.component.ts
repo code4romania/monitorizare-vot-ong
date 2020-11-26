@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest } from 'rxjs';
-import { delay, distinctUntilChanged, distinctUntilKeyChanged, filter, map, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest, merge } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, distinctUntilKeyChanged, endWith, filter, ignoreElements, map, mapTo, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
@@ -12,13 +12,14 @@ import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-
 import { fetchAllFormTabs, FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
 import { DisplayedNote, SectionsState }  from '../answers.model';
-import { getSelectedAnswersAsObject, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
+import { getSelectedAnswersAsObject, getSelectedAnswersLoadingStatus, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
-import { getNotes, getNotesAsObject, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
+import { getNotes, getNotesAsObject, getNotesLoadingStatus, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
 import { Note } from 'src/app/models/note.model';
 import { LoadNotesAction } from 'src/app/store/note/note.actions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 const notesTab = { id: -1, description: 'Notes' };
 
@@ -51,15 +52,10 @@ export class AnswerDetailsComponent implements OnInit {
     tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
     filter(Boolean),
     map<AnswerThread & AnswerExtra, any>(a => ({ ...a, locationType: a.urbanArea ? 'Urban' : 'Rural' })),
-
-    // data retrieval from the store is done synchronously
-    // so we want to subscribe to the store after the template's subscriptions
-    // are created
-    subscribeOn(asyncScheduler),
-    share(),
+    shareReplay(1),
   );
 
-  notes$: Observable<any> = this.store.select(getNotesMergedWithQuestions);
+  notes$: Observable<any> = this.store.select(getNotesMergedWithQuestions).pipe(shareReplay(1));
 
   formTabs$ = this.store.select(getFormItems).pipe(
     filter(tabs => !!tabs[0]),
@@ -89,13 +85,15 @@ export class AnswerDetailsComponent implements OnInit {
     filter(Boolean),
     tap((loadedForm: Form) => this.crtSelectedTabId = this.crtSelectedTabId !== notesTab.id ? loadedForm.id : this.crtSelectedTabId),
     map((loadedForm: Form) => loadedForm?.formSections ?? []),
-
+    
+    debounceTime(0),
+    distinctUntilChanged(),
     startWith([]),
     shareReplay(1),
   );
 
   sectionsState$ = combineLatest([
-    this.sections$.pipe(filter(sections => !!sections.length)),
+    this.sections$.pipe(filter((sections: any) => !!sections.length)),
     this.store.select(getSelectedAnswersAsObject).pipe(filter(Boolean)),
     this.store.select(getNotesAsObject).pipe(filter(Boolean))
   ]).pipe(
@@ -119,6 +117,11 @@ export class AnswerDetailsComponent implements OnInit {
       },
       { flaggedQuestions: {}, selectedAnswers: {}, formNotes: {} }
     ),
+  );
+
+  isSectionContentLoading$ = merge(
+    this.sections$.pipe(debounceTime(100), map((s: any) => s.length === 0)),
+    of(false)
   );
 
   constructor(

@@ -1,4 +1,4 @@
-<ng-container *ngIf="notes.length; else noNotes">
+<ng-container *ngIf="notes?.length; else noNotes">
   <div class="c-notes-columns">
     <div *ngFor="let column of columns" class="c-notes-column">
       {{ column.name }}

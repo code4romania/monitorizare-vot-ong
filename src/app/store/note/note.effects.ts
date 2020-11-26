@@ -1,9 +1,10 @@
-import { distinctUntilChanged, filter, map, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, endWith, filter, map, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Note } from '../../models/note.model';
 import {
   LoadNotesAction,
   LoadNotesDoneAction,
   NoteActionTypes,
+  setLoadingStatusFromEffects,
 } from './note.actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
@@ -34,7 +35,7 @@ export class NoteEffects {
     withLatestFrom(this.store.select(note)),
     distinctUntilChanged(
       ([prevAction]: [LoadNotesAction, NoteState], [crtAction, crtState]: [LoadNotesAction, NoteState]) => 
-        prevAction.payload.idPollingStation === crtAction.payload.idPollingStation && !!crtState === true
+        +prevAction.payload.idPollingStation === +crtAction.payload.idPollingStation && !!crtState === true
     ),
     map(([action]) => action),
     switchMap((a: LoadNotesAction) => {
@@ -44,9 +45,10 @@ export class NoteEffects {
       );
 
       return this.http.get<Note[]>(notesUrl, { body: a.payload }).pipe(
-        startWith([])
+        map((notes) => new LoadNotesDoneAction(notes as any)),
+        startWith(setLoadingStatusFromEffects({ isLoading: true, })),
+        endWith(setLoadingStatusFromEffects({ isLoading: false, }))
       );
     }),
-    map((notes) => new LoadNotesDoneAction(notes))
   );
 }
