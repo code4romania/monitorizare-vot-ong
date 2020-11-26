@@ -21,8 +21,8 @@ export class LoadNotesAction implements Action {
 }
 export class LoadNotesDoneAction implements Action {
     readonly type = NoteActionTypes.LOAD_DONE;
-    payload: Note[];
-    constructor(note: Note[]) {
+    payload: (Omit<Note, 'attachmentsPaths'> & { attachmentsPaths: string[] })[];
+    constructor(note: (Omit<Note, 'attachmentsPaths'> & { attachmentsPaths: string[] })[]) {
         this.payload = note;
     }
 }

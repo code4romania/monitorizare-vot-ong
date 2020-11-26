@@ -21,7 +21,9 @@ export function noteReducer(state = noteInitialState, action: NoteActions) {
             };
         case NoteActionTypes.LOAD_DONE:
             return Object.assign({}, state, {
-                notes: action.payload,
+                notes: action.payload.map(
+                    n => ({ ...n, attachmentsPaths: n.attachmentsPaths.map(a => ({ src: a, isImage: a.endsWith('.jpg') })) })
+                ),
                 loading: false,
                 error: false
             });

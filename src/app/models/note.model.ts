@@ -1,7 +1,7 @@
 export class Note {
     countyCode: string;
     pollingStattionNumber: number;
-    attachmentPath: string;
+    attachmentsPaths: ({ src: string; isImage: boolean, type?: string; })[];
     text: string;
     formCode: string;
     formId: number;

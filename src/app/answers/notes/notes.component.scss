@@ -57,3 +57,33 @@
   text-align: center;
   margin: 0;
 }
+
+.c-notes-modal {
+  &__header {
+    border-bottom: 1px solid $border-color-gray;
+    padding: 1rem 1.4rem;
+    color: $darker-gray;
+  }
+
+  &__content {
+    color: $readable-dark-gray;
+    padding: 1rem 1.2rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__close-button {
+    display: block;
+    width: max-content;
+    margin-left: auto;
+    margin-top: 2rem;
+  }
+
+  &__image-container {
+    overflow: hidden;
+    max-height: 45rem;
+    margin-top: 2rem;
+  }
+}
