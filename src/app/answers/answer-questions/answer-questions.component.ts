@@ -25,11 +25,16 @@ export class AnswerQuestionsComponent implements AfterViewInit {
     if (!this.scrolledQuestionId) {
       return;
     }
-    let { nativeElement: divToScrollTo } = this.questionsDivs.find(item => +item.nativeElement.dataset.questionId === this.scrolledQuestionId);
-    this.scrolledQuestionId = null;
+    
+    // This cover the case when from `Notes` tab the user is redirected to a form tab
+    // which is different than the previous one, shown exactly before the user had visited the `Notes` tab
+    setTimeout(() => {
+      let { nativeElement: divToScrollTo } = this.questionsDivs.find(item => +item.nativeElement.dataset.questionId === this.scrolledQuestionId);
+      this.scrolledQuestionId = null;
 
-    (divToScrollTo as HTMLDivElement).scrollIntoView();
-    divToScrollTo = null;
+      (divToScrollTo as HTMLDivElement).scrollIntoView();
+      divToScrollTo = null;
+    });
   }
 
 }
