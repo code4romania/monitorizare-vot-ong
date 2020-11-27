@@ -1,5 +1,5 @@
 import { Note } from '../../models/note.model';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 import { actionType } from '../util';
 export class NoteActionTypes {
     static readonly LOAD = actionType('[Note] Load');
@@ -21,9 +21,14 @@ export class LoadNotesAction implements Action {
 }
 export class LoadNotesDoneAction implements Action {
     readonly type = NoteActionTypes.LOAD_DONE;
-    payload: Note[];
-    constructor(note: Note[]) {
+    payload: (Omit<Note, 'attachmentsPaths'> & { attachmentsPaths: string[] })[];
+    constructor(note: (Omit<Note, 'attachmentsPaths'> & { attachmentsPaths: string[] })[]) {
         this.payload = note;
     }
 }
 export type NoteActions = LoadNotesAction | LoadNotesDoneAction;
+
+export const setLoadingStatusFromEffects = createAction(
+    '[Note Effects] Set Loading Status From effects',
+    props<{ isLoading: boolean }>()
+);

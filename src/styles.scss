@@ -46,9 +46,9 @@ body {
   margin: 0;
   overflow: hidden;
   padding: 0;
-  position: absolute;
   width: 1px;
   white-space: nowrap;
+  position: fixed;
 }
 
 .is-base-cell {

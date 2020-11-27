@@ -11,12 +11,6 @@ export class AnswerListGuard implements CanActivate {
     constructor(private store: Store<AppState>) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        this.store.pipe(select(s => s.answer.answerFilters), take(1),
-            map(s => new LoadAnswerPreviewAction(route.data['urgent'], 1, 5, true, s)),
-            map(a => {
-                this.store.dispatch(a);
-            }), )
-            .subscribe();
 
         return true;
     }

@@ -3,10 +3,11 @@ import { Note } from '../../models/note.model';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
-import { AnswerActions, AnswerActionTypes } from './answer.actions';
+import { AnswerActions, AnswerActionTypes, setAnswersLoadingStatus, updateFilters, updatePageInfo } from './answer.actions';
 import { AnswerFilters } from '../../models/answer.filters.model';
+import { ActionCreator } from '@ngrx/store';
 export class AnswerState {
-    threads: AnswerThread[] = [];
+    threads: AnswerThread[];
     urgent: boolean = undefined;
     page = 1;
     pageSize = 10;
@@ -29,40 +30,37 @@ export class AnswerState {
     answerExtraLoading = false;
     answerExtraError = false;
 
-    answerFilters: AnswerFilters = { observerPhone: null, pollingStationNumber: null, county: null };
+    // answerFilters: AnswerFilters = { observerPhone: null, pollingStationNumber: null, county: null };
+    answerFilters: AnswerFilters = {} as AnswerFilters;
 }
 export let initialAnswerState: AnswerState = new AnswerState();
 
-export function answerReducer(state = initialAnswerState, action: AnswerActions) {
+export function answerReducer(state = initialAnswerState, action: AnswerActions | any) {
     switch (action.type) {
-        case AnswerActionTypes.LOAD_PREVIEW:
-            const newList = action.payload.refresh || (action.payload.urgent !== state.urgent),
-                shouldLoadList = shouldLoadPage(action.payload.page, action.payload.pageSize, state.threads.length);
-            const shouldUpdateFilters = Object.keys(action.payload.answerFilters).length > 0 ? true : false;
-
-            let newState = Object.assign({}, state, {
-                page: action.payload.page,
-                answerFilters: shouldUpdateFilters ? action.payload.answerFilters : state.answerFilters,
-                pageSize: action.payload.pageSize,
-                threads: newList ? [] : state.threads,
-                threadsLoading: shouldLoadList || newList,
-                threadsError: false,
-                urgent: action.payload.urgent
-            });
-            // if we're loading a new list, deselect any selected answer
-            if (newList) {
-                newState = Object.assign({}, newState, {
-                    selectedAnswer: undefined,
-                    selectedLoading: false,
-                    selectedError: false,
-                    observerId: undefined,
-                    sectionId: undefined,
-                    answerExtra: undefined,
-                    answerExtraLoading: false,
-                    answerExtraError: false
-                });
+        
+        case setAnswersLoadingStatus.type:
+            return {
+                ...state,
+                threadsLoading: action.isLoading,
             }
-            return newState;
+
+        case updateFilters.type: {
+            const { type, ...payload } = action;
+            
+            return {
+                ...state,
+                answerFilters: payload,
+            }
+        }
+
+        case updatePageInfo.type: {
+            const { type, ...payload } = action;
+
+            return {
+                ...state,
+                ...payload,
+            }
+        }
 
         case AnswerActionTypes.LOAD_PREVIEW_ERROR:
             return Object.assign({}, state, {
@@ -72,9 +70,11 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions)
             });
         case AnswerActionTypes.LOAD_PREVIEW_DONE:
             return Object.assign({}, state, {
-                threads: state.threads.concat(action.payload.threads),
-                totalItems: action.payload.totalItems,
-                totalPages: action.payload.totalPages,
+                // threads: state.threads.concat(action.payload.threads),
+                // threads: action.payload.threads,
+                // totalItems: action.payload.totalItems,
+                // totalPages: action.payload.totalPages,
+                ...action.payload,
                 threadsLoading: false,
                 threadsError: false
             });

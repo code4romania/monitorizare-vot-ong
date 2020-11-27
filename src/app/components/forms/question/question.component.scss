@@ -37,7 +37,7 @@
 
 
   .options-panel {
-    background-color: #EDEDED;
+    background-color: $border-color-gray;
     padding: 8px;
 
     .options-list {
@@ -70,7 +70,7 @@
     justify-content: space-evenly;
     flex-direction: row;
 
-    border: 1px solid #EDEDED;
+    border: 1px solid $border-color-gray;
   }
 
   .icon-holder {
