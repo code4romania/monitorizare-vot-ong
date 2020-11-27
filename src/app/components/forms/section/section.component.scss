@@ -1,13 +1,14 @@
+@import "../../../../variables";
 .section-create {
+  margin-top:20px; // this matches that margin on the header-row bottom
   .section-details {
     display: flex;
     flex-direction: column;
   }
 
   .add-question-button {
-    color: rebeccapurple;
+    color: $primary;
     cursor: pointer;
-    font-weight: bold;
   }
 
   .form-labeled-field {
@@ -22,8 +23,6 @@
 
     .header-text {
       margin: auto 0;
-      font-size: larger;
-      font-weight: bold;
     }
   }
 
@@ -42,13 +41,13 @@
   }
 
   .icon-holder {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-around; */
 
     cursor: pointer;
 
-    margin: auto 4px;
+    margin: 12px 4px;
   }
 
   .icon-reorder {

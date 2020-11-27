@@ -1,4 +1,4 @@
-import { from as observableFrom, Subscription } from 'rxjs';
+import { from, from as observableFrom, Observable, Subscription } from 'rxjs';
 
 import { concatMap, take, map } from 'rxjs/operators';
 import { ObserversStateItem } from '../../store/observers/observers.state';
@@ -11,6 +11,8 @@ import {
   OnInit,
   ViewChild,
   TemplateRef,
+  Inject,
+  InjectionToken,
 } from '@angular/core';
 import {
   LoadObserversAction,
@@ -23,6 +25,55 @@ import { ObserversFilterForm } from './observers-filter.form';
 import { ObserversService } from '../../services/observers.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
+import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
+const ACTIONS_COLUMN_NAME = 'Actions';
+
+const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
+  providedIn: 'root',
+  factory: () => {
+    const columns: TableColumn[] = [
+      { name: 'NAME', propertyName: 'name', },
+      { name: 'PHONE', propertyName: 'phone', },
+      { name: 'LAST_LOGIN', propertyName: 'lastSeen', canBeSorted: true },
+      { name: 'OBSERVER_POLLING_STATIONS', propertyName: 'numberOfPollingStations' },
+      { name: 'ACTIONS', propertyName: ACTIONS_COLUMN_NAME },
+    ];
+
+    return columns;
+  }
+});
+
+const DROPDOWN_CONFIG = new InjectionToken('DROPDOWN_CONFIG', {
+  providedIn: 'root',
+  factory: () => {
+    return [
+      {name: 'Edit', isMain: true, eventType: DropdownEvents.EDIT},
+      {name: 'Delete', eventType: DropdownEvents.DELETE},
+      {name: 'Notification', eventType: DropdownEvents.NOTIFICATION},
+      {name: 'Reset Password', eventType: DropdownEvents.RESET_PASSWORD},
+    ];
+  }
+})
+
+const DROPDOWN_EVENTS = new InjectionToken('DROPDOWN_EVENTS', {
+  providedIn: 'root',
+  factory: () => DropdownEvents,
+});
+
+enum DropdownEvents {
+  EDIT,
+  DELETE,
+  NOTIFICATION,
+  RESET_PASSWORD,
+}
+
+type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
 @Component({
   selector: 'app-observers',
@@ -31,6 +82,7 @@ import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstr
 })
 export class ObserversComponent implements OnInit, OnDestroy {
   @ViewChild('editObserverModalTemplate') editObserverModal: TemplateRef<any>;
+  @ViewChild('resetPasswordContent') resetPasswordContent: TemplateRef<any>;
 
   observersState: ObserversStateItem;
   observersSubscription: Subscription;
@@ -52,14 +104,27 @@ export class ObserversComponent implements OnInit, OnDestroy {
   };
   observerToEdit: Observer;
 
+  actionsColumnName = ACTIONS_COLUMN_NAME;
+  tableColumns: TableColumnTranslated[] = [];
+  crtResetPasswordRow = null;
+
   constructor(
     private http: ApiService,
     private store: Store<AppState>,
     private observersService: ObserversService,
     private toastrService: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private client: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+    private translateService: TranslateService,
+    @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
+    @Inject(TABLE_COLUMNS) rawTableColumns: TableColumn[],
+    @Inject(DROPDOWN_CONFIG) public dropdownConfig: DropdownConfigItem[],
+    @Inject(DROPDOWN_EVENTS) public DropDownEvents: typeof DropdownEvents
   ) {
     this.observersFilterForm = new ObserversFilterForm();
+    this.translateColumnNames(rawTableColumns);
   }
 
   ngOnInit() {
@@ -84,6 +149,27 @@ export class ObserversComponent implements OnInit, OnDestroy {
   resetFilters() {
     this.observersFilterForm.reset({ name: '', phone: '' });
     this.loadObservers(1);
+  }
+
+  onSelectedZoneEvent (ev: SelectedZoneEvents) {
+    console.warn('TO BE IMPLEMENTED', ev);
+  }
+
+  onDropdownEvent (ev: DropdownEvents, row: Observer) {
+    switch (ev) {
+      case DropdownEvents.EDIT:
+        this.router.navigate(['profil/edit/', row.phone], { relativeTo: this.route });
+        break;
+      case DropdownEvents.DELETE:
+        this.deleteObserver(row);
+        break;
+      case DropdownEvents.NOTIFICATION:
+        console.warn('TO BE IMPLEMENTED');
+        break;
+      case DropdownEvents.RESET_PASSWORD:
+        this.onResetPasswordEvent(row);
+        break;
+    }
   }
 
   private loadObservers(pageNo) {
@@ -173,6 +259,17 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.observersCountSubscription.unsubscribe();
   }
 
+  deleteObserver(observer: Observer) {
+    if (confirm(this.translateService.instant('OBSERVER_DELETE_CONFIRMATION'))) {
+      this.observersService
+        .deleteObserver(observer.id)
+        .subscribe(() => {
+          this.toastrService.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
+          this.loadObservers(1);
+        });
+    }
+  }
+
   isPasswordValid(): boolean {
     return (
       this.newPassword &&
@@ -180,9 +277,9 @@ export class ObserversComponent implements OnInit, OnDestroy {
     );
   }
 
-  resetPassword() {
+  resetPassword({ phone, newPassword }) {
     this.observersService
-      .resetPasswordObserver(this.observerToEdit.phone, this.newPassword)
+      .resetPasswordObserver(phone, newPassword)
       .subscribe(
         (_) => {
           this.toastrService.success(
@@ -194,6 +291,31 @@ export class ObserversComponent implements OnInit, OnDestroy {
         (_) => {
           this.toastrService.error('Could not reset password', 'Error!');
         }
+      );
+  }
+
+  onSortedColumnClicked({ col, sortDirection }: SortedColumnEvent) {
+    console.log(col, sortDirection);
+
+    // TODO: call proper API
+  }
+
+  private translateColumnNames (rawTableColumns: TableColumn[]) {
+    this.tableColumns = rawTableColumns.map(
+      ({ name, ...rest }) => ({ ...rest, name: this.translateService.get(name) })
+    );
+  }
+
+  private onResetPasswordEvent (row: any) {
+    this.crtResetPasswordRow = row;
+    from(this.modalService.open(this.resetPasswordContent).result)
+      .subscribe(
+        newPassword => {
+          this.resetPassword({ phone: row.phone, newPassword });
+
+          this.crtResetPasswordRow = null;
+        },
+        () => this.crtResetPasswordRow = null,
       );
   }
 }

@@ -1,10 +1,14 @@
 import {Observable, Observer} from 'rxjs';
 import {Injectable} from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class TokenService {
+  jwtHelper = new JwtHelperService();
+
   public tokenKey = 'token-id';
   private _token: string = undefined;
+  private _userName: string;
 
   private _isRefreshing: boolean;
 
@@ -18,6 +22,7 @@ export class TokenService {
 
   constructor() {
     this._token = localStorage.getItem(this.tokenKey);
+    this._userName = this.getUserNameFromToken(this._token);
     this.setTokenStream();
   }
 
@@ -31,6 +36,9 @@ export class TokenService {
     });
   }
 
+  public get userName() {
+    return this._userName;
+  }
   public get token() {
     return this._token;
   }
@@ -38,9 +46,18 @@ export class TokenService {
     this._token = value;
     if (value !== undefined){
       localStorage.setItem(this.tokenKey, value);
+      this._userName = this.getUserNameFromToken(value);
     } else {
       localStorage.removeItem(this.tokenKey);
     }
     this.observers.forEach(obs => obs.next(value));
+  }
+  private getUserNameFromToken(token: string) {
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (!decodedToken) return null;
+    return decodedToken.sub;
+  }
+  public isloggedIn() {
+    return this.token ? true : false;
   }
 }

@@ -1,11 +1,8 @@
-<div class="card">
+<div class="card" [ngClass]="{'dialog': dialog}">
   <div class="card-header">
     <div class="card-header-contents">
-      <h3 *ngIf="item.header" style="margin: 0">
-        {{ item.header }}
-      </h3>
-      <h4 *ngIf="item.subHeader" style="margin: 0">
-        {{ item.subHeader }}
+      <h4 *ngIf="item.subHeader" class="m-0">
+        {{ item.header }} {{ item.subHeader }}
       </h4>
     </div>
   </div>
@@ -27,9 +24,9 @@
         </app-statistics-value>
       </div>
 
-      <div class="row card-footer">
-        <div class="col-xs-12 text-right">
-          <a class="" [routerLink]="['/statistics', item.key]">
+      <div class="card-footer" *ngIf="!dialog">
+        <div class="justify-content-end d-flex">
+          <a (click)="openDetail(item)">
             {{ "SEE_COMPLETE_LIST" | translate }}
           </a>
         </div>

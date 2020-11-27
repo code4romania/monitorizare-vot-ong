@@ -13,7 +13,9 @@
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "importHelpers": true,
-    "typeRoots": ["../node_modules/@types"]
+    "typeRoots": ["../node_modules/@types"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]

@@ -9,9 +9,15 @@ import {
   NgbCollapseModule,
   NgbNavModule,
   NgbDropdownModule,
+  NgbTooltipModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { BaseButtonComponent } from './base-button/base-button.component';
+import { BaseCheckboxComponent } from './base-checkbox/base-checkbox.component';
+import { BaseDropdownComponent } from './base-dropdown/base-dropdown.component';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -22,6 +28,7 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     NgbNavModule,
     RouterModule,
     TranslateModule,
+    NgbTooltipModule
   ],
   exports: [
     FormsModule,
@@ -36,12 +43,20 @@ import { IconToggleInputComponent } from './icon-toggle-input/icon-toggle-input.
     ErrorIndicatorComponent,
     TranslateModule,
     IconToggleInputComponent,
+    NgbTooltipModule,
+    BaseButtonComponent,
+    BaseCheckboxComponent,
+    BaseDropdownComponent,
   ],
   declarations: [
     PaginationComponent,
     LoadingIndicatorComponent,
     ErrorIndicatorComponent,
     IconToggleInputComponent,
+    ConfirmationModalComponent,
+    BaseButtonComponent,
+    BaseCheckboxComponent,
+    BaseDropdownComponent,
   ],
   providers: [],
 })

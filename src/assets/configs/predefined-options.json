@@ -1,0 +1,36 @@
+[
+  {
+    "label": "PREDEFINED_OPTIONS.CONFIRMATION.LABEL",
+    "options": [
+      {
+        "label": "PREDEFINED_OPTIONS.CONFIRMATION.YES"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.CONFIRMATION.NO"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.CONFIRMATION.DONT_KNOW"
+      }
+    ]
+  },
+  {
+    "label": "PREDEFINED_OPTIONS.RATING.LABEL",
+    "options": [
+      {
+        "label": "PREDEFINED_OPTIONS.RATING.1"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.RATING.2"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.RATING.3"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.RATING.4"
+      },
+      {
+        "label": "PREDEFINED_OPTIONS.RATING.5"
+      }
+    ]
+  }
+]

@@ -8,6 +8,8 @@ import { FormState } from '../../store/form/form.reducer';
 import { FormDeleteAction, FormLoadAction } from '../../store/form/form.actions';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { cloneDeep } from 'lodash';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-forms',
@@ -23,7 +25,7 @@ export class FormsComponent implements OnInit, OnDestroy {
 
   formsSubscription: Subscription;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private _modalService: NgbModal) { }
 
   ngOnInit() {
     this.loadForms(1, this.pageSize, this.draftSelected);
@@ -50,7 +52,11 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   public deleteForm(form: FormDetails) {
-    this.store.dispatch(new FormDeleteAction(form.id));
+    const modalRef = this._modalService.open(ConfirmationModalComponent)
+    modalRef.componentInstance.message = 'Are you sure you want to delete this record?';
+    modalRef.result
+    .then(() => this.store.dispatch(new FormDeleteAction(form.id)))
+    .catch(() => { });
   }
 
   ngOnDestroy(): void {

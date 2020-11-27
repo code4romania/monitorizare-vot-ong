@@ -30,6 +30,7 @@ export function initQuestionFormGroup(formBuilder: FormBuilder) {
 export function initOptionFormGroup(formBuilder: FormBuilder) {
   return formBuilder.group({
     text: formBuilder.control(''),
-    isFreeText: formBuilder.control(false)
+    isFreeText: formBuilder.control(false),
+    flagged: formBuilder.control(false)
   });
 }
