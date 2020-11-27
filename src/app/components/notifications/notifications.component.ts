@@ -108,13 +108,15 @@ export class NotificationsComponent implements OnInit {
   }
 
   changeCountyFilter() {
-    this.usingObserverFilters = true;
     this.pollingStationFrom = '';
     this.pollingStationTo = '';
     this.resetFilteredObservers();
     if (this.selectedCounties.length) {
+      this.usingObserverFilters = true;
       this.maxPollingStationNumber =
         this.counties.find(c => c.code === this.selectedCounties[0].code)?.limit;
+    } else {
+      this.usingObserverFilters = false;
     }
   }
 
