@@ -169,5 +169,7 @@
   "ANSWERS_LOCATION": "Location",
   "ANSWERS_WHICH_BELONG_TO": "Responses which belong to",
 
-  "NOTES_EMPTY_ROWS_MESSAGE": "There aren't any notes created"
+  "NOTES_EMPTY_ROWS_MESSAGE": "There aren't any notes created",
+  "NOTES_SENT_SUCCESS": "Notification sent",
+  "NOTES_SENT_FAILURE": "Something went wrong"
 }

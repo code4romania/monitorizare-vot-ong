@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { concat, Observable, of, timer } from 'rxjs';
-import { catchError, mapTo, pluck, tap } from 'rxjs/operators';
+import { catchError, map, mapTo, pluck, tap } from 'rxjs/operators';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { getSpecificThreadByObserver } from 'src/app/store/answer/answer.selectors';
@@ -43,7 +43,8 @@ export class AnswerNotificationComponent {
       from: 'Monitorizare Vot',
       recipients: [this.route.snapshot.params.idObserver]
     }).pipe(
-      catchError(err => of(err.message)),  
+      mapTo('NOTES_SENT_SUCCESS'),
+      catchError(err => of('NOTES_SENT_FAILURE')),  
     );
 
     this.actionResultMessage$ = concat(

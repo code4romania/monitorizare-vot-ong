@@ -19,7 +19,7 @@
   <h4 class="c-notif__title">{{ 'NOTIF_DETAILS_FOR' | translate }} {{ observerName$ | async }}</h4>
 
   <div *ngIf="actionResultMessage$ | async as actionResultMessage">
-    {{ actionResultMessage | json }}
+    {{ actionResultMessage ? (actionResultMessage | translate) : '' }}
   </div>
 
   <div class="card mt-4">
