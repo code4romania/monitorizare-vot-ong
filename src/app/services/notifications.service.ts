@@ -7,7 +7,9 @@ import {environment} from 'src/environments/environment';
 import {Location} from '@angular/common';
 import {Observer} from '../models/observer.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationsService {
   private baseUrl: string;
 

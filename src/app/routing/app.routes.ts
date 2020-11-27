@@ -23,43 +23,12 @@ export let appRoutes: Routes = [
     path: '',
     pathMatch: 'full',
     canActivate: [AuthGuard, HomeGuard],
-    redirectTo: '/urgents',
+    redirectTo: '/answers',
   },
   {
     path: 'answers',
-    component: AnswerComponent,
-    canActivate: [AuthGuard, AnswerListGuard],
-    children: [
-      {
-        path: 'details/:idObserver/:idPollingStation',
-        component: AnswerDetailsComponent,
-        canActivate: [AuthGuard, AnswerDetailsGuard],
-      },
-      {
-        path: '',
-        canActivate: [AuthGuard],
-        component: AnswerDetailsComponent,
-      },
-    ],
-  },
-  {
-    path: 'urgents',
-    component: AnswerComponent,
-    canActivate: [AuthGuard, AnswerListGuard],
-    data: {
-      urgent: true,
-    },
-    children: [
-      {
-        path: 'details/:idObserver/:idPollingStation',
-        component: AnswerDetailsComponent,
-        canActivate: [AuthGuard, AnswerDetailsGuard],
-      },
-      {
-        path: '',
-        component: AnswerDetailsComponent,
-      },
-    ],
+    loadChildren: () => import('src/app/answers/answers.module').then(m => m.AnswersModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'statistics',

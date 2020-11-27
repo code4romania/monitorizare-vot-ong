@@ -1,7 +1,8 @@
 import {of as observableOf} from 'rxjs';
 
-import {catchError, map, switchMap, take, tap} from 'rxjs/operators';
+import {catchError, delay, filter, map, mergeAll, mergeMap, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
 import {
+  fetchAllFormTabs,
   FormActionTypes,
   FormDeleteAction,
   FormErrorAction,
@@ -12,33 +13,45 @@ import {
   FullyLoadFormAction,
   FullyLoadFormCompleteAction
 } from './form.actions';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {FormSection} from '../../models/form.section.model';
 import {FormsService} from '../../services/forms.service';
 import {Router} from '@angular/router';
 import {Form} from '../../models/form.model';
+import { Store } from '@ngrx/store';
+import { form, getFormItems, getFullyLoadedForms } from './form.selectors';
 
 @Injectable()
 export class FormEffects {
 
-    constructor(private formsService: FormsService,
-                private actions: Actions,
-                private router: Router) {}
+    constructor(
+      private formsService: FormsService,
+      private actions: Actions,
+      private router: Router,
+      private store: Store
+    ) { }
 
-    @Effect()
-    loadFormAction = this.actions
-        .pipe(ofType(FormActionTypes.LOAD_ALL_FORMS_META)).pipe(
-        switchMap(_ => this.formsService.loadForms()),
-        map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
-        catchError(() => observableOf(new FormErrorAction())), );
+  @Effect()
+  loadFormAction = this.actions
+      .pipe(
+        ofType(FormActionTypes.LOAD_ALL_FORMS_META),
+        withLatestFrom(this.store.select(form)),
+        filter(([, crtFormState]) => !!crtFormState.items === false),
+        switchMap(_ =>
+          this.formsService.loadForms().pipe(
+            map(formInfo => new FormLoadCompletedAction(formInfo.formVersions)),
+            catchError(() => observableOf(new FormErrorAction())),
+          )
+        ), 
+      );
 
     @Effect()
     fullyLoadFormAction = this.actions
       .pipe(
         ofType(FormActionTypes.LOAD_ONE_FORM_FULLY),
         map((a: FullyLoadFormAction) => a.formId),
-        switchMap(formId =>
+        mergeMap(formId =>
           this.formsService.getForm(formId)
             .pipe(
               map((sections: FormSection[]) => {
@@ -94,4 +107,14 @@ export class FormEffects {
           )),
         catchError(() => observableOf(new FormErrorAction()))
       );
+
+  fetchAllFormTabs = createEffect(
+    () => this.actions.pipe(
+      ofType(fetchAllFormTabs),
+      withLatestFrom(this.store.select(getFormItems), this.store.select(getFullyLoadedForms)),
+      filter(([, formTabs, loadedForms]) => formTabs.length !== Object.keys(loadedForms).length),
+      map(([, formTabs, loadedForms]) =>  formTabs.filter(f => !loadedForms[f.id]).map(f => new FullyLoadFormAction(f.id))),
+      mergeAll(),
+    )
+  )
 }

@@ -1,0 +1,92 @@
+@import '../../../variables';
+
+$filter-zone-height: 2.8rem;
+$label-color: $darker-gray;
+
+.c-answers__container {
+  margin-bottom: 2rem;
+}
+
+span.font-weight-bold.h-is-muted {
+  font-size: 1.1rem;
+}
+
+.c-answers__header-title {
+  color: $darker-gray;
+}
+
+.c-no-msg {
+  &__title {
+    color: $darker-gray;
+  }
+
+  &__content {
+    color: $readable-dark-gray;
+  }
+}
+
+.c-answers__buttons {
+  .c-answers__button svg:first-child {
+    margin-right: .5rem;
+  }
+}
+
+.form-group {
+  & > .form-control {
+    border: 1px solid $base-gray;
+    color: $input-text-color;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    font-size: 1.1rem;
+    height: $filter-zone-height;
+
+    &::placeholder {
+      color: $input-text-color;
+    }
+  }
+
+  & > select.form-control {
+    min-width: 13rem;
+    padding: 0.5rem;
+  }
+
+  & > label {
+    color: $label-color;
+    font-size: 1.2rem;
+    line-height: 30px;
+  }
+}
+
+.c-answers-checkbox {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  
+  &__wrapper {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    transform: translateY(45%);
+    padding: 0 0.8rem;
+    font-size: 1.2rem;
+
+    @media all and (max-width: 467px) {
+      margin-bottom: 2.1rem;
+    }
+
+    label {
+      margin-bottom: 0;
+      cursor: pointer;
+      color: $darker-gray;
+    }
+
+    input[type=checkbox] {
+      display: inline-block !important;
+      height: 1rem;
+      width: 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+  }
+}
