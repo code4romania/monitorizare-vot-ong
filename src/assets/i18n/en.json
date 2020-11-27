@@ -83,6 +83,7 @@
   "POLLING_STATION_NUMBER": "Polling station number:",
 
   "NOTIFICATIONS": "Notifications",
+  "NOTIFICATION_HISTORY": "Notification history",
   "COUNTIES": "Counties",
   "COUNTY_FILTER": "Filter by counties",
   "POLLING_STATIONS_FILTER": "Polling stations (optional)",

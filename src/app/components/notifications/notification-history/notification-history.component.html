@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <h5>{{'NOTIFICATION_HISTORY' | translate}}</h5>
+
+  <app-table-container
+    *ngIf="notificationState$ | async as notificationState"
+    [columns]="tableColumns"
+    [rows]="notificationList"
+    [is-loading]="notificationState.loading"
+  >
+    <app-pagination
+      footer-area
+      [page]="notificationState.page"
+      [pageSize]="notificationState.pageSize"
+      [totalItems]="notificationState.totalItems"
+      [nextEnabled]="!notificationState.loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination>
+  </app-table-container>
+</div>

@@ -27,6 +27,9 @@ import {
   observersReducer,
   observersCountReducer,
 } from './observers/observers.reducer';
+import {NotificationsState} from './notifications/notifications.state';
+import {notificationsReducer} from './notifications/notifications.reducer';
+import {NotificationsEffects} from './notifications/notifications.effects';
 
 export class AppState {
   form: FormState;
@@ -35,6 +38,7 @@ export class AppState {
   observers: ObserversState;
   observersCount: ObserversCountState;
   note: NoteState;
+  notifications: NotificationsState;
 }
 
 const moduleImports = [
@@ -45,6 +49,7 @@ const moduleImports = [
     observers: observersReducer,
     note: noteReducer,
     observersCount: observersCountReducer,
+    notifications: notificationsReducer
   }),
   EffectsModule.forRoot([
     FormEffects,
@@ -53,6 +58,7 @@ const moduleImports = [
     ObserversEffects,
     ObserversCountEffects,
     NoteEffects,
+    NotificationsEffects
   ]),
   StoreDevtoolsModule.instrument({
     maxAge: 25, // Retains last 25 states

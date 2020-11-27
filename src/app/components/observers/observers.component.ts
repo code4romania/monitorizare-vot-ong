@@ -1,36 +1,30 @@
-import { from, from as observableFrom, Observable, Subscription } from 'rxjs';
+import {from, from as observableFrom, Subscription} from 'rxjs';
 
-import { concatMap, take, map } from 'rxjs/operators';
-import { ObserversStateItem } from '../../store/observers/observers.state';
-import { AppState } from '../../store/store.module';
-import { select, Store } from '@ngrx/store';
-import { ApiService } from '../../core/apiService/api.service';
+import {concatMap, map, take} from 'rxjs/operators';
+import {ObserversStateItem} from '../../store/observers/observers.state';
+import {AppState} from '../../store/store.module';
+import {select, Store} from '@ngrx/store';
+import {ApiService} from '../../core/apiService/api.service';
+import {Component, Inject, InjectionToken, OnDestroy, OnInit, TemplateRef, ViewChild,} from '@angular/core';
+import {LoadObserversAction, LoadObserversCountAction,} from '../../store/observers/observers.actions';
+import {values} from 'lodash';
+import {Observer} from '../../models/observer.model';
+import {ListType} from '../../models/list.type.model';
+import {ObserversFilterForm} from './observers-filter.form';
+import {ObserversService} from '../../services/observers.service';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClient} from '@angular/common/http';
+import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
 import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  TemplateRef,
-  Inject,
-  InjectionToken,
-} from '@angular/core';
-import {
-  LoadObserversAction,
-  LoadObserversCountAction,
-} from '../../store/observers/observers.actions';
-import { values } from 'lodash';
-import { Observer } from '../../models/observer.model';
-import { ListType } from '../../models/list.type.model';
-import { ObserversFilterForm } from './observers-filter.form';
-import { ObserversService } from '../../services/observers.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
-import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
-import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+  SelectedZoneEvents,
+  SortedColumnEvent,
+  TableColumn,
+  TableColumnTranslated
+} from 'src/app/table/table-container/table-container.component';
+import {DropdownConfigItem} from 'src/app/shared/base-dropdown/base-dropdown.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -72,8 +66,6 @@ enum DropdownEvents {
   NOTIFICATION,
   RESET_PASSWORD,
 }
-
-type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }
 
 @Component({
   selector: 'app-observers',
