@@ -153,7 +153,7 @@
   "FROM": "From",
   "TO": "To",
 
-  "VALIDATION_REQUIRED": "%s is required"
+  "VALIDATION_REQUIRED": "%s is required",
 
   "EXPORT": "Export",
   "NO_RESULTS": "No results",
