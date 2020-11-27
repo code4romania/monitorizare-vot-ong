@@ -13,6 +13,7 @@ export class FormActionTypes {
     static readonly UPLOAD = actionType('[Form] UPLOAD');
     static readonly UPLOAD_PUBLISH = actionType('[Form] UPLOAD PUBLISH');
     static readonly UPLOAD_COMPLETE = actionType('[Form] UPLOAD_COMPLETE');
+    static readonly UPDATE = actionType('[Form] UPDATE');
     static readonly DELETE = actionType('[Form] DELETE');
 }
 export class FormLoadAction implements Action {
@@ -50,6 +51,12 @@ export class FormUploadPublishAction implements Action {
 
 export class FormUploadCompleteAction implements Action {
   readonly type = FormActionTypes.UPLOAD_COMPLETE;
+}
+
+export class FormUpdateAction implements Action {
+  readonly type = FormActionTypes.UPDATE;
+
+  constructor(public form: Form) {}
 }
 
 export class FormDeleteAction implements Action {

@@ -92,10 +92,26 @@
               <div class="btn-group" ngbDropdown role="group" container="body">
                 <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
                 <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger">
+                  <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
                     <img src="/assets/forms/icon-delete.png" alt="">
-                    <span>{{ "DELETE" | translate }}</span>
+                    <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
                   </button>
+                  <button *ngIf="form.draft" ngbDropdownItem (click)="publishForm(form)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-publish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_PUBLISH" | translate }}</span>
+                  </button>
+                  <button *ngIf="!form.draft" ngbDropdownItem (click)="unpublishForm(form)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-unpublish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_UNPUBLISH" | translate }}</span>
+                  </button>
+                  <!-- Not yet implemented
+                  <button ngbDropdownItem (click)="setAsFirstForm(form)" class="text">
+                    <img src="/assets/forms/icon-delete.png" alt="">
+                    <span>{{ "FORM_SET_AS_FIRST" | translate }}</span>
+                  </button>
+                  -->
                 </div>
               </div>
             </div>

@@ -49,6 +49,10 @@ export class FormsService {
     return this.uploadForm(formClone);
   }
 
+  public updateForm(form: Form) {
+    return this.http.put(this.baseUrl, form);
+  }
+
   private uploadForm(form: Form) {
     if (!form.currentVersion) {
       form.currentVersion = 1;

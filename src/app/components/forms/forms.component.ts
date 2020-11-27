@@ -5,11 +5,16 @@ import { select, Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { FormState } from '../../store/form/form.reducer';
-import { FormDeleteAction, FormLoadAction } from '../../store/form/form.actions';
+import {
+  FormDeleteAction,
+  FormLoadAction,
+  FormUpdateAction
+} from '../../store/form/form.actions';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { cloneDeep } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
+import {Form} from "../../models/form.model";
 
 @Component({
   selector: 'app-forms',
@@ -57,6 +62,16 @@ export class FormsComponent implements OnInit, OnDestroy {
     modalRef.result
     .then(() => this.store.dispatch(new FormDeleteAction(form.id)))
     .catch(() => { });
+  }
+
+  public publishForm(formDetails: FormDetails) {
+    formDetails.draft=false;
+    this.store.dispatch(new FormUpdateAction(Form.fromMetaData(formDetails)));
+  }
+
+  public unpublishForm(formDetails: FormDetails) {
+    formDetails.draft=true;
+    this.store.dispatch(new FormUpdateAction(Form.fromMetaData(formDetails)));
   }
 
   ngOnDestroy(): void {

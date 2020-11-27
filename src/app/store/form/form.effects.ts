@@ -7,6 +7,7 @@ import {
   FormErrorAction,
   FormLoadAction,
   FormLoadCompletedAction,
+  FormUpdateAction,
   FormUploadAction,
   FormUploadCompleteAction,
   FullyLoadFormAction,
@@ -88,6 +89,17 @@ export class FormEffects {
       ofType(FormActionTypes.UPLOAD_COMPLETE),
       take(1),
       tap(_ => this.router.navigate(['formulare']))
+    );
+
+  @Effect()
+  formUpdate = this.actions
+    .pipe(
+      ofType(FormActionTypes.UPDATE),
+      switchMap((a: FormUpdateAction) =>
+        this.formsService.updateForm(a.form).pipe(
+          map(_ => new FormLoadAction())
+        )),
+      catchError(() => observableOf(new FormErrorAction()))
     );
 
   @Effect()
