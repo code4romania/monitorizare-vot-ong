@@ -1,73 +1,80 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 form-group">
-      <label for="notificationTitle">{{'NOTIFICATION_TITLE' | translate}}</label>
-      <input class="form-control" id="notificationTitle" [(ngModel)]="notificationTitle"
-        placeholder="{{'NOTIFICATION_TITLE' | translate}}">
-      <label for="messageTextarea">{{'MESSAGE' | translate}}</label>
-      <textarea [(ngModel)]="message" class="form-control" id="messageTextarea"
-        placeholder="{{'MESSAGE' | translate}}"></textarea>
-    </div>
-
-    <div class="col-md-6 form-group">
+<div class="container-fluid">
+  <h5>{{'OBSERVERS_FILTER' | translate}}</h5>
+  <div class="form-group card card-body mt-3">
+    <div class="d-flex flex-row">
       <div>
-        <label for="countiesMultiSelect">{{'COUNTIES' | translate}}</label>
-        <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="onCountySelect($event)"
-          (onDeSelect)="resetSelections()" [(ngModel)]="selectedCounties" [data]="counties"
-          placeholder="{{'COUNTIES' | translate}}" [settings]="countyDropdownSettings">
+        <label for="countiesMultiSelect">{{'COUNTY_FILTER' | translate}}</label>
+        <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="changeCountyFilter()"
+                                 (onDeSelect)="changeCountyFilter()"
+                                 [(ngModel)]="selectedCounties" [data]="counties"
+                                 placeholder="{{'COUNTY_FILTER' | translate}}" [settings]="countyDropdownSettings">
         </ng-multiselect-dropdown>
       </div>
 
-      <div class="margin-top">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="pollingStationMultiSelect">{{'POLLING_STATIONS_FROM' | translate}}</label>
-            <ng-multiselect-dropdown id="pollingStationMultiSelect1" [(ngModel)]="pollingStationFrom"
-              [data]="pollingStations" placeholder="{{'POLLING_STATIONS_FROM' | translate}}"
-              [settings]="dropdownSettings">
-            </ng-multiselect-dropdown>
-          </div>
-          <div class="col-md-6">
-            <label for="pollingStationMultiSelect">{{'POLLING_STATIONS_TO' | translate}}</label>
-            <ng-multiselect-dropdown id="pollingStationMultiSelect" [(ngModel)]="pollingStationTo"
-              [data]="pollingStations" placeholder="{{'POLLING_STATIONS_TO' | translate}}"
-              [settings]="dropdownSettings">
-            </ng-multiselect-dropdown>
-          </div>
+      <div *ngIf="selectedCounties.length" class="ml-3">
+        <label>
+          <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
+          <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
+        </label>
+        <div class="d-flex justify-content-between">
+          <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
+                 (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
+                 placeholder="{{'FROM' | translate}}">
+          <div class="mt-1 text-muted">&ndash;</div>
+          <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
+                 (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
+                 placeholder="{{'TO' | translate}}">
         </div>
       </div>
-      <div class="margin-top">
-        <button (click)="searchForObservers()" class="btn btn-success">{{'SEARCH' | translate}}</button>
-        <button (click)="resetFilter()" class="btn btn-success to-right">{{'RESET' | translate}}</button>
+
+      <div class="ml-3">
+        <label>&nbsp;</label>
+        <div class="w-100">
+          <button (click)="searchForObservers()" class="btn btn-outline-primary"
+                  [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
+          <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 form-group">
-      <button (click)="submitNotification()"
-              [ngClass]="{'btn-success': isValidNoArg(), 'btn-default': !isValidNoArg()}"
-              class="btn">{{'SEND_NOTIFICATIONS_TO' | translate}}
-        {{selectedObserversIds?.length}}
-        {{'NOTIFICATION_OBSERVERS' | translate}}</button>
 
-      <button (click)="submitNotificationGlobally()"
-              [ngClass]="{'btn-success': isValidGloballyNoArg(), 'btn-default': !isValidGloballyNoArg()}"
-              class="btn to-right">{{'SEND_NOTIFICATIONS_TO_ALL' | translate }}</button>
+    <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
+      <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
+      <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
     </div>
   </div>
-  <div class="row" *ngIf="filteredObservers.length >0">
-    <div class="col-md-6 form-group">
-      <span>{{'SELECTED_OBSERVERS_COUNT' | translate}}</span> &middot; {{ filteredObservers?.length }}
-      &middot;
-      <button (click)="selectAll()" *ngIf="filteredObservers.length !== selectedObserversIds.length"
-        class="btn btn-default">{{'SELECT_ALL' | translate}}</button>
-      <button (click)="deselectAll()" *ngIf="filteredObservers.length === selectedObserversIds.length"
-        class="btn btn-default">{{'DESELECT_ALL' | translate}}</button>
+
+  <h5>{{usingObserverFilters ? ('NOTIFICATION_DETAILS' | translate)
+    : observerCount + ' ' + ('TOTAL_OBSERVERS' | translate) }}</h5>
+  <form [formGroup]="notificationForm" class="form-group card card-body mt-3">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="notificationTitle">{{'NOTIFICATION_TITLE' | translate}}</label>
+        <input class="form-control" id="notificationTitle" name="notificationTitle" formControlName="notificationTitle"
+               required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationTitle.errors}"
+               placeholder="{{'NOTIFICATION_TITLE' | translate}}">
+        <div *ngIf="notificationFormSubmitted && notificationTitle.errors?.required" class="invalid-feedback">
+          {{('VALIDATION_REQUIRED' | translate).replace('%s', ('NOTIFICATION_TITLE' | translate))}}
+        </div>
+
+        <label class="mt-2" for="notificationMessage">{{'MESSAGE' | translate}}</label>
+        <textarea class="form-control" id="notificationMessage" name="notificationMessage"
+                  formControlName="notificationMessage"
+                  required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationMessage.errors}"
+                  placeholder="{{'MESSAGE' | translate}}" rows="5"></textarea>
+        <div *ngIf="notificationFormSubmitted && notificationMessage.errors?.required" class="invalid-feedback">
+          {{('VALIDATION_REQUIRED' | translate).replace('%s', ('MESSAGE' | translate))}}
+        </div>
+
+        <div class="mt-2">
+          <button (click)="submitNotification()" type="submit" class="btn btn-warning"
+                  [disabled]="usingObserverFilters && !filteredObserverIds?.length">
+            {{usingObserverFilters
+            ? ('SEND_NOTIFICATIONS_TO_N_OBSERVERS' | translate)
+              .replace('%d', filteredObserverIds ? filteredObserverIds.length : '?')
+            : ('SEND_NOTIFICATIONS_TO_ALL' | translate)}}
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="observer-list">
-    <div class="observer-data" *ngFor="let item of filteredObservers">
-      <app-observers-card [selectionEnabled]="true" [observer]="item" (onSelect)="onObserverSelect($event)"></app-observers-card>
-    </div>
-  </div>
+  </form>
 </div>
