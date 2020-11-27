@@ -19,7 +19,7 @@ export class NotificationsComponent implements OnInit {
   selectedCounties: { code: string; name: string }[] = [];
   filteredObserverIds: string[] = [];
   notificationForm: FormGroup;
-  submitted = false;
+  notificationFormSubmitted = false;
   observerCount: number;
   maxPollingStationNumber: number;
 
@@ -62,7 +62,7 @@ export class NotificationsComponent implements OnInit {
 
   submitNotification() {
     // TODO: change channel and from
-    this.submitted = true;
+    this.notificationFormSubmitted = true;
     if (this.notificationForm.valid) {
       const message = this.translate.instant('NOTIFICATION_SEND_CONFIRMATION');
       const count = this.filteredObserverIds?.length || this.observerCount;
@@ -94,15 +94,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   searchForObservers() {
-    const from = parseInt(this.pollingStationFrom, 10);
-    const to = parseInt(this.pollingStationTo, 10);
+    const from = parseInt(this.pollingStationFrom, 10) || 1;
+    const to = parseInt(this.pollingStationTo, 10) || this.maxPollingStationNumber;
 
     this.notificationsService
-      .getActiveObserversInCounties(
-        this.selectedCounties.map(c => c.code),
-        from,
-        to
-      )
+      .getActiveObserversInCounties(this.selectedCounties.map(c => c.code), from, to)
       .subscribe((res) => {
         this.filteredObserverIds = res.map(o => o.id);
       });

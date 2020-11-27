@@ -14,7 +14,7 @@
       <div *ngIf="selectedCounties.length" class="ml-3">
         <label>
           <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
-          <span *ngIf="maxPollingStationNumber"> [1 ... {{maxPollingStationNumber}}]</span>
+          <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
         </label>
         <div class="d-flex justify-content-between">
           <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
@@ -49,17 +49,17 @@
       <div class="col-md-6">
         <label for="notificationTitle">{{'NOTIFICATION_TITLE' | translate}}</label>
         <input class="form-control" id="notificationTitle" name="notificationTitle" formControlName="notificationTitle"
-               required [ngClass]="{'is-invalid': submitted && notificationTitle.errors}"
+               required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationTitle.errors}"
                placeholder="{{'NOTIFICATION_TITLE' | translate}}">
-        <div *ngIf="submitted && notificationTitle.errors?.required" class="invalid-feedback">
+        <div *ngIf="notificationFormSubmitted && notificationTitle.errors?.required" class="invalid-feedback">
           Title is required.
         </div>
 
         <label class="mt-2" for="notificationMessage">{{'MESSAGE' | translate}}</label>
         <textarea class="form-control" id="notificationMessage" name="notificationMessage" formControlName="notificationMessage"
-                  required [ngClass]="{'is-invalid': submitted && notificationMessage.errors}"
+                  required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationMessage.errors}"
                   placeholder="{{'MESSAGE' | translate}}" rows="5"></textarea>
-        <div *ngIf="submitted && notificationMessage.errors?.required" class="invalid-feedback">
+        <div *ngIf="notificationFormSubmitted && notificationMessage.errors?.required" class="invalid-feedback">
           Message is required.
         </div>
 
