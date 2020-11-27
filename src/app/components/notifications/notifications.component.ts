@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CountyPollingStationInfo, NotificationsService,} from '../../services/notifications.service';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {GlobalNotificationModel, NotificationModel,} from '../../models/notification.model';
+import {GlobalNotificationModel,} from '../../models/notification.model';
 import {Observer} from '../../models/observer.model';
 import {TranslateService} from '@ngx-translate/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ObserversService} from '../../services/observers.service';
 
 @Component({
   selector: 'app-notifications',
@@ -11,20 +13,28 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-  notificationTitle: string;
-  message: string;
   counties: CountyPollingStationInfo[] = [];
-  pollingStations = [];
-  pollingStationFrom = [];
-  pollingStationTo = [];
+  pollingStationFrom = '';
+  pollingStationTo = '';
   selectedCounties: { code: string; name: string }[] = [];
-  dropdownSettings: IDropdownSettings = {};
-  countyDropdownSettings: IDropdownSettings = {};
-  itemsShowLimit = 10;
-  filteredObservers: Observer[] = [];
+  filteredObserverIds: string[] = [];
+  notificationForm: FormGroup;
+  submitted = false;
+  observerCount: number;
+  maxPollingStationNumber: number;
+
+  countyDropdownSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'code',
+    textField: 'name',
+    itemsShowLimit: 10,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true,
+  };
 
   constructor(
     private notificationsService: NotificationsService,
+    private observersService: ObserversService,
     private translate: TranslateService
   ) {}
 
@@ -33,172 +43,87 @@ export class NotificationsComponent implements OnInit {
       .getCounties()
       .subscribe((res) => (this.counties = res));
 
-    this.countyDropdownSettings = {
-      singleSelection: true,
-      idField: 'code',
-      textField: 'name',
-      itemsShowLimit: this.itemsShowLimit,
-      allowSearchFilter: true,
-      closeDropDownOnSelection: true,
-    };
-    this.dropdownSettings = {
-      singleSelection: true,
-      itemsShowLimit: this.itemsShowLimit,
-      allowSearchFilter: true,
-      closeDropDownOnSelection: true,
-    };
+    this.observersService.countObservers()
+      .subscribe(count => this.observerCount = count);
+
+    this.notificationForm = new FormGroup({
+      notificationTitle: new FormControl('', [Validators.required]),
+      notificationMessage: new FormControl('', [Validators.required])
+    });
   }
 
-  onCountySelect(item: any) {
-    this.resetSelections();
-    this.fillPollingStations();
+  get notificationTitle() {
+    return this.notificationForm.get('notificationTitle');
+  }
+
+  get notificationMessage() {
+    return this.notificationForm.get('notificationMessage');
   }
 
   submitNotification() {
     // TODO: change channel and from
-    const notification: NotificationModel = this.createNotification();
-
-    if (this.isValid(notification)) {
+    this.submitted = true;
+    if (this.notificationForm.valid) {
       const message = this.translate.instant('NOTIFICATION_SEND_CONFIRMATION');
-      if (!confirm(message.replace('%d', this.selectedObserversIds.length))) {
+      const count = this.filteredObserverIds?.length || this.observerCount;
+
+      if (!confirm(message.replace('%d', count))) {
         return;
       }
-      this.notificationsService
-        .pushNotification(notification)
-        .subscribe((x) => console.log(x));
-    } else {
-      alert('Not all fields have been completed');
+
+      const notification = this.createGlobalNotification();
+      if (this.filteredObserverIds?.length) {
+        this.notificationsService
+          .pushNotification({...notification, recipients: this.filteredObserverIds})
+          .subscribe(console.log);
+      } else {
+        this.notificationsService
+          .pushNotificationGlobally(notification)
+          .subscribe(console.log);
+      }
     }
-  }
-
-  submitNotificationGlobally() {
-    const notification: GlobalNotificationModel = this.createGlobalNotification();
-
-    if (this.isValidGlobally(notification)) {
-      this.notificationsService
-        .pushNotificationGlobally(notification)
-        .subscribe((x) => console.log(x));
-    } else {
-      alert('Not all fields have been completed');
-    }
-  }
-
-  isValidNoArg(): boolean {
-    return this.isValid(this.createNotification());
-  }
-
-  isValid(notification: NotificationModel): boolean {
-    if (!this.isValidGlobally(notification)) {
-      return false;
-    }
-
-    return !(!notification.recipients || !(notification.recipients.length > 0));
-
-
-  }
-
-  isValidGloballyNoArg(): boolean {
-    return this.isValidGlobally(this.createGlobalNotification());
-  }
-
-  isValidGlobally(notification: GlobalNotificationModel): boolean {
-    if (!notification.message || notification.message === '') {
-      return false;
-    }
-    if (!notification.title || notification.title === '') {
-      return false;
-    }
-    if (!notification.channel || notification.channel === '') {
-      return false;
-    }
-    return !(!notification.from || notification.from === '');
-
-  }
-
-  private createNotification(): NotificationModel {
-    return {
-      channel: 'Firebase',
-      from: 'Monitorizare Vot',
-      message: this.message,
-      title: this.notificationTitle,
-      recipients: this.selectedObserversIds,
-    };
   }
 
   private createGlobalNotification(): GlobalNotificationModel {
     return {
       channel: 'Firebase',
       from: 'Monitorizare Vot',
-      message: this.message,
-      title: this.notificationTitle,
+      message: this.notificationMessage.value,
+      title: this.notificationTitle.value,
     };
   }
 
-  private fillPollingStations(): void {
-    this.pollingStations = [];
-    if (this.selectedCounties && this.selectedCounties.length > 0) {
-      const selectedCounty: any = this.selectedCounties[0];
-      const countyDetails: CountyPollingStationInfo = this.counties.find(
-        (x) => x.code === selectedCounty.code
-      );
-      if (countyDetails) {
-        for (let i = 1; i <= countyDetails.limit; i++) {
-          this.pollingStations.push(i);
-        }
-      }
-    }
-  }
-
-  resetSelections() {
-    this.pollingStationTo = [];
-    this.pollingStationFrom = [];
-  }
-
   searchForObservers() {
-    const to = this.pollingStationTo[0];
-    const from = this.pollingStationFrom[0];
+    const from = parseInt(this.pollingStationFrom, 10);
+    const to = parseInt(this.pollingStationTo, 10);
 
     this.notificationsService
       .getActiveObserversInCounties(
-        this.selectedCounties.map((x) => x.code),
+        this.selectedCounties.map(c => c.code),
         from,
         to
       )
       .subscribe((res) => {
-        this.filteredObservers = res;
+        this.filteredObserverIds = res.map(o => o.id);
       });
   }
 
-  selectedObserversIds: string[] = [];
+  resetFilteredObservers() {
+    this.filteredObserverIds = [];
+  }
 
-  onObserverSelect(selectedObserver: Partial<Observer>) {
-    if (selectedObserver.isSelected) {
-      this.selectedObserversIds.push(selectedObserver.id);
-    } else {
-      const index = this.selectedObserversIds.findIndex(
-        (observerId) => observerId === selectedObserver.id
-      );
-      this.selectedObserversIds.splice(index, 1);
+  changeCountyFilter() {
+    this.pollingStationFrom = '';
+    this.pollingStationTo = '';
+    this.resetFilteredObservers();
+    if (this.selectedCounties.length) {
+      this.maxPollingStationNumber =
+        this.counties.find(c => c.code === this.selectedCounties[0].code)?.limit;
     }
   }
 
-  selectAll() {
-    this.selectedObserversIds = [];
-    this.filteredObservers.forEach((x) => {
-      x.isSelected = true;
-      this.selectedObserversIds.push(x.id);
-    });
-  }
-
-  deselectAll() {
-    this.selectedObserversIds = [];
-    this.filteredObservers.forEach((x) => {
-      x.isSelected = false;
-    });
-  }
   resetFilter() {
-    this.pollingStationFrom = [];
-    this.pollingStationTo = [];
     this.selectedCounties = [];
+    this.changeCountyFilter();
   }
 }
