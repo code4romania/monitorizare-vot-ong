@@ -27,28 +27,7 @@ const TABLE_COLUMNS = [
 })
 export class NotificationHistoryComponent implements OnInit {
   tableColumns: TableColumnTranslated[] = [];
-  notificationList: HistoryNotificationModel[];
   notificationState$: Observable<NotificationsState>;
-
-  counties: CountyPollingStationInfo[] = [];
-  pollingStationFrom = '';
-  pollingStationTo = '';
-  selectedCounties: { code: string; name: string }[] = [];
-  filteredObserverIds: string[] = null;
-  usingObserverFilters = false;
-  notificationForm: FormGroup;
-  notificationFormSubmitted = false;
-  observerCount: number;
-  maxPollingStationNumber: number;
-
-  countyDropdownSettings: IDropdownSettings = {
-    singleSelection: true,
-    idField: 'code',
-    textField: 'name',
-    itemsShowLimit: 10,
-    allowSearchFilter: true,
-    closeDropDownOnSelection: true,
-  };
 
   constructor(
     private store: Store<AppState>,
@@ -58,6 +37,8 @@ export class NotificationHistoryComponent implements OnInit {
   ngOnInit() {
     this.loadNotifications(1);
     this.notificationState$ = this.store.select(selectNotifications);
+    this.tableColumns = TABLE_COLUMNS.map(
+      ({name, ...rest}) => ({ ...rest, name: this.translateService.get(name)}));
   }
 
   private loadNotifications(page: number) {
@@ -66,11 +47,5 @@ export class NotificationHistoryComponent implements OnInit {
 
   pageChanged(e) {
     this.loadNotifications(e.page);
-  }
-
-  private translateColumnNames() {
-    this.tableColumns = TABLE_COLUMNS.map(
-      ({ name, ...rest }) => ({ ...rest, name: this.translateService.get(name) })
-    );
   }
 }

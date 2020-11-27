@@ -4,9 +4,24 @@
   <app-table-container
     *ngIf="notificationState$ | async as notificationState"
     [columns]="tableColumns"
-    [rows]="notificationList"
+    [rows]="notificationState.data"
     [is-loading]="notificationState.loading"
+    [disable-checkbox]="true"
   >
+    <ng-template let-row="row" let-prop="column.propertyName">
+      <ng-container [ngSwitch]="true">
+        <span *ngSwitchCase="!row[prop] && row[prop] !== 0">
+          {{ 'UNSPECIFIED' | translate }}
+        </span>
+        <span *ngSwitchCase="prop === 'insertedAt'">
+          {{ row[prop] | date: 'short' }}
+        </span>
+        <span *ngSwitchDefault>
+          {{row[prop]}}
+        </span>
+      </ng-container>
+    </ng-template>
+
     <app-pagination
       footer-area
       [page]="notificationState.page"
