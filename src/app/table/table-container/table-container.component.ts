@@ -1,36 +1,8 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { TableColumnDirective } from '../table-column/table-column.directive';
 
-export interface TableColumn {
-  name: string;
-  canBeSorted?: boolean;
-  propertyName?: string;
-}
-
-export enum SortDirection {
-  ASC,
-  DESC
-}
-
-export interface SortedColumnEvent {
-  col: TableColumn;
-  sortDirection: SortDirection;
-}
-
-export enum SelectedZoneEvents {
-  DELETE,
-  NOTIFCATION
-}
-
-const SELECTED_ZONE_EVENTS = new InjectionToken('SELECTED_ZONE_EVENTS', {
-  providedIn: 'root',
-  factory: () => SelectedZoneEvents,
-});
-
-const SORT_DIRECTION = new InjectionToken('SORT_DIRECTION', {
-  providedIn: 'root',
-  factory: () => SortDirection,
-});
+import { SelectedZoneEvents, SortDirection, SortedColumnEvent, TableColumn, SELECTED_ZONE_EVENTS, SORT_DIRECTION } from '../table.model';
 
 @Component({
   selector: 'app-table-container[columns]',
@@ -43,6 +15,7 @@ export class TableContainerComponent implements OnInit {
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
   @Input('is-loading') isLoading = true;
+  @Input('no-rows-message') noRowsMessage = '';
   
   @Input('disable-checkbox') 
   @HostBinding('class.is-checkbox-disabled')
@@ -50,8 +23,9 @@ export class TableContainerComponent implements OnInit {
 
   @Output() selectedZoneEvent = new EventEmitter();
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
+  @Output() rowClicked = new EventEmitter();
 
-  @ContentChild(TemplateRef) tdContent: TemplateRef<any>;
+  @ContentChild(TableColumnDirective) tableColumn: TableColumnDirective;
   
   selectedRows: { [rowId: string]: boolean } = {};
   allSelected = false;

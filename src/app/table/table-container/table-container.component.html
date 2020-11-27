@@ -29,7 +29,7 @@
   </thead>
 
   <tbody>
-    <ng-container *ngIf="!isLoading; else loading">
+    <ng-container *ngIf="!isLoading && rows.length !== 0; else notShowingData">
       <ng-container *ngFor="let r of rows;">
         <app-base-checkbox 
           *ngIf="!isCheckboxDisabled"
@@ -39,11 +39,14 @@
           class="c-table__row-check"
         ></app-base-checkbox>
   
-        <tr [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected">
+        <tr 
+          (click)="rowClicked.emit(r)"
+          [class.is-selected]="selectedRows[r[idKey]] === true ? true : selectedRows[r[idKey]] === false ? false : allSelected"
+        >
           <td
             *ngFor="let col of columns"
           >
-            <ng-template [ngTemplateOutlet]="tdContent" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
+            <ng-template [ngTemplateOutlet]="tableColumn.templateRef" [ngTemplateOutletContext]="{ row: r, column: col }"></ng-template>
           </td>
         </tr>
       </ng-container>
@@ -95,6 +98,9 @@
   </app-base-button>
 </div>
 
-<ng-template #loading>
-  <app-loading-indicator class="c-table--loading-indicator"></app-loading-indicator>
+<ng-template #notShowingData>
+  <app-loading-indicator *ngIf="isLoading" class="c-table--loading-indicator"></app-loading-indicator>
 </ng-template>
+
+
+<ng-content *ngIf="rows.length === 0 && !isLoading" select="[no-rows-message]"></ng-content>

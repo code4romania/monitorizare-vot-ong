@@ -8,6 +8,10 @@ $foreground-color: #A5A5A5;
   align-items: center;
   padding: 1.5rem .8rem;
   flex-wrap: wrap;
+
+  &.is-hidden {
+    display: none;
+  }
 }
 
 .c-pagination {

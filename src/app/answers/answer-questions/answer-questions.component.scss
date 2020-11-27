@@ -1,0 +1,92 @@
+@import '../../../variables';
+
+$question-title-background: #FAFAFA;
+$flagged-question-title-background: #FFF5F5;
+$question-text-color: #474747;
+
+.c-answer-section {
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+  
+  &__desc {
+    color: $light-text-gray;
+    width: 50%;
+
+    @media all and (max-width: 980px) {
+      & {
+        width: 70%;
+      }
+    }
+
+    @media all and (max-width: 650px) {
+      width: 100%;
+    }
+  }
+
+  &__questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media all and (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.c-answer-question {
+  border: 1px solid $border-color-gray;
+  border-radius: 4px;
+  color: $question-text-color;
+  height: min-content;
+
+  &.is-flagged {
+    border-color: $delete-color;
+  }
+
+  &__title {
+    padding: 1rem;
+    background-color: $question-title-background;
+
+    .c-answer-question.is-flagged & {
+      background-color: $flagged-question-title-background;
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    row-gap: .8rem;
+    padding: 1rem;
+  }
+
+  &__option {
+    display: flex;
+    column-gap: 2rem;
+
+    &.is-option-text {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .c-answer-checkbox {
+    line-height: .5rem;
+  }
+}
+
+.c-answer-note {
+  &__button {
+    width: max-content;
+    display: block;
+    margin-left: auto;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
+
+    &.has-question-flagged {
+      color: $delete-color;
+    }
+  }
+}
