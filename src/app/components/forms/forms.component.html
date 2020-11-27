@@ -15,70 +15,96 @@
   <div class="card border-light shadow">
     <ul class="nav pl-3">
       <li class="nav-item pt-3">
-        <a class="nav-link cursor-pointer" [class.active]="!draftSelected" (click)="onTabSelect()">{{ "PUBLIC" | translate }}</a>
+        <a class="nav-link cursor-pointer" [class.active]="!draftSelected"
+           (click)="onTabSelect()">{{ "PUBLIC" | translate }}</a>
       </li>
       <li class="nav-item pt-3">
-        <a class="nav-link cursor-pointer" [class.active]="draftSelected" (click)="onTabSelect()">{{ "DRAFT" | translate }}</a>
+        <a class="nav-link cursor-pointer" [class.active]="draftSelected"
+           (click)="onTabSelect()">{{ "DRAFT" | translate }}</a>
       </li>
     </ul>
-    <div class="table-responsive">
+    <div class="table-responsive" style="padding-left: 1%; padding-right: 1%">
       <table class="table align-items-center">
         <thead>
-          <tr>
-            <th class="w-25">
-              {{ "FORM_TITLE" | translate }}
-            </th>
-            <th class="w-10">
-              {{ "FORM_CODE" | translate }}
-            </th>
-            <th class="w-10">
-              # {{ "TOTAL_QUESTIONS" | translate }}
-            </th>
-            <th class="">
-              {{ "DIASPORA" | translate }}
-            </th>
-            <th class="w-25">
-              {{ "LAST_EDIT" | translate }}
-            </th>
-            <th class="">
-              {{ "ACTION" | translate }}
-            </th>
-            <th class=""></th>
-          </tr>
+        <tr>
+          <th>
+            {{ "FORM_TITLE" | translate }}
+          </th>
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "FORM_CODE" | translate }}
+          </th>
+
+          <!-- TO BE IMPLEMENTED
+          <th class="w-15 centered-cell no-wrap">
+            {{ "FORM_TOTAL_QUESTIONS" | translate }}
+          </th>
+          -->
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "DIASPORA" | translate }}
+          </th>
+
+          <!-- TO BE IMPLEMENTED
+          <th class="w-15 centered-cell no-wrap">
+            {{ "LAST_EDIT" | translate }}
+          </th>
+          -->
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "ACTIONS" | translate }}
+          </th>
+          <th class="centered-cell no-wrap" style="width: 5%"></th>
+        </tr>
         </thead>
+
         <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
-          <tr *ngFor="let form of formsList" cdkDrag cdkDragLockAxis="y">
-            <td  class="w-25">
-              {{ form.description }}
-            </td>
-            <td >
-              {{ form.code }}
-            </td>
-            <td >number</td>
-            <td >
-              <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora" alt="" />
-            </td>
-            <td >date</td>
-            <td >
-              <div class="btn-group">
-                <button type="button" class="btn bg-light" [routerLink]="[form.id]">
-                  {{ "EDIT" | translate }}
-                </button>
-                <div class="btn-group" ngbDropdown role="group" container="body">
-                  <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
-                  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger">
-                      <img src="/assets/forms/icon-delete.png" alt="">
-                      <span>{{ "DELETE" | translate }}</span>
-                    </button>
-                  </div>
+        <tr *ngFor="let form of formsList" cdkDrag cdkDragLockAxis="y">
+          <td>
+            {{ form.description }}
+          </td>
+
+          <td class="w-15 centered-cell no-wrap">
+            {{ form.code }}
+          </td>
+
+          <!-- TO BE IMPLEMENTED
+          <td class="w-15 centered-cell no-wrap">
+            number
+          </td>
+          -->
+
+          <td class="w-15 centered-cell no-wrap">
+            <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora" alt=""/>
+          </td>
+
+          <!-- TO BE IMPLEMENTED
+          <td class="w-15 centered-cell no-wrap">
+            date
+          </td>
+          -->
+
+          <td class="w-15 centered-cell no-wrap">
+            <div class="btn-group">
+              <button type="button" class="btn bg-light" [routerLink]="[form.id]">
+                {{ "EDIT" | translate }}
+              </button>
+              <div class="btn-group" ngbDropdown role="group" container="body">
+                <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger">
+                    <img src="/assets/forms/icon-delete.png" alt="">
+                    <span>{{ "DELETE" | translate }}</span>
+                  </button>
                 </div>
               </div>
-            </td>
-            <td class="cursor-move" cdkDragHandle>
-              <img src="/assets/forms/icon-reorder.png" alt="">
-            </td>
-          </tr>
+            </div>
+          </td>
+
+          <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png" alt="">
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

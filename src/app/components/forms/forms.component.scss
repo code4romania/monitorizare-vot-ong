@@ -5,28 +5,29 @@
 
 @include media-breakpoint-up(xl) {
 
- }
+}
+
 @include media-breakpoint-up(lg) {
 
- }
+}
+
 @include media-breakpoint-up(md) {
 
- }
+}
 
-.nav > li{
+.nav > li {
   position: relative;
 }
 
-.nav .nav-item  a .active {
+.nav .nav-item a .active {
   color: $purple;
 }
 
-.nav .nav-item a{
+.nav .nav-item a {
   color: $secondary;
 }
 
-.nav .nav-item .active::after
-{
+.nav .nav-item .active::after {
   content: " ";
   position: absolute;
   bottom: 0;
@@ -36,11 +37,21 @@
   height: 2px;
   transition: all 250ms ease 0s;
 }
-.w-10{
-  width:10%;
+
+.w-15 {
+  width: 15%;
 }
 
-.cdk-drop-list-dragging .cdk-drag  {
+.no-wrap {
+  white-space: nowrap;
+}
+
+.centered-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
