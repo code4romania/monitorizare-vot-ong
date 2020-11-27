@@ -30,19 +30,20 @@
       <div class="ml-3">
         <label>&nbsp;</label>
         <div class="w-100">
-          <button (click)="searchForObservers()" class="btn btn-outline-primary">{{'SEARCH' | translate}}</button>
+          <button (click)="searchForObservers()" class="btn btn-outline-primary"
+                  [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
           <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
         </div>
       </div>
     </div>
 
-    <div *ngIf="filteredObserverIds?.length" class="d-flex flex-row text-muted mt-3">
-      {{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}
+    <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
+      <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
+      <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
     </div>
   </div>
 
-  <h5>{{ filteredObserverIds?.length
-    ? ('NOTIFICATION_DETAILS' | translate)
+  <h5>{{usingObserverFilters ? ('NOTIFICATION_DETAILS' | translate)
     : observerCount + ' ' + ('TOTAL_OBSERVERS' | translate) }}</h5>
   <form [formGroup]="notificationForm" class="form-group card card-body mt-3">
     <div class="row">
@@ -52,21 +53,24 @@
                required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationTitle.errors}"
                placeholder="{{'NOTIFICATION_TITLE' | translate}}">
         <div *ngIf="notificationFormSubmitted && notificationTitle.errors?.required" class="invalid-feedback">
-          Title is required.
+          {{('VALIDATION_REQUIRED' | translate).replace('%s', ('NOTIFICATION_TITLE' | translate))}}
         </div>
 
         <label class="mt-2" for="notificationMessage">{{'MESSAGE' | translate}}</label>
-        <textarea class="form-control" id="notificationMessage" name="notificationMessage" formControlName="notificationMessage"
+        <textarea class="form-control" id="notificationMessage" name="notificationMessage"
+                  formControlName="notificationMessage"
                   required [ngClass]="{'is-invalid': notificationFormSubmitted && notificationMessage.errors}"
                   placeholder="{{'MESSAGE' | translate}}" rows="5"></textarea>
         <div *ngIf="notificationFormSubmitted && notificationMessage.errors?.required" class="invalid-feedback">
-          Message is required.
+          {{('VALIDATION_REQUIRED' | translate).replace('%s', ('MESSAGE' | translate))}}
         </div>
 
         <div class="mt-2">
-          <button (click)="submitNotification()" type="submit" class="btn btn-warning">
-            {{filteredObserverIds?.length
-            ? ('SEND_NOTIFICATIONS_TO_N_OBSERVERS' | translate).replace('%d', filteredObserverIds.length)
+          <button (click)="submitNotification()" type="submit" class="btn btn-warning"
+                  [disabled]="usingObserverFilters && !filteredObserverIds?.length">
+            {{usingObserverFilters
+            ? ('SEND_NOTIFICATIONS_TO_N_OBSERVERS' | translate)
+              .replace('%d', filteredObserverIds ? filteredObserverIds.length : '?')
             : ('SEND_NOTIFICATIONS_TO_ALL' | translate)}}
           </button>
         </div>

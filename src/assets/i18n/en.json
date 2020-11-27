@@ -81,6 +81,7 @@
   "OBSERVER_ID": "Observer Id:",
   "OBSERVER_PHONE": "Observer Phone Number:",
   "POLLING_STATION_NUMBER": "Polling station number:",
+
   "NOTIFICATIONS": "Notifications",
   "COUNTIES": "Counties",
   "COUNTY_FILTER": "Filter by counties",
@@ -92,19 +93,19 @@
   "ACTIVE_OBSERVERS ": "Active observers:",
   "TOTAL_OBSERVERS": "total observers",
   "OBSERVERS_IN_SELECTION": "observers in selection",
+  "OBSERVER_FILTER_PENDING": "Click Search to make a selection, or Clear to remove the filter",
   "NOTIFICATION_DETAILS": "Notification details",
   "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Send notification to %d observers",
+  "NOTIFICATION_SEND_CONFIRMATION": "You are about to send this message to %d observers. Are you sure?",
+
   "RESET": "Clear filter",
   "PASSWORD": "Password",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
   "DOWNLOAD_ANSWERS": "Download answers",
   "CREDENTIALS_INVALID": "Credentials are invalid",
-  "FROM": "From",
-  "TO": "To",
   "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
-  "NOTIFICATION_SEND_CONFIRMATION": "Are you sure you want to notify %d observer(s)?",
   "BACK": "Back",
 
   "INDEX": "Index",
@@ -149,5 +150,9 @@
   "TYPE": "Type",
   "SELECT_FILE": "Select file",
   "IMPORT": "Import",
-  "SUCCESS": "Success"
+  "SUCCESS": "Success",
+  "FROM": "From",
+  "TO": "To",
+
+  "VALIDATION_REQUIRED": "%s is required"
 }

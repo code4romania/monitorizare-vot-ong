@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {CountyPollingStationInfo, NotificationsService,} from '../../services/notifications.service';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import {GlobalNotificationModel,} from '../../models/notification.model';
-import {Observer} from '../../models/observer.model';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserversService} from '../../services/observers.service';
@@ -17,7 +16,8 @@ export class NotificationsComponent implements OnInit {
   pollingStationFrom = '';
   pollingStationTo = '';
   selectedCounties: { code: string; name: string }[] = [];
-  filteredObserverIds: string[] = [];
+  filteredObserverIds: string[] = null;
+  usingObserverFilters = false;
   notificationForm: FormGroup;
   notificationFormSubmitted = false;
   observerCount: number;
@@ -64,15 +64,13 @@ export class NotificationsComponent implements OnInit {
     // TODO: change channel and from
     this.notificationFormSubmitted = true;
     if (this.notificationForm.valid) {
-      const message = this.translate.instant('NOTIFICATION_SEND_CONFIRMATION');
-      const count = this.filteredObserverIds?.length || this.observerCount;
-
-      if (!confirm(message.replace('%d', count))) {
+      const count = this.usingObserverFilters ? this.filteredObserverIds?.length : this.observerCount;
+      if (!confirm(this.translate.instant('NOTIFICATION_SEND_CONFIRMATION').replace('%d', count))) {
         return;
       }
 
       const notification = this.createGlobalNotification();
-      if (this.filteredObserverIds?.length) {
+      if (this.usingObserverFilters) {
         this.notificationsService
           .pushNotification({...notification, recipients: this.filteredObserverIds})
           .subscribe(console.log);
@@ -94,6 +92,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   searchForObservers() {
+    this.usingObserverFilters = true;
     const from = parseInt(this.pollingStationFrom, 10) || 1;
     const to = parseInt(this.pollingStationTo, 10) || this.maxPollingStationNumber;
 
@@ -105,10 +104,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   resetFilteredObservers() {
-    this.filteredObserverIds = [];
+    this.filteredObserverIds = null;
   }
 
   changeCountyFilter() {
+    this.usingObserverFilters = true;
     this.pollingStationFrom = '';
     this.pollingStationTo = '';
     this.resetFilteredObservers();
@@ -121,5 +121,6 @@ export class NotificationsComponent implements OnInit {
   resetFilter() {
     this.selectedCounties = [];
     this.changeCountyFilter();
+    this.usingObserverFilters = false;
   }
 }
