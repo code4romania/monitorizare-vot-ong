@@ -4,6 +4,7 @@ import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserversService} from '../../services/observers.service';
+import {SentGlobalNotificationModel} from '../../models/notification.model';
 
 @Component({
   selector: 'app-notifications',
