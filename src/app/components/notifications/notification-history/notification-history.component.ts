@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {TableColumn, TableColumnTranslated} from '../../../table/table.model';
 
-const DEFAULT_PAGE_SIZE = 50;
+const DEFAULT_PAGE_SIZE = 10;
 const TABLE_COLUMNS: TableColumn[] = [
   { name: 'SENT_BY', propertyName: 'senderAccount'},
   { name: 'NGO', propertyName: 'senderNgoName'},

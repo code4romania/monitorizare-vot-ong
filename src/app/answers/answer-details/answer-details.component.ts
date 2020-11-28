@@ -1,41 +1,32 @@
-import {Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {TranslateService} from '@ngx-translate/core';
-import {combineLatest, concat, merge, Observable, of, Subject} from 'rxjs';
-import {
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  distinctUntilKeyChanged,
-  filter,
-  map,
-  scan,
-  shareReplay,
-  startWith,
-  take,
-  tap
-} from 'rxjs/operators';
-import {AnswerExtra} from 'src/app/models/answer.extra.model';
-import {AnswerThread} from 'src/app/models/answer.thread.model';
-import {FormDetails} from 'src/app/models/form.info.model';
-import {Form} from 'src/app/models/form.model';
-import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
-import {fetchAllFormTabs, FullyLoadFormAction} from 'src/app/store/form/form.actions';
-import {AppState} from 'src/app/store/store.module';
-import {getSelectedAnswersAsObject, getSpecificThreadByObserver} from '../../store/answer/answer.selectors';
-import {getFormItems, getFullyLoadedForms} from '../../store/form/form.selectors';
-import {getNotesAsObject, getNotesMergedWithQuestions} from '../../store/note/note.selectors';
-import {LoadNotesAction} from 'src/app/store/note/note.actions';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest, merge } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, distinctUntilKeyChanged, endWith, filter, ignoreElements, map, mapTo, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
+import { AnswerExtra } from 'src/app/models/answer.extra.model';
+import { AnswerThread } from 'src/app/models/answer.thread.model';
+import { FormDetails } from 'src/app/models/form.info.model';
+import { Form } from 'src/app/models/form.model';
+import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
+import { fetchAllFormTabs, FullyLoadFormAction } from 'src/app/store/form/form.actions';
+import { AppState } from 'src/app/store/store.module';
+import { DisplayedNote, SectionsState }  from '../answers.model';
+import { getSelectedAnswersAsObject, getSelectedAnswersLoadingStatus, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
+import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
+
+import { getNotes, getNotesAsObject, getNotesLoadingStatus, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
+import { Note } from 'src/app/models/note.model';
+import { LoadNotesAction } from 'src/app/store/note/note.actions';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
-const notesTab = {id: -1, description: 'Notes'};
+const notesTab = { id: -1, description: 'Notes' };
 
 type Tab = Partial<FormDetails>
 
 @Component({
-  selector: 'app-answer-details',
+  selector: 'answer-details',
   templateUrl: './answer-details.component.html',
   styleUrls: ['./answer-details.component.scss']
 })
@@ -50,19 +41,19 @@ export class AnswerDetailsComponent implements OnInit {
   crtClickedNote: { text: string; questionCode: string; attachmentsPaths: any[]; };
 
   statsLabels = [
-    {name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName',},
-    {name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'locationType',},
-    {name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber',},
-    {name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'observerArrivalTime',},
+    { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
+    { name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'locationType', },
+    { name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber', },
+    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'observerArrivalTime', },
   ];
 
   crtPollingStation$ = this.store.select(getSpecificThreadByObserver, +this.route.snapshot.params.idObserver)
-    .pipe(
-      tap(v => v === void 0 && this.router.navigate(['../../'], {relativeTo: this.route})),
-      filter(Boolean),
-      map<AnswerThread & AnswerExtra, any>(a => ({...a, locationType: a.urbanArea ? 'Urban' : 'Rural'})),
-      shareReplay(1),
-    );
+  .pipe(
+    tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
+    filter(Boolean),
+    map<AnswerThread & AnswerExtra, any>(a => ({ ...a, locationType: a.urbanArea ? 'Urban' : 'Rural' })),
+    shareReplay(1),
+  );
 
   notes$: Observable<any> = this.store.select(getNotesMergedWithQuestions).pipe(shareReplay(1));
 
@@ -124,7 +115,7 @@ export class AnswerDetailsComponent implements OnInit {
           formNotes,
         };
       },
-      {flaggedQuestions: {}, selectedAnswers: {}, formNotes: {}}
+      { flaggedQuestions: {}, selectedAnswers: {}, formNotes: {} }
     ),
   );
 
@@ -140,16 +131,15 @@ export class AnswerDetailsComponent implements OnInit {
     private translate: TranslateService,
     private modalService: NgbModal,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
-    const {idObserver, idPollingStation} = this.route.snapshot.params;
+    const { idObserver, idPollingStation } = this.route.snapshot.params;
 
     this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
   }
 
-  onTabClicked(tab: Tab) {
+  onTabClicked (tab: Tab) {
     if (tab.description === 'Notes') {
       this.onNotesTabClicked(tab);
 
@@ -161,13 +151,13 @@ export class AnswerDetailsComponent implements OnInit {
     this.formTabChanged.next(tab);
   }
 
-  showModalWithNote(clickedNote) {
+  showModalWithNote (clickedNote) {
     this.crtClickedNote = clickedNote;
 
-    this.modalService.open(this.modalTemplateRef, {centered: true, size: 'lg',});
+    this.modalService.open(this.modalTemplateRef, { centered: true, size: 'lg', });
   }
 
-  private onNotesTabClicked(tab) {
+  private onNotesTabClicked (tab) {
     this.store.dispatch(fetchAllFormTabs());
 
     this.formTabChanged.next(notesTab);
