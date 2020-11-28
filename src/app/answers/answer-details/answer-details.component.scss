@@ -1,0 +1,115 @@
+@import '../../../variables';
+
+.c-answer-header {
+  &__title {
+    color: $darker-gray;
+  }
+}
+
+.c-answer-stats {
+  background: #fff;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 1.2rem 1.5rem;
+  margin-top: 2rem;
+
+  &__container {
+    display: grid;
+    width: 70%;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 1rem;
+
+    @media all and (max-width: 920px) {
+      & {
+        width: 100%;
+      }
+    }
+
+    @media all and (max-width: 650px) {
+      & {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media all and (max-width: 380px) {
+      & {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  &__label {
+    color: $dim-gray;
+    font-weight: bold;
+
+    & + span {
+      color: $readable-dark-gray;
+    }
+  }
+}
+
+.c-answer-forms {
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  background-color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow-y: auto;
+  max-height: 80vh;
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1px solid $border-color-gray;
+    padding-top: .5rem;
+    column-gap: 1.5rem;
+  }
+
+  &__sections {
+    margin-top: 1rem;
+  }
+}
+
+.c-answer-form-tab {
+  color: $dim-gray;
+  padding-bottom: .7rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  &.is-tab-selected {
+    color: $primary-purple;
+    border-bottom: 1px solid $primary-purple;
+  }
+}
+
+.c-notes-modal {
+  &__header {
+    border-bottom: 1px solid $border-color-gray;
+    padding: 1rem 1.4rem;
+    color: $darker-gray;
+  }
+
+  &__content {
+    color: $readable-dark-gray;
+    padding: 1rem 1.2rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__close-button {
+    display: block;
+    width: max-content;
+    margin-left: auto;
+    margin-top: 2rem;
+  }
+
+  &__image-container {
+    overflow: hidden;
+    max-height: 45rem;
+    margin-top: 2rem;
+  }
+}

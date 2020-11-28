@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 
 export enum CHECKBOX_VARIANTS {
   FILLED,
@@ -14,6 +14,12 @@ export enum CHECKBOX_VARIANTS {
 export class BaseCheckboxComponent implements OnInit {
   @Input() name: any;
   @Input() forceCheck = false;
+  
+  @Input('is-transparent')
+  @HostBinding('class.is-transparent') isTransparent = false;
+
+  @Input('is-disabled')
+  @HostBinding('class.is-disabled') isDisabled = false;
 
   @Output() checkboxChanged = new EventEmitter();
 

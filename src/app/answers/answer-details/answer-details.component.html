@@ -1,0 +1,101 @@
+<div class="container-fluid c-answer-detail__container">
+  <app-base-button 
+      [custom-styles]="{ fontSize: '1.2rem' }"
+      [variant]="BaseButtonVariants.ALLTRANSPARENT" 
+      [routerLink]="['../../']"
+    >
+      <div class="d-flex align-items-center">
+        <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        &nbsp;
+        <span>{{ 'BACK' | translate }}</span>
+      </div>
+  </app-base-button>
+
+  <div class="c-answer-header flex-wrap d-flex justify-content-between align-items-center mt-4">
+    <h4 class="c-answer-header__title">
+      {{ 'ANSWERS_WHICH_BELONG_TO' | translate }} {{ (crtPollingStation$ | async)?.observerName }}
+    </h4>
+    
+    <app-base-button class="c-answer-header__button" routerLink="notification">
+      <span class="content">{{ 'SEND_NOTIF' | translate }}</span>
+    </app-base-button>
+  </div>
+
+  <div class="c-answer-stats">
+    <ng-container *ngIf="(crtPollingStation$ | async) as crtPollingStation">
+      <div class="c-answer-stats__container">
+        <div 
+          *ngFor="let stat of statsLabels"
+          class="c-answer-stats__item"
+        >
+          <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="c-answer-forms">
+    <div class="c-answer-forms__tabs">
+      <div
+        *ngFor="let formTab of formTabs$ | async"
+        (click)="onTabClicked(formTab)"
+        [class.is-tab-selected]="crtSelectedTabId === formTab.id"
+        class="c-answer-form-tab"
+      >
+        {{ formTab.description }}
+      </div>
+    </div>
+
+    <div class="c-answer-forms__sections" *ngIf="(isSectionContentLoading$ | async) === false; else loading">
+      <app-answer-questions
+        *ngIf="!isNotesTabShown; else notes"
+        (showNoteClicked)="showModalWithNote($event)"
+        [sectionsState]="sectionsState$ | async"
+        [sections]="sections$ | async"
+        [scrolled-question-id]="scrolledQuestionId"
+      ></app-answer-questions>
+
+      <ng-template #notes>
+        <app-notes
+          (showNoteInModal)="showModalWithNote($event)"
+          (questionLinkClicked)="onTabClicked({ id: $event.formId }); scrolledQuestionId = $event.questionId"
+          [notes]="notes$ | async"
+        ></app-notes>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalTemplateRef let-activeModal>
+  <div class="c-notes-modal">
+    <!-- This is needed because, by default, it will focus on the first `focusable` -->
+    <!-- element, which in this case is the button placed at the end -->
+    <!-- Without this `hack`, the modal will always be scrolled to that button -->
+    <input type="text" style="display:none" />
+
+    <div class="c-notes-modal__header">
+      <h4>{{ crtClickedNote.questionCode }} Note</h4>
+    </div>
+
+    <div class="c-notes-modal__content">
+      <p>{{ crtClickedNote.text }}</p>
+
+      <div class="c-notes-modal__image-container" *ngFor="let attachment of crtClickedNote.attachmentsPaths">
+        <img *ngIf="attachment.isImage" [src]="attachment.src">
+      </div>
+
+      <app-base-button (click)="activeModal.close()" [disabled]="false" [variant]="BaseButtonVariants.PURPLE"
+        [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
+        class="c-notes-modal__close-button">
+        {{ 'CLOSE' | translate }}
+      </app-base-button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <app-loading-indicator></app-loading-indicator>
+</ng-template>

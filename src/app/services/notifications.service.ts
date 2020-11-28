@@ -8,7 +8,9 @@ import {Location} from '@angular/common';
 import {Observer} from '../models/observer.model';
 import {HttpParams} from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationsService {
   private readonly baseUrl: string;
 
