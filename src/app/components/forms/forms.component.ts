@@ -71,13 +71,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public publishForm(formDetails: FormDetails) {
-    formDetails.draft = false;
-    this.store.dispatch(new FormUpdateAction(Form.fromMetaData(formDetails)));
-  }
-
-  public unpublishForm(formDetails: FormDetails) {
-    formDetails.draft = true;
+  public setFormDraftStatus(formDetails: FormDetails, value: boolean) {
+    formDetails.draft = value;
     this.store.dispatch(new FormUpdateAction(Form.fromMetaData(formDetails)));
   }
 

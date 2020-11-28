@@ -100,12 +100,12 @@
                     <img src="/assets/forms/icon-delete.png" alt="">
                     <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
                   </button>
-                  <button *ngIf="form.draft" ngbDropdownItem (click)="publishForm(form)" class="text"
+                  <button *ngIf="form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, false)" class="text"
                           style="height: 40px;">
                     <img src="/assets/forms/icon-publish.png" alt="">
                     <span style="padding-left: 10px">{{ "FORM_PUBLISH" | translate }}</span>
                   </button>
-                  <button *ngIf="!form.draft" ngbDropdownItem (click)="unpublishForm(form)" class="text"
+                  <button *ngIf="!form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, true)" class="text"
                           style="height: 40px;">
                     <img src="/assets/forms/icon-unpublish.png" alt="">
                     <span style="padding-left: 10px">{{ "FORM_UNPUBLISH" | translate }}</span>
