@@ -16,17 +16,17 @@ export class TableContainerComponent implements OnInit {
   @Input() idKey = 'id';
   @Input('is-loading') isLoading = true;
   @Input('no-rows-message') noRowsMessage = '';
-  
-  @Input('disable-checkbox') 
+
+  @Input('disable-checkbox')
   @HostBinding('class.is-checkbox-disabled')
-  isCheckboxDisabled = false; 
+  isCheckboxDisabled = false;
 
   @Output() selectedZoneEvent = new EventEmitter();
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
   @Output() rowClicked = new EventEmitter();
 
   @ContentChild(TableColumnDirective) tableColumn: TableColumnDirective;
-  
+
   selectedRows: { [rowId: string]: boolean } = {};
   allSelected = false;
   nrSelectedRows = 0;
@@ -53,9 +53,9 @@ export class TableContainerComponent implements OnInit {
   }
 
   toggleRow (rowId) {
-    this.selectedRows[rowId] = typeof this.selectedRows[rowId] === 'boolean' 
-      ? !this.selectedRows[rowId] 
-      : this.allSelected ? false : true; 
+    this.selectedRows[rowId] = typeof this.selectedRows[rowId] === 'boolean'
+      ? !this.selectedRows[rowId]
+      : this.allSelected ? false : true;
 
     this.nrSelectedRows += (this.selectedRows[rowId] ? 1 : -1);
 
@@ -73,21 +73,21 @@ export class TableContainerComponent implements OnInit {
     if (!col.canBeSorted) {
       return;
     }
-    
+
     let nextSortDir;
-    
+
     if (this.crtSortedColumn !== col) {
       // setting it to `ASC` because it is assumed that all
       // columns are set to `DESC` by default
       nextSortDir = SortDirection.ASC;
       this.crtSortedColumn = col;
     } else {
-      nextSortDir = this.crtSortDirection === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC; 
+      nextSortDir = this.crtSortDirection === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC;
     }
-    
+
     this.sortedColumnClicked.emit({
       col,
-      sortDirection: nextSortDir, 
+      sortDirection: nextSortDir,
     });
 
     this.crtSortDirection = nextSortDir;
@@ -98,4 +98,4 @@ export class TableContainerComponent implements OnInit {
     this.nrSelectedRows = 0;
     this.selectedRows = {};
   }
-} 
+}
