@@ -1,5 +1,6 @@
 {
   "LOGIN": "Login",
+  "USERNAME": "Username",
   "PHONE_NUMBER": "Phone Number",
   "ARRIVAL_TIME": "Arrival Time",
   "DEPARTURE_TIME": "Departure Time",

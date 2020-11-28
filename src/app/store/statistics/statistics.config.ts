@@ -18,7 +18,7 @@ export let statisticsConfig = [{
     key: 'sesizari-judete',
     method: 'countiesIrregularities',
     header: 'Topul judetelor',
-    subHeader: 'cu cele mai sesizari'
+    subHeader: 'cu cele mai multe sesizari'
 }, {
     key: 'sesizari-sectii',
     method: 'pollingStationIrregularities',
