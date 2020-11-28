@@ -37,28 +37,28 @@ export class AnswerComponent implements OnInit {
         this.formState = this.store.pipe(select(state => state.form), distinctUntilChanged());
         this.answerState = this.store.pipe(select(state => state.answer), distinctUntilChanged());
 
-        this.answerState.subscribe(value => {
-            this.isUrgent = value.urgent || false;
-            this.countyCode = value.answerFilters.county;
-            this.pollingStationNumber = value.answerFilters.pollingStationNumber;
-            this.observerPhone = value.answerFilters.observerPhone;
-        });
+        // this.answerState.subscribe(value => {
+        //     this.isUrgent = value.urgent || false;
+        //     this.countyCode = value.answerFilters.county;
+        //     this.pollingStationNumber = value.answerFilters.pollingStationNumber;
+        //     this.observerPhone = value.answerFilters.observerPhone;
+        // });
     }
 
     requestFilteredData() {
-        this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
-            observerPhone: this.observerPhone,
-            pollingStationNumber: this.pollingStationNumber,
-            county: this.countyCode
-        }));
+        // this.store.dispatch(new LoadAnswerPreviewAction(this.isUrgent, 1, 5, true, {
+        //     observerPhone: this.observerPhone,
+        //     pollingStationNumber: this.pollingStationNumber,
+        //     county: this.countyCode
+        // }));
 
     }
 
     redoAnswerListAction() {
         // take the current state of the answerState, and do a reloaded
-        this.store.pipe(select(state => state.answer), take(1),
-            map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters)),
-            map(a => this.store.dispatch(a)), ).subscribe();
+        // this.store.pipe(select(state => state.answer), take(1),
+        //     map(s => new LoadAnswerPreviewAction(s.urgent, s.page, s.pageSize, true, s.answerFilters)),
+        //     map(a => this.store.dispatch(a)), ).subscribe();
     }
 
     redoAnswerDetailsAction() {
@@ -70,12 +70,12 @@ export class AnswerComponent implements OnInit {
     }
 
     pageChanged(event) {
-        this.store.pipe(select(s => s.answer), take(1),
-            map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
-            map(a => {
-                this.store.dispatch(a);
-            }), )
-            .subscribe();
+        // this.store.pipe(select(s => s.answer), take(1),
+        //     map(s => new LoadAnswerPreviewAction(s.urgent, event.page, event.pageSize, false, s.answerFilters)),
+        //     map(a => {
+        //         this.store.dispatch(a);
+        //     }), )
+        //     .subscribe();
     }
 
     resetFilters(): void {

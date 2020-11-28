@@ -5,7 +5,7 @@
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es2018", "dom"],
+    "lib": ["es2019", "dom"],
     "mapRoot": "./",
     "target": "es2015",
     "module": "es2020",

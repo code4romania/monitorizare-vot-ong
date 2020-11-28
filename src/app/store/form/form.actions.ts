@@ -1,6 +1,6 @@
 import {actionType} from '../util';
 import {Form} from '../../models/form.model';
-import {Action} from '@ngrx/store';
+import {Action, createAction} from '@ngrx/store';
 import {FormDetails} from '../../models/form.info.model';
 
 export class FormActionTypes {
@@ -19,7 +19,7 @@ export class FormActionTypes {
 export class FormLoadAction implements Action {
     readonly type = FormActionTypes.LOAD_ALL_FORMS_META;
 
-    constructor(public draft?: boolean) {
+    constructor(public draft?: boolean, public forceReload: boolean = false) {
     }
 }
 export class FormErrorAction implements Action {
@@ -62,7 +62,7 @@ export class FormUpdateAction implements Action {
 export class FormDeleteAction implements Action {
   readonly type = FormActionTypes.DELETE;
 
-  constructor(public formId: number) {}
+  constructor(public form: Form) {}
 }
 
 export class FullyLoadFormAction implements Action {
@@ -84,3 +84,7 @@ export type FormActions =
   FullyLoadFormAction |
   FullyLoadFormCompleteAction |
   FormUploadAction ;
+
+export const fetchAllFormTabs = createAction(
+  '[Answer-details Page] Fetch All Form Tabs'
+);

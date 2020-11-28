@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../core/apiService/api.service';
-import { Observer } from '../models/observer.model';
-import { environment } from 'src/environments/environment';
-import { Location } from '@angular/common';
+import {Injectable} from '@angular/core';
+import {ApiService} from '../core/apiService/api.service';
+import {Observer} from '../models/observer.model';
+import {environment} from 'src/environments/environment';
+import {Location} from '@angular/common';
+import {Observable} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 @Injectable()
 export class ObserversService {
@@ -54,6 +56,11 @@ export class ObserversService {
       `/api/v1/observer?Number=${id}`
     );
     return this.http.get(url);
+  }
+
+  countObservers(): Observable<number> {
+    const url = Location.joinWithSlash(this.baseUrl, '/api/v1/observer/count');
+    return this.http.get<number>(url).pipe(first());
   }
 
   uploadCsv(formData: any) {

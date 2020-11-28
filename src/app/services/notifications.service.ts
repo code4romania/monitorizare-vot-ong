@@ -1,16 +1,15 @@
-import { take } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
-import { Observable } from 'rxjs';
-import {
-  GlobalNotificationModel,
-  NotificationModel,
-} from '../models/notification.model';
-import { environment } from 'src/environments/environment';
-import { Location } from '@angular/common';
-import { Observer } from '../models/observer.model';
+import {take} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ApiService, QueryParamBuilder} from '../core/apiService/api.service';
+import {Observable} from 'rxjs';
+import {GlobalNotificationModel, NotificationModel,} from '../models/notification.model';
+import {environment} from 'src/environments/environment';
+import {Location} from '@angular/common';
+import {Observer} from '../models/observer.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationsService {
   private baseUrl: string;
 
@@ -19,20 +18,12 @@ export class NotificationsService {
   }
 
   public pushNotification(notification: NotificationModel): Observable<any> {
-    const url: string = Location.joinWithSlash(
-      this.baseUrl,
-      '/api/v1/notification/send'
-    );
+    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send');
     return this.http.post(url, notification).pipe(take(1));
   }
 
-  public pushNotificationGlobally(
-    notification: GlobalNotificationModel
-  ): Observable<any> {
-    const url: string = Location.joinWithSlash(
-      this.baseUrl,
-      '/api/v1/notification/send/all'
-    );
+  public pushNotificationGlobally(notification: GlobalNotificationModel): Observable<any> {
+    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send/all');
     return this.http.post(url, notification).pipe(take(1));
   }
 

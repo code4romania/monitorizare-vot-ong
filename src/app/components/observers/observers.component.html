@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container-fluid c-observers__container">
   
   <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 c-observers__header">
     <div class="d-flex align-items-center">
-      <h3 class="mb-0">{{ 'OBSERVERS' | translate }}</h3>
+      <h3 class="mb-0 c-observers__header-title">{{ 'OBSERVERS' | translate }}</h3>
       <i class="h-vertical-line"></i>
       <span class="font-weight-bold h-is-muted">{{ totalCount }} total</span>
     </div>
@@ -88,7 +88,7 @@
       </div>
     </div>
     
-    <ng-template let-r="row" let-c="column" >
+    <ng-template tableColumn let-r="row" let-c="column">
       <app-base-dropdown 
         class="c-observers__dropdown"
         *ngIf="c.propertyName === actionsColumnName"

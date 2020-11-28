@@ -10,7 +10,7 @@ export class FormState {
     };
 }
 const formsInitialState: FormState = {
-    items: [],
+    items: undefined,
     fullyLoaded: {}
 };
 export function formReducer(state = formsInitialState, $action: FormActions) {

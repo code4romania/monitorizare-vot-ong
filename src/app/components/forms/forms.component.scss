@@ -20,7 +20,7 @@
 }
 
 .nav .nav-item a .active {
-  color: $purple;
+  color: $primary;
 }
 
 .nav .nav-item a {
@@ -33,7 +33,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: $purple;
+  background-color: $primary;
   height: 2px;
   transition: all 250ms ease 0s;
 }

@@ -1,8 +1,7 @@
 @import '../../../variables';
 
-$selected-row-color: #F9F9FA;
-$text-color: #636363;
-$border-color: #EDEDED;
+$text-color: $dim-gray;
+$border-color: $border-color-gray;
 
 :host {
   display: block;
@@ -35,6 +34,11 @@ $border-color: #EDEDED;
 
   tbody {
     font-size: 1.1rem;
+
+    :host.is-checkbox-disabled & > tr:hover {
+      background-color: $selected-row-color;
+      cursor: pointer;
+    }
   }
 
   &__row-check {

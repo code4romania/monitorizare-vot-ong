@@ -1,0 +1,38 @@
+@import '../../../variables';
+
+.card {
+  background: #FFFFFF;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  border: none;
+}
+
+.c-notif-body {
+  width: 50%;
+  @media all and (max-width: 600px) {
+    & {
+      width: 100%;
+    }
+  }
+
+  .form-control {
+    border: 1px solid $border-color-gray;
+    border-radius: 4px;
+  }
+
+  .form-group label {
+    color: $dim-gray;
+  }
+}
+
+.c-notif {
+  &__title {
+    color: $darker-gray;
+  }
+}
+
+.c-notif-buttons {
+  margin-top: 2.5rem;
+  column-gap: 1rem;
+  display: flex;
+}

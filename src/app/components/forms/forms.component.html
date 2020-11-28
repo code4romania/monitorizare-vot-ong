@@ -5,9 +5,13 @@
     </div>
     <div class="ml-auto">
       <div class="btn-group" role="group" aria-label="Sort">
-        <button class="btn-primary btn" [routerLink]="['/formulare/nou']">
-          + {{ "NEW_FORM" | translate }}
-        </button>
+        <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/formulare/nou']">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="content"> {{ 'NEW_FORM' | translate }}</span>
+        </app-base-button>
       </div>
     </div>
   </div>

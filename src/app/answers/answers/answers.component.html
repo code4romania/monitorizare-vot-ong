@@ -1,0 +1,157 @@
+<div class="container-fluid c-answers__container">
+  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 flex-wrap">
+    <div class="d-flex align-items-center">
+      <h3 class="mb-0 c-answers__header-title">{{ 'ANSWERS_HEADER_TITLE' | translate }}</h3>
+      <i class="h-vertical-line"></i>
+      <span class="font-weight-bold h-is-muted">{{ (answerState$ | async).totalItems }} total</span>
+    </div>
+  
+    <div class="c-answers__buttons" role="group" aria-label="Sort">
+      <app-base-button (click)="downloadAnswers(filtersForm.value);" class="c-answers__button">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.83337 5.83301H14.1667V14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span>{{ 'EXPORT' | translate }}</span>
+      </app-base-button>
+    </div>
+  </div>
+
+  <app-table-container
+    (sortedColumnClicked)="onSortedColumnClicked($event)"
+    (rowClicked)="onRowClicked($event)"
+    [columns]="tableColumns"
+    [rows]="(answers$ | async)"
+    [is-loading]="(answerState$ | async).threadsLoading"
+    [disable-checkbox]="true"
+  >
+    <div header-area>
+      <div class="card-body" *ngIf="(filters$ | async) as filters">
+        <form #f="ngForm" [formGroup]="filtersForm" (ngSubmit)="requestFilteredData(f.value)" novalidate class="row">
+          <div class="form-group col-auto">
+            <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'COUNTY_CODE' | translate | lowercase }}</label>
+            <select 
+              class="form-control" 
+              id="form-name"
+              formControlName="county"
+              name="county"
+            >
+              <option 
+                *ngFor="let county of (counties$ | async); first as isFirst"
+                [value]="isFirst ? '' : county.code"
+              >
+                {{ isFirst ? ('CHOOSE_COUNTY' | translate) : county.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'POLLING_STATION_NUMBER' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              type="text"
+              name="pollingStationNumber"
+              formControlName="pollingStationNumber"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'OBSERVER_PHONE' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              type="text"
+              name="observerPhoneNumber"
+              formControlName="observerPhoneNumber"
+              id="form-county"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group c-answers-checkbox">
+            <div class="c-answers-checkbox__wrapper">
+              <label for="urgent">Urgent</label>
+              <input
+                type="checkbox"
+                name="urgent"
+                formControlName="urgent"
+                id="urgent"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <!-- FIXME: type `date` -->
+          <!-- <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'FROM' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="fromTime"
+              id="form-county"
+              class="form-control"
+            />
+          </div> -->
+
+          <!-- FIXME: type `date` -->
+          <!-- <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'TO' | translate | lowercase }}</label>
+            <input 
+              [placeholder]="'TYPE' | translate" 
+              ngModel
+              type="text"
+              name="toTime"
+              id="form-county"
+              class="form-control"
+            />
+          </div> -->
+          
+          <div class="col-auto form-group align-self-end">
+            <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+              <!-- in `height: '2.8rem'`, the value is from `.scss` file -->
+              <app-base-button 
+                [disabled]="false"
+                [variant]="BaseButtonVariants.PURPLE" 
+                [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }"
+                type="submit"
+              >
+                {{ 'FILTER' | translate }}
+              </app-base-button>
+              &nbsp;
+              <app-base-button 
+                (click)="f.reset({ county: '' }); onResetFilters()"
+                [disabled]="false"
+                [variant]="BaseButtonVariants.PURPLE" 
+                [custom-styles]="{ height: '2.8rem', border: 'none' }"
+              >
+                {{ 'RESET' | translate }}
+              </app-base-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <ng-template tableColumn let-r="row" let-c="column">
+      {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
+    </ng-template>
+
+    <app-pagination
+      footer-area
+      [page]="(answerState$ | async).page"
+      [pageSize]="(answerState$ | async).pageSize"
+      [totalItems]="(answerState$ | async).totalItems"
+      (pageChanged)="onPageChanged($event)"
+    ></app-pagination>
+
+    <div no-rows-message class="c-no-msg">
+      <h4 class="text-center pb-2 c-no-msg__title">{{ 'NO_RESULTS' | translate }}</h4>
+
+      <p class="text-center pb-3 c-no-msg__content">{{ 'TRY_AGAIN_MSG' | translate }}</p>
+    </div>
+  </app-table-container>
+</div>

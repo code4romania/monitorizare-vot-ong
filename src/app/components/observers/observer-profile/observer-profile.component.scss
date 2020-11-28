@@ -1,7 +1,7 @@
 @import '../../../../variables';
 
-$label-text-color: #636363;
-$border-color: #EDEDED;
+$label-text-color: $dim-gray;
+$border-color: $border-color-gray;
 
 .c-profile {
   &__back-icon {
