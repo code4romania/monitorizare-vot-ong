@@ -83,24 +83,27 @@
   "POLLING_STATION_NUMBER": "Polling station number:",
 
   "NOTIFICATIONS": "Notifications",
-  "NOTIFICATION_HISTORY": "Notification history",
   "COUNTIES": "Counties",
   "COUNTY_FILTER": "Filter by counties",
   "POLLING_STATIONS_FILTER": "Polling stations (optional)",
+  "RESET": "Clear filter",
   "NOTIFICATION_TITLE": "Notification title",
   "MESSAGE": "Message",
   "SEND_NOTIFICATIONS": "Send",
   "SEARCH": "Search",
-  "ACTIVE_OBSERVERS ": "Active observers:",
   "TOTAL_OBSERVERS": "total observers",
   "OBSERVERS_IN_SELECTION": "observers in selection",
   "OBSERVER_FILTER_PENDING": "Click Search to make a selection, or Clear to remove the filter",
   "NOTIFICATION_DETAILS": "Notification details",
-  "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all",
+  "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all observers",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Send notification to %d observers",
   "NOTIFICATION_SEND_CONFIRMATION": "You are about to send this message to %d observers. Are you sure?",
 
-  "RESET": "Clear filter",
+  "NOTIFICATION_HISTORY": "Notification history",
+  "SENT_BY": "Sent by",
+  "SENT_TO": "Sent to",
+  "SENT_AT": "Sent at",
+
   "PASSWORD": "Password",
   "ENTER_NEW_PASSWORD": "Enter new pin for observer: ",
   "RESET_PASSWORD": "Reset password",
@@ -154,6 +157,8 @@
   "SUCCESS": "Success",
   "FROM": "From",
   "TO": "To",
+  "NGO": "NGO",
+  "TITLE": "Title",
 
   "VALIDATION_REQUIRED": "%s is required"
 }

@@ -1,9 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {FormGroup} from '@angular/forms';
-import {CountyPollingStationInfo} from '../../../services/notifications.service';
-import {TableColumn, TableColumnTranslated} from '../../../table/table-container/table-container.component';
-import {HistoryNotificationModel} from '../../../models/notification.model';
+import {TableColumnTranslated} from '../../../table/table-container/table-container.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/store.module';
 import {NotificationsActions} from '../../../store/notifications/notifications.actions';
@@ -11,13 +7,14 @@ import {NotificationsState, selectNotifications} from '../../../store/notificati
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
-const DEFAULT_PAGE_SIZE = 100;
+const DEFAULT_PAGE_SIZE = 50;
 const TABLE_COLUMNS = [
   { name: 'SENT_BY', propertyName: 'senderAccount'},
   { name: 'NGO', propertyName: 'senderNgoName'},
   { name: 'TITLE', propertyName: 'title'},
   { name: 'MESSAGE', propertyName: 'body'},
-  { name: 'DATE', propertyName: 'insertedAt'}
+  { name: 'SENT_TO', propertyName: 'sentObserverIds'},
+  { name: 'SENT_AT', propertyName: 'insertedAt'}
 ];
 
 @Component({
