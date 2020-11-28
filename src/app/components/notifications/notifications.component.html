@@ -1,52 +1,54 @@
 <div class="container-fluid">
-  <div class="d-flex justify-content-between align-items-center">
-    <h5 class="m-0">{{'OBSERVERS_FILTER' | translate}}</h5>
-    <a [routerLink]="['history']" routerLinkActive="active" class="btn btn-outline-secondary">
-      {{'NOTIFICATION_HISTORY' | translate}}
-    </a>
-  </div>
-  <div class="form-group card card-body mt-3">
-    <div class="d-flex flex-row">
-      <div>
-        <label for="countiesMultiSelect">{{'COUNTY_FILTER' | translate}}</label>
-        <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="changeCountyFilter()"
-                                 (onDeSelect)="changeCountyFilter()"
-                                 [(ngModel)]="selectedCounties" [data]="counties"
-                                 placeholder="{{'COUNTY_FILTER' | translate}}" [settings]="countyDropdownSettings">
-        </ng-multiselect-dropdown>
-      </div>
+  <ng-container *ngIf="!(usingRouteObserverIds$ | async)">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="m-0">{{'OBSERVERS_FILTER' | translate}}</h5>
+      <a [routerLink]="['/notifications/history']" routerLinkActive="active" class="btn btn-outline-secondary">
+        {{'NOTIFICATION_HISTORY' | translate}}
+      </a>
+    </div>
+    <div class="form-group card card-body mt-3">
+      <div class="d-flex flex-row">
+        <div>
+          <label for="countiesMultiSelect">{{'COUNTY_FILTER' | translate}}</label>
+          <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="changeCountyFilter()"
+                                   (onDeSelect)="changeCountyFilter()"
+                                   [(ngModel)]="selectedCounties" [data]="counties"
+                                   placeholder="{{'COUNTY_FILTER' | translate}}" [settings]="countyDropdownSettings">
+          </ng-multiselect-dropdown>
+        </div>
 
-      <div *ngIf="selectedCounties.length" class="ml-3">
-        <label>
-          <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
-          <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
-        </label>
-        <div class="d-flex justify-content-between">
-          <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
-                 (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
-                 placeholder="{{'FROM' | translate}}">
-          <div class="mt-1 text-muted">&ndash;</div>
-          <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
-                 (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
-                 placeholder="{{'TO' | translate}}">
+        <div *ngIf="selectedCounties.length" class="ml-3">
+          <label>
+            <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
+            <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
+          </label>
+          <div class="d-flex justify-content-between">
+            <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
+                   (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
+                   placeholder="{{'FROM' | translate}}">
+            <div class="mt-1 text-muted">&ndash;</div>
+            <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
+                   (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
+                   placeholder="{{'TO' | translate}}">
+          </div>
+        </div>
+
+        <div class="ml-3">
+          <label>&nbsp;</label>
+          <div class="w-100">
+            <button (click)="searchForObservers()" class="btn btn-outline-primary"
+                    [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
+            <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
+          </div>
         </div>
       </div>
 
-      <div class="ml-3">
-        <label>&nbsp;</label>
-        <div class="w-100">
-          <button (click)="searchForObservers()" class="btn btn-outline-primary"
-                  [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
-          <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
-        </div>
+      <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
+        <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
+        <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
       </div>
     </div>
-
-    <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
-      <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
-      <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
-    </div>
-  </div>
+  </ng-container>
 
   <h5>{{usingObserverFilters ? ('NOTIFICATION_DETAILS' | translate)
     : observerCount + ' ' + ('TOTAL_OBSERVERS' | translate) }}</h5>

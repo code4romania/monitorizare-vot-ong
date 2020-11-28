@@ -5,6 +5,13 @@ import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserversService} from '../../services/observers.service';
 import {SentGlobalNotificationModel} from '../../models/notification.model';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
+interface NotificationsRouteParams extends Params {
+  toObserverIds: string;
+}
 
 @Component({
   selector: 'app-notifications',
@@ -18,6 +25,7 @@ export class NotificationsComponent implements OnInit {
   selectedCounties: { code: string; name: string }[] = [];
   filteredObserverIds: string[] = null;
   usingObserverFilters = false;
+  usingRouteObserverIds$: Observable<boolean>;
   notificationForm: FormGroup;
   notificationFormSubmitted = false;
   observerCount: number;
@@ -35,10 +43,32 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private notificationsService: NotificationsService,
     private observersService: ObserversService,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private route: ActivatedRoute
+  ) {
+  }
 
   ngOnInit() {
+    this.usingRouteObserverIds$ = this.route.queryParams.pipe(
+      map((params: NotificationsRouteParams) => {
+        if (!params.toObserverIds) return false;
+
+        try {
+          const toObserverIds = JSON.parse(params.toObserverIds);
+          if (toObserverIds.every(id => typeof id === 'number')) {
+            this.filteredObserverIds = toObserverIds;
+            this.usingObserverFilters = true;
+            return true;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+
+        return false;
+      }));
+
+    this.usingRouteObserverIds$.subscribe(console.log);
+
     this.notificationsService
       .getCounties()
       .subscribe((res) => (this.counties = res));
