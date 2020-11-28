@@ -1,36 +1,25 @@
-import { from, from as observableFrom, Observable, Subscription } from 'rxjs';
-
-import { concatMap, take, map } from 'rxjs/operators';
-import { ObserversStateItem } from '../../store/observers/observers.state';
-import { AppState } from '../../store/store.module';
-import { select, Store } from '@ngrx/store';
-import { ApiService } from '../../core/apiService/api.service';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  TemplateRef,
-  Inject,
-  InjectionToken,
-} from '@angular/core';
-import {
-  LoadObserversAction,
-  LoadObserversCountAction,
-} from '../../store/observers/observers.actions';
-import { values } from 'lodash';
-import { Observer } from '../../models/observer.model';
-import { ListType } from '../../models/list.type.model';
-import { ObserversFilterForm } from './observers-filter.form';
-import { ObserversService } from '../../services/observers.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
-import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { TableColumn, TableColumnTranslated, SelectedZoneEvents, SortedColumnEvent } from 'src/app/table/table.model';
+import {from, from as observableFrom, Subscription} from 'rxjs';
+import {concatMap, map, take} from 'rxjs/operators';
+import {ObserversStateItem} from '../../store/observers/observers.state';
+import {AppState} from '../../store/store.module';
+import {select, Store} from '@ngrx/store';
+import {ApiService} from '../../core/apiService/api.service';
+import {Component, Inject, InjectionToken, OnDestroy, OnInit, TemplateRef, ViewChild,} from '@angular/core';
+import {LoadObserversAction, LoadObserversCountAction,} from '../../store/observers/observers.actions';
+import {values} from 'lodash';
+import {Observer} from '../../models/observer.model';
+import {ListType} from '../../models/list.type.model';
+import {ObserversFilterForm} from './observers-filter.form';
+import {ObserversService} from '../../services/observers.service';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClient} from '@angular/common/http';
+import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
+import {DropdownConfigItem} from 'src/app/shared/base-dropdown/base-dropdown.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {SelectedZoneEvent, SelectedZoneEventTypes, SortedColumnEvent, TableColumn, TableColumnTranslated} from 'src/app/table/table.model';
+import {NotificationsRouteParams} from '../notifications/notifications.component';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -149,8 +138,12 @@ export class ObserversComponent implements OnInit, OnDestroy {
     this.loadObservers(1);
   }
 
-  onSelectedZoneEvent (ev: SelectedZoneEvents) {
-    console.warn('TO BE IMPLEMENTED', ev);
+  onSelectedZoneEvent(ev: SelectedZoneEvent) {
+    if (ev.type === SelectedZoneEventTypes.NOTIFCATION) {
+      const observerIds = ev.selectedRowIds.map(id => parseInt(id, 10));
+      const params: NotificationsRouteParams = {toObserverIds: JSON.stringify(observerIds)};
+      this.router.navigate(['/notifications'], {queryParams: params});
+    }
   }
 
   onDropdownEvent (ev: DropdownEvents, row: Observer) {
@@ -162,7 +155,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
         this.deleteObserver(row);
         break;
       case DropdownEvents.NOTIFICATION:
-        console.warn('TO BE IMPLEMENTED');
+        const params: NotificationsRouteParams = {toObserverIds: JSON.stringify([row.id])};
+        this.router.navigate(['/notifications'], {queryParams: params});
         break;
       case DropdownEvents.RESET_PASSWORD:
         this.onResetPasswordEvent(row);

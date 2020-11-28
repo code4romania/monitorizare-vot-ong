@@ -7,9 +7,10 @@ import {ObserversService} from '../../services/observers.service';
 import {SentGlobalNotificationModel} from '../../models/notification.model';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, first, map, tap} from 'rxjs/operators';
+import {Location} from '@angular/common';
 
-interface NotificationsRouteParams extends Params {
+export interface NotificationsRouteParams extends Params {
   toObserverIds: string;
 }
 
@@ -25,7 +26,7 @@ export class NotificationsComponent implements OnInit {
   selectedCounties: { code: string; name: string }[] = [];
   filteredObserverIds: string[] = null;
   usingObserverFilters = false;
-  usingRouteObserverIds$: Observable<boolean>;
+  usingRouteFilter$: Observable<boolean>;
   notificationForm: FormGroup;
   notificationFormSubmitted = false;
   observerCount: number;
@@ -44,12 +45,12 @@ export class NotificationsComponent implements OnInit {
     private notificationsService: NotificationsService,
     private observersService: ObserversService,
     private translate: TranslateService,
-    private route: ActivatedRoute
-  ) {
-  }
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit() {
-    this.usingRouteObserverIds$ = this.route.queryParams.pipe(
+    this.usingRouteFilter$ = this.route.queryParams.pipe(
       map((params: NotificationsRouteParams) => {
         if (!params.toObserverIds) return false;
 
@@ -65,16 +66,24 @@ export class NotificationsComponent implements OnInit {
         }
 
         return false;
+      }),
+      tap(usingRouteFilter => {
+        if (!usingRouteFilter) this.resetFilter(); // clear filter if route not used
       }));
 
-    this.usingRouteObserverIds$.subscribe(console.log);
+    // Execute this once, the first time when component is not filtered
+    this.usingRouteFilter$
+      .pipe(
+        filter(usingRouteObserverIds => !usingRouteObserverIds),
+        first())
+      .subscribe(() => {
+        this.notificationsService
+          .getCounties()
+          .subscribe((res) => (this.counties = res));
 
-    this.notificationsService
-      .getCounties()
-      .subscribe((res) => (this.counties = res));
-
-    this.observersService.countObservers()
-      .subscribe(count => this.observerCount = count);
+        this.observersService.countObservers()
+          .subscribe(count => this.observerCount = count);
+      });
 
     this.notificationForm = new FormGroup({
       notificationTitle: new FormControl('', [Validators.required]),
@@ -131,6 +140,10 @@ export class NotificationsComponent implements OnInit {
       .subscribe((res) => {
         this.filteredObserverIds = res.map(o => o.id);
       });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   resetFilteredObservers() {

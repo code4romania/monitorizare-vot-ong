@@ -19,14 +19,19 @@ export interface SortedColumnEvent {
   sortDirection: SortDirection;
 }
 
-export enum SelectedZoneEvents {
+export interface SelectedZoneEvent {
+  type: SelectedZoneEventTypes;
+  selectedRowIds: string[];
+}
+
+export enum SelectedZoneEventTypes {
   DELETE,
   NOTIFCATION
 }
 
 export const SELECTED_ZONE_EVENTS = new InjectionToken('SELECTED_ZONE_EVENTS', {
   providedIn: 'root',
-  factory: () => SelectedZoneEvents,
+  factory: () => SelectedZoneEventTypes,
 });
 
 export const SORT_DIRECTION = new InjectionToken('SORT_DIRECTION', {
