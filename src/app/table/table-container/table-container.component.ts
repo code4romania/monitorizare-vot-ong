@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { TableColumnDirective } from '../table-column/table-column.directive';
-
-import { SelectedZoneEvents, SortDirection, SortedColumnEvent, TableColumn, SELECTED_ZONE_EVENTS, SORT_DIRECTION } from '../table.model';
+import {ChangeDetectionStrategy, Component, ContentChild, EventEmitter, HostBinding, Inject, Input, OnInit, Output} from '@angular/core';
+import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
+import {TableColumnDirective} from '../table-column/table-column.directive';
+import {SELECTED_ZONE_EVENTS, SelectedZoneEvents, SORT_DIRECTION, SortDirection, SortedColumnEvent, TableColumn} from '../table.model';
 
 @Component({
   selector: 'app-table-container[columns]',
@@ -14,9 +13,12 @@ export class TableContainerComponent implements OnInit {
   @Input() columns: TableColumn[] = [];
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
+  // tslint:disable-next-line:no-input-rename
   @Input('is-loading') isLoading = true;
+  // tslint:disable-next-line:no-input-rename
   @Input('no-rows-message') noRowsMessage = '';
 
+  // tslint:disable-next-line:no-input-rename
   @Input('disable-checkbox')
   @HostBinding('class.is-checkbox-disabled')
   isCheckboxDisabled = false;

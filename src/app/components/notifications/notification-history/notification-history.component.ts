@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {TableColumnTranslated} from '../../../table/table-container/table-container.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../store/store.module';
 import {NotificationsActions} from '../../../store/notifications/notifications.actions';
 import {NotificationsState, selectNotifications} from '../../../store/notifications/notifications.state';
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {TableColumnTranslated} from '../../../table/table.model';
 
 const DEFAULT_PAGE_SIZE = 50;
 const TABLE_COLUMNS = [

@@ -1,5 +1,4 @@
 import {from, from as observableFrom, Subscription} from 'rxjs';
-
 import {concatMap, map, take} from 'rxjs/operators';
 import {ObserversStateItem} from '../../store/observers/observers.state';
 import {AppState} from '../../store/store.module';
@@ -16,15 +15,10 @@ import {ToastrService} from 'ngx-toastr';
 import {NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClient} from '@angular/common/http';
 import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
-import {
-  SelectedZoneEvents,
-  SortedColumnEvent,
-  TableColumn,
-  TableColumnTranslated
-} from 'src/app/table/table-container/table-container.component';
 import {DropdownConfigItem} from 'src/app/shared/base-dropdown/base-dropdown.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {SelectedZoneEvents, SortedColumnEvent, TableColumn, TableColumnTranslated} from '../../table/table.model';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
