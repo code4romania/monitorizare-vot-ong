@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="d-flex flex-row mb-3">
+    <a [routerLink]="['/notifications']" routerLinkActive="active"
+       class="text-decoration-none d-flex align-items-center">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      <span class="pl-2">{{'Back' | translate}}</span>
+    </a>
+  </div>
+  <h5>{{'NOTIFICATION_HISTORY' | translate}}</h5>
+
+  <app-table-container
+    *ngIf="notificationState$ | async as notificationState"
+    [columns]="tableColumns"
+    [rows]="notificationState.data"
+    [is-loading]="notificationState.loading"
+    [disable-checkbox]="true"
+  >
+    <ng-template tableColumn let-row="row" let-prop="column.propertyName">
+      <ng-container [ngSwitch]="true">
+        <span *ngSwitchCase="!row[prop] && row[prop] !== 0">
+          {{ 'UNSPECIFIED' | translate }}
+        </span>
+        <span *ngSwitchCase="prop === 'insertedAt'" [title]="row[prop] | date: 'medium'">
+          {{ row[prop] | date: 'shortTime' }}
+        </span>
+        <span *ngSwitchCase="prop === 'sentObserverIds'">
+          {{ row[prop].length }} {{'OBSERVERS' | translate}}
+        </span>
+        <span *ngSwitchDefault>
+          {{row[prop]}}
+        </span>
+      </ng-container>
+    </ng-template>
+
+    <app-pagination
+      footer-area
+      [page]="notificationState.page"
+      [pageSize]="notificationState.pageSize"
+      [totalItems]="notificationState.totalItems"
+      [nextEnabled]="!notificationState.loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination>
+  </app-table-container>
+</div>

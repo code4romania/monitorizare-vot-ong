@@ -32,7 +32,7 @@ type Tab = Partial<FormDetails>
 })
 export class AnswerDetailsComponent implements OnInit {
   @ViewChild('modalTemplateRef') modalTemplateRef: TemplateRef<any>;
-  
+
   formTabChanged = new Subject<{ id?: number }>();
 
   crtSelectedTabId = null;
@@ -85,7 +85,7 @@ export class AnswerDetailsComponent implements OnInit {
     filter(Boolean),
     tap((loadedForm: Form) => this.crtSelectedTabId = this.crtSelectedTabId !== notesTab.id ? loadedForm.id : this.crtSelectedTabId),
     map((loadedForm: Form) => loadedForm?.formSections ?? []),
-    
+
     debounceTime(0),
     distinctUntilChanged(),
     startWith([]),
@@ -135,7 +135,7 @@ export class AnswerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const { idObserver, idPollingStation } = this.route.snapshot.params;
-    
+
     this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
   }
 
@@ -150,10 +150,10 @@ export class AnswerDetailsComponent implements OnInit {
     this.crtSelectedTabId = null;
     this.formTabChanged.next(tab);
   }
-  
+
   showModalWithNote (clickedNote) {
     this.crtClickedNote = clickedNote;
-    
+
     this.modalService.open(this.modalTemplateRef, { centered: true, size: 'lg', });
   }
 

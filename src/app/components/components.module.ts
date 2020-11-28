@@ -29,6 +29,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {TableModule} from '../table/table.module'
 import {ObserverImportComponent} from './observers/observer-import/observer-import.component';
+import {NotificationHistoryComponent} from './notifications/notification-history/notification-history.component';
 
 export let components = [
   AnswerComponent,
@@ -54,6 +55,7 @@ export let components = [
   StatisticsDetailsComponent,
   StatisticsValueComponent,
   NotificationsComponent,
+  NotificationHistoryComponent,
   LoginComponent,
   ObserverImportComponent,
 ];

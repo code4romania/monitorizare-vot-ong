@@ -16,6 +16,7 @@ import { NotificationsComponent } from '../components/notifications/notification
 import { FormsComponent } from '../components/forms/forms.component';
 import { FormCreateComponent } from '../components/forms/form-create/form-create.component';
 import { ObserverImportComponent } from '../components/observers/observer-import/observer-import.component';
+import {NotificationHistoryComponent} from '../components/notifications/notification-history/notification-history.component';
 
 export let appRoutes: Routes = [
   {
@@ -85,4 +86,9 @@ export let appRoutes: Routes = [
     component: NotificationsComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'notifications/history',
+    component: NotificationHistoryComponent,
+    canActivate: [AuthGuard]
+  }
 ];
