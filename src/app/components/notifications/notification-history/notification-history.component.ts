@@ -5,10 +5,10 @@ import {NotificationsActions} from '../../../store/notifications/notifications.a
 import {NotificationsState, selectNotifications} from '../../../store/notifications/notifications.state';
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {TableColumnTranslated} from '../../../table/table.model';
+import {TableColumn, TableColumnTranslated} from '../../../table/table.model';
 
 const DEFAULT_PAGE_SIZE = 50;
-const TABLE_COLUMNS = [
+const TABLE_COLUMNS: TableColumn[] = [
   { name: 'SENT_BY', propertyName: 'senderAccount'},
   { name: 'NGO', propertyName: 'senderNgoName'},
   { name: 'TITLE', propertyName: 'title'},

@@ -1,7 +1,15 @@
 import {ChangeDetectionStrategy, Component, ContentChild, EventEmitter, HostBinding, Inject, Input, OnInit, Output} from '@angular/core';
 import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
 import {TableColumnDirective} from '../table-column/table-column.directive';
-import {SELECTED_ZONE_EVENTS, SelectedZoneEvents, SORT_DIRECTION, SortDirection, SortedColumnEvent, TableColumn} from '../table.model';
+import {
+  SELECTED_ZONE_EVENTS,
+  SelectedZoneEvents,
+  SORT_DIRECTION,
+  SortDirection,
+  SortedColumnEvent,
+  TableColumn,
+  TableColumnTranslated
+} from '../table.model';
 
 @Component({
   selector: 'app-table-container[columns]',
@@ -10,7 +18,7 @@ import {SELECTED_ZONE_EVENTS, SelectedZoneEvents, SORT_DIRECTION, SortDirection,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableContainerComponent implements OnInit {
-  @Input() columns: TableColumn[] = [];
+  @Input() columns: TableColumn[] | TableColumnTranslated[] = [];
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
   // tslint:disable-next-line:no-input-rename

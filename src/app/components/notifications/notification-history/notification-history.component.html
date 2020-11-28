@@ -17,7 +17,7 @@
     [is-loading]="notificationState.loading"
     [disable-checkbox]="true"
   >
-    <ng-template let-row="row" let-prop="column.propertyName">
+    <ng-template tableColumn let-row="row" let-prop="column.propertyName">
       <ng-container [ngSwitch]="true">
         <span *ngSwitchCase="!row[prop] && row[prop] !== 0">
           {{ 'UNSPECIFIED' | translate }}
