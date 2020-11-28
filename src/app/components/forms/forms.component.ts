@@ -58,7 +58,9 @@ export class FormsComponent implements OnInit, OnDestroy {
       .subscribe(formState => {
         this.formsList = cloneDeep(formState.items);
         this.totalCount = this.formsList ? this.formsList.length : 0;
-        this.draftSelected = this.formsList? this.formsList[0].draft: false;
+        if(this.formsList !== undefined && this.formsList.length > 0) {
+          this.draftSelected = this.formsList[0].draft;
+        }
       });
   }
 
