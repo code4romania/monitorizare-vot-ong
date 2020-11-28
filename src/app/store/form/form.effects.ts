@@ -112,7 +112,7 @@ export class FormEffects {
   formDelete = this.actions
     .pipe(
       ofType(FormActionTypes.DELETE),
-      // take(1),
+      take(1),
       switchMap((a: FormDeleteAction) =>
         this.formsService.deleteForm(a.form.id).pipe(
           map(_ => new FormLoadAction(a.form.draft, true)),
