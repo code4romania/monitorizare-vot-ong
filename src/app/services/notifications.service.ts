@@ -1,28 +1,37 @@
-import {take} from 'rxjs/operators';
+import {first, take} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ApiService, QueryParamBuilder} from '../core/apiService/api.service';
 import {Observable} from 'rxjs';
-import {GlobalNotificationModel, NotificationModel,} from '../models/notification.model';
+import {HistoryNotifications, SentGlobalNotificationModel, SentNotificationModel,} from '../models/notification.model';
 import {environment} from 'src/environments/environment';
 import {Location} from '@angular/common';
 import {Observer} from '../models/observer.model';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationsService {
-  private baseUrl: string;
+  private readonly baseUrl: string;
 
   constructor(private http: ApiService) {
     this.baseUrl = environment.apiUrl;
   }
 
-  public pushNotification(notification: NotificationModel): Observable<any> {
+  public getAll(page, pageSize = 100): Observable<HistoryNotifications> {
+    const url = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/get/all');
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+    return this.http.get<HistoryNotifications>(url, {params}).pipe(first());
+  }
+
+  public pushNotification(notification: SentNotificationModel): Observable<any> {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send');
     return this.http.post(url, notification).pipe(take(1));
   }
 
-  public pushNotificationGlobally(notification: GlobalNotificationModel): Observable<any> {
+  public pushNotificationGlobally(notification: SentGlobalNotificationModel): Observable<any> {
     const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/notification/send/all');
     return this.http.post(url, notification).pipe(take(1));
   }

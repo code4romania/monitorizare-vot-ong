@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CountyPollingStationInfo, NotificationsService,} from '../../services/notifications.service';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {GlobalNotificationModel,} from '../../models/notification.model';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserversService} from '../../services/observers.service';
+import {SentGlobalNotificationModel} from '../../models/notification.model';
 
 @Component({
   selector: 'app-notifications',
@@ -82,7 +82,7 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  private createGlobalNotification(): GlobalNotificationModel {
+  private createGlobalNotification(): SentGlobalNotificationModel {
     return {
       channel: 'Firebase',
       from: 'Monitorizare Vot',

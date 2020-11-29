@@ -1,5 +1,10 @@
 <div class="container-fluid">
-  <h5>{{'OBSERVERS_FILTER' | translate}}</h5>
+  <div class="d-flex justify-content-between align-items-center">
+    <h5 class="m-0">{{'OBSERVERS_FILTER' | translate}}</h5>
+    <a [routerLink]="['history']" routerLinkActive="active" class="btn btn-outline-secondary">
+      {{'NOTIFICATION_HISTORY' | translate}}
+    </a>
+  </div>
   <div class="form-group card card-body mt-3">
     <div class="d-flex flex-row">
       <div>
