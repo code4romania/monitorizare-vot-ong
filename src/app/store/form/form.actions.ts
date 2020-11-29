@@ -13,12 +13,13 @@ export class FormActionTypes {
     static readonly UPLOAD = actionType('[Form] UPLOAD');
     static readonly UPLOAD_PUBLISH = actionType('[Form] UPLOAD PUBLISH');
     static readonly UPLOAD_COMPLETE = actionType('[Form] UPLOAD_COMPLETE');
+    static readonly UPDATE = actionType('[Form] UPDATE');
     static readonly DELETE = actionType('[Form] DELETE');
 }
 export class FormLoadAction implements Action {
     readonly type = FormActionTypes.LOAD_ALL_FORMS_META;
 
-    constructor() {
+    constructor(public draft?: boolean, public forceReload: boolean = false) {
     }
 }
 export class FormErrorAction implements Action {
@@ -52,10 +53,16 @@ export class FormUploadCompleteAction implements Action {
   readonly type = FormActionTypes.UPLOAD_COMPLETE;
 }
 
+export class FormUpdateAction implements Action {
+  readonly type = FormActionTypes.UPDATE;
+
+  constructor(public form: Form) {}
+}
+
 export class FormDeleteAction implements Action {
   readonly type = FormActionTypes.DELETE;
 
-  constructor(public formId: number) {}
+  constructor(public form: Form) {}
 }
 
 export class FullyLoadFormAction implements Action {

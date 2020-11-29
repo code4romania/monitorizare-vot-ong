@@ -16,8 +16,9 @@ export class FormsService {
     this.baseUrl = Location.joinWithSlash(environment.apiUrl, '/api/v1/form');
   }
 
-  public loadForms() {
-    return this.http.get<FormInfo>(this.baseUrl).pipe();
+  public loadForms(draft: boolean = false) {
+    const url: string = Location.joinWithSlash(this.baseUrl, `?draft=${draft}`);
+    return this.http.get<FormInfo>(url).pipe();
   }
 
   public searchForms(name: string, pageNo?: number, pageSize?: number) {
@@ -47,6 +48,10 @@ export class FormsService {
     formClone.draft = false;
 
     return this.uploadForm(formClone);
+  }
+
+  public updateForm(form: Form) {
+    return this.http.put(this.baseUrl, form);
   }
 
   private uploadForm(form: Form) {

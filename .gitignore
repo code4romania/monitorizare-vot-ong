@@ -17,6 +17,7 @@
 .settings/
 
 # misc
+/package-lock.json
 /.sass-cache
 /connect.lock
 /coverage/*
