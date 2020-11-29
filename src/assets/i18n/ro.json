@@ -98,6 +98,7 @@
   "OBSERVERS_IN_SELECTION": "observatori în selecție",
   "OBSERVER_FILTER_PENDING": "Apasă Caută pentru a face o selecție, sau Resetați filtrul",
   "NOTIFICATION_DETAILS": "Detaliile notificării",
+  "SELECTED_OBSERVERS": "observatori selectați",
   "SEND_NOTIFICATIONS_TO_ALL": "Trimite notificare către toți observatorii",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Trimite notificare către %d observatori",
   "NOTIFICATION_SEND_CONFIRMATION": "Esti sigur ca vrei sa trimiti notificarea la %d observator(i)?",

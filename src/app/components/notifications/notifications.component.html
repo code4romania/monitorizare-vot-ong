@@ -1,55 +1,67 @@
 <div class="container-fluid">
-  <div class="d-flex justify-content-between align-items-center">
-    <h5 class="m-0">{{'OBSERVERS_FILTER' | translate}}</h5>
-    <a [routerLink]="['history']" routerLinkActive="active" class="btn btn-outline-secondary">
-      {{'NOTIFICATION_HISTORY' | translate}}
+  <ng-container *ngIf="!(usingRouteFilter$ | async)">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="m-0">{{'OBSERVERS_FILTER' | translate}}</h5>
+      <a [routerLink]="['/notifications/history']" routerLinkActive="active" class="btn btn-outline-secondary">
+        {{'NOTIFICATION_HISTORY' | translate}}
+      </a>
+    </div>
+    <div class="form-group card card-body mt-3">
+      <div class="d-flex flex-row">
+        <div>
+          <label for="countiesMultiSelect">{{'COUNTY_FILTER' | translate}}</label>
+          <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="changeCountyFilter()"
+                                   (onDeSelect)="changeCountyFilter()"
+                                   [(ngModel)]="selectedCounties" [data]="counties"
+                                   placeholder="{{'COUNTY_FILTER' | translate}}" [settings]="countyDropdownSettings">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div *ngIf="selectedCounties.length" class="ml-3">
+          <label>
+            <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
+            <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
+          </label>
+          <div class="d-flex justify-content-between">
+            <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
+                   (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
+                   placeholder="{{'FROM' | translate}}">
+            <div class="mt-1 text-muted">&ndash;</div>
+            <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
+                   (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
+                   placeholder="{{'TO' | translate}}">
+          </div>
+        </div>
+
+        <div class="ml-3">
+          <label>&nbsp;</label>
+          <div class="w-100">
+            <button (click)="searchForObservers()" class="btn btn-outline-primary"
+                    [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
+            <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
+        <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
+        <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <div *ngIf="usingRouteFilter$ | async" class="d-flex flex-row mb-3">
+    <a (click)="goBack()" [routerLink]="" class="text-decoration-none d-flex align-items-center">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      <span class="pl-2">{{'Back' | translate}}</span>
     </a>
   </div>
-  <div class="form-group card card-body mt-3">
-    <div class="d-flex flex-row">
-      <div>
-        <label for="countiesMultiSelect">{{'COUNTY_FILTER' | translate}}</label>
-        <ng-multiselect-dropdown id="countiesMultiSelect" (onSelect)="changeCountyFilter()"
-                                 (onDeSelect)="changeCountyFilter()"
-                                 [(ngModel)]="selectedCounties" [data]="counties"
-                                 placeholder="{{'COUNTY_FILTER' | translate}}" [settings]="countyDropdownSettings">
-        </ng-multiselect-dropdown>
-      </div>
-
-      <div *ngIf="selectedCounties.length" class="ml-3">
-        <label>
-          <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
-          <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
-        </label>
-        <div class="d-flex justify-content-between">
-          <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
-                 (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
-                 placeholder="{{'FROM' | translate}}">
-          <div class="mt-1 text-muted">&ndash;</div>
-          <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
-                 (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
-                 placeholder="{{'TO' | translate}}">
-        </div>
-      </div>
-
-      <div class="ml-3">
-        <label>&nbsp;</label>
-        <div class="w-100">
-          <button (click)="searchForObservers()" class="btn btn-outline-primary"
-                  [disabled]="!selectedCounties?.length">{{'SEARCH' | translate}}</button>
-          <button (click)="resetFilter()" class="btn btn-link ml-2">{{'RESET' | translate}}</button>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="usingObserverFilters" class="d-flex flex-row text-muted mt-3">
-      <span *ngIf="filteredObserverIds">{{filteredObserverIds.length}} {{'OBSERVERS_IN_SELECTION' | translate}}</span>
-      <span *ngIf="!filteredObserverIds">{{'OBSERVER_FILTER_PENDING' | translate}}</span>
-    </div>
-  </div>
-
-  <h5>{{usingObserverFilters ? ('NOTIFICATION_DETAILS' | translate)
-    : observerCount + ' ' + ('TOTAL_OBSERVERS' | translate) }}</h5>
+  <h5>
+    {{usingObserverFilters ? ('NOTIFICATION_DETAILS' | translate) : observerCount + ' ' + ('TOTAL_OBSERVERS' | translate) }}
+    {{(usingRouteFilter$ | async) ? '(' + filteredObserverIds.length + ' ' + ('SELECTED_OBSERVERS' | translate) + ')' : ''}}
+  </h5>
   <form [formGroup]="notificationForm" class="form-group card card-body mt-3">
     <div class="row">
       <div class="col-md-6">

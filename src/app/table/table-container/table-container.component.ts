@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Inject, InjectionToken, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { TableColumnDirective } from '../table-column/table-column.directive';
-
-import { SelectedZoneEvents, SortDirection, SortedColumnEvent, TableColumn, SELECTED_ZONE_EVENTS, SORT_DIRECTION } from '../table.model';
+import {ChangeDetectionStrategy, Component, ContentChild, EventEmitter, HostBinding, Inject, Input, OnInit, Output} from '@angular/core';
+import {BASE_BUTTON_VARIANTS, Variants} from 'src/app/shared/base-button/base-button.component';
+import {TableColumnDirective} from '../table-column/table-column.directive';
+import {
+  SELECTED_ZONE_EVENTS,
+  SelectedZoneEvent,
+  SelectedZoneEventTypes,
+  SORT_DIRECTION,
+  SortDirection,
+  SortedColumnEvent,
+  TableColumn,
+  TableColumnTranslated
+} from '../table.model';
 
 @Component({
   selector: 'app-table-container[columns]',
@@ -11,7 +19,7 @@ import { SelectedZoneEvents, SortDirection, SortedColumnEvent, TableColumn, SELE
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableContainerComponent implements OnInit {
-  @Input() columns: TableColumn[] = [];
+  @Input() columns: TableColumn[] | TableColumnTranslated[] = [];
   @Input() rows: unknown[] = [];
   @Input() idKey = 'id';
   @Input('is-loading') isLoading = true;
@@ -21,7 +29,7 @@ export class TableContainerComponent implements OnInit {
   @HostBinding('class.is-checkbox-disabled')
   isCheckboxDisabled = false;
 
-  @Output() selectedZoneEvent = new EventEmitter();
+  @Output() selectedZoneEvent = new EventEmitter<SelectedZoneEvent>();
   @Output() sortedColumnClicked = new EventEmitter<SortedColumnEvent>();
   @Output() rowClicked = new EventEmitter();
 
@@ -35,7 +43,7 @@ export class TableContainerComponent implements OnInit {
 
   constructor(
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants,
-    @Inject(SELECTED_ZONE_EVENTS) public Events: typeof SelectedZoneEvents,
+    @Inject(SELECTED_ZONE_EVENTS) public Events: typeof SelectedZoneEventTypes,
     @Inject(SORT_DIRECTION) public sortDirection: typeof SortDirection,
   ) { }
 
@@ -55,7 +63,7 @@ export class TableContainerComponent implements OnInit {
   toggleRow (rowId) {
     this.selectedRows[rowId] = typeof this.selectedRows[rowId] === 'boolean'
       ? !this.selectedRows[rowId]
-      : this.allSelected ? false : true;
+      : !this.allSelected;
 
     this.nrSelectedRows += (this.selectedRows[rowId] ? 1 : -1);
 
@@ -64,8 +72,11 @@ export class TableContainerComponent implements OnInit {
     }
   }
 
-  sendSelectedZoneEvent (ev: SelectedZoneEvents) {
-    this.selectedZoneEvent.emit(ev);
+  sendSelectedZoneEvent (type: SelectedZoneEventTypes) {
+    const selectedRowIds = this.allSelected
+      ? this.rows.map(r => r[this.idKey])
+      : Object.entries(this.selectedRows).filter(r => r[1]).map(r => r[0]);
+    this.selectedZoneEvent.emit({type, selectedRowIds});
     this.clearSelectedRows();
   }
 

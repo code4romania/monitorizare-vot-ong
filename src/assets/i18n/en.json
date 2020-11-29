@@ -97,6 +97,7 @@
   "OBSERVERS_IN_SELECTION": "observers in selection",
   "OBSERVER_FILTER_PENDING": "Click Search to make a selection, or Clear to remove the filter",
   "NOTIFICATION_DETAILS": "Notification details",
+  "SELECTED_OBSERVERS": "observers selected",
   "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all observers",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Send notification to %d observers",
   "NOTIFICATION_SEND_CONFIRMATION": "You are about to send this message to %d observers. Are you sure?",
