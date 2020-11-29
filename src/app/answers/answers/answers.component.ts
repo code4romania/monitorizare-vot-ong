@@ -146,7 +146,7 @@ export class AnswersComponent implements OnInit {
     this.isLoading = true;
     return this.answersService.downloadAnswers(filter).subscribe(res => {
       this.isLoading = false;
-      FileSaver.saveAs(res, 'answsers.xlsx');
+      FileSaver.saveAs(res, 'data.csv');
     }, error => {
       this.isLoading = false;
     });
