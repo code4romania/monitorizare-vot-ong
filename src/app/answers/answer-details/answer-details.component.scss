@@ -111,5 +111,10 @@
     overflow: hidden;
     max-height: 45rem;
     margin-top: 2rem;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
   }
 }
