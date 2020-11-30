@@ -1,0 +1,40 @@
+@import '../../../../variables';
+
+$label-text-color: $dim-gray;
+$border-color: $border-color-gray;
+
+.c-import {
+  &__title {
+    color: $darker-gray;
+  }
+
+
+  &__card-body {
+    width: 50%;
+
+    @media all and (max-width: 700px) {
+      & {
+        width: 100%;
+      }
+    }
+
+    @media all and (min-width: 700px) and (max-width: 920px) {
+      & {
+        width: 75%;
+      }
+    }
+
+    input.form-control[class] {
+      padding: 1.4rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid $border-color;
+    }
+  }
+}
+
+.form-group {
+  label {
+    color: $label-text-color;
+    font-size: 1.15rem;
+  }
+}

@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div class="mr-auto">
+      <app-base-button [custom-styles]="{ fontSize: '1.2rem' }" [variant]="BaseButtonVariants.ALLTRANSPARENT"
+        [routerLink]="['../']">
+        <div class="d-flex align-items-center">
+          <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          &nbsp;
+          <span>{{ 'BACK' | translate }}</span>
+        </div>
+      </app-base-button>
+    </div>
+  </div>
+
+  <h4 class="c-notif__title">{{ 'NOTIF_DETAILS_FOR' | translate }} {{ observerName$ | async }}</h4>
+
+  <div *ngIf="actionResultMessage$ | async as actionResultMessage">
+    {{ actionResultMessage ? (actionResultMessage | translate) : '' }}
+  </div>
+
+  <div class="card mt-4">
+    <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+      <div class="card-body">
+        
+        <div class="c-notif-body">
+          <div class="form-group">
+            <label for="title">
+              {{ 'TITLE' | translate }}
+            </label>
+            <input ngModel required name="title" id="title" type="text" class="form-control" [placeholder]="'TYPE' | translate" />
+          </div>
+          
+          <div class="form-group">
+            <label for="message">
+              {{ 'MESSAGE' | translate }}
+            </label>
+            <textarea ngModel required class="form-control" name="message" id="message" cols="30" rows="10"
+              [placeholder]="'TYPE' | translate"></textarea>
+          </div>
+        </div>
+
+        <div class="c-notif-buttons">
+          <app-base-button 
+            class="c-notif__button" 
+            [custom-styles]="buttonStyles"
+            [variant]="BaseButtonVariants.BGYELLOW" 
+            type="submit" 
+            [disabled]="f.invalid"
+          >
+            {{ 'SAVE' | translate }}
+          </app-base-button>
+  
+          <app-base-button 
+            class="c-notif__button"
+            [routerLink]="['../']"
+            [custom-styles]="buttonStyles" 
+            [variant]="BaseButtonVariants.DEFAULT"
+            type="button"
+          >
+            {{ 'CANCEL' | translate }}
+          </app-base-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <form (ngSubmit)="requestFilteredData()" name="filtreazaDupa">
+    <div class="form-row">
+      <div class="col-md-2 mb-3">
+        <label for="countyCode" class="control-label">{{'COUNTY_CODE' | translate}}</label>
+        <input [(ngModel)]="countyCode" name="countyCode" class="form-control" id="countyCode">
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="pollingStationNumber" class="control-label">{{'POLLING_STATION_NUMBER' | translate}}</label>
+        <input [(ngModel)]="pollingStationNumber" name="pollingStationNumber" class="form-control"
+          id="pollingStationNumber">
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="observerPhone" class="control-label">{{'OBSERVER_PHONE' | translate}}</label>
+        <input [(ngModel)]="observerPhone" name="observerPhone" class="form-control" id="observerId">
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="fromTime" class="control-label">{{'FROM' | translate }}</label>
+        <input [(ngModel)]="fromTime" name="fromTime" class="form-control" id="fromTime" placeholder="yyyy-MM-dd hh:mm">
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <label for="toTime" class="control-label">{{'TO' | translate}}</label>
+        <input [(ngModel)]="toTime" name="toTime" class="form-control" id="toTime" placeholder="yyyy-MM-dd hh:mm">
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="form-group action-buttons">
+        <button type="submit" class="btn btn-success">Filter</button>
+        <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="list-header col-md-12">
+    <h3>{{((answerState | async)?.urgent ? 'URGENT_HEADER' : 'NOT_URGENT_HEADER') | translate}}</h3>
+    <h5>{{((answerState | async)?.urgent ? 'URGENT_SUBHEADER' : 'NOT_URGENT_SUBHEADER') | translate}}</h5>
+    <button (click)="downloadAnswers()" class="btn btn-default mb-2">{{'DOWNLOAD_ANSWERS' | translate }}</button>
+  </div>
+  <div class="col-md-3">
+    <app-answer-list [answerState]="answerState | async" (reload)="redoAnswerListAction()"
+      (pageChanged)="pageChanged($event)">
+    </app-answer-list>
+  </div>
+  <div class="col-md-8">
+    <router-outlet>
+    </router-outlet>
+  </div>
+</div>

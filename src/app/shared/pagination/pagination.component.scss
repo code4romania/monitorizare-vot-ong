@@ -1,0 +1,51 @@
+@import '../../../variables';
+
+$foreground-color: #A5A5A5;
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem .8rem;
+  flex-wrap: wrap;
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+.c-pagination {
+  &__buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    margin-left: .45rem;
+    height: 30px;
+    width: 30px;
+    color: $foreground-color;
+    cursor: pointer;
+  
+    &:not(&--direction) {
+      background-color: transparent;;
+    }
+
+    &--selected:not(&--direction) {
+      background-color: $primary-purple;
+      color: #fff;
+    }
+    
+    // adding `[class]` to have the same specificity
+    // as `:not(.class)` from above
+    &--disabled[class] {
+      background-color: lighten($foreground-color, 20%);
+      cursor: not-allowed;
+    }
+  }
+
+  &__stats {
+    color: $foreground-color;
+    font-size: 1rem;
+  }
+}

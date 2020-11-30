@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="d-flex flex-column mb-4">
+    <div class="cursor-pointer ">
+        <span (click)="onBackPressed()">&#8592; {{ "BACK" | translate }}</span>
+    </div>
+    <div class="control-container d-flex justify-content-between mt-2">
+      <h4>{{ "FORM_EDIT" | translate }}</h4>
+      <div class="btn-group-separated" role="group" aria-label="save group">
+        <button class="btn-outline-secondary btn" (click)="saveForm()" type="submit">
+          {{ "FORM_SAVE_DRAFT" | translate }}
+        </button>
+        <button class="btn-warning btn ml-2" (click)="saveAndPublishForm()" type="submit">
+          {{ "FORM_PUBLISH" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="formDetailsFormGroup">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="form-title">{{ "FORM_TITLE" | translate }}</label>
+              <input
+                class="form-control"
+                id="form-title"
+                formControlName="description"
+                placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="form-cde">{{ "FORM_CODE" | translate }}</label>
+              <input
+                class="form-control"
+                formControlName="code"
+                id="form-code"
+                placeholder="{{ 'FORM_CODE_PLACEHOLDER' | translate }}"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="form-cde">{{ "FORM_DESCRIPTION" | translate }}</label>
+              <textarea
+                class="form-control"
+                formControlName="description"
+                id="form-description"
+                placeholder="{{ 'FORM_DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="form-diaspora"
+            formControlName="diaspora"
+          />
+          <label for="form-diaspora" class="form-check-label">{{
+            "FORM_ONLY_DIASPORA" | translate
+          }}</label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="section-list"
+    cdkDropList
+    (cdkDropListDropped)="onReorder($event)"
+  >
+    <div
+      *ngFor="let section of sectionFormGroupsArray; let i = index"
+      cdkDrag
+      class="section"
+    >
+      <app-section
+        [sectionFormGroup]="section"
+        (sectionDeleteEventEmitter)="onSectionDelete(i)"
+      >
+      </app-section>
+    </div>
+  </div>
+
+  <div class="section-add mt-2" (click)="addFormSection()">
+    + {{ "SECTION_ADD" | translate }}
+  </div>
+</div>

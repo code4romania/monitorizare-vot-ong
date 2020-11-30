@@ -1,0 +1,84 @@
+<div class="section-create">
+  <div class="header-row">
+    <h4 class="header-text">{{
+      sectionFormGroup.controls.description.value
+    }}</h4>
+
+    <div class="buttons-pane">
+      <button class="btn btn-outline-danger" (click)="sectionDeleteEventEmitter.emit()">
+        {{ "SECTION_DELETE" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body section-details">
+      <form [formGroup]="sectionFormGroup">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-labeled-field">
+              <div>
+                <span>{{ "SECTION_TITLE" | translate }}</span>
+              </div>
+              <div>
+                <input
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="{{ 'SECTION_TITLE_PLACEHOLDER' | translate }}"
+                />
+              </div>
+            </div>
+            <div class="form-labeled-field">
+              <div>
+                <span>{{ "SECTION_CODE" | translate }}</span>
+              </div>
+              <div>
+                <input
+                  class="form-control"
+                  formControlName="code"
+                  placeholder="{{ 'SECTION_CODE_PLACEHOLDER' | translate }}"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!--      According to the design, this field should be here, but for now it has no correspondence in the model.-->
+
+            <!--        <div>-->
+            <!--          <span>{{'SECTION_DESCRIPTION' | translate}}</span>-->
+            <!--        </div>-->
+            <!--        <div>-->
+            <!--          <textarea rows="4" class="form-control" [(ngModel)]="section.description" placeholder="{{'SECTION_DESCRIPTION_PLACEHOLDER' | translate}}"></textarea>-->
+            <!--        </div>-->
+          </div>
+        </div>
+      </form>
+
+      <div
+        class="question-list"
+        cdkDropList
+        (cdkDropListDropped)="onReorder($event)"
+      >
+        <div
+          *ngFor="let question of questionFormGroupsArray; let i = index"
+          cdkDrag
+          class="question-line"
+        >
+          <app-question
+            [questionFormGroup]="question"
+            (questionDeleteEventEmitter)="onQuestionDelete(i)"
+            class="question"
+          >
+          </app-question>
+
+          <div class="field icon-holder" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 add-question-button" (click)="addQuestion()">
+        + {{ "QUESTION_ADD" | translate }}
+      </div>
+    </div>
+  </div>
+</div>

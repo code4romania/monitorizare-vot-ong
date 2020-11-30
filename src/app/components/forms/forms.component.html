@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4">{{ "FORMS" | translate }}</h2>
+    </div>
+    <div class="ml-auto">
+      <div class="btn-group" role="group" aria-label="Sort">
+        <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/formulare/nou']">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="content"> {{ 'NEW_FORM' | translate }}</span>
+        </app-base-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-light shadow">
+    <ul class="nav pl-3">
+      <li class="nav-item pt-3">
+        <a class="nav-link cursor-pointer" [class.active]="!draftSelected"
+           (click)="onTabSelect()">{{ "PUBLIC" | translate }}</a>
+      </li>
+      <li class="nav-item pt-3">
+        <a class="nav-link cursor-pointer" [class.active]="draftSelected"
+           (click)="onTabSelect()">{{ "DRAFT" | translate }}</a>
+      </li>
+    </ul>
+    <div class="table-responsive" style="padding-left: 1%; padding-right: 1%">
+      <table class="table align-items-center">
+        <thead>
+        <tr>
+          <th>
+            {{ "FORM_TITLE" | translate }}
+          </th>
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "FORM_CODE" | translate }}
+          </th>
+
+          <!-- TO BE IMPLEMENTED
+          <th class="w-15 centered-cell no-wrap">
+            {{ "FORM_TOTAL_QUESTIONS" | translate }}
+          </th>
+          -->
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "DIASPORA" | translate }}
+          </th>
+
+          <!-- TO BE IMPLEMENTED
+          <th class="w-15 centered-cell no-wrap">
+            {{ "LAST_EDIT" | translate }}
+          </th>
+          -->
+
+          <th class="w-15 centered-cell no-wrap">
+            {{ "ACTIONS" | translate }}
+          </th>
+          <th class="centered-cell no-wrap" style="width: 5%"></th>
+        </tr>
+        </thead>
+
+        <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
+        <tr *ngFor="let form of formsList" cdkDrag cdkDragLockAxis="y">
+          <td>
+            {{ form.description }}
+          </td>
+
+          <td class="w-15 centered-cell no-wrap">
+            {{ form.code }}
+          </td>
+
+          <!-- TO BE IMPLEMENTED
+          <td class="w-15 centered-cell no-wrap">
+            number
+          </td>
+          -->
+
+          <td class="w-15 centered-cell no-wrap">
+            <img src="/assets/forms/diaspora-check.png" *ngIf="form.diaspora" alt=""/>
+          </td>
+
+          <!-- TO BE IMPLEMENTED
+          <td class="w-15 centered-cell no-wrap">
+            date
+          </td>
+          -->
+
+          <td class="w-15 centered-cell no-wrap">
+            <div class="btn-group">
+              <button type="button" class="btn bg-light" [routerLink]="[form.id]">
+                {{ "EDIT" | translate }}
+              </button>
+              <div class="btn-group" ngbDropdown role="group" container="body">
+                <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
+                    <img src="/assets/forms/icon-delete.png" alt="">
+                    <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
+                  </button>
+                  <button *ngIf="form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, false)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-publish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_PUBLISH" | translate }}</span>
+                  </button>
+                  <button *ngIf="!form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, true)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-unpublish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_UNPUBLISH" | translate }}</span>
+                  </button>
+                  <!-- Not yet implemented
+                  <button ngbDropdownItem (click)="setAsFirstForm(form)" class="text">
+                    <img src="/assets/forms/icon-delete.png" alt="">
+                    <span>{{ "FORM_SET_AS_FIRST" | translate }}</span>
+                  </button>
+                  -->
+                </div>
+              </div>
+            </div>
+          </td>
+
+          <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle>
+            <img src="/assets/forms/icon-reorder.png" alt="">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,61 @@
+@import "../../../variables";
+
+$base-foreground-color: $primary-gray;
+
+$bg-yellow: #FFD628;
+$bg-yellow-foreground: #464646;
+
+$bg-gray: #F2F2F2;
+
+:host {
+  display: inline-block;
+}
+
+button {
+  color: $base-foreground-color;
+  font-weight: bold;
+  border: 1px solid $base-gray;
+  background: transparent;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.55rem;
+  width: 100%;
+  height: 100%;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+:host.is-bg-yellow button {
+  background: $bg-yellow;
+  color: $bg-yellow-foreground;
+  border: none;
+
+  &[disabled] {
+    background: lighten($bg-yellow, 10%);
+    color: lighten($bg-yellow-foreground, 15%);
+  }
+}
+
+:host.is-bg-gray button {
+  background: $bg-gray;
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem 1.1rem;
+}
+
+:host.is-all-transparent button {
+  border: none;
+}
+
+:host.is-purple button {
+  border-radius: 6px;
+  border-color: $primary-purple;
+  color: $primary-purple;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+:host.has-color-inherited button {
+  color: inherit;
+}

@@ -1,0 +1,92 @@
+<nav class="navbar navbar-expand-lg navbar-light mb-4">
+  <a class="navbar-brand" [routerLink]="['/']">
+    <img
+      src="../../../assets/vote_monitor.png"
+      class="brand-logo"
+      width="50"
+      alt=""
+    />
+  </a>
+  <button
+    (click)="isHamburgerClicked = !isHamburgerClicked"
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="!isHamburgerClicked" class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a
+          [routerLink]="['/answers']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "ANSWERS" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          [routerLink]="['/statistics']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "STATISTICS" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          [routerLink]="['/observatori']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "OBSERVERS" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [href]="observerGuideUrl" target="_blank" class="nav-link">
+          {{ "OBSERVER_GUIDE" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          [routerLink]="['/formulare']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "FORMS" | translate }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          [routerLink]="['/notifications']"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          {{ "NOTIFICATIONS" | translate }}
+        </a>
+      </li>
+    </ul>
+
+    <div *ngIf="isLoggedIn()" class="nav-item" ngbDropdown>
+
+      <span class="nav-link cursor-pointer" tabindex="0" ngbDropdownToggle id="loggedInUser" role="button">
+        <img
+        src="../../../assets/user-icon.svg"
+        width="20"
+        alt=""
+      />
+        {{ userName | titlecase }}
+      </span>
+      <div ngbDropdownMenu aria-labelledby="loggedInUser" class="dropdown-menu dropdown-menu-right">
+        <a ngbDropdownItem class="cursor-pointer" (click)="logout()">{{ "LOGOUT" | translate }}</a>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,3 @@
+<input [disabled]="isDisabled" [checked]="forceCheck" #i [id]="name" class="is-visually-hidden" type="checkbox">
+
+<label (click)="!isDisabled && checkBoxChanged(); !isDisabled && i.checked = !i.checked" [for]="name"></label>

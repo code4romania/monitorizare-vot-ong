@@ -1,0 +1,87 @@
+
+ @import "../../../../variables";
+ span {
+   &.rotate {
+    img {
+     transform: rotate(270deg)
+    }
+  }
+ }
+
+ .add-option-button {
+  color: $primary;
+  cursor: pointer;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+
+  .option-line {
+    display: flex;
+    flex-direction: row;
+
+    .option {
+      flex-grow: 1;
+    }
+  }
+
+}
+
+
+.question-component {
+
+  display: flex;
+  flex-direction: row;
+
+
+
+  .options-panel {
+    background-color: $border-color-gray;
+    padding: 8px;
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+
+      .option-line {
+        display: flex;
+        flex-direction: row;
+
+        .option {
+          flex-grow: 1;
+        }
+      }
+
+    }
+  }
+
+  .expandable-container {
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+
+    padding: 4px;
+  }
+
+  .main-fields-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+    border: 1px solid $border-color-gray;
+  }
+
+  .icon-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    cursor: pointer;
+  }
+
+  /* .field {
+    margin: 16px auto;
+  } */
+}

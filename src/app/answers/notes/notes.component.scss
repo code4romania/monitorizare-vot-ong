@@ -1,0 +1,65 @@
+@import '../../../variables';
+
+.c-notes-row, .c-notes-columns {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+
+  @media all and (max-width: 700px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.c-notes-column:nth-child(2) {
+  padding-left: 25%;
+}
+
+.c-notes-columns {
+  padding-top: 0.7rem;
+  padding-bottom: .5rem;
+  color: $dim-gray;
+}
+
+.c-notes-rows {
+  color: $readable-dark-gray;
+  padding-bottom: 1rem;
+}
+
+.c-notes-row {
+  height: 4.7rem;
+  border: 1px solid $border-color-gray;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $selected-row-color;
+  }
+
+  &:not(:last-child) {
+    border-bottom: none;
+  }
+
+  &__form-details {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 0.3rem;
+  }
+
+  &__note-content {
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+
+  &__flagged-status {
+    display: flex;
+    align-items: center;
+    padding-left: 30%;
+  }
+}
+
+.c-notes-empty-rows {
+  color: $readable-dark-gray;
+  text-align: center;
+  margin: 0;
+}

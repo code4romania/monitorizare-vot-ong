@@ -1,0 +1,60 @@
+@import '../../../../variables';
+
+$label-text-color: $dim-gray;
+$border-color: $border-color-gray;
+
+.c-profile {
+  &__back-icon {
+    transform: scale(1.4);
+  }
+
+  &__title {
+    color: $darker-gray;
+  }
+
+  .card &__form-body {
+    width: 60%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5rem;
+    row-gap: 1.2rem;
+    
+    input {
+      padding: 1.4rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid $border-color;
+    }
+  }
+
+  &__buttons {
+    margin-top: 2rem;
+  }
+
+  &__button:not(:first-child) {
+    margin-left: 1rem;
+  }
+
+  &__button--delete {
+    color: $delete-color;
+  }
+}
+
+.card {
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  border: none;
+}
+
+.form-group {
+  label {
+    color: $label-text-color;
+    font-size: 1.15rem;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .c-profile__form-body {
+    width: 100%;
+  }
+}

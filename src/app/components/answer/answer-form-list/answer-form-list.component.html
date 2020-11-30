@@ -1,0 +1,12 @@
+<div *ngFor="let section of form.formSections" class="mb-4">
+  <h4 class="mb-3">{{ section.description }}</h4>
+  <div *ngFor="let question of section.questions; let isLast = last">
+    <app-categorical-question
+      [notes]="notesForQuestion(question)"
+      [question]="question"
+      [completedAnswers]="answersForQuestion(question)?.answers"
+    >
+    </app-categorical-question>
+    <hr *ngIf="!isLast" />
+  </div>
+</div>

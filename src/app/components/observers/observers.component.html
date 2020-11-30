@@ -1,0 +1,181 @@
+<div class="container-fluid c-observers__container">
+  
+  <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 c-observers__header">
+    <div class="d-flex align-items-center">
+      <h3 class="mb-0 c-observers__header-title">{{ 'OBSERVERS' | translate }}</h3>
+      <i class="h-vertical-line"></i>
+      <span class="font-weight-bold h-is-muted">{{ totalCount }} total</span>
+    </div>
+
+    <div class="c-observers__buttons" role="group" aria-label="Sort">
+      <app-base-button routerLink="import">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.1666 5.83301L5.83331 14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M14.1666 14.1663H5.83331V5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span class="content">Import</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </app-base-button>
+      
+      <app-base-button>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.83337 5.83301H14.1667V14.1663" stroke="#707070" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <span class="content">Export</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </app-base-button>
+      
+      <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['profil/new']">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="content">{{ 'OBSERVER_ADD' | translate }}</span>
+      </app-base-button>
+    </div>
+  </div>
+
+  <app-table-container
+    (selectedZoneEvent)="onSelectedZoneEvent($event)"
+    (sortedColumnClicked)="onSortedColumnClicked($event)"
+    [columns]="tableColumns"
+    [rows]="observersList"
+    [is-loading]="observersState.loading"
+  >
+    <div header-area>
+      <div class="card-body">
+        <form novalidate [formGroup]="observersFilterForm" class="row">
+          <div class="form-group col-auto">
+            <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'NAME' | translate | lowercase }}</label>
+            <input [placeholder]="'TYPE' | translate" type="text" name="name" id="form-name" class="form-control" formControlName="name" />
+          </div>
+          <div class="form-group col-auto">
+            <label for="form-county">{{ 'FILTER_BY' | translate }} {{ 'PHONE_NUMBER' | translate | lowercase }}</label>
+            <input [placeholder]="'TYPE' | translate" type="text" name="phone" id="form-county" class="form-control" formControlName="phone" />
+          </div>
+          <div class="col-auto form-group align-self-end">
+            <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+              <!-- in `height: '2.8rem'`, the value is from `.scss` file -->
+              <app-base-button
+                (click)="applyFilters()"
+                [disabled]="observersFilterForm.isEmpty()"
+                [variant]="BaseButtonVariants.PURPLE"
+                [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }" 
+              >
+                {{ 'FILTER' | translate }}
+              </app-base-button>
+              &nbsp;
+              <app-base-button 
+                (click)="resetFilters()"
+                [disabled]="observersFilterForm.isEmpty()"
+                [variant]="BaseButtonVariants.PURPLE"
+                [custom-styles]="{ height: '2.8rem', border: 'none' }" 
+              >
+                {{ 'RESET' | translate }}
+              </app-base-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <ng-template tableColumn let-r="row" let-c="column">
+      <app-base-dropdown 
+        class="c-observers__dropdown"
+        *ngIf="c.propertyName === actionsColumnName"
+        [configArr]="dropdownConfig"
+        (dropdownEvent)="onDropdownEvent($event, r)"
+      >
+        <ng-template let-btn>
+          <ng-container [ngSwitch]="btn.eventType">
+            <ng-container *ngSwitchCase="DropDownEvents.EDIT">
+              {{ 'EDIT' | translate }}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="DropDownEvents.RESET_PASSWORD">
+              {{ 'RESET_PASSWORD' | translate }}
+            </ng-container>
+
+            <div class="d-flex align-items-center c-dropdown-button--delete" *ngSwitchCase="DropDownEvents.DELETE">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 5H4.16667H17.5" stroke="#F16359" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M6.66663 5.00033V3.33366C6.66663 2.89163 6.84222 2.46771 7.15478 2.15515C7.46734 1.84259 7.89127 1.66699 8.33329 1.66699H11.6666C12.1087 1.66699 12.5326 1.84259 12.8451 2.15515C13.1577 2.46771 13.3333 2.89163 13.3333 3.33366V5.00033M15.8333 5.00033V16.667C15.8333 17.109 15.6577 17.5329 15.3451 17.8455C15.0326 18.1581 14.6087 18.3337 14.1666 18.3337H5.83329C5.39127 18.3337 4.96734 18.1581 4.65478 17.8455C4.34222 17.5329 4.16663 17.109 4.16663 16.667V5.00033H15.8333Z"
+                  stroke="#F16359" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              &nbsp;&nbsp;
+              <span>{{ 'DELETE' | translate }}</span>
+            </div>
+
+            <div class="d-flex align-items-center c-dropdown-button--notification" *ngSwitchCase="DropDownEvents.NOTIFICATION">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
+                  stroke="#707070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              &nbsp;&nbsp;
+              <span>{{ 'SEND_NOTIF' | translate }}</span>
+            </div>
+          </ng-container>
+        </ng-template>
+      </app-base-dropdown>
+
+      <span *ngIf="c.propertyName !== actionsColumnName">
+        {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
+      </span>
+    </ng-template>
+
+    <app-pagination
+      footer-area
+      [page]="observersState.page"
+      [pageSize]="observersState.pageSize"
+      [totalItems]="observersState.totalItems"
+      [nextEnabled]="!observersState.loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination> 
+  </app-table-container>  
+
+  <div *ngIf="observersState.error">
+    <app-error-indicator></app-error-indicator>
+  </div>
+</div>
+
+<ng-template #resetPasswordContent let-activeModal let-dismiss="dismiss">
+  <h4 class="c-reset-pwd__title">{{ 'ENTER_NEW_PASSWORD' | translate }} {{ crtResetPasswordRow.name }}</h4>
+  
+  <div class="form-group col-auto">
+    <input required ngModel #i="ngModel" [placeholder]="'TYPE' | translate" type="text" name="password" id="form-name" class="form-control"/>
+  </div>
+
+  <div class="c-reset-pwd__buttons">
+    <app-base-button 
+      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }" 
+      [variant]="BaseButtonVariants.PURPLE"
+      [disabled]="!i.valid"
+      (click)="activeModal.close(i.value)"
+      class="c-reset-pwd__button" 
+      type="button" 
+    >
+      {{ 'CONFIRM' | translate }}
+    </app-base-button>
+    
+    <app-base-button 
+      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }"
+      class="c-reset-pwd__button" 
+      type="button" 
+      (click)="dismiss()"
+    >
+      {{ 'CANCEL' | translate }}
+    </app-base-button>
+  </div>
+</ng-template>

@@ -1,0 +1,104 @@
+@import '../../../variables';
+
+$notif-color: $primary-gray;
+$label-color: $darker-gray;
+$filter-zone-height: 2.8rem;
+
+.c-observers__container {
+  margin-bottom: 2rem;
+}
+
+span.font-weight-bold.h-is-muted {
+  font-size: 1.1rem;
+}
+
+.c-observers__header-title {
+  color: $darker-gray;
+}
+
+.c-observers__buttons {
+  app-base-button:not(:last-child) {
+    margin-right: 1rem;
+  }
+  
+  app-base-button svg:first-child {
+    margin-right: .5rem;
+  }
+  
+  app-base-button .content ~ svg {
+    margin-left: .5rem;
+  }
+
+  @media all and (max-width: 760px) {
+    & {
+     margin-top: 1.5rem;
+    }
+
+    app-base-button {
+      margin-top: .5rem;
+    }
+  }
+}
+
+.c-observers__header {
+  @media all and (max-width: 780px) {
+    & {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.c-observers__dropdown {
+  @media all and (max-width: 860px) {
+    & {
+      margin-right: .5rem;
+    }
+  }
+}
+
+.c-dropdown-button {
+  &--delete {
+    color: $delete-color;
+  }
+
+  &--notification {
+    color: $notif-color;
+  }
+}
+
+.form-group {
+  & > input.form-control {
+    border: 1px solid $base-gray;
+    color: $input-text-color;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    font-size: 1.1rem;
+    height: $filter-zone-height;
+
+    &::placeholder {
+      color: $input-text-color;
+    }
+  }
+
+  & > label {
+    color: $label-color;
+    font-size: 1.2rem;
+    line-height: 30px;
+  }
+}
+
+.c-reset-pwd {
+  &__title {
+    padding: 1rem;
+    color: $darker-gray;
+  }
+
+  &__buttons {
+    padding: 1rem;
+    display: flex;
+  }
+
+  &__button:not(:first-child) {
+    margin-left: 1.5rem;
+  }
+}

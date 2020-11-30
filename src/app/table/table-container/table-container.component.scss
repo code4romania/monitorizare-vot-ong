@@ -1,0 +1,150 @@
+@import '../../../variables';
+
+$text-color: $dim-gray;
+$border-color: $border-color-gray;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+
+  @media all and (max-width: 700px) {
+    & {
+      overflow-x: scroll;
+    }
+  }
+}
+
+.c-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: $text-color;
+
+  tbody {
+    position: relative;
+  }
+
+  thead {
+    font-weight: 500;
+  }
+
+  tbody {
+    font-size: 1.1rem;
+
+    :host.is-checkbox-disabled & > tr:hover {
+      background-color: $selected-row-color;
+      cursor: pointer;
+    }
+  }
+
+  &__row-check {
+    position: absolute;
+    transform: translate(15px, 5px);
+  }
+
+  thead th,
+  tbody tr td {
+    padding-left: 3.7rem;
+
+    :host.is-checkbox-disabled & {
+      padding-left: 2rem;
+    }
+  }
+
+  th.is-sortable {
+    color: $primary-purple;
+    
+    & * {
+      cursor: pointer;  
+    }
+
+    svg {
+      transform: translateX(.5em) scale(1.5);
+      fill: $primary-purple;
+    }
+
+    &.is-sorted-asc svg {
+      transform: translateX(.5em) scale(1.5) rotate(180deg) translateY(25%);
+    }
+  }
+
+  tr {
+    height: 3.5rem;
+
+    &.is-selected {
+      background-color: $selected-row-color;
+    }
+  }
+
+  tbody {
+    tr {
+      border-top: 1px solid $border-color;
+    }
+
+    tr:last-child {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  &--loading-indicator {
+    display: block;
+    width: 100%;
+    position: absolute;
+  }
+}
+
+.c-selected-zone {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform .3s;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  box-shadow: 0px -4px 28px rgba(0, 0, 0, 0.1);
+
+  &__item:not(:first-child) {
+    margin-left: 1.5rem;
+  }
+
+  &__item--stats {
+    color: $readable-dark-gray;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-weight: normal;
+    }
+
+    &--delete {
+      color: $delete-color;
+    }
+  }
+
+  &__cell {
+    background-color: $primary-purple;
+    color: #fff;
+  }
+
+  svg {
+    transform: scale(1.3);
+  }
+}
+
+.c-selected-zone.is-shown {
+  transform: translateY(0);
+}

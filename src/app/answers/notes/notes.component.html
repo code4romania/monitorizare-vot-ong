@@ -1,0 +1,37 @@
+<ng-container *ngIf="notes?.length; else noNotes">
+  <div class="c-notes-columns">
+    <div *ngFor="let column of columns" class="c-notes-column">
+      {{ column.name }}
+    </div>
+  </div>
+  
+  <div class="c-notes-rows">
+    <div (click)="onRowClicked(note)" *ngFor="let note of notes" class="c-notes-row">
+      <div class="c-notes-row__form-details">
+        <ng-container *ngIf="note.hasCorrespondingQuestion">
+          <div>{{ note.tabName }}</div>
+          <div><u (click)="onQuestionLinkClicked($event, note)">{{ note.questionCode }}</u></div>
+        </ng-container>
+  
+        <ng-container *ngIf="!note.hasCorrespondingQuestion">
+          -
+        </ng-container>
+      </div>
+  
+      <div class="c-notes-row__flagged-status">
+        <svg *ngIf="note.isQuestionFlagged" width="18" height="13" viewBox="0 0 18 13" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 1L6 12L1 7" stroke="#5F288D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+  
+      <div class="c-notes-row__note-content">
+        {{ note.text }}
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noNotes>
+  <p class="c-notes-empty-rows">{{ 'NOTES_EMPTY_ROWS_MESSAGE' | translate }}.</p>
+</ng-template>

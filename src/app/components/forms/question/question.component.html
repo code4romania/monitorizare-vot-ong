@@ -1,0 +1,44 @@
+
+<div class="card mb-4">
+  <div class="card-header d-flex flex-row justify-content-between">
+    <div><span [ngClass]="{'rotate':hideOptions}" (click)="toggleOptions()"><img src="/assets/forms/down.png" alt=""></span> {{ questionFormGroup.controls['code']?.value || 'QUESTION_CODE' | translate }} - {{ questionFormGroup.controls['text']?.value || 'QUESTION_TEXT' | translate }}</div>
+    <div class="field icon-holder" (click)="questionDeleteEventEmitter.emit()">
+      <img src="/assets/forms/icon-delete.png" alt="">
+    </div>
+  </div>
+  <div class="card-body" [hidden]="hideOptions">
+
+      <form [formGroup]="questionFormGroup">
+        <div class="row">
+          <div class="field col-lg-3 col-md-6">
+            <input class="form-control" formControlName="code" placeholder="{{'QUESTION_CODE' | translate}}">
+          </div>
+          <div class="field col-lg-6 col-md-12 order-2 mt-md-4 mt-lg-0">
+            <input class="form-control" formControlName="text" placeholder="{{'QUESTION_TEXT' | translate}}">
+          </div>
+          <div class="field col-lg-3 col-md-6 order-1">
+            <select class="form-control" formControlName="questionType">
+              <option *ngFor="let questionType of questionTypes" [ngValue]="questionType.id">{{questionType.name | translate}}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <hr />
+        <div cdkDropList class="options-list" (cdkDropListDropped)="onReorder($event)">
+          <div *ngFor="let option of optionFormGroupsArray; let i = index" cdkDrag class="option-line">
+            <app-option [optionFormGroup]="option"
+                        (optionDeleteEventEmitter)="onOptionDelete(i)"
+                        class="option">
+            </app-option>
+
+            <div class="icon-holder icon-reorder" cdkDragHandle>
+              <img src="/assets/forms/icon-reorder.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="add-option-button" style="display: inline; padding-right: 30px;" (click)="addOption()">+ {{'OPTION_ADD' | translate}}</div>
+            <div class="add-option-button" style="display: inline" (click)="choosePredefinedOption()">+ {{'PREDEFINED_OPTIONS_MODAL.ADD' | translate}}</div>
+        </div>
+  </div>
+</div>

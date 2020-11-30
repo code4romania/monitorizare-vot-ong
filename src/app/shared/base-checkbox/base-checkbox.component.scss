@@ -1,0 +1,66 @@
+@import '../../../variables';
+
+$filled-unchecked-bg: $light-gray;
+$filled-checked-bg: $primary-purple;
+
+$border-color: $base-gray;
+
+label {
+  position: relative;
+  cursor: pointer;
+}
+
+label::after,
+label::before {
+  position: absolute;
+  content: '';
+}
+
+label::before {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background-color: $filled-unchecked-bg;
+}
+
+input:checked + label::before {
+  background-color: $filled-checked-bg;
+}
+
+input:checked + label::after {
+  height: 11px;
+  width: 4px;
+  border-bottom: 1.5px solid #fff;
+  border-right: 1.5px solid #fff;
+  transform: translate(200%, 30%) rotate(35deg);
+}
+
+:host.is-transparent {
+  label::before {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid $primary-purple;
+  }
+
+  input:checked + label::before {
+    background-color: #fff;
+  }
+
+  input:checked + label::after {
+    height: 16px;
+    width: 6px;
+    border-bottom: 1.5px solid $primary-purple;
+    border-right: 1.5px solid $primary-purple;
+    transform: translate(200%, -20%) rotate(48deg);
+    box-shadow: 1px 1p 1px 1px red;
+    box-shadow: 6px -9px 0px 0px #fff, inset -3px -4px 0px 0px #fff;
+  }
+}
+
+:host.is-disabled {
+  label {
+    cursor: not-allowed;
+  }
+}
