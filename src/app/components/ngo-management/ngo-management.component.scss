@@ -1,0 +1,10 @@
+@import "../../../variables";
+.c-dropdown-button {
+    &--delete {
+        color: $delete-color;
+    }
+}
+
+svg{
+    margin-right: 10px;
+}

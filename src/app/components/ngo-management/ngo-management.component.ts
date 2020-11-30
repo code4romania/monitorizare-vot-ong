@@ -12,13 +12,12 @@ import { NgosService } from 'src/app/services/ngos.service';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { DropdownConfigItem } from 'src/app/shared/base-dropdown/base-dropdown.component';
 import { NgosStateItem } from 'src/app/store/ngos/ngos.state';
-import { SelectedZoneEvents, SortedColumnEvent, TableColumn } from 'src/app/table/table-container/table-container.component';
+import { SelectedZoneEvents, TableColumn } from 'src/app/table/table-container/table-container.component';
 
 import { ListType } from '../../models/list.type.model';
+import { LoadNgosAction } from '../../store/ngos/ngos.actions';
 import { AppState } from '../../store/store.module';
-import {
-  LoadNgosAction
-} from '../../store/ngos/ngos.actions';
+import { NgoFilterForm } from './ngo-filter.form';
 
 const ACTIONS_COLUMN_NAME = 'Actions';
 
@@ -80,6 +79,7 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
   ngosSubscription: Subscription;
   ngosList: Array<NgoModel>;
   listType: ListType = ListType.CARD;
+  ngoFilterForm: NgoFilterForm;
   selectedNgosIds: Array<number> = [];
   listTypes = ListType;
   anyNgos = false;
@@ -118,6 +118,7 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
     @Inject(DROPDOWN_EVENTS) public DropDownEvents: typeof DropdownEvents
   ) {
     this.translateColumnNames(rawTableColumns);
+    this.ngoFilterForm = new NgoFilterForm();
   }
 
   ngOnInit() {
@@ -184,6 +185,7 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
           (storeItem: NgosStateItem) =>
             new LoadNgosAction(
               storeItem.key,
+              this.ngoFilterForm.get('name').value,
               true,
             )
         )
@@ -227,6 +229,15 @@ export class NgoManagementComponent implements OnInit, OnDestroy {
     }
 
     return defaultValue;
+  }
+
+  resetFilters() {
+    this.ngoFilterForm.reset({ name: ''});
+    this.loadNgos();
+  }
+
+  applyFilters() {
+    this.loadNgos();
   }
 
   private translateColumnNames(rawTableColumns: TableColumn[]) {

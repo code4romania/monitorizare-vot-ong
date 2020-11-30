@@ -1,0 +1,8 @@
+<div class="toggle-wrapper">
+    <label class="input-label">{{label}}</label>
+
+    <label class="toggle" (click)="!isReadonly && checkBoxChanged(toggle);">
+        <input [(ngModel)]="value" type="checkbox" #toggle>
+        <span class="slider round"></span>
+    </label>
+</div>

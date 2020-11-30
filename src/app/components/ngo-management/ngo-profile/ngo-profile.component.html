@@ -1,15 +1,13 @@
 <div class="container-fluid">
   <div class="d-flex mb-4">
     <div class="mr-auto">
-      <app-base-button 
-        [custom-styles]="{ fontSize: '1.2rem' }"
-        [variant]="BaseButtonVariants.ALLTRANSPARENT" 
-        [routerLink]="['/ong']"
-      >
+      <app-base-button [custom-styles]="{ fontSize: '1.2rem' }" [variant]="BaseButtonVariants.ALLTRANSPARENT"
+        [routerLink]="['/ong']">
         <div class="d-flex align-items-center">
-          <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 16L4 12L8 8" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           &nbsp;
           <span>{{ 'BACK' | translate }}</span>
@@ -24,73 +22,45 @@
   </div>
 
   <div class="card ml-3">
-    <form
-      novalidate
-      [formGroup]="ngoProfileForm"
-      (ngSubmit)="onSubmit()"
-    >
+    <form novalidate [formGroup]="ngoProfileForm" (ngSubmit)="onSubmit()">
       <div class="card-body">
         <div class="c-profile__form-body">
           <div class="form-group">
             <label for="name">{{ 'NAME' | translate }}</label>
-            <input
-              formControlName="name"
-              id="name"
-              type="text"
-              class="form-control"
-              [placeholder]="'TYPE' | translate"
-            />
+            <input formControlName="name" id="name" type="text" class="form-control"
+              [placeholder]="'TYPE' | translate" />
           </div>
-          
+
           <div class="form-group">
             <label for="shortName">{{ 'SHORT_NAME' | translate }}</label>
-            <input
-              formControlName="shortName"
-              id="shortName"
-              type="text"
-              class="form-control"
-              [placeholder]="'TYPE' | translate"
-            />
+            <input formControlName="shortName" id="shortName" type="text" class="form-control"
+              [placeholder]="'TYPE' | translate" maxlength="102" />
           </div>
 
           <div class="form-group">
-            <label for="organizer">{{ 'ORGANIZER' | translate }}</label>
-            <input formControlName="organizer" id="organizer" class="form-control" type="checkbox" />
+            <app-toggle [label]="'IS_ORGANIZER' | translate" name="organizer" formControlName="organizer"
+              id="organizer"></app-toggle>
           </div>
 
           <div class="form-group">
-            <app-base-checkbox [label] ="'IS_ACTIVE' | translate" 
-            name="isActive" 
-            formControlName="isActive" id="isActive" ></app-base-checkbox>
-
-            <!-- <input formControlName="isActive" id="isActive" class="form-control" type="checkbox" /> -->
+            <app-toggle [label]="'IS_ACTIVE' | translate" name="isActive" formControlName="isActive"
+              id="isActive"></app-toggle>
           </div>
         </div>
 
         <div class="c-profile__buttons">
-          <app-base-button 
-            class="c-profile__button"
-            [custom-styles]="{ fontWeight: 'normal' }" 
-            [variant]="BaseButtonVariants.BGYELLOW"
-            type="submit"
-            [disabled]="ngoProfileForm.invalid"
-          >
+          <app-base-button class="c-profile__button" [custom-styles]="{ fontWeight: 'normal' }"
+            [variant]="BaseButtonVariants.BGYELLOW" type="submit" [disabled]="ngoProfileForm.invalid">
             {{ 'SAVE' | translate }}
           </app-base-button>
 
-          <app-base-button
-            class="c-profile__button"
-            [routerLink]="['/ong']"
-            [custom-styles]="{ fontWeight: 'normal' }" 
-            [variant]="BaseButtonVariants.DEFAULT"
-          >
+          <app-base-button class="c-profile__button" [routerLink]="['/ong']" [custom-styles]="{ fontWeight: 'normal' }"
+            [variant]="BaseButtonVariants.DEFAULT">
             {{ 'CANCEL' | translate }}
           </app-base-button>
 
           <ng-container *ngIf="pageState === 'edit'">
-            <ng-template 
-              [ngTemplateOutlet]="editButtons"
-            ></ng-template>
+            <ng-template [ngTemplateOutlet]="editButtons"></ng-template>
           </ng-container>
         </div>
       </div>
@@ -99,12 +69,8 @@
 </div>
 
 <ng-template #editButtons>
-  <app-base-button
-    (click)="deleteNgo()"
-    class="c-profile__button"
-    [custom-styles]="{ fontWeight: 'normal' }" 
-    [variant]="BaseButtonVariants.ALLTRANSPARENT"
-  >
+  <app-base-button (click)="deleteNgo()" class="c-profile__button" [custom-styles]="{ fontWeight: 'normal' }"
+    [variant]="BaseButtonVariants.ALLTRANSPARENT">
     <span class="c-profile__button--delete">{{ 'DELETE' | translate }}</span>
   </app-base-button>
 </ng-template>

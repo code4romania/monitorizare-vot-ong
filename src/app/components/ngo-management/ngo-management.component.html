@@ -20,13 +20,43 @@
         </div>
     </div>
 
-    <app-table-container [disableCheckbox]="true" (selectedZoneEvent)="onSelectedZoneEvent($event)" [columns]="tableColumns"
-        [rows]="ngosList" [is-loading]="ngosState.loading">
+    <app-table-container [disableCheckbox]="true" (selectedZoneEvent)="onSelectedZoneEvent($event)"
+        [columns]="tableColumns" [rows]="ngosList" [is-loading]="ngosState.loading">
         <div header-area>
             <div class="card-body">
             </div>
         </div>
-
+        <div header-area>
+            <div class="card-body">
+              <form novalidate [formGroup]="ngoFilterForm" class="row">
+                <div class="form-group col-auto">
+                  <label for="form-name">{{ 'FILTER_BY' | translate }} {{ 'NAME' | translate | lowercase }}</label>
+                  <input [placeholder]="'TYPE' | translate" type="text" name="name" id="form-name" class="form-control" formControlName="name" />
+                </div>
+                <div class="col-auto form-group align-self-end">
+                  <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+                    <app-base-button
+                      (click)="applyFilters()"
+                      [disabled]="ngoFilterForm.isEmpty()"
+                      [variant]="BaseButtonVariants.PURPLE"
+                      [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }" 
+                    >
+                      {{ 'FILTER' | translate }}
+                    </app-base-button>
+                    &nbsp;
+                    <app-base-button 
+                      (click)="resetFilters()"
+                      [disabled]="ngoFilterForm.isEmpty()"
+                      [variant]="BaseButtonVariants.PURPLE"
+                      [custom-styles]="{ height: '2.8rem', border: 'none' }" 
+                    >
+                      {{ 'RESET' | translate }}
+                    </app-base-button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         <ng-template let-r="row" let-c="column">
             <app-base-dropdown class="c-ngos__dropdown" *ngIf="c.propertyName === actionsColumnName"
                 [configArr]="dropdownConfig" (dropdownEvent)="onDropdownEvent($event, r)">
@@ -37,16 +67,52 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="DropDownEvents.CHANGE_ACTIVE_FLAG">
-                            {{  (r.isActive ? 'MAKE_INACTIVE': 'MAKE_ACTIVE' )  | translate }}
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M16.5 8.3099V8.9999C16.4991 10.6172 15.9754 12.1909 15.007 13.4863C14.0386 14.7816 12.6775 15.7293 11.1265 16.1878C9.57557 16.6464 7.91794 16.5913 6.40085 16.0308C4.88376 15.4704 3.58849 14.4345 2.70822 13.0777C1.82795 11.7209 1.40984 10.1159 1.51626 8.50214C1.62267 6.88832 2.24791 5.35214 3.29871 4.1227C4.34951 2.89326 5.76959 2.03644 7.34714 1.68001C8.92469 1.32358 10.5752 1.48665 12.0525 2.1449"
+                                    stroke="#707070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.5 3L9 10.5075L6.75 8.2575" stroke="#707070" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span>{{(r.isActive ? 'MAKE_INACTIVE': 'MAKE_ACTIVE' )  | translate }}</span>
                         </ng-container>
 
                         <div class="d-flex align-items-center c-dropdown-button--notification"
                             *ngSwitchCase="DropDownEvents.CHANGE_ORGANISER_FLAG">
-                            <span>{{ (r.organizer? 'REMOVE_ORGANIZER_FLAG': 'MAKE_ORGANIZER') | translate }}</span>
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0)">
+                                    <path
+                                        d="M12 15.75V14.25C12 13.4544 11.6839 12.6913 11.1213 12.1287C10.5587 11.5661 9.79565 11.25 9 11.25H3.75C2.95435 11.25 2.19129 11.5661 1.62868 12.1287C1.06607 12.6913 0.75 13.4544 0.75 14.25V15.75"
+                                        stroke="#707070" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M6.375 8.25C8.03185 8.25 9.375 6.90685 9.375 5.25C9.375 3.59315 8.03185 2.25 6.375 2.25C4.71815 2.25 3.375 3.59315 3.375 5.25C3.375 6.90685 4.71815 8.25 6.375 8.25Z"
+                                        stroke="#707070" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M12.75 8.25L14.25 9.75L17.25 6.75" stroke="#707070" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0">
+                                        <rect width="18" height="18" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span>{{(r.organizer? 'REMOVE_ORGANIZER_FLAG': 'MAKE_ORGANIZER') | translate }}</span>
                         </div>
 
                         <div class="d-flex align-items-center c-dropdown-button--delete"
                             *ngSwitchCase="DropDownEvents.DELETE">
+                            <svg width="18" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 5H4.16667H17.5" stroke="#F16359" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M6.66663 5.00033V3.33366C6.66663 2.89163 6.84222 2.46771 7.15478 2.15515C7.46734 1.84259 7.89127 1.66699 8.33329 1.66699H11.6666C12.1087 1.66699 12.5326 1.84259 12.8451 2.15515C13.1577 2.46771 13.3333 2.89163 13.3333 3.33366V5.00033M15.8333 5.00033V16.667C15.8333 17.109 15.6577 17.5329 15.3451 17.8455C15.0326 18.1581 14.6087 18.3337 14.1666 18.3337H5.83329C5.39127 18.3337 4.96734 18.1581 4.65478 17.8455C4.34222 17.5329 4.16663 17.109 4.16663 16.667V5.00033H15.8333Z"
+                                    stroke="#F16359" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                             <span>{{ 'DELETE' | translate }}</span>
                         </div>
                     </ng-container>
@@ -54,8 +120,8 @@
             </app-base-dropdown>
 
             <span *ngIf="c.propertyName !== actionsColumnName">
-                <app-base-checkbox *ngIf="isBooleanValue(r[c.propertyName])" [name]="c.propertyName"
-                    [ngModel]="r[c.propertyName]" [readonly]="true" class="c-table__row-check"></app-base-checkbox>
+                <app-base-checkbox *ngIf="isBooleanValue(r[c.propertyName])" class="c-table__row-check"
+                    [name]="c.propertyName" [ngModel]="r[c.propertyName]" [isReadonly]="true"></app-base-checkbox>
 
                 <span
                     *ngIf="!isBooleanValue(r[c.propertyName])">{{ getValueOrDefault(r[c.propertyName], ('UNSPECIFIED' | translate)) }}</span>

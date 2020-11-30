@@ -14,12 +14,14 @@ export class LoadNgosAction implements Action {
 
   payload: {
     key: string,
+    name: string,
     refresh: boolean,
   };
 
-  constructor(key: string, refresh = false) {
+  constructor(key: string, name: string = '', refresh = false) {
     this.payload = {
       key,
+      name,
       refresh,
     };
 

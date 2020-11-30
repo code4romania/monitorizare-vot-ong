@@ -5,8 +5,6 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
-
-import { ApiListResponse } from '../../../models/api-list-response.model';
 import { NgoModel } from '../../../models/ngo.model';
 import { NgosService } from '../../../services/ngos.service';
 import { PageState } from '../../../models/page-state.model';
@@ -90,7 +88,24 @@ export class NgoProfileComponent implements OnInit, OnDestroy {
       .saveChanges(values, this.ngo)
       .subscribe((data) => {
         this.toastr.success('Success', 'Changes have been saved');
-      });
+      },
+      (error)=> this.handleError(error));
+  }
+
+  private handleError(error: any) {
+    if (error.status === 400 && error.error) {
+      // handle validation error
+      const validationErrorDictionary = error.error.errors;
+      const errors = [];
+      for (const fieldName in validationErrorDictionary) {
+        if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+          errors.push(validationErrorDictionary[fieldName]);
+        }
+      }
+      this.toastr.error('Validation error', errors.join('\n'));
+    } else {
+      this.toastr.error('Error', error.detail || error.title);
+    }
   }
 
   private addNewNgo(values: { [k: string]: any }) {

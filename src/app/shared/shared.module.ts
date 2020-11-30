@@ -17,6 +17,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
 import { BaseButtonComponent } from './base-button/base-button.component';
 import { BaseCheckboxComponent } from './base-checkbox/base-checkbox.component';
 import { BaseDropdownComponent } from './base-dropdown/base-dropdown.component';
+import { ToggleComponent } from './toggle/toggle.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { BaseDropdownComponent } from './base-dropdown/base-dropdown.component';
     BaseButtonComponent,
     BaseCheckboxComponent,
     BaseDropdownComponent,
+    ToggleComponent
   ],
   declarations: [
     PaginationComponent,
@@ -57,6 +59,7 @@ import { BaseDropdownComponent } from './base-dropdown/base-dropdown.component';
     BaseButtonComponent,
     BaseCheckboxComponent,
     BaseDropdownComponent,
+    ToggleComponent,
   ],
   providers: [],
 })

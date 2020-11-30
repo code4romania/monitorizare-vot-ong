@@ -20,8 +20,8 @@ export class NgosService {
   }
 
   saveChanges(ngo: { [k: string]: any }, info: NgoModel) {
-    const url: string = Location.joinWithSlash(this.baseUrl, '/api/v1/ngo');
-    return this.http.put(url, { ...ngo, idNgo: info.id });
+    const url: string = Location.joinWithSlash(this.baseUrl, `/api/v1/ngo/${info.id}`);
+    return this.http.post(url, { ...ngo, idNgo: info.id });
   }
 
   deleteNgo(id: number) {
