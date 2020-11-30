@@ -74,6 +74,18 @@
       </li>
     </ul>
 
+    <div class="nav-item" ngbDropdown>
+      <span class="nav-link cursor-pointer" tabindex="1" ngbDropdownToggle id="selectedLanguage" role="button">
+        {{ "LANGUAGES" | translate }}
+      </span>
+      <div ngbDropdownMenu aria-labelledby="selectedLanguage" class="dropdown-menu dropdown-menu-right">
+        <a ngbDropdownItem *ngFor="let language of getAvailableLanguages()" (click)="setLanguage(language)"
+           class="cursor-pointer">
+          {{ language | uppercase }}
+        </a>
+      </div>
+    </div>
+
     <div *ngIf="isLoggedIn()" class="nav-item" ngbDropdown>
 
       <span class="nav-link cursor-pointer" tabindex="0" ngbDropdownToggle id="loggedInUser" role="button">
