@@ -189,5 +189,8 @@
 
   "NOTES_EMPTY_ROWS_MESSAGE": "There aren't any notes created",
   "NOTES_SENT_SUCCESS": "Notification sent",
-  "NOTES_SENT_FAILURE": "Something went wrong"
+  "NOTES_SENT_FAILURE": "Something went wrong",
+
+  "LANGUAGE_NAME": "English",
+  "LANGUAGES": "Languages"
 }
