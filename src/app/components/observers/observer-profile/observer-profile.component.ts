@@ -48,7 +48,7 @@ export class ObserverProfileComponent implements OnInit, OnDestroy {
     this.observerProfileForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
       phone: ['', [Validators.required, Validators.pattern(NOT_ONLY_SPACE_LINE)]],
-      password: ['', Validators.required],
+      pin: ['', Validators.required],
     });
   }
 
