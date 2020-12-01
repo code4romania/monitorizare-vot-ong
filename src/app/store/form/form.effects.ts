@@ -1,6 +1,6 @@
 import { of as observableOf } from 'rxjs';
 
-import {catchError, filter, map, mergeAll, mergeMap, switchMap, take, tap, withLatestFrom} from 'rxjs/operators';
+import {catchError, filter, map, mergeAll, mergeMap, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {
   fetchAllFormTabs,
   FormActionTypes,
@@ -53,18 +53,17 @@ export class FormEffects {
     .pipe(
       ofType(FormActionTypes.LOAD_ONE_FORM_FULLY),
       map((a: FullyLoadFormAction) => a.formId),
-        mergeMap(formId =>
+      mergeMap(formId =>
         this.formsService.getForm(formId)
           .pipe(
             map((sections: FormSection[]) => {
-              const form = new Form();
-              form.id = formId;
-              form.formSections = sections;
-              return new FullyLoadFormCompleteAction(form);
-            })
-          )
-      ),
-      catchError(() => observableOf(new FormErrorAction()))
+              const loadedForm = new Form();
+              loadedForm.id = formId;
+              loadedForm.formSections = sections;
+              return new FullyLoadFormCompleteAction(loadedForm);
+            }),
+            catchError(() => observableOf(new FormErrorAction()))
+          ))
     );
 
   @Effect()
@@ -73,9 +72,9 @@ export class FormEffects {
       ofType(FormActionTypes.UPLOAD),
       switchMap((a: FormUploadAction) =>
         this.formsService.saveForm(a.form).pipe(
-          map(_ => new FormUploadCompleteAction())
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormUploadCompleteAction()),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
@@ -84,16 +83,15 @@ export class FormEffects {
       ofType(FormActionTypes.UPLOAD_PUBLISH),
       switchMap((a: FormUploadAction) =>
         this.formsService.saveAndPublishForm(a.form).pipe(
-          map(_ => new FormUploadCompleteAction())
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormUploadCompleteAction()),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
   formUploadSuccess = this.actions
     .pipe(
       ofType(FormActionTypes.UPLOAD_COMPLETE),
-      take(1),
       tap(_ => this.router.navigate(['formulare']))
     );
 
@@ -103,21 +101,20 @@ export class FormEffects {
       ofType(FormActionTypes.UPDATE),
       switchMap((a: FormUpdateAction) =>
         this.formsService.updateForm(a.form).pipe(
-          map(_ => new FormLoadAction(a.form.draft,true))
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormLoadAction(a.form.draft, true)),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
   formDelete = this.actions
     .pipe(
       ofType(FormActionTypes.DELETE),
-      take(1),
       switchMap((a: FormDeleteAction) =>
         this.formsService.deleteForm(a.form.id).pipe(
           map(_ => new FormLoadAction(a.form.draft, true)),
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   fetchAllFormTabs = createEffect(
@@ -125,7 +122,7 @@ export class FormEffects {
       ofType(fetchAllFormTabs),
       withLatestFrom(this.store.select(getFormItems), this.store.select(getFullyLoadedForms)),
       filter(([, formTabs, loadedForms]) => formTabs.length !== Object.keys(loadedForms).length),
-      map(([, formTabs, loadedForms]) =>  formTabs.filter(f => !loadedForms[f.id]).map(f => new FullyLoadFormAction(f.id))),
+      map(([, formTabs, loadedForms]) => formTabs.filter(f => !loadedForms[f.id]).map(f => new FullyLoadFormAction(f.id))),
       mergeAll(),
     )
   )

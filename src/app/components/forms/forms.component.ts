@@ -68,9 +68,10 @@ export class FormsComponent implements OnInit, OnDestroy {
     const modalRef = this._modalService.open(ConfirmationModalComponent)
     modalRef.componentInstance.message = 'Are you sure you want to delete this record?';
     modalRef.result
-      .then(() => this.store.dispatch(new FormDeleteAction(Form.fromMetaData(formDetails))))
-      .catch(() => {
-      });
+      .then(() => {
+        this.store.dispatch(new FormDeleteAction(Form.fromMetaData(formDetails)));
+      })
+      .catch(console.error);
   }
 
   public setFormDraftStatus(formDetails: FormDetails, value: boolean) {
