@@ -12,7 +12,7 @@ import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-
 import { fetchAllFormTabs, FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
 import { DisplayedNote, SectionsState }  from '../answers.model';
-import { getSelectedAnswersAsObject, getSelectedAnswersLoadingStatus, getSpecificThreadByObserver } from '../../store/answer/answer.selectors';
+import { getSelectedAnswersAsObject, getSelectedAnswersLoadingStatus, getSpecificThreadByIds } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
 import { getNotes, getNotesAsObject, getNotesLoadingStatus, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
@@ -47,7 +47,10 @@ export class AnswerDetailsComponent implements OnInit {
     { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'observerArrivalTime', },
   ];
 
-  crtPollingStation$ = this.store.select(getSpecificThreadByObserver, +this.route.snapshot.params.idObserver)
+  crtPollingStation$ = this.store.select(getSpecificThreadByIds, {
+    idObserver: +this.route.snapshot.params.idObserver,
+    idPollingStation: +this.route.snapshot.params.idPollingStation,
+  })
   .pipe(
     tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
     filter(Boolean),

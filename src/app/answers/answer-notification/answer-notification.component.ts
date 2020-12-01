@@ -5,7 +5,7 @@ import { concat, Observable, of, timer } from 'rxjs';
 import { catchError, map, mapTo, pluck, tap } from 'rxjs/operators';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { getSpecificThreadByObserver } from 'src/app/store/answer/answer.selectors';
+import { getSpecificThreadByIds } from 'src/app/store/answer/answer.selectors';
 import { AppState } from 'src/app/store/store.module';
 
 @Component({
@@ -14,7 +14,10 @@ import { AppState } from 'src/app/store/store.module';
   styleUrls: ['./answer-notification.component.scss']
 })
 export class AnswerNotificationComponent {
-  observerName$ = this.store.select(getSpecificThreadByObserver, +this.route.snapshot.params.idObserver)
+  observerName$ = this.store.select(getSpecificThreadByIds, {
+    idObserver: +this.route.snapshot.params.idObserver,
+    idPollingStation: +this.route.snapshot.params.idPollingStation,
+  })
     .pipe(
       tap(v => v === void 0 && this.router.navigate(['/answers'], { relativeTo: this.route })),
       pluck('observerName'),

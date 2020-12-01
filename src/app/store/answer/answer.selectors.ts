@@ -37,9 +37,18 @@ export const getAnswerThreads = createSelector(
   (state: AnswerState) => state.threads ? state.threads : [],
 );
 
-export const getSpecificThreadByObserver = createSelector(
+/** IDs uniquely identifying an answer thread. */
+type AnswerThreadIds = {
+  idObserver: number;
+  idPollingStation: number;
+};
+
+export const getSpecificThreadByIds = createSelector(
   getAnswerThreads,
-  (threads: AnswerThread[], observerId: number) => threads.find(thread => thread.idObserver === observerId)
+  (threads: AnswerThread[], props: AnswerThreadIds) =>
+    threads.find(thread => (thread.idObserver === props.idObserver) &&
+      (thread.idPollingStation == props.idPollingStation)
+    )
 );
 
 export const getSelectedAnswersLoadingStatus = createSelector(
