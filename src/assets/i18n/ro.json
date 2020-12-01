@@ -190,5 +190,8 @@
 
   "NOTES_EMPTY_ROWS_MESSAGE": "Nu există notițe create",
   "NOTES_SENT_SUCCESS": "Notificare trimisă",
-  "NOTES_SENT_FAILURE": "A apărut o eroare"
+  "NOTES_SENT_FAILURE": "A apărut o eroare",
+
+  "LANGUAGE_NAME": "Română",
+  "LANGUAGES": "Schimbă limba"
 }

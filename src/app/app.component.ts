@@ -14,9 +14,10 @@ export class AppComponent {
     if (lang) {
       this.langIndex = this.languages.findIndex((x) => x === lang);
     } else {
-      localStorage.setItem('language', 'en');
+      localStorage.setItem('language', 'ro');
     }
-    translate.setDefaultLang(lang || 'en');
-    translate.use(lang || 'en');
+    translate.addLangs(this.languages);
+    translate.setDefaultLang(lang || 'ro');
+    translate.use(lang || 'ro');
   }
 }
