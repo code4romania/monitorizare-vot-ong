@@ -117,4 +117,14 @@
       max-width: 100%;
     }
   }
+
+  &__video-container {
+    max-height: 45rem;
+    margin-top: 2rem;
+    text-align: center;
+    
+    video {
+      height: 45rem;
+    }
+  }
 }

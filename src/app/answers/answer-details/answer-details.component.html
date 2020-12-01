@@ -83,9 +83,20 @@
     <div class="c-notes-modal__content">
       <p>{{ crtClickedNote.text }}</p>
 
-      <div class="c-notes-modal__image-container" *ngFor="let attachment of crtClickedNote.attachmentsPaths">
-        <img *ngIf="attachment.isImage" [src]="attachment.src">
-      </div>
+      <ng-container *ngFor="let attachment of crtClickedNote.attachmentsPaths">
+        
+        <div *ngIf="attachment.isImage" class="c-notes-modal__image-container">
+          <img [src]="attachment.src">
+        </div>
+        
+        <div *ngIf="!attachment.isImage" class="c-notes-modal__video-container">
+          <video controls>
+            <source [src]="attachment.src">
+          </video>
+        </div>
+        
+      </ng-container>
+      
 
       <app-base-button (click)="activeModal.close()" [disabled]="false" [variant]="BaseButtonVariants.PURPLE"
         [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
