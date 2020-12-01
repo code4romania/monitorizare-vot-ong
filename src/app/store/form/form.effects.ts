@@ -1,4 +1,5 @@
-import {of as observableOf} from 'rxjs';
+import { of as observableOf } from 'rxjs';
+
 import {catchError, filter, map, mergeAll, mergeMap, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {
   fetchAllFormTabs,
@@ -14,13 +15,13 @@ import {
   FullyLoadFormCompleteAction
 } from './form.actions';
 import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
-import {FormSection} from '../../models/form.section.model';
-import {FormsService} from '../../services/forms.service';
-import {Router} from '@angular/router';
-import {Form} from '../../models/form.model';
-import {Store} from '@ngrx/store';
-import {form, getFormItems, getFullyLoadedForms} from './form.selectors';
+import { Injectable } from '@angular/core';
+import { FormSection } from '../../models/form.section.model';
+import { FormsService } from '../../services/forms.service';
+import { Router } from '@angular/router';
+import { Form } from '../../models/form.model';
+import { Store } from '@ngrx/store';
+import { form, getFormItems, getFullyLoadedForms } from './form.selectors';
 
 @Injectable()
 export class FormEffects {
@@ -30,8 +31,7 @@ export class FormEffects {
     private actions: Actions,
     private router: Router,
     private store: Store
-  ) {
-  }
+  ) { }
 
   @Effect()
   loadFormAction = this.actions
@@ -109,9 +109,6 @@ export class FormEffects {
   @Effect()
   formDelete = this.actions
     .pipe(
-      tap(a => {
-        console.log('action', a);
-      }),
       ofType(FormActionTypes.DELETE),
       switchMap((a: FormDeleteAction) =>
         this.formsService.deleteForm(a.form.id).pipe(
