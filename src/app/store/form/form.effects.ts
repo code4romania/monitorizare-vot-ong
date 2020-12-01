@@ -61,10 +61,9 @@ export class FormEffects {
               loadedForm.id = formId;
               loadedForm.formSections = sections;
               return new FullyLoadFormCompleteAction(loadedForm);
-            })
-          )
-      ),
-      catchError(() => observableOf(new FormErrorAction()))
+            }),
+            catchError(() => observableOf(new FormErrorAction()))
+          ))
     );
 
   @Effect()
@@ -73,9 +72,9 @@ export class FormEffects {
       ofType(FormActionTypes.UPLOAD),
       switchMap((a: FormUploadAction) =>
         this.formsService.saveForm(a.form).pipe(
-          map(_ => new FormUploadCompleteAction())
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormUploadCompleteAction()),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
@@ -84,9 +83,9 @@ export class FormEffects {
       ofType(FormActionTypes.UPLOAD_PUBLISH),
       switchMap((a: FormUploadAction) =>
         this.formsService.saveAndPublishForm(a.form).pipe(
-          map(_ => new FormUploadCompleteAction())
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormUploadCompleteAction()),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
@@ -102,20 +101,23 @@ export class FormEffects {
       ofType(FormActionTypes.UPDATE),
       switchMap((a: FormUpdateAction) =>
         this.formsService.updateForm(a.form).pipe(
-          map(_ => new FormLoadAction(a.form.draft, true))
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          map(_ => new FormLoadAction(a.form.draft, true)),
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   @Effect()
   formDelete = this.actions
     .pipe(
+      tap(a => {
+        console.log('action', a);
+      }),
       ofType(FormActionTypes.DELETE),
       switchMap((a: FormDeleteAction) =>
         this.formsService.deleteForm(a.form.id).pipe(
           map(_ => new FormLoadAction(a.form.draft, true)),
-        )),
-      catchError(() => observableOf(new FormErrorAction()))
+          catchError(() => observableOf(new FormErrorAction()))
+        ))
     );
 
   fetchAllFormTabs = createEffect(
