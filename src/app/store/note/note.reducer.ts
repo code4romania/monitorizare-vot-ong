@@ -22,7 +22,7 @@ export function noteReducer(state = noteInitialState, action: NoteActions | any)
         case NoteActionTypes.LOAD_DONE:
             return Object.assign({}, state, {
                 notes: action.payload.map(
-                    n => ({ ...n, attachmentsPaths: n.attachmentsPaths.map(a => ({ src: a, isImage: a.endsWith('.jpg') })) })
+                    n => ({ ...n, attachmentsPaths: n.attachmentsPaths.map(a => ({ src: a, isImage: a.endsWith('.jpg')||a.endsWith('.jpeg') })) })
                 ),
                 // loading: false,
                 error: false
