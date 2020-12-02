@@ -8,7 +8,6 @@
   "NOT_URGENT_HEADER": "The latest answers from the accredited observers",
   "URGENT_SUBHEADER": "They are marked as urgent because they represent signs of fraud or serious irregularities in the reporter's polling station.",
   "NOT_URGENT_SUBHEADER": "They contain each observer's answers, including the flagged ones, which are marked accordingly.",
-  "EMERGENCIES": "Emergencies",
   "ANSWERS": "Answers",
   "STATISTICS": "Statistics",
   "IS_URBAN_AREA": "Is it an urban area",
@@ -44,8 +43,8 @@
 
   "MULTIPLE_CHOICE": "Multiple Choice",
   "SINGLE_CHOICE": "Single Choice",
-  "MULTIPLE_CHOICE_TEXT": "Multiple Choice Text",
-  "SINGLE_CHOICE_TEXT": "Single Choice Text",
+  "MULTIPLE_CHOICE_TEXT": "Multiple Choice With Free Text",
+  "SINGLE_CHOICE_TEXT": "Single Choice With Free Text",
 
   "OPTION_ADD": "Add option",
 
@@ -168,7 +167,7 @@
 
   "VALIDATION_REQUIRED": "%s is required",
 
-  "EXPORT": "Export",
+  "EXPORT": "Export answers",
   "NO_RESULTS": "No results",
   "TRY_AGAIN_MSG": "Please make sure you've typed everything correctly and try again",
   "VIEW_NOTE": "View Note",
@@ -180,7 +179,7 @@
   "ANSWERS_POLLING_STATION": "Polling Station",
   "ANSWERS_NAME": "Name",
   "ANSWERS_PHONE": "Phone",
-  "ANSWERS_DATE_AND_TIME": "Date&Time",
+  "ANSWERS_DATE_AND_TIME": "Date & Time",
   "ANSWERS_LOCATION_TYPE": "Location type",
   "ANSWERS_HEADER_TITLE": "Last responses",
   "ANSWERS_STATION": "Station",
