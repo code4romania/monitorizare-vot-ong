@@ -1,7 +1,7 @@
 import { BaseAnswer } from './base.answer.model';
 import {BaseQuestion} from './base.question.model';
 
-export class FormQuestion extends BaseQuestion {
+export interface FormQuestion extends BaseQuestion {
     id: number;
     formCode: string;
     code: string;

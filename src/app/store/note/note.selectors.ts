@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Note } from '../../models/note.model';
+import { Note, NoteMap } from '../../models/note.model';
 import { getSelectedAnswersAsObject } from '../answer/answer.selectors';
 import { getAllQuestionsGroupedByTabId, getFormItems, getFormItemsById, getFullyLoadedForms } from '../form/form.selectors';
 
@@ -17,7 +17,7 @@ export const getNotes = createSelector(
 
 export const getNotesAsObject = createSelector(
   getNotes,
-  (notes: Note[]) => !notes
+  (notes: Note[]): NoteMap => !notes
     ? {}
     : notes.reduce((acc, crt) => (acc[crt.questionId] = crt, acc), {})
 );
@@ -45,7 +45,7 @@ export const getNotesMergedWithQuestions = createSelector(
             questionCode: correspondingQuestion.code,
             isQuestionFlagged: correspondingQuestion.optionsToQuestions.some(o => o.flagged && selectedAnswers[correspondingQuestion.id]?.answers[o.id]),
             hasCorrespondingQuestion: true,
-          } 
+          }
           : {
             hasCorrespondingQuestion: false,
           }

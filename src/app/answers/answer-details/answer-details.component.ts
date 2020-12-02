@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { asyncScheduler, concat, EMPTY, Observable, of, Subject, combineLatest, merge } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, distinctUntilKeyChanged, endWith, filter, ignoreElements, map, mapTo, scan, share, shareReplay, skip, startWith, subscribeOn, switchMap, take, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
+import { concat, Observable, of, Subject, combineLatest, merge } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, distinctUntilKeyChanged, filter, map, scan, shareReplay, startWith, take, tap } from 'rxjs/operators';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
@@ -11,14 +11,16 @@ import { Form } from 'src/app/models/form.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { fetchAllFormTabs, FullyLoadFormAction } from 'src/app/store/form/form.actions';
 import { AppState } from 'src/app/store/store.module';
-import { DisplayedNote, SectionsState }  from '../answers.model';
-import { getSelectedAnswersAsObject, getSelectedAnswersLoadingStatus, getSpecificThreadByIds } from '../../store/answer/answer.selectors';
+import { SectionsState }  from '../answers.model';
+import { getSelectedAnswersAsObject, getSpecificThreadByIds } from '../../store/answer/answer.selectors';
 import { getFormItems, getFullyLoadedForms } from '../../store/form/form.selectors';
 
-import { getNotes, getNotesAsObject, getNotesLoadingStatus, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
-import { Note } from 'src/app/models/note.model';
+import { getNotesAsObject, getNotesMergedWithQuestions } from '../../store/note/note.selectors';
+import {  NoteMap } from 'src/app/models/note.model';
 import { LoadNotesAction } from 'src/app/store/note/note.actions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {FormSection} from '../../models/form.section.model';
+import {CompletedQuestionMap} from '../../models/completed.question.model';
 
 
 const notesTab = { id: -1, description: 'Notes' };
@@ -60,7 +62,7 @@ export class AnswerDetailsComponent implements OnInit {
 
   notes$: Observable<any> = this.store.select(getNotesMergedWithQuestions).pipe(shareReplay(1));
 
-  formTabs$ = this.store.select(getFormItems).pipe(
+  formTabs$: Observable<Tab[]> = this.store.select(getFormItems).pipe(
     filter(tabs => !!tabs[0]),
     map(tabs => [...tabs, notesTab]),
     shareReplay(1),
@@ -72,7 +74,7 @@ export class AnswerDetailsComponent implements OnInit {
     delay(0),
   );
 
-  sections$ = combineLatest([
+  sections$: Observable<FormSection[]> = combineLatest([
     concat(
       this.formTabs$.pipe(map(tabs => tabs[0]), take(1)),
       this.formTabChanged
@@ -87,21 +89,21 @@ export class AnswerDetailsComponent implements OnInit {
     map(([crtFormTab, fullyLoadedForms]: [FormDetails, { [k: string]: Form }]) => fullyLoadedForms[crtFormTab.id]),
     filter(Boolean),
     tap((loadedForm: Form) => this.crtSelectedTabId = this.crtSelectedTabId !== notesTab.id ? loadedForm.id : this.crtSelectedTabId),
-    map((loadedForm: Form) => loadedForm?.formSections ?? []),
+    map<Form, FormSection[]>((loadedForm: Form) => loadedForm?.formSections ?? []),
 
     debounceTime(0),
     distinctUntilChanged(),
     startWith([]),
-    shareReplay(1),
-  );
+    shareReplay(1)
+  ) as Observable<FormSection[]>;
 
-  sectionsState$ = combineLatest([
-    this.sections$.pipe(filter((sections: any) => !!sections.length)),
-    this.store.select(getSelectedAnswersAsObject).pipe(filter(Boolean)),
-    this.store.select(getNotesAsObject).pipe(filter(Boolean))
+  sectionsState$: Observable<SectionsState> = combineLatest([
+    this.sections$.pipe(filter((sections) => !!sections.length)),
+    this.store.select(getSelectedAnswersAsObject).pipe(filter<CompletedQuestionMap>(Boolean)),
+    this.store.select(getNotesAsObject).pipe(filter<NoteMap>(Boolean))
   ]).pipe(
     scan(
-      (acc, [crtSections, selectedAnswers, formNotes]) => {
+      (acc: SectionsState, [crtSections, selectedAnswers, formNotes]) => {
         for (const section of crtSections) {
           for (const q of section.questions) {
             const isQuestionFlagged = q.optionsToQuestions.some(o => o.flagged && selectedAnswers[q.id]?.answers[o.id]);

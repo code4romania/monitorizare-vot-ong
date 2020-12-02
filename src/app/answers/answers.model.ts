@@ -1,10 +1,11 @@
 import { FormQuestion } from 'src/app/models/form.question.model';
-import { Note } from 'src/app/models/note.model';
+import {Note, NoteMap} from 'src/app/models/note.model';
+import {CompletedQuestionMap} from '../models/completed.question.model';
 
 export interface SectionsState {
-  flaggedQuestions: { [k: string]: FormQuestion },
-  selectedAnswers: { [k: string]: any },
-  formNotes: { [k: string]: Note },
+  flaggedQuestions: { [k: number]: boolean },
+  selectedAnswers: CompletedQuestionMap,
+  formNotes: NoteMap,
 }
 
 export interface DisplayedNote extends Note {

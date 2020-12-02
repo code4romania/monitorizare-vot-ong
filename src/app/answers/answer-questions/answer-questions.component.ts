@@ -1,6 +1,7 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, EventEmitter, Inject, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
-import { DisplayedNote, SectionsState } from '../answers.model';
+import { SectionsState } from '../answers.model';
+import {FormSection} from '../../models/form.section.model';
 
 @Component({
   selector: 'app-answer-questions',
@@ -9,7 +10,7 @@ import { DisplayedNote, SectionsState } from '../answers.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnswerQuestionsComponent implements AfterViewInit {
-  @Input() sections = [];
+  @Input() sections: FormSection[] = [];
   @Input() sectionsState: SectionsState;
   @Input('scrolled-question-id') scrolledQuestionId: number;
 
@@ -25,11 +26,12 @@ export class AnswerQuestionsComponent implements AfterViewInit {
     if (!this.scrolledQuestionId) {
       return;
     }
-    
+
     // This cover the case when from `Notes` tab the user is redirected to a form tab
     // which is different than the previous one, shown exactly before the user had visited the `Notes` tab
     setTimeout(() => {
-      let { nativeElement: divToScrollTo } = this.questionsDivs.find(item => +item.nativeElement.dataset.questionId === this.scrolledQuestionId);
+      let { nativeElement: divToScrollTo } =
+        this.questionsDivs.find(item => +item.nativeElement.dataset.questionId === this.scrolledQuestionId);
       this.scrolledQuestionId = null;
 
       (divToScrollTo as HTMLDivElement).scrollIntoView();
