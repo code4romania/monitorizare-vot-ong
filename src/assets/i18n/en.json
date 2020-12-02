@@ -168,6 +168,7 @@
   "VALIDATION_REQUIRED": "%s is required",
 
   "EXPORT": "Export answers",
+  "EXPORT_NOTES": "Export notes",
   "NO_RESULTS": "No results",
   "TRY_AGAIN_MSG": "Please make sure you've typed everything correctly and try again",
   "VIEW_NOTE": "View Note",

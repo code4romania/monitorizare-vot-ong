@@ -169,6 +169,7 @@
   "VALIDATION_REQUIRED": "%s este necesar",
 
   "EXPORT": "Exportă răspunsurile",
+  "EXPORT_NOTES": "Exportă notele",
   "NO_RESULTS": "Niciun rezultat",
   "TRY_AGAIN_MSG": "Asigură-te că ai scris totul corect și încearcă din nou",
   "VIEW_NOTE": "Vezi nota",

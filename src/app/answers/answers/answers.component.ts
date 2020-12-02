@@ -1,5 +1,5 @@
 
-import { map, take, shareReplay, filter } from 'rxjs/operators';
+import {map, shareReplay, finalize} from 'rxjs/operators';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction, updateFilters, updatePageInfo } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
@@ -22,7 +22,6 @@ import { getCounties } from 'src/app/store/county/county.selectors';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { FormLoadAction } from 'src/app/store/form/form.actions';
 import { FormBuilder } from '@angular/forms';
-import { toFinite } from 'lodash';
 
 const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
   providedIn: 'root',
@@ -30,9 +29,9 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
     const columns: TableColumn[] = [
       { name: 'ANSWERS_POLLING_STATION', propertyName: 'pollingStationName', },
       { name: 'ANSWERS_NAME', propertyName: 'observerName', },
-      { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', }, 
+      { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', },
       { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'observerArrivalTime', canBeSorted: true },
-      { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'locationType', },  
+      { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'locationType', },
     ];
 
     return columns;
@@ -123,6 +122,31 @@ export class AnswersComponent implements OnInit {
       return;
     }
 
+    const filter = this.mapFilterKeys(rawFilters);
+
+    this.isLoading = true;
+    return this.answersService.downloadAnswers(filter).subscribe(res => {
+      this.isLoading = false;
+      FileSaver.saveAs(res, 'data.csv');
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  downloadNotes(rawFilters) {
+    if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
+      return;
+    }
+
+    const filter = this.mapFilterKeys(rawFilters);
+
+    this.isLoading = true;
+    return this.answersService.downloadNotes(filter)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(res => FileSaver.saveAs(res, 'notes-data.csv'));
+  }
+
+  private mapFilterKeys(rawFilters) {
     const filterWordsDict = {
       county: 'county',
       pollingStationNumber: 'pollingStationNumber',
@@ -135,21 +159,16 @@ export class AnswersComponent implements OnInit {
     const filter: AnswersPackFilter = {};
 
     for (const rawKey in rawFilters) {
-      const rawValue = rawFilters[rawKey];
-      const key = filterWordsDict[rawKey];
+      if (rawFilters.hasOwnProperty(rawKey)) {
+        const rawValue = rawFilters[rawKey];
+        const key = filterWordsDict[rawKey];
 
-      if (this.isValidValue(rawValue)) {
-        filter[key] = rawValue;
+        if (this.isValidValue(rawValue)) {
+          filter[key] = rawValue;
+        }
       }
     }
-
-    this.isLoading = true;
-    return this.answersService.downloadAnswers(filter).subscribe(res => {
-      this.isLoading = false;
-      FileSaver.saveAs(res, 'data.csv');
-    }, error => {
-      this.isLoading = false;
-    });
+    return filter;
   }
 
   private translateColumnNames(rawTableColumns: TableColumn[]) {
