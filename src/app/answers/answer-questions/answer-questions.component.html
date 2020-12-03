@@ -7,7 +7,7 @@
     <div
       #question
       [attr.data-question-id]="q.id"
-      *ngFor="let q of section.questions" 
+      *ngFor="let q of section.questions"
       class="c-answer-question"
       [class.is-flagged]="sectionsState.flaggedQuestions[q.id]"
     >
@@ -16,10 +16,11 @@
       <div class="c-answer-question__options">
         <div *ngFor="let o of q.optionsToQuestions" class="c-answer-question__option"
           [class.is-option-text]="o.isFreeText">
-          <ng-container 
+          <ng-container
             *ngTemplateOutlet="
-              o.isFreeText ? textOption : checkboxOption; 
-              context: { question: q, option: o, checked: sectionsState.selectedAnswers[q.id] && sectionsState.selectedAnswers[q.id].answers[o.id] }
+              o.isFreeText ? textOption : checkboxOption;
+              context: { question: q, option: o,
+               answer: sectionsState.selectedAnswers[q.id] && sectionsState.selectedAnswers[q.id].answers[o.id]}
             "></ng-container>
 
           <div class="c-answer-text">{{ o.text }}</div>
@@ -27,15 +28,15 @@
       </div>
 
       <div *ngIf="sectionsState.formNotes[q.id]" class="c-answer-note">
-        <app-base-button 
-          (click)="showNoteClicked.emit({ 
-            text: sectionsState.formNotes[q.id].text, 
+        <app-base-button
+          (click)="showNoteClicked.emit({
+            text: sectionsState.formNotes[q.id].text,
             questionCode: q.code,
             attachmentsPaths: sectionsState.formNotes[q.id].attachmentsPaths
-          })" 
+          })"
           [disabled]="false"
           [variant]="BaseButtonVariants.PURPLE"
-          [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }" 
+          [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"
           class="c-answer-note__button"
           [has-color-inherited]="!!sectionsState.flaggedQuestions[q.id]"
           [class.has-question-flagged]="!!sectionsState.flaggedQuestions[q.id]"
@@ -47,22 +48,22 @@
   </div>
 </div>
 
-<ng-template #checkboxOption let-q="question" let-o="option" let-checked="checked">
+<ng-template #checkboxOption let-q="question" let-o="option" let-answer="answer">
   <app-base-checkbox
     (checkboxChanged)="null"
     [is-disabled]="true"
-    [forceCheck]="checked"
+    [forceCheck]="answer"
     [name]="o.id"
     [is-transparent]="true"
     class="c-answer-checkbox"
   ></app-base-checkbox>
 </ng-template>
 
-<ng-template #textOption let-q="question" let-o="option" let-answer="checked">
-  <textarea 
+<ng-template #textOption let-q="question" let-o="option" let-answer="answer">
+  <textarea
     readonly
-    [name]="q.id" 
-    [id]="q.id" 
+    [name]="q.id"
+    [id]="q.id"
     class="form-control"
-  >{{ answer?.text }}</textarea>
+  >{{ answer?.value }}</textarea>
 </ng-template>

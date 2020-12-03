@@ -1,4 +1,5 @@
-export class BaseAnswer {
+export interface BaseAnswer {
+    id: number;
     idOption: number;
     text: string;
     isFreeText: boolean;

@@ -1,4 +1,4 @@
-export class BaseQuestion {
+export interface BaseQuestion {
     id: number;
     formCode: string;
     code: string;

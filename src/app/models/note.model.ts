@@ -7,3 +7,7 @@ export class Note {
     formId: number;
     questionId: number;
 }
+
+export interface NoteMap {
+  [prop: number]: Note;
+}

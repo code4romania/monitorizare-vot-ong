@@ -5,8 +5,6 @@ import {
   AnswerExtra,
   AnswerExtraConstructorData,
 } from '../../models/answer.extra.model';
-import { LoadNotesAction } from '../note/note.actions';
-import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerState } from './answer.reducer';
 import { AppState } from '../store.module';
 import { Store } from '@ngrx/store';
@@ -86,7 +84,7 @@ export class AnswerEffects {
         params: this.buildLoadAnswerPreviewFilterParams(action.payload),
       }).pipe(
         switchMap(
-          json => json.data.length 
+          json => json.data.length
             ? forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
               map(extraDetailsArr => ({
                 ...json,
@@ -112,7 +110,7 @@ export class AnswerEffects {
         startWith(setAnswersLoadingStatus({ isLoading: true }))
       )
     }),
-    
+
     // catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
   );
 
@@ -141,7 +139,7 @@ export class AnswerEffects {
 
         params = (!!val || val === 0) ? params.append(k, val + '') : params;
       }
-      
+
       // params = isNil(payload.page)
       //   ? params
       //   : params.append('page', payload.page.toString());
@@ -169,7 +167,7 @@ export class AnswerEffects {
   loadDetails = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_DETAILS),
     withLatestFrom(this.store.select(answer)),
-    filter(([, crtAnswerState]) => !!crtAnswerState.selectedAnswer === false),
+    // filter(([, crtAnswerState]) => !!crtAnswerState.selectedAnswer === false),
     map(([action]) => action),
     switchMap((action: LoadAnswerDetailsAction) => {
       const completedAnswears: string = Location.joinWithSlash(

@@ -1,6 +1,6 @@
 import { FormQuestion } from './form.question.model';
 
-export class FormSection {
+export interface FormSection {
     uniqueId: string;
     id: number;
     code: string;
