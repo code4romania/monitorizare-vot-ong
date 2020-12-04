@@ -108,7 +108,7 @@ export class ObserverProfileComponent implements OnInit, OnDestroy {
   private addNewObserver(values: { [k: string]: string }) {
     const observerToAdd: Observer = new Observer({});
     observerToAdd.phone = values.phone;
-    observerToAdd.pin = values.password;
+    observerToAdd.pin = values.pin;
     observerToAdd.name = values.name;
 
     this.observerService.addNewObserver(observerToAdd).subscribe(() => {
