@@ -6,6 +6,6 @@ import { EnvironmentConfig } from 'src/typings';
 
 export const environment: EnvironmentConfig = {
   production: false,
-  observerGuideUrl: 'http://monitorizare-vot-ghid.azurewebsites.net/',
+  observerGuideUrl: 'https://fiecarevot.ro/wp-content/uploads/2020/12/Manual-observatori-FV-parlamentare2020.pdf',
   apiUrl: 'https://#{apiEndpoint}#',
 };
