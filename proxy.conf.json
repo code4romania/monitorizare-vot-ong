@@ -1,8 +1,0 @@
-{
-  "/api/*": {
-    "target": "http://api.votemonitor.org/",
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}

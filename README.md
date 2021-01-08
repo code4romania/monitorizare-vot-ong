@@ -2,7 +2,7 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/monitorizare-vot-ong.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-ong/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-[See the project live](https://app.votemonitor.org/)
+[See the project live](https://app.votemonitor.org)
 
 Monitorizare Vot is a mobile app for monitoring elections by authorized observers. They can use the app in order to offer a real-time snapshot on what is going on at polling stations and they can report on any noticeable irregularities.
 
@@ -18,7 +18,7 @@ The app also has a web version, available for every citizen who wants to report 
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](https://github.com/code4romania/.github/blob/master/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+Help us out by testing this project in the [staging environment](https://monitorizare-vot-ong-git-develop.code4romania.vercel.app). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a **[Feature request]**. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
@@ -50,7 +50,9 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Run `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA. Run `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod. If you also have the backend app running locally, you can run `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
+- `ng serve --environment=qa` or `npm run start-qa` for a dev server with configs for QA.
+- `ng serve --environment=prod` or `npm run start-prod` for a dev server with configs for Prod
+- `ng serve --environment=local` or `npm run start-local` for a dev server with configs for local backend.
 
 ### Code scaffolding
 
@@ -71,7 +73,7 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 ### Staging environment
 
-- preview environments available automatically on each PR powered by [Vercel](https://vercel.com/). Preview environment for `develop` branch: https://monitorizare-vot-ong-git-develop.code4romania.vercel.app/login
+- preview environments available automatically on each PR powered by [Vercel](https://vercel.com/). Preview environment for `develop` branch: https://monitorizare-vot-ong-git-develop.code4romania.vercel.app
 
 ## Feedback
 

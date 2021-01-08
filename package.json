@@ -4,12 +4,11 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve --proxyConfig proxy.conf.json",
+    "start": "ng serve",
     "start-qa": "ng serve --configuration=qa",
     "start-prod": "ng serve --configuration=prod",
     "start-local": "ng serve --configuration=local",
     "build": "ng build --prod",
-    "build-token": "npm run build -- --configuration=token",
     "lint": "tslint \"src/**/*.ts\""
   },
   "private": true,
