@@ -102,6 +102,8 @@
   "SEND_NOTIFICATIONS_TO_ALL": "Trimite notificare către toți observatorii",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Trimite notificare către %d observatori",
   "NOTIFICATION_SEND_CONFIRMATION": "Ești sigur că vrei să trimiți notificarea către %d observator(i)?",
+  "NOTIFICATION_SENT_SUCCESS": "Mesajul a fost trimis cu succes",
+  "NOTIFICATION_SENT_ERROR": "A apărut o eroare la trimiterea mesajului. Încearcă din nou.",
 
   "NOTIFICATION_HISTORY": "Istoric notificări",
   "SENT_BY": "Trimis de",
@@ -161,6 +163,7 @@
   "SELECT_FILE": "Selectaţi fișierul",
   "IMPORT": "Importaţi",
   "SUCCESS": "Succes",
+  "ERROR": "Eroare",
   "FROM": "De la",
   "TO": "Pana la",
   "NGO": "ONG",
