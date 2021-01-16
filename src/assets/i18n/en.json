@@ -101,6 +101,8 @@
   "SEND_NOTIFICATIONS_TO_ALL": "Send notification to all observers",
   "SEND_NOTIFICATIONS_TO_N_OBSERVERS": "Send notification to %d observers",
   "NOTIFICATION_SEND_CONFIRMATION": "You are about to send this message to %d observers. Are you sure?",
+  "NOTIFICATION_SENT_SUCCESS": "The message has been successfully sent",
+  "NOTIFICATION_SENT_ERROR": "Something went wrong while sending the message. Try again.",
 
   "NOTIFICATION_HISTORY": "Notification history",
   "SENT_BY": "Sent by",
@@ -160,6 +162,7 @@
   "SELECT_FILE": "Select file",
   "IMPORT": "Import",
   "SUCCESS": "Success",
+  "ERROR": "Error",
   "FROM": "From",
   "TO": "To",
   "NGO": "NGO",

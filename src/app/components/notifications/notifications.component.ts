@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CountyPollingStationInfo, NotificationsService,} from '../../services/notifications.service';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObserversService} from '../../services/observers.service';
 import {SentGlobalNotificationModel} from '../../models/notification.model';
@@ -9,6 +8,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
 import {filter, first, map, tap} from 'rxjs/operators';
 import {Location} from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface NotificationsRouteParams extends Params {
   toObserverIds: string;
@@ -44,6 +45,7 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private notificationsService: NotificationsService,
     private observersService: ObserversService,
+    private toastrService: ToastrService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private location: Location
@@ -112,13 +114,29 @@ export class NotificationsComponent implements OnInit {
       if (this.usingObserverFilters) {
         this.notificationsService
           .pushNotification({...notification, recipients: this.filteredObserverIds})
-          .subscribe(console.log);
+          .subscribe({
+            next: result => this.onNotificationSubmitted(),
+            error: errorMsg => this.onNotificationError()
+          });
       } else {
         this.notificationsService
           .pushNotificationGlobally(notification)
-          .subscribe(console.log);
+          .subscribe({
+            next: result => this.onNotificationSubmitted(),
+            error: errorMsg => this.onNotificationError()
+          });
       }
     }
+  }
+
+  private onNotificationSubmitted() {
+    this.notificationFormSubmitted = false;
+    this.toastrService.success(this.translate.instant('NOTIFICATION_SENT_SUCCESS'), this.translate.instant('SUCCESS'));
+    this.notificationForm.reset();
+  }
+
+  private onNotificationError() {
+    this.toastrService.error(this.translate.instant('NOTIFICATION_SENT_ERROR'), this.translate.instant('ERROR'));
   }
 
   private createGlobalNotification(): SentGlobalNotificationModel {
