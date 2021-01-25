@@ -126,3 +126,17 @@ export const setAnswersLoadingStatus = createAction(
     '[Answers Page] Set Answer\'s Loading Status',
     props<{ isLoading: boolean }>()
 );
+
+export interface TimerPayload {timer: number}
+
+export const setThreadsRecentlyRefreshedTimer = createAction(
+  '[Answers Page] Store timer when Answer Threads were recently refreshed',
+  props<TimerPayload>()
+);
+
+export interface RecentlyRefreshedPayload {recentlyRefreshed: boolean}
+
+export const setThreadsRecentlyRefreshed = createAction(
+  '[Answers Page] Answer Threads were recently refreshed',
+  props<RecentlyRefreshedPayload>()
+);

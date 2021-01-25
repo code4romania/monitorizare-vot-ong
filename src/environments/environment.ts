@@ -10,4 +10,5 @@ export const environment: EnvironmentConfig = {
   observerGuideUrl:
     'https://fiecarevot.ro/wp-content/uploads/2020/12/Manual-observatori-FV-parlamentare2020.pdf',
   apiUrl: 'https://api.votemonitor.org/',
+  answersRefreshTimeMs: 60000
 };

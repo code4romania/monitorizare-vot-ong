@@ -21,15 +21,14 @@ import {
   LoadAnswerPreviewAction,
   LoadAnswerPreviewDoneAction,
   LoadAnswerPreviewErorrAction,
+  RecentlyRefreshedPayload,
   setAnswersLoadingStatus,
+  setThreadsRecentlyRefreshed,
+  setThreadsRecentlyRefreshedTimer,
   updatePageInfo,
 } from './answer.actions';
-import { HttpParams } from '@angular/common/http';
-import { AnswerFilters } from '../../models/answer.filters.model';
-import { isNil } from 'lodash';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AnswerThread } from '../../models/answer.thread.model';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
 import { answer } from './answer.selectors';
@@ -53,7 +52,8 @@ export class AnswerEffects {
   loadThreads = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_PREVIEW),
     withLatestFrom(this.store.select(answer)),
-    filter(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) => action.payload.refresh || !!crtState.threads === false),
+    filter(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) =>
+      !!crtState.threads === false || action.payload.refresh || crtState.threadsRecentlyRefreshed === false),
     map(([action, crtState]: [LoadAnswerPreviewAction, AnswerState]) => {
       const { payload: currentPayload } = action;
       const updatedPayload = {};
@@ -69,20 +69,7 @@ export class AnswerEffects {
     }),
 
     switchMap((action: LoadAnswerPreviewAction) => {
-      const answearsUrl: string = Location.joinWithSlash(
-        this.baseUrl,
-        '/api/v1/answers'
-      );
-
-      return this.http.get<{
-        data: AnswerThread[];
-        totalItems: number;
-        totalPages: number;
-        page: number,
-        pageSize: number,
-      }>(answearsUrl, {
-        params: this.buildLoadAnswerPreviewFilterParams(action.payload),
-      }).pipe(
+      return this.answerService.getAnswers(action.payload).pipe(
         switchMap(
           json => json.data.length
             ? forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
@@ -102,6 +89,7 @@ export class AnswerEffects {
                 json.totalPages,
               ),
               setAnswersLoadingStatus({ isLoading: false }),
+              setThreadsRecentlyRefreshed({recentlyRefreshed: true}),
               updatePageInfo({ page: json.page, pageSize: json.pageSize })
             ]
         ),
@@ -113,55 +101,6 @@ export class AnswerEffects {
 
     // catchError(() => observableOf(new LoadAnswerPreviewErorrAction()))
   );
-
-  shouldLoad(page: number, pageSize: number, arrayLen) {
-    if (page === undefined || pageSize === undefined) {
-      return true;
-    }
-
-    return page * pageSize > arrayLen;
-  }
-
-  private buildLoadAnswerPreviewFilterParams(payload: {
-    page: number;
-    pageSize: number;
-    refresh: boolean;
-    answerFilters?: AnswerFilters;
-  }): HttpParams {
-    // adding these upfront since they will always be present
-    let params = new HttpParams()
-      .append('page', payload.page + '')
-      .append('pageSize', payload.pageSize + '');
-
-    if (payload && payload.answerFilters) {
-      for (const k in payload.answerFilters) {
-        const val = payload.answerFilters[k];
-
-        params = (!!val || val === 0) ? params.append(k, val + '') : params;
-      }
-
-      // params = isNil(payload.page)
-      //   ? params
-      //   : params.append('page', payload.page.toString());
-      // params = isNil(payload.pageSize)
-      //   ? params
-      //   : params.append('pageSize', payload.pageSize.toString());
-      // params = isNil(payload.answerFilters.county)
-      //   ? params
-      //   : params.append('county', payload.answerFilters.county);
-      // params = isNil(payload.answerFilters.pollingStationNumber)
-      //   ? params
-      //   : params.append('pollingStationNumber', payload.answerFilters.pollingStationNumber);
-      // params = isNil(payload.answerFilters.observerPhone)
-      //   ? params
-      //   : params.append('observerPhoneNumber', payload.answerFilters.observerPhone.toString());
-      // params = isNil(payload.urgent)
-      //   ? params
-      //   : params.append('urgent', payload.urgent.toString());
-    }
-
-    return params;
-  }
 
   @Effect()
   loadDetails = this.actions.pipe(
@@ -188,24 +127,6 @@ export class AnswerEffects {
     catchError(() => observableOf(new LoadAnswerDetailsErrorAction()))
   );
 
-  // @Effect()
-  // loadNotes = this.actions.pipe(
-  //   ofType(AnswerActionTypes.LOAD_DETAILS),
-  //   map(
-  //     (a: LoadAnswerDetailsAction) =>
-  //       new LoadNotesAction(a.payload.sectionId, a.payload.observerId)
-  //   )
-  // );
-
-  // @Effect()
-  // loadExtraFromAnswer = this.actions.pipe(
-  //   ofType(AnswerActionTypes.LOAD_DETAILS),
-  //   map(
-  //     (a: LoadAnswerDetailsAction) =>
-  //       new LoadAnswerExtraAction(a.payload.observerId, a.payload.sectionId)
-  //   )
-  // );
-
   @Effect()
   loadExtra = this.actions.pipe(
     ofType(AnswerActionTypes.LOAD_EXTRA),
@@ -226,5 +147,26 @@ export class AnswerEffects {
     map((json) => (json ? new AnswerExtra(json) : undefined)),
     map((extra) => new LoadAnswerExtraDoneAction(extra)),
     catchError(() => observableOf(new LoadAnswerExtraErrorAction()))
+  );
+
+  /**
+   * Timer that resets itself after a preset time
+   */
+  @Effect()
+  threadsRecentlyRefreshedTimer = this.actions.pipe(
+    ofType(setThreadsRecentlyRefreshed),
+    withLatestFrom(this.store.select(answer)),
+    map(([{recentlyRefreshed}, {threadsRecentlyRefreshedTimer}]: [RecentlyRefreshedPayload, AnswerState]) => {
+      if (threadsRecentlyRefreshedTimer) {
+        clearTimeout(threadsRecentlyRefreshedTimer);
+      }
+
+      const ms = environment.answersRefreshTimeMs || 60000;
+      const timer = recentlyRefreshed
+        ? setTimeout(() => this.store.dispatch(setThreadsRecentlyRefreshedTimer({timer: null})), ms)
+        : null;
+
+      return setThreadsRecentlyRefreshedTimer({timer});
+    })
   );
 }

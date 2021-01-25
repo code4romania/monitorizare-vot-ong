@@ -5,13 +5,15 @@ import { ApiService, QueryParamBuilder } from '../core/apiService/api.service';
 import { AnswerExtraConstructorData } from '../models/answer.extra.model';
 import {HttpParams} from '@angular/common/http';
 import {first} from 'rxjs/operators';
+import {AnswerThread} from '../models/answer.thread.model';
+import {AnswerFilters} from '../models/answer.filters.model';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AnswersService {
 	private baseUrl: string = environment.apiUrl;
-	private extraDetailsURL = this.baseUrl + '/api/v1/answers/pollingStationInfo';
+  private extraDetailsURL = Location.joinWithSlash(this.baseUrl, '/api/v1/answers/pollingStationInfo');
 
 	constructor(private http: ApiService) { }
 
@@ -46,6 +48,45 @@ export class AnswersService {
 			},
 		});
 	}
+
+
+  getAnswers(payload) {
+    const answersUrl: string = Location.joinWithSlash(this.baseUrl, '/api/v1/answers');
+
+    return this.http.get<{
+      data: AnswerThread[];
+      totalItems: number;
+      totalPages: number;
+      page: number,
+      pageSize: number,
+    }>(answersUrl, {
+      params: this.buildLoadAnswerPreviewFilterParams(payload),
+    });
+  }
+
+  private buildLoadAnswerPreviewFilterParams(payload: {
+    page: number;
+    pageSize: number;
+    refresh: boolean;
+    answerFilters?: AnswerFilters;
+  }): HttpParams {
+    // adding these upfront since they will always be present
+    let params = new HttpParams()
+      .append('page', payload.page + '')
+      .append('pageSize', payload.pageSize + '');
+
+    if (payload && payload.answerFilters) {
+      for (const k in payload.answerFilters) {
+        if (payload.answerFilters.hasOwnProperty(k)) {
+          const val = payload.answerFilters[k];
+
+          params = (!!val || val === 0) ? params.append(k, val + '') : params;
+        }
+      }
+    }
+
+    return params;
+  }
 }
 
 export interface AnswersPackFilter {

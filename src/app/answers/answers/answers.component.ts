@@ -113,6 +113,10 @@ export class AnswersComponent implements OnInit {
     this.store.dispatch(new FormLoadAction());
   }
 
+  refreshAnswers() {
+    this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
+  }
+
   private isValidValue(value) {
     return value !== null && value !== '';
   }

@@ -3,11 +3,21 @@ import { Note } from '../../models/note.model';
 import { shouldLoadPage } from '../../shared/pagination.service';
 import { AnswerThread } from '../../models/answer.thread.model';
 import { CompletedQuestion } from '../../models/completed.question.model';
-import { AnswerActions, AnswerActionTypes, setAnswersLoadingStatus, updateFilters, updatePageInfo } from './answer.actions';
+import {
+  AnswerActions,
+  AnswerActionTypes,
+  setAnswersLoadingStatus,
+  setThreadsRecentlyRefreshedTimer,
+  TimerPayload,
+  updateFilters,
+  updatePageInfo
+} from './answer.actions';
 import { AnswerFilters } from '../../models/answer.filters.model';
 import { ActionCreator } from '@ngrx/store';
 export class AnswerState {
     threads: AnswerThread[];
+    threadsRecentlyRefreshed = false;
+    threadsRecentlyRefreshedTimer: number = null;
     urgent: boolean = undefined;
     page = 1;
     pageSize = 10;
@@ -35,9 +45,9 @@ export class AnswerState {
 }
 export let initialAnswerState: AnswerState = new AnswerState();
 
-export function answerReducer(state = initialAnswerState, action: AnswerActions | any) {
+export function answerReducer(state = initialAnswerState, action: AnswerActions | any): AnswerState {
     switch (action.type) {
-        
+
         case setAnswersLoadingStatus.type:
             return {
                 ...state,
@@ -46,7 +56,7 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions 
 
         case updateFilters.type: {
             const { type, ...payload } = action;
-            
+
             return {
                 ...state,
                 answerFilters: payload,
@@ -110,6 +120,13 @@ export function answerReducer(state = initialAnswerState, action: AnswerActions 
                 answerExtraLoading: false,
                 selectedError: true
             });
+        case setThreadsRecentlyRefreshedTimer.type:
+            const {timer} = action as TimerPayload;
+            return {
+              ...state,
+              threadsRecentlyRefreshed: timer !== null,
+              threadsRecentlyRefreshedTimer: timer
+            };
         default:
             return state;
     }

@@ -5,4 +5,5 @@ export interface EnvironmentConfig {
     production: boolean;
     observerGuideUrl: string;
     apiUrl: string;
+    answersRefreshTimeMs?: number;
 }
