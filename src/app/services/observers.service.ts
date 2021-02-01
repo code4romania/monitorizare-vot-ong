@@ -27,7 +27,7 @@ export class ObserversService {
       this.baseUrl,
       '/api/v1/observer'
     );
-    return this.http.put(url, { ...observer, idObserver: info.id });
+    return this.http.put(url, { ...observer, observerId: info.id });
   }
 
   deleteObserver(id: string) {
