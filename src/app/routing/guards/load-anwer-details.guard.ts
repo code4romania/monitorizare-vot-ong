@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class AnswerDetailsGuard implements CanActivate {
     constructor(private store: Store<AppState>) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.store.dispatch(new LoadAnswerDetailsAction(route.params['idObserver'], route.params['idPollingStation']));
+        this.store.dispatch(new LoadAnswerDetailsAction(route.params['observerId'], route.params['pollingStationId']));
         return true;
     }
 }

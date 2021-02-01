@@ -91,7 +91,7 @@ export class AnswersService {
 
 export interface AnswersPackFilter {
 	idNgo?: number;
-	idObserver?: number;
+	observerId?: number;
 	phoneObserver?: number;
 	pollingStationNumber?: number;
 	county?: string;
