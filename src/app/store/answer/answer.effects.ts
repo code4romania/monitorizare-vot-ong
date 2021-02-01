@@ -72,7 +72,7 @@ export class AnswerEffects {
       return this.answerService.getAnswers(action.payload).pipe(
         switchMap(
           json => json.data.length
-            ? forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.idObserver, a.idPollingStation))).pipe(
+            ? forkJoin(json.data.map(a => this.answerService.fetchExtraDetailsForObserver(a.observerId, a.pollingStationId))).pipe(
               map(extraDetailsArr => ({
                 ...json,
                 data: json.data.map((a, i) => ({ ...a, ...extraDetailsArr[i] }))
@@ -116,8 +116,8 @@ export class AnswerEffects {
 
       return this.http.get<CompletedQuestion[]>(completedAnswears, {
         body: {
-          idPollingStation: action.payload.sectionId,
-          idObserver: action.payload.observerId,
+          pollingStationId: action.payload.sectionId,
+          observerId: action.payload.observerId,
         },
       });
     }),

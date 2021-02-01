@@ -107,9 +107,9 @@ export class AnswersComponent implements OnInit {
     this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
   }
 
-  onRowClicked({ idObserver, idPollingStation }: AnswerThread) {
-    this.router.navigate([idObserver, idPollingStation], { relativeTo: this.activatedRoute });
-    this.store.dispatch(new LoadAnswerDetailsAction(idObserver, idPollingStation));
+  onRowClicked({ observerId, pollingStationId }: AnswerThread) {
+    this.router.navigate([observerId, pollingStationId], { relativeTo: this.activatedRoute });
+    this.store.dispatch(new LoadAnswerDetailsAction(observerId, pollingStationId));
     this.store.dispatch(new FormLoadAction());
   }
 

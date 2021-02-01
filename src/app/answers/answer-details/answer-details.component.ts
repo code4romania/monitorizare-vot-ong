@@ -50,8 +50,8 @@ export class AnswerDetailsComponent implements OnInit {
   ];
 
   crtPollingStation$ = this.store.select(getSpecificThreadByIds, {
-    idObserver: +this.route.snapshot.params.idObserver,
-    idPollingStation: +this.route.snapshot.params.idPollingStation,
+    observerId: +this.route.snapshot.params.observerId,
+    pollingStationId: +this.route.snapshot.params.pollingStationId,
   })
   .pipe(
     tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
@@ -139,9 +139,9 @@ export class AnswerDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const { idObserver, idPollingStation } = this.route.snapshot.params;
+    const { observerId, pollingStationId } = this.route.snapshot.params;
 
-    this.store.dispatch(new LoadNotesAction(+idPollingStation, +idObserver));
+    this.store.dispatch(new LoadNotesAction(+pollingStationId, +observerId));
   }
 
   onTabClicked (tab: Tab) {

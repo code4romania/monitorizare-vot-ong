@@ -41,15 +41,15 @@ export const getAnswerThreads = createSelector(
 
 /** IDs uniquely identifying an answer thread. */
 type AnswerThreadIds = {
-  idObserver: number;
-  idPollingStation: number;
+  observerId: number;
+  pollingStationId: number;
 };
 
 export const getSpecificThreadByIds = createSelector(
   getAnswerThreads,
   (threads: AnswerThread[], props: AnswerThreadIds) =>
-    threads.find(thread => (thread.idObserver === props.idObserver) &&
-      (thread.idPollingStation == props.idPollingStation)
+    threads.find(thread => (thread.observerId === props.observerId) &&
+      (thread.pollingStationId == props.pollingStationId)
     )
 );
 

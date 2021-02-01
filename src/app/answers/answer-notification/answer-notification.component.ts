@@ -15,8 +15,8 @@ import { AppState } from 'src/app/store/store.module';
 })
 export class AnswerNotificationComponent {
   observerName$ = this.store.select(getSpecificThreadByIds, {
-    idObserver: +this.route.snapshot.params.idObserver,
-    idPollingStation: +this.route.snapshot.params.idPollingStation,
+    observerId: +this.route.snapshot.params.observerId,
+    pollingStationId: +this.route.snapshot.params.pollingStationId,
   })
     .pipe(
       tap(v => v === void 0 && this.router.navigate(['/answers'], { relativeTo: this.route })),
@@ -44,7 +44,7 @@ export class AnswerNotificationComponent {
       ...values,
       channel: 'Firebase',
       from: 'Monitorizare Vot',
-      recipients: [this.route.snapshot.params.idObserver]
+      recipients: [this.route.snapshot.params.observerId]
     }).pipe(
       mapTo('NOTES_SENT_SUCCESS'),
       catchError(err => of('NOTES_SENT_FAILURE')),  

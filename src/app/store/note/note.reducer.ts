@@ -4,8 +4,8 @@ export class NoteState {
     notes: Note[];
     loading = false;
     error = false;
-    idObserver: number = undefined;
-    idPollingStation: number = undefined;
+    observerId: number = undefined;
+    pollingStationId: number = undefined;
 }
 export let noteInitialState = new NoteState();
 
@@ -16,8 +16,8 @@ export function noteReducer(state = noteInitialState, action: NoteActions | any)
                 ...state,
                 // loading: true,
                 error: false,
-                idObserver: action.payload.idObserver,
-                idPollingStation: action.payload.idPollingStation
+                observerId: action.payload.observerId,
+                pollingStationId: action.payload.pollingStationId
             };
         case NoteActionTypes.LOAD_DONE:
             return Object.assign({}, state, {

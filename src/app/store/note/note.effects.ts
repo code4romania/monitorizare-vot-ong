@@ -35,7 +35,7 @@ export class NoteEffects {
     withLatestFrom(this.store.select(note)),
     distinctUntilChanged(
       ([prevAction]: [LoadNotesAction, NoteState], [crtAction, crtState]: [LoadNotesAction, NoteState]) => 
-        +prevAction.payload.idPollingStation === +crtAction.payload.idPollingStation && !!crtState === true
+        +prevAction.payload.pollingStationId === +crtAction.payload.pollingStationId && !!crtState === true
     ),
     map(([action]) => action),
     switchMap((a: LoadNotesAction) => {

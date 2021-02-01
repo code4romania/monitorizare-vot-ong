@@ -12,11 +12,11 @@ const routes: Routes = [
     component: AnswersComponent,
   },
   {
-    path: ':idObserver/:idPollingStation',
+    path: ':observerId/:pollingStationId',
     component: AnswerDetailsComponent
   },
   {
-    path: ':idObserver/:idPollingStation/notification',
+    path: ':observerId/:pollingStationId/notification',
     component: AnswerNotificationComponent,
   },
 ];
