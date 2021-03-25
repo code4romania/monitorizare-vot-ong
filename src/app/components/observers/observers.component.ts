@@ -80,7 +80,6 @@ export class ObserversComponent implements OnInit, OnDestroy {
   selectedObserversIds: Array<string> = [];
   listTypes = ListType;
   anyObservers = false;
-  pageSize = 9;
   totalCount = 0;
 
   newPassword = '';

@@ -1,16 +1,18 @@
 import { Component, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit, OnChanges {
+export class PaginationComponent implements OnChanges {
 
   @Input()
   page: number;
+
   @Input()
-  pageSize: number;
+  pageSize = environment.pageSize;
 
   @Input()
   totalItems: number;
@@ -25,13 +27,8 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   startingindex: number;
   endingIndex: number;
-  numberOfDynamicButtons = 0;
+  maxPage = 0;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-  
   ngOnChanges(changes: SimpleChanges) {
     if (!(changes.page || changes.pageSize || changes.totalItems)) {
       return;
@@ -43,40 +40,12 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.endingIndex > this.totalItems){
       this.endingIndex = this.totalItems;
     }
-    
+
     if ((this.totalItems || this.totalItems === 0) && this.pageSize) {
-      this.numberOfDynamicButtons = Math.ceil(this.totalItems / this.pageSize);
+      this.maxPage = Math.ceil(this.totalItems / this.pageSize);
     }
 
     this.isHidden = this.totalItems === 0;
-  }
-
-  canNextPage() {
-    if (this.nextEnabled === false) {
-      return false;
-    }
-    return !(this.totalItems !== undefined && this.pageSize * this.page >= this.totalItems);
-
-  }
-  canPrevPage(){
-    return this.page !== 1;
-
-  }
-  nextPage() {
-    if (this.canNextPage()) {
-      this.pageChanged.emit({
-        page: this.page + 1,
-        pageSize: this.pageSize
-      });
-    }
-  }
-  prevPage() {
-    if (this.canPrevPage()){
-      this.pageChanged.emit({
-        page: this.page - 1,
-        pageSize: this.pageSize
-      });
-    }
   }
 
   navigateToPage (nextPage) {
@@ -84,5 +53,16 @@ export class PaginationComponent implements OnInit, OnChanges {
       page: nextPage,
       pageSize: this.pageSize,
     });
+  }
+
+  range(page, maxPage) {
+    const start = Math.max(1, page - 2);
+    const end = Math.min(page + 2, maxPage);
+
+    const range = [];
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+    return range;
   }
 }

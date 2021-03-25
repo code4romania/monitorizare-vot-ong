@@ -13,14 +13,14 @@ import {
   updatePageInfo
 } from './answer.actions';
 import { AnswerFilters } from '../../models/answer.filters.model';
-import { ActionCreator } from '@ngrx/store';
+import {environment} from '../../../environments/environment';
 export class AnswerState {
     threads: AnswerThread[];
     threadsRecentlyRefreshed = false;
     threadsRecentlyRefreshedTimer: number = null;
     urgent: boolean = undefined;
     page = 1;
-    pageSize = 10;
+    pageSize = environment.pageSize;
     totalItems: number = undefined;
     totalPages: number = undefined;
     threadsLoading = false;

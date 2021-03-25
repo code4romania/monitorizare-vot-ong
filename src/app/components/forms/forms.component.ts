@@ -15,6 +15,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ConfirmationModalComponent} from 'src/app/shared/confirmation-modal/confirmation-modal.component';
 import {Form} from "../../models/form.model";
 import {BASE_BUTTON_VARIANTS, Variants} from "../../shared/base-button/base-button.component";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-forms',
@@ -23,7 +24,7 @@ import {BASE_BUTTON_VARIANTS, Variants} from "../../shared/base-button/base-butt
 })
 export class FormsComponent implements OnInit, OnDestroy {
   formsList: FormDetails[];
-  pageSize = 10;
+  pageSize = environment.pageSize;
   totalCount = 0;
   page = 1;
   draftSelected: boolean = false;
