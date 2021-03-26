@@ -1,5 +1,5 @@
 <div class="c-pagination__buttons">
-  <button 
+  <button
     class="is-base-cell c-pagination__button c-pagination__button--direction"
     [class.c-pagination__button--disabled]="page === 1"
     [disabled]="page === 1"
@@ -10,7 +10,7 @@
       <path d="M15 14.1663L10.8333 9.99967L15 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
   </button>
-  <button 
+  <button
     class="is-base-cell c-pagination__button c-pagination__button--direction"
     [class.c-pagination__button--disabled]="page === 1"
     [disabled]="page === 1"
@@ -18,34 +18,38 @@
   >
     <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 9L1 5L5 1" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>    
+    </svg>
   </button>
-  
+
+  <span *ngIf="page > 3" class="ml-2">...</span>
+
   <button
-    *ngFor="let _ of [].constructor(numberOfDynamicButtons); index as btnIdx"
-    (click)="navigateToPage(btnIdx + 1)"
+    *ngFor="let btnPage of range(page, maxPage)"
+    (click)="navigateToPage(btnPage)"
     class="is-base-cell c-pagination__button"
-    [disabled]="btnIdx + 1 === page"
-    [class.c-pagination__button--selected]="btnIdx + 1 === page"
+    [disabled]="btnPage === page"
+    [class.c-pagination__button--selected]="btnPage === page"
   >
-    {{ btnIdx + 1 }}
+    {{ btnPage }}
   </button>
-  
-  <button 
+
+  <span *ngIf="page < maxPage - 2" class="ml-2">...</span>
+
+  <button
     class="is-base-cell c-pagination__button c-pagination__button--direction"
-    [class.c-pagination__button--disabled]="page === numberOfDynamicButtons"
-    [disabled]="page === numberOfDynamicButtons"
+    [class.c-pagination__button--disabled]="page === maxPage"
+    [disabled]="page === maxPage"
     (click)="navigateToPage(page + 1)"
   >
     <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1.5 9L5.5 5L1.5 1" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <button 
+  <button
     class="is-base-cell c-pagination__button c-pagination__button--direction"
-    [class.c-pagination__button--disabled]="page === numberOfDynamicButtons"
-    [disabled]="page === numberOfDynamicButtons"
-    (click)="navigateToPage(numberOfDynamicButtons)"
+    [class.c-pagination__button--disabled]="page === maxPage"
+    [disabled]="page === maxPage"
+    (click)="navigateToPage(maxPage)"
   >
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10.8333 14.1663L15 9.99967L10.8333 5.83301" stroke="#A5A5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

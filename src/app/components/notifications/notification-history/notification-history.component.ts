@@ -6,8 +6,9 @@ import {NotificationsState, selectNotifications} from '../../../store/notificati
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {TableColumn, TableColumnTranslated} from '../../../table/table.model';
+import {environment} from '../../../../environments/environment';
 
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = environment.pageSize;
 const TABLE_COLUMNS: TableColumn[] = [
   { name: 'SENT_BY', propertyName: 'senderAccount'},
   { name: 'NGO', propertyName: 'senderNgoName'},

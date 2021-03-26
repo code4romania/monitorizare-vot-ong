@@ -6,4 +6,5 @@ export interface EnvironmentConfig {
     observerGuideUrl: string;
     apiUrl: string;
     answersRefreshTimeMs?: number;
+    pageSize?: number;
 }
