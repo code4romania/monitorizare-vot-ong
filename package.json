@@ -34,7 +34,7 @@
     "bootstrap": "^4.5.2",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "ng-multiselect-dropdown": "^0.2.6",
     "ngx-toastr": "^12.1.0",
     "rxjs": "~6.6.0",
