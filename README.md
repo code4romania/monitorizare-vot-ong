@@ -30,7 +30,7 @@ Angular 9
 
 Typescript 3.5.3
 
-Swagger docs for the API are available [here](https://api.votemonitor.org/swagger/index.html).
+Swagger docs for the API are available [here](https://api.votemonitor.org/swagger/index.html). To authenticate please login using the test credentials via the `POST/api/v2/access/authorize` endpoint. Add the received auth token to authorize calls in Swagger, in the format: `Bearer AUTH_CODE_HERE`.
 
 ## Repos and projects
 
