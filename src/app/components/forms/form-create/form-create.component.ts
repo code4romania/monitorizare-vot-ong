@@ -1,20 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Form} from '../../../models/form.model';
-import {Location} from '@angular/common';
-import {FormSection} from '../../../models/form.section.model';
-import {AppState} from '../../../store/store.module';
-import {Store} from '@ngrx/store';
-import {FormUploadAction, FormUploadPublishAction, FullyLoadFormAction} from '../../../store/form/form.actions';
-import {Subscription} from 'rxjs';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import {moveItemInFormArray} from '../../utils';
-import {initFormFormGroup, initOptionFormGroup, initQuestionFormGroup, initSectionFormGroup} from '../form-groups-builder';
-import {FormQuestion} from '../../../models/form.question.model';
-import {BaseAnswer} from '../../../models/base.answer.model';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ɵɵsetComponentScope } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Form } from '../../../models/form.model';
+import { Location } from '@angular/common';
+import { FormSection } from '../../../models/form.section.model';
+import { AppState } from '../../../store/store.module';
+import { Store } from '@ngrx/store';
+import { FormActionTypes, FormUploadAction, FormUploadCompleteAction, FormUploadPublishAction, FullyLoadFormAction } from '../../../store/form/form.actions';
+import { Subject, Subscription } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { moveItemInFormArray } from '../../utils';
+import { initFormFormGroup, initOptionFormGroup, initQuestionFormGroup, initSectionFormGroup } from '../form-groups-builder';
+import { FormQuestion } from '../../../models/form.question.model';
+import { BaseAnswer } from '../../../models/base.answer.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { FormEffects } from 'src/app/store/form/form.effects';
 
 @Component({
   selector: 'app-form-create',
@@ -24,27 +27,28 @@ import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/co
 export class FormCreateComponent implements OnInit, OnDestroy {
 
   readonly FORM_ID_URL_PARAM = 'formId';
-
   title: string;
-
   formDetailsFormGroup: FormGroup;
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  formDataSubscription: Subscription;
 
   constructor(private location: Location,
     private store: Store<AppState>,
+    private FormEffects$: FormEffects,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private _modalService: NgbModal) { }
 
   ngOnInit() {
     this.formDetailsFormGroup = initFormFormGroup(this.formBuilder);
     this.title = 'Adauga formular nou';
+    this.listenToActionSteam();
 
     this.activatedRoute.paramMap.subscribe(params => {
       const hasFormId = params.has(this.FORM_ID_URL_PARAM);
       if (!hasFormId) {
-        return ;
+        return;
       }
 
       const targetFormId = +params.get(this.FORM_ID_URL_PARAM);
@@ -84,12 +88,15 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   }
 
   private handleLoadedFormData(formId: number) {
-    this.formDataSubscription = this.store
+    this.store
       .select(state => state.form.fullyLoaded)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
       .subscribe(loadedForms => {
         const correspondingForm = loadedForms[formId];
         if (!correspondingForm) {
-          return ;
+          return;
         }
 
         this.patchReactiveForm(correspondingForm);
@@ -135,6 +142,29 @@ export class FormCreateComponent implements OnInit, OnDestroy {
     this.store.dispatch(new FormUploadPublishAction(form));
   }
 
+  private listenToActionSteam(): void {
+    this.FormEffects$.formUpload.pipe(
+      filter(action => action.type === FormActionTypes.UPLOAD_COMPLETE),
+      takeUntil(this.destroy$)
+    ).subscribe(res => {
+      if (res.type === new FormUploadCompleteAction().type) {
+        this.routeBackToList();
+      }
+    });
+    this.FormEffects$.formUploadPublish.pipe(
+      filter(action => action.type === FormActionTypes.UPLOAD_COMPLETE),
+      takeUntil(this.destroy$)
+    ).subscribe(res => {
+      if (res.type === new FormUploadCompleteAction().type) {
+        this.routeBackToList();
+      }
+    });
+  }
+
+  private routeBackToList(): void {
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+  }
+
   onSectionDelete(index: number) {
     const modalRef = this._modalService.open(ConfirmationModalComponent)
     modalRef.componentInstance.message = 'Are you sure you want to delete this record?';
@@ -143,9 +173,8 @@ export class FormCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.formDataSubscription) {
-      this.formDataSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   onReorder(event: CdkDragDrop<FormSection[]>) {
