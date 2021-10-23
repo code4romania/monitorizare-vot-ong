@@ -187,7 +187,7 @@
   "IMPORT_COUNTRY": "Import",
   "POLLING_STATION_FILTER_BY_NAME": "name",
   "FILTER_BY_POLLING_NAME": "type the county name or code",
-  "NO_POLLING_STATION": "there are zero counties",
+  "NO_POLLING_STATIONS": "there are zero counties",
 
   "ANSWERS_POLLING_STATION": "Polling Station",
   "ANSWERS_NAME": "Name",
