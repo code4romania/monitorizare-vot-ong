@@ -1,0 +1,43 @@
+.btn-group {
+  app-base-button {
+    margin-left:1rem;
+  }
+}
+.filter-container {
+  margin:1rem;
+}
+
+.form-control {
+  width:350px;
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.centered-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}

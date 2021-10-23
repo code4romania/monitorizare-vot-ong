@@ -1,13 +1,22 @@
+
 import { CountyState } from "./county.state";
-import { createReducer, on } from "@ngrx/store";
-import { fetchCountriesFailure, fetchCountriesSuccess } from "./county.actions";
+import { CountryActions, CountryActionTypes } from "./county.actions";
+
 
 const initialCountyState: CountyState = {
   counties: undefined,
 };
 
-export const countyReducer = createReducer(
-  initialCountyState,
-  on(fetchCountriesSuccess, (state, action) => ({ ...state, counties: action.counties, })),
-  on(fetchCountriesFailure, (state, action) => ({ ...state, errorMessage: action.errorMessage, })),
-);
+export function countyReducer(state = initialCountyState, $action: CountryActions) {
+  switch ($action.type) {
+    case CountryActionTypes.FETCH_COUNTRIES_SUCCESS:
+      return { ...state, counties: $action.countries };
+    case CountryActionTypes.FETCH_COUNTRIES_FAILURE:
+      return { ...state, errorMessage: $action.errorMessage };
+    case CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS_SUCCESS:
+      return { ...state, counties: $action.countries };
+    case CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS_FAILURE:
+      return { ...state, errorMessage: $action.errorMessage };
+
+  }
+}

@@ -16,7 +16,8 @@ import { NotificationsComponent } from '../components/notifications/notification
 import { FormsComponent } from '../components/forms/forms.component';
 import { FormCreateComponent } from '../components/forms/form-create/form-create.component';
 import { ObserverImportComponent } from '../components/observers/observer-import/observer-import.component';
-import {NotificationHistoryComponent} from '../components/notifications/notification-history/notification-history.component';
+import { NotificationHistoryComponent } from '../components/notifications/notification-history/notification-history.component';
+import { PollingStationsComponent } from '../components/polling-stations/polling-stations.component';
 
 export let appRoutes: Routes = [
   {
@@ -89,6 +90,11 @@ export let appRoutes: Routes = [
   {
     path: 'notifications/history',
     component: NotificationHistoryComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'polling-stations',
+    component: PollingStationsComponent,
     canActivate: [AuthGuard]
   }
 ];

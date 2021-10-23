@@ -1,0 +1,170 @@
+<div class="container-fluid">
+  <div class="d-flex mb-4">
+    <div>
+      <h2 class="d-inline h4">{{ "FORMS" | translate }}</h2>
+    </div>
+    <div class="ml-auto">
+      <div class="btn-group" role="group" aria-label="Sort">
+
+        <app-base-button [disabled]="true" [variant]="BaseButtonVariants.BGGRAY">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="content"> {{ 'IMPORT_COUNTRY' | translate }}</span>
+        </app-base-button>
+
+        <app-base-button [disabled]="true" [variant]="BaseButtonVariants.BGGRAY">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="content"> {{ 'EXPORT_COUNTRY' | translate }}</span>
+        </app-base-button>
+
+        <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/polling-stations/nou']">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="content"> {{ 'ADD_COUNTRY' | translate }}</span>
+        </app-base-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-light shadow">
+    <div class="filter-container">
+      <form #f="ngForm" [formGroup]="filtersForm" (ngSubmit)="filterList(formFilter.value)" novalidate class="row">
+        <div class="form-group col-auto">
+          <label for="formFilter">{{ 'FILTER_BY' | translate }} {{ 'POLLING_STATION_FILTER_BY_NAME' | translate
+            }}</label>
+          <input #formFilter [placeholder]="'FILTER_BY_POLLING_NAME' | translate" type="text" name="filterByName"
+            formControlName="filter" class="form-control" />
+        </div>
+
+        <div class="col-auto form-group align-self-end">
+          <div class="btn-group d-flex align-items-center" role="group" aria-label="Filter">
+            <!-- in `height: '2.8rem'`, the value is from `.scss` file -->
+            <app-base-button [disabled]="false" [variant]="BaseButtonVariants.PURPLE"
+              [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }" type="submit">
+              {{ 'FILTER' | translate }}
+            </app-base-button>
+            &nbsp;
+            <app-base-button (click)="f.reset({ county: '' }); onResetFilters()" [disabled]="false"
+              [variant]="BaseButtonVariants.PURPLE" [custom-styles]="{ height: '2.8rem', border: 'none' }">
+              {{ 'RESET' | translate }}
+            </app-base-button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="table-responsive" style="padding-left: 1%; padding-right: 1%">
+      <table class="table align-items-center">
+        <thead>
+          <tr>
+            <th>
+              {{ "COUNTY_NAME" | translate }}
+            </th>
+
+            <th class="w-15 centered-cell no-wrap">
+              {{ "CODE" | translate }}
+            </th>
+
+            <th class="w-15 centered-cell no-wrap">
+              {{ "STATIONS" | translate }}
+            </th>
+
+            <th class="w-15 centered-cell no-wrap">
+              {{ "DIASPORA" | translate }}
+            </th>
+
+            <th class="w-15 centered-cell no-wrap">
+              {{ "ACTIONS" | translate }}
+            </th>
+            <th class="centered-cell no-wrap" style="width: 5%"></th>
+          </tr>
+        </thead>
+
+        <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
+          <tr *ngFor="let county of filteredCountryList" cdkDrag cdkDragLockAxis="y">
+            <td>
+              {{ county.name }}
+            </td>
+
+            <td class="w-15 centered-cell no-wrap">
+              {{ county.code }}
+            </td>
+
+            <td class="w-15 centered-cell no-wrap">
+              {{ county.numberOfPollingStations }}
+            </td>
+
+
+            <td class="w-15 centered-cell no-wrap">
+              <img src="/assets/forms/diaspora-check.png" *ngIf="county.diaspora" alt="" />
+            </td>
+
+            <td class="w-15 centered-cell no-wrap">
+              <div class="btn-group">
+                <button type="button" class="btn bg-light" [routerLink]="[county.id]">
+                  {{ "EDIT" | translate }}
+                </button>
+                <div class="btn-group" ngbDropdown role="group" container="body">
+                  <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
+                  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
+                      <img src="/assets/forms/icon-delete.png" alt="">
+                      <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
+                    </button>
+                    <!-- <button *ngIf="form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, false)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-publish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_PUBLISH" | translate }}</span>
+                  </button>
+                  <button *ngIf="!form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, true)" class="text"
+                          style="height: 40px;">
+                    <img src="/assets/forms/icon-unpublish.png" alt="">
+                    <span style="padding-left: 10px">{{ "FORM_UNPUBLISH" | translate }}</span>
+                  </button> -->
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle>
+              <img src="/assets/forms/icon-reorder.png" alt="">
+            </td>
+          </tr>
+        </tbody>
+
+        <div *ngIf="filteredCountryList?.length === 0">
+          {{ 'NO_POLLING_STATIONS' | translate }}
+        </div>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<!--
+<div class="row">
+  <div class="col">
+    I live
+  </div>
+  <div class="col">
+    <div *ngFor="let country of countyList.counties">
+      {{country | json}}
+    </div>
+  </div>
+</div> -->

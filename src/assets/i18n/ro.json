@@ -179,7 +179,17 @@
   "MESSAGE": "Mesaj",
   "NOTIF_DETAILS_FOR": "Detaliile notificării pentru",
   "CHOOSE_COUNTY": "Alegeți județul",
+  "ADD_COUNTRY": "Adăugați țara",
   "CLOSE": "Închideți",
+  "COUNTY_NAME": "Numele țării",
+  "CODE": "Cod",
+  "STATIONS": "Staţii",
+  "EXPORT_COUNTRY": "Exportă",
+  "IMPORT_COUNTRY": "Importaţi",
+  "POLLING_STATION_FILTER_BY_NAME": "nume",
+  "FILTER_BY_POLLING_NAME": "tastați numele sau codul județului",
+  "NO_POLLING_STATION": "sunt zero județe",
+
 
   "ANSWERS_POLLING_STATION": "Secția de votare",
   "ANSWERS_NAME": "Nume",
