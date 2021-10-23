@@ -257,6 +257,8 @@ export class ObserversComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.toastrService.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
           this.loadObservers(1);
+        }, () => {
+          this.toastrService.error(this.translateService.instant('ERROR'), this.translateService.instant('OBSERVER_DELETE_ERROR'));
         });
     }
   }

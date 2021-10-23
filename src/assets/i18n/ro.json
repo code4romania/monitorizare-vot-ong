@@ -137,6 +137,7 @@
   "OBSERVER_EDIT": "Editaţi Observator",
   "OBSERVER_DELETE_CONFIRMATION": "Sunteti sigur ca doriti sa stergeti acest observator?",
   "OBSERVER_DELETE_SUCCESS": "Observatorul a fost sters",
+  "OBSERVER_DELETE_ERROR": "A apărut o eroare la ștergerea observatorului",
   "OBSERVER_POLLING_STATIONS": "Secţii De Votare Vizitate",
   "OBSERVERS_SELECTED": "Observatori Selectaţi",
   "OBSERVERS_IMPORT": "Importaţi Observatori",
