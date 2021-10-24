@@ -1,5 +1,5 @@
 
-import { map, shareReplay, finalize } from 'rxjs/operators';
+import { map, shareReplay, finalize, take, filter } from 'rxjs/operators';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction, updateFilters, updatePageInfo } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
@@ -63,9 +63,14 @@ export class AnswersComponent implements OnInit {
     map(threads => threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
   );
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
-  counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
+  /* counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
     map((counties: County[]) => [{ name: '' }, ...(counties || [])]),
-  );
+  ); */
+  public counties$ = this.store.select(state => state.county).pipe(
+    map(countyList => countyList?.counties),
+    filter(counties => !!counties),
+    map((counties: County[]) => [{ name: '' }, ...(counties || [])])
+  )
 
   constructor(
     private store: Store<AppState>,
@@ -84,7 +89,14 @@ export class AnswersComponent implements OnInit {
   ngOnInit() {
     this.formState = this.store.pipe(select(state => state.form));
 
-    this.store.dispatch(new CountryAnswersFetchAction());
+    //this.store.dispatch(new CountryAnswersFetchAction());
+    this.store
+      .pipe(
+        select(s => s.county),
+        take(1),
+        map(_ => new CountryAnswersFetchAction())
+      )
+      .subscribe(action => this.store.dispatch(action));
   }
 
   requestFilteredData(filters) {
