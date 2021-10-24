@@ -1,5 +1,5 @@
 <div class="container-fluid c-observers__container">
-  
+
   <div class="d-flex justify-content-between mt-2 mb-4 pl-0 pr-2 c-observers__header">
     <div class="d-flex align-items-center">
       <h3 class="mb-0 c-observers__header-title">{{ 'OBSERVERS' | translate }}</h3>
@@ -20,7 +20,7 @@
           <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </app-base-button>
-      
+
       <app-base-button>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.83337 14.1663L14.1667 5.83301" stroke="#707070" stroke-width="2" stroke-linecap="round"
@@ -33,7 +33,7 @@
           <path d="M5 7.5L10 12.5L15 7.5" stroke="#AFAFAF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </app-base-button>
-      
+
       <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['profil/new']">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -69,16 +69,16 @@
                 (click)="applyFilters()"
                 [disabled]="observersFilterForm.isEmpty()"
                 [variant]="BaseButtonVariants.PURPLE"
-                [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }" 
+                [custom-styles]="{ height: '2.8rem', padding: '0.5rem 1.2rem' }"
               >
                 {{ 'FILTER' | translate }}
               </app-base-button>
               &nbsp;
-              <app-base-button 
+              <app-base-button
                 (click)="resetFilters()"
                 [disabled]="observersFilterForm.isEmpty()"
                 [variant]="BaseButtonVariants.PURPLE"
-                [custom-styles]="{ height: '2.8rem', border: 'none' }" 
+                [custom-styles]="{ height: '2.8rem', border: 'none' }"
               >
                 {{ 'RESET' | translate }}
               </app-base-button>
@@ -87,9 +87,9 @@
         </form>
       </div>
     </div>
-    
+
     <ng-template tableColumn let-r="row" let-c="column">
-      <app-base-dropdown 
+      <app-base-dropdown
         class="c-observers__dropdown"
         *ngIf="c.propertyName === actionsColumnName"
         [configArr]="dropdownConfig"
@@ -142,8 +142,14 @@
       [nextEnabled]="!observersState.loading"
       (pageChanged)="pageChanged($event)"
     >
-    </app-pagination> 
-  </app-table-container>  
+    </app-pagination>
+
+    <div no-rows-message class="c-no-msg">
+      <h4 class="text-center pb-2 c-no-msg__title">{{ 'NO_RESULTS' | translate }}</h4>
+
+      <p class="text-center pb-3 c-no-msg__content">{{ 'TRY_AGAIN_MSG' | translate }}</p>
+    </div>
+  </app-table-container>
 
   <div *ngIf="observersState.error">
     <app-error-indicator></app-error-indicator>
@@ -152,27 +158,27 @@
 
 <ng-template #resetPasswordContent let-activeModal let-dismiss="dismiss">
   <h4 class="c-reset-pwd__title">{{ 'ENTER_NEW_PASSWORD' | translate }} {{ crtResetPasswordRow.name }}</h4>
-  
+
   <div class="form-group col-auto">
     <input required ngModel #i="ngModel" [placeholder]="'TYPE' | translate" type="text" name="password" id="form-name" class="form-control"/>
   </div>
 
   <div class="c-reset-pwd__buttons">
-    <app-base-button 
-      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }" 
+    <app-base-button
+      [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }"
       [variant]="BaseButtonVariants.PURPLE"
       [disabled]="!i.valid"
       (click)="activeModal.close(i.value)"
-      class="c-reset-pwd__button" 
-      type="button" 
+      class="c-reset-pwd__button"
+      type="button"
     >
       {{ 'CONFIRM' | translate }}
     </app-base-button>
-    
-    <app-base-button 
+
+    <app-base-button
       [custom-styles]="{ borderRadius: '3px', padding: '.2rem .7rem' }"
-      class="c-reset-pwd__button" 
-      type="button" 
+      class="c-reset-pwd__button"
+      type="button"
       (click)="dismiss()"
     >
       {{ 'CANCEL' | translate }}

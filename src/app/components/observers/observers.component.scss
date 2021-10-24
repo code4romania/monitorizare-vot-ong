@@ -16,15 +16,25 @@ span.font-weight-bold.h-is-muted {
   color: $darker-gray;
 }
 
+.c-no-msg {
+  &__title {
+    color: $darker-gray;
+  }
+
+  &__content {
+    color: $readable-dark-gray;
+  }
+}
+
 .c-observers__buttons {
   app-base-button:not(:last-child) {
     margin-right: 1rem;
   }
-  
+
   app-base-button svg:first-child {
     margin-right: .5rem;
   }
-  
+
   app-base-button .content ~ svg {
     margin-left: .5rem;
   }
