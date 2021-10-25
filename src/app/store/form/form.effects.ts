@@ -89,13 +89,6 @@ export class FormEffects {
     );
 
   @Effect()
-  formUploadSuccess = this.actions
-    .pipe(
-      ofType(FormActionTypes.UPLOAD_COMPLETE),
-      tap(_ => this.router.navigate(['formulare']))
-    );
-
-  @Effect()
   formUpdate = this.actions
     .pipe(
       ofType(FormActionTypes.UPDATE),
