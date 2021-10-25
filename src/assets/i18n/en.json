@@ -188,6 +188,7 @@
   "POLLING_STATION_FILTER_BY_NAME": "name",
   "FILTER_BY_POLLING_NAME": "type the county name or code",
   "NO_POLLING_STATIONS": "there are zero counties",
+  "MOVE_TO_TOP": "Set as first",
 
   "ANSWERS_POLLING_STATION": "Polling Station",
   "ANSWERS_NAME": "Name",

@@ -11,6 +11,15 @@ export class CountryActionTypes {
   static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS = actionType('[Polling Station Page] Fetch Counties');
   static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS_SUCCESS = actionType('[Polling Station Effects] Counties Fetched Success');
   static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS_FAILURE = actionType('[Polling Station Effects] Counties Fetched Failure');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER = actionType('[Polling Station Page] Drag and Dropped Post');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER_SUCCESS = actionType('[Polling Station Page] Drag and Dropped Success');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER_FAILURE = actionType('[Polling Station Page] Drag and Dropped Failure');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST = actionType('[Polling Station Page] Move to First Post');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST_SUCCESS = actionType('[Polling Station Page] Move to First Success');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST_FAILURE = actionType('[Polling Station Page] Move to First Failure');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE = actionType('[Polling Station Page] DELETE Post');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE_SUCCESS = actionType('[Polling Station Page] DELETE Success');
+  static readonly POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE_FAILURE = actionType('[Polling Station Page] DELETE Failure');
 }
 
 export type CountryActions =
@@ -19,7 +28,16 @@ export type CountryActions =
   CountryAnswersSuccessAction |
   CountryPollingStationFetchAction |
   CountryPollingStationErrorAction |
-  CountryPollingStationSuccessAction;
+  CountryPollingStationSuccessAction |
+  CountryPollingDragAndDropAction |
+  CountryPollingDragAndDropErrorAction |
+  CountryPollingDragAndDropSuccessAction |
+  CountryPollingMoveToFirstAction |
+  CountryPollingMoveToFirstErrorAction |
+  CountryPollingMoveToFirstSuccessAction |
+  CountryPollingDeleteAction |
+  CountryPollingDeleteErrorAction |
+  CountryPollingDeleteSuccessAction;
 
 
 export class CountryAnswersFetchAction implements Action {
@@ -69,3 +87,87 @@ export class CountryPollingStationSuccessAction implements Action {
     this.countries = countries;
   }
 }
+
+
+export class CountryPollingDragAndDropAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER;
+  countries: County[];
+
+  constructor(countries: County[]) {
+    this.countries = countries;
+  }
+}
+
+export class CountryPollingDragAndDropErrorAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER_FAILURE;
+  errorMessage: string;
+
+  constructor(errorMessage: string) {
+    this.errorMessage = errorMessage;
+  }
+}
+
+export class CountryPollingDragAndDropSuccessAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER_SUCCESS;
+  countries: County[];
+
+  constructor(countries: County[]) {
+    this.countries = countries;
+  }
+}
+
+
+export class CountryPollingMoveToFirstAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST;
+  country: County;
+
+  constructor(country: County) {
+    this.country = country;
+  }
+}
+
+export class CountryPollingMoveToFirstErrorAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST_FAILURE;
+  errorMessage: string;
+
+  constructor(errorMessage: string) {
+    this.errorMessage = errorMessage;
+  }
+}
+
+export class CountryPollingMoveToFirstSuccessAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST_SUCCESS;
+  countries: County[];
+
+  constructor(countries: County[]) {
+    this.countries = countries;
+  }
+}
+
+export class CountryPollingDeleteAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE;
+  country: County;
+
+  constructor(country: County) {
+    this.country = country;
+  }
+}
+
+export class CountryPollingDeleteErrorAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE_FAILURE;
+  errorMessage: string;
+
+  constructor(errorMessage: string) {
+    this.errorMessage = errorMessage;
+  }
+}
+
+export class CountryPollingDeleteSuccessAction implements Action {
+  readonly type = CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE_SUCCESS;
+  countries: County[];
+
+  constructor(countries: County[]) {
+    this.countries = countries;
+  }
+}
+

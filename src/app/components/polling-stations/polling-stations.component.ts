@@ -3,7 +3,7 @@ import { AppState } from './../../store/store.module';
 import { select, Store } from '@ngrx/store';
 import { Component, Inject, OnInit } from '@angular/core';
 import { map, take, tap, takeUntil } from 'rxjs/operators';
-import { CountryPollingStationFetchAction } from 'src/app/store/county/county.actions';
+import { CountryPollingDragAndDropAction, CountryPollingMoveToFirstAction, CountryPollingStationFetchAction } from 'src/app/store/county/county.actions';
 import { Subject } from 'rxjs';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -18,6 +18,7 @@ export class PollingStationsComponent implements OnInit {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private countyList: County[] = [];
   public filteredCountryList: County[] = [];
+  private currentFilter: string | null = null;
 
   public filtersForm = this.fb.group({
     filter: ''
@@ -52,16 +53,18 @@ export class PollingStationsComponent implements OnInit {
   private handleCountyData(): void {
     this.store.select(state => state.county).pipe(
       map(countyList => this.countyList = countyList?.counties),
-      tap(countyList => this.filteredCountryList = countyList),
+      tap(countyList => this.currentFilter ? this.filterList(this.currentFilter) : this.filteredCountryList = countyList),
       takeUntil(this.destroy$)
     ).subscribe();
   }
 
   onReorder(event: CdkDragDrop<County[]>) {
-    moveItemInArray(this.countyList, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.filteredCountryList, event.previousIndex, event.currentIndex);
+    this.store.dispatch(new CountryPollingDragAndDropAction(this.countyList))
   }
 
   public filterList(text: string): void {
+    this.currentFilter = text;
     const newFilter = [...this.countyList];
     this.filteredCountryList = newFilter.filter(item =>
       item.name.toLocaleLowerCase().includes(text.toLowerCase()) ||
@@ -70,6 +73,15 @@ export class PollingStationsComponent implements OnInit {
   }
 
   public onResetFilters(): void {
+    this.currentFilter = null;
     this.filteredCountryList = [...this.countyList];
+  }
+
+  public moveToFirst(item: County): void {
+    this.store.dispatch(new CountryPollingMoveToFirstAction(item))
+  }
+
+  public deleteCountry(item: County): void {
+
   }
 }

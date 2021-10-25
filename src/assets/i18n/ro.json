@@ -189,6 +189,7 @@
   "POLLING_STATION_FILTER_BY_NAME": "nume",
   "FILTER_BY_POLLING_NAME": "tastați numele sau codul județului",
   "NO_POLLING_STATIONS": "sunt zero județe",
+  "MOVE_TO_TOP": "Setați ca primul",
 
 
   "ANSWERS_POLLING_STATION": "Secția de votare",

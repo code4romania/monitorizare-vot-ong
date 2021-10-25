@@ -119,26 +119,21 @@
                 <div class="btn-group" ngbDropdown role="group" container="body">
                   <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
                   <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
+                    <button ngbDropdownItem (click)="deleteCountry(county)" class="text-danger" style="height: 40px;">
                       <img src="/assets/forms/icon-delete.png" alt="">
                       <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
                     </button>
-                    <!-- <button *ngIf="form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, false)" class="text"
-                          style="height: 40px;">
-                    <img src="/assets/forms/icon-publish.png" alt="">
-                    <span style="padding-left: 10px">{{ "FORM_PUBLISH" | translate }}</span>
-                  </button>
-                  <button *ngIf="!form.draft" ngbDropdownItem (click)="setFormDraftStatus(form, true)" class="text"
-                          style="height: 40px;">
-                    <img src="/assets/forms/icon-unpublish.png" alt="">
-                    <span style="padding-left: 10px">{{ "FORM_UNPUBLISH" | translate }}</span>
-                  </button> -->
+                    <button ngbDropdownItem (click)="moveToFirst(county)" class="text" style="height: 40px;">
+                      <img src="/assets/forms/icon-publish.png" alt="">
+                      <span style="padding-left: 10px">{{ "MOVE_TO_TOP" | translate }}</span>
+                    </button>
                   </div>
                 </div>
               </div>
             </td>
 
-            <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle>
+            <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle
+              [cdkDragHandleDisabled]="currentFilter != null">
               <img src="/assets/forms/icon-reorder.png" alt="">
             </td>
           </tr>

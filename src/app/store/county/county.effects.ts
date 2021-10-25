@@ -1,4 +1,4 @@
-import { CountryActionTypes, CountryAnswersErrorAction, CountryAnswersSuccessAction, CountryPollingStationErrorAction, CountryPollingStationSuccessAction } from './county.actions';
+import { CountryActionTypes, CountryAnswersErrorAction, CountryAnswersSuccessAction, CountryPollingDeleteErrorAction, CountryPollingDeleteSuccessAction, CountryPollingDragAndDropErrorAction, CountryPollingDragAndDropSuccessAction, CountryPollingStationErrorAction, CountryPollingStationSuccessAction } from './county.actions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
@@ -47,5 +47,35 @@ export class CountyEffects {
       )
     ),
   )
+
+  @Effect() pollingStationsDragAndDrop$ = this.actions$
+    .pipe(
+      ofType(CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DROP_AND_DROP_ORDER),
+      switchMap((counties: County[]) =>
+        this.apiService.post(this.fetchCountiesURL + '/update-order', { counties: counties }).pipe(
+          map((counties: County[]) => new CountryPollingDragAndDropSuccessAction(counties)),
+          catchError((err) => of(new CountryPollingDragAndDropErrorAction(err.message)))
+        ))
+    );
+
+  @Effect() pollingStationsMoveToFirst$ = this.actions$
+    .pipe(
+      ofType(CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_MOVE_TO_FIRST),
+      switchMap((county: County) =>
+        this.apiService.post(this.fetchCountiesURL + '/move-to-first', { county: county }).pipe(
+          map((counties: County[]) => new CountryPollingDragAndDropSuccessAction(counties)),
+          catchError((err) => of(new CountryPollingDragAndDropErrorAction(err.message)))
+        ))
+    );
+
+  @Effect() pollingStationsDeleteCounty$ = this.actions$
+    .pipe(
+      ofType(CountryActionTypes.POST_COUNTRIES_FOR_POLLING_STATIONS_DELETE),
+      switchMap((county: County) =>
+        this.apiService.post(this.fetchCountiesURL + '/delete', { county: county }).pipe(
+          map((counties: County[]) => new CountryPollingDeleteSuccessAction(counties)),
+          catchError((err) => of(new CountryPollingDeleteErrorAction(err.message)))
+        ))
+    );
 
 }
