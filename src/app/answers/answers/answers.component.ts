@@ -1,5 +1,5 @@
 
-import {map, shareReplay, finalize} from 'rxjs/operators';
+import { map, shareReplay, finalize, take, filter } from 'rxjs/operators';
 import { LoadAnswerDetailsAction, LoadAnswerPreviewAction, updateFilters, updatePageInfo } from '../../store/answer/answer.actions';
 import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
@@ -16,7 +16,7 @@ import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerFilters } from 'src/app/models/answer.filters.model';
 import { getAnswerThreads, getFilters } from 'src/app/store/answer/answer.selectors';
-import { fetchCountiesFromAnswers } from 'src/app/store/county/county.actions';
+import { CountryAnswersFetchAction } from 'src/app/store/county/county.actions';
 import { County } from 'src/app/store/county/county.state';
 import { getCounties } from 'src/app/store/county/county.selectors';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
@@ -63,9 +63,12 @@ export class AnswersComponent implements OnInit {
     map(threads => threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
   );
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
-  counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
-    map((counties: County[]) => [{ name: '' }, ...(counties || [])]),
-  );
+
+  public counties$ = this.store.select(state => state.county).pipe(
+    map(countyList => countyList?.counties),
+    filter(counties => !!counties),
+    map((counties: County[]) => [{ name: '' }, ...(counties || [])])
+  )
 
   constructor(
     private store: Store<AppState>,
@@ -83,11 +86,16 @@ export class AnswersComponent implements OnInit {
 
   ngOnInit() {
     this.formState = this.store.pipe(select(state => state.form));
-
-    this.store.dispatch(fetchCountiesFromAnswers());
+    this.store
+      .pipe(
+        select(s => s.county),
+        take(1),
+        map(_ => new CountryAnswersFetchAction())
+      )
+      .subscribe(action => this.store.dispatch(action));
   }
 
-  requestFilteredData (filters) {
+  requestFilteredData(filters) {
     this.store.dispatch(updateFilters(filters));
     this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
   }
@@ -102,7 +110,7 @@ export class AnswersComponent implements OnInit {
     // TODO: call proper API
   }
 
-  onResetFilters () {
+  onResetFilters() {
     this.store.dispatch(updateFilters({}));
     this.store.dispatch(new LoadAnswerPreviewAction(1, undefined, true));
   }
@@ -121,7 +129,7 @@ export class AnswersComponent implements OnInit {
     return value !== null && value !== '';
   }
 
-  downloadAnswers (rawFilters) {
+  downloadAnswers(rawFilters) {
     if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
       return;
     }
