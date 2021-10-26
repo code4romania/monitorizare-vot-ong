@@ -38,7 +38,6 @@ export class CountyEffects {
 
   @Effect() getPollingStations$ = this.actions$.pipe(
     ofType(CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS),
-    // withLatestFrom(this.store.select(getCounties)),
     switchMap(
       () => this.apiService.get(this.fetchCountiesURL).pipe(
         map((counties: County[]) => new CountryPollingStationSuccessAction(counties)),
