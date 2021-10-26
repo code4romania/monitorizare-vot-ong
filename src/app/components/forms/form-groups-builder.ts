@@ -1,10 +1,11 @@
-import {FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 export function initFormFormGroup(formBuilder: FormBuilder) {
   return formBuilder.group({
-    description: formBuilder.control(''),
-    code: formBuilder.control(''),
+    title: formBuilder.control(null, Validators.required),
+    description: formBuilder.control(null, Validators.required),
+    code: formBuilder.control(null, Validators.required),
     diaspora: formBuilder.control(false),
     formSections: formBuilder.array([], Validators.required)
   });

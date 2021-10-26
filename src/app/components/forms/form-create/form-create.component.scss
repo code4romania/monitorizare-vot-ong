@@ -57,5 +57,9 @@ textarea {
   min-height: 124px; // aligns to 2 inputs in a column layout
 }
 
+//bootstrap override
+.invalid-feedback {
+  display: block;
+}
 
 
