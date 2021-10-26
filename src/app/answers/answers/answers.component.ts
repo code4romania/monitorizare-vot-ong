@@ -63,9 +63,7 @@ export class AnswersComponent implements OnInit {
     map(threads => threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
   );
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
-  /* counties$: Observable<Partial<County>[]> = this.store.select(getCounties).pipe(
-    map((counties: County[]) => [{ name: '' }, ...(counties || [])]),
-  ); */
+
   public counties$ = this.store.select(state => state.county).pipe(
     map(countyList => countyList?.counties),
     filter(counties => !!counties),
@@ -88,8 +86,6 @@ export class AnswersComponent implements OnInit {
 
   ngOnInit() {
     this.formState = this.store.pipe(select(state => state.form));
-
-    //this.store.dispatch(new CountryAnswersFetchAction());
     this.store
       .pipe(
         select(s => s.county),
