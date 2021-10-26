@@ -60,7 +60,18 @@ export class PollingStationsComponent implements OnInit {
 
   onReorder(event: CdkDragDrop<County[]>) {
     moveItemInArray(this.filteredCountryList, event.previousIndex, event.currentIndex);
+    this.filteredCountryList = this.convertOrderWithIndex(this.filteredCountryList);
+
+    // TODO: might have to have a bounce/timeout so we don't hammer the backend
+    // Won't be able to test until backend is complete.
     this.store.dispatch(new CountryPollingDragAndDropAction(this.countyList))
+  }
+
+  private convertOrderWithIndex(list: County[]): County[] {
+    list.map((item, index) => {
+      item.order = index
+    })
+    return list;
   }
 
   public filterList(text: string): void {
