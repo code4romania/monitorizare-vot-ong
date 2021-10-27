@@ -5,5 +5,5 @@ export const county = createFeatureSelector<CountyState>('county');
 
 export const getCounties = createSelector(
   county,
-  (state: CountyState) => state.counties,
+  (state: CountyState) => state?.counties,
 )
