@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { TokenService } from 'src/app/core/token/token.service';
 import { ObserversService } from 'src/app/services/observers.service';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
 
@@ -15,16 +16,31 @@ export class ObserverImportComponent implements OnInit {
 
   constructor (
     private fb: FormBuilder,
+    private tokenService: TokenService,
     private toastr: ToastrService,
     private observerService: ObserversService,
     @Inject(BASE_BUTTON_VARIANTS) public BaseButtonVariants: typeof Variants
   ) { }
 
   ngOnInit(): void {
-    this.formGroup = this.fb.group({
-      ngoId: ['', Validators.required],
+    this.formGroup = this.buildForm();
+  }
+
+  buildForm(): FormGroup {
+    const user = this.tokenService.user;
+    const isAdmin = user?.userType === 'NgoAdmin';
+    const isAdminNotOrganizer = isAdmin && !user?.organizer;
+    const form = this.fb.group({
+      ngoId: [
+        {
+          value: isAdminNotOrganizer ? user?.idNgo : '',
+          disabled: isAdminNotOrganizer
+        },
+        Validators.required
+      ],
       file: ['', Validators.required],
     });
+    return form;
   }
 
   onSubmit () {
