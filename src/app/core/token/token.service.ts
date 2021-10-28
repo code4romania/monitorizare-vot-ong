@@ -1,6 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {Injectable} from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../../models/user.model';
 
 @Injectable()
 export class TokenService {
@@ -8,7 +9,7 @@ export class TokenService {
 
   public tokenKey = 'token-id';
   private _token: string = undefined;
-  private _userName: string;
+  private _user: User;
 
   private _isRefreshing: boolean;
 
@@ -22,7 +23,7 @@ export class TokenService {
 
   constructor() {
     this._token = localStorage.getItem(this.tokenKey);
-    this._userName = this.getUserNameFromToken(this._token);
+    this._user = this.getUserFromToken(this._token);
     this.setTokenStream();
   }
 
@@ -37,7 +38,10 @@ export class TokenService {
   }
 
   public get userName() {
-    return this._userName;
+    return this._user.sub;
+  }
+  public get user() {
+    return this._user;
   }
   public get token() {
     return this._token;
@@ -46,16 +50,21 @@ export class TokenService {
     this._token = value;
     if (value !== undefined){
       localStorage.setItem(this.tokenKey, value);
-      this._userName = this.getUserNameFromToken(value);
+      this._user = this.getUserFromToken(value);
     } else {
       localStorage.removeItem(this.tokenKey);
     }
     this.observers.forEach(obs => obs.next(value));
   }
-  private getUserNameFromToken(token: string) {
+  private getUserFromToken(token: string): User {
     const decodedToken = this.jwtHelper.decodeToken(token);
     if (!decodedToken) return null;
-    return decodedToken.sub;
+    return {
+      sub: decodedToken.sub,
+      idNgo: decodedToken.IdNgo,
+      userType: decodedToken.UserType,
+      organizer: decodedToken.Organizer
+    };
   }
   public isloggedIn() {
     return this.token ? true : false;
