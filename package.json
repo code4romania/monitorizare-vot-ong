@@ -8,7 +8,10 @@
     "start-qa": "ng serve --configuration=qa",
     "start-prod": "ng serve --configuration=prod",
     "start-local": "ng serve --configuration=local",
-    "build": "ng build --prod",
+    "build": "ng build",
+    "build-prod": "ng build --configuration=prod",
+    "build-qa": "ng build --configuration=qa",
+    "build-local": "ng build --configuration=local",
     "lint": "tslint \"src/**/*.ts\""
   },
   "private": true,
