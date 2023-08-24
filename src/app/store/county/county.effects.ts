@@ -1,5 +1,6 @@
 import { CountryActionTypes, CountryAnswersErrorAction, CountryAnswersSuccessAction, CountryPollingStationErrorAction, CountryPollingStationSuccessAction } from './county.actions';
 import { Injectable } from '@angular/core';
+import {Location} from '@angular/common';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/apiService/api.service';
 import { environment } from '../../../environments/environment';
@@ -13,7 +14,7 @@ import { getCounties } from './county.selectors';
 @Injectable()
 export class CountyEffects {
   private baseURL: string = environment.apiUrl;
-  private fetchCountiesURL = this.baseURL + '/api/v1/county';
+  private fetchCountiesURL =  Location.joinWithSlash(this.baseURL, '/api/v1/county');
 
   constructor(
     private actions$: Actions,
