@@ -4,30 +4,30 @@ import { actionType } from "../util";
 import { County } from "./county.state";
 
 
-export class CountryActionTypes {
-  static readonly FETCH_COUNTRIES_FROM_ANSWERS = actionType('[Answers Page] Fetch Counties');
-  static readonly FETCH_COUNTRIES_SUCCESS = actionType('[County Effects] Counties Fetched Success');
-  static readonly FETCH_COUNTRIES_FAILURE = actionType('[County Effects] Counties Fetched Failure');
-  static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS = actionType('[Polling Station Page] Fetch Counties');
-  static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS_SUCCESS = actionType('[Polling Station Effects] Counties Fetched Success');
-  static readonly FETCH_COUNTRIES_FOR_POLLING_STATIONS_FAILURE = actionType('[Polling Station Effects] Counties Fetched Failure');
+export class CountyActionTypes {
+  static readonly FETCH_COUNTIES_FROM_ANSWERS = actionType('[Answers Page] Fetch Counties');
+  static readonly FETCH_COUNTIES_SUCCESS = actionType('[County Effects] Counties Fetched Success');
+  static readonly FETCH_COUNTIES_FAILURE = actionType('[County Effects] Counties Fetched Failure');
+  static readonly FETCH_COUNTIES_FOR_POLLING_STATIONS = actionType('[Polling Station Page] Fetch Counties');
+  static readonly FETCH_COUNTIES_FOR_POLLING_STATIONS_SUCCESS = actionType('[Polling Station Effects] Counties Fetched Success');
+  static readonly FETCH_COUNTIES_FOR_POLLING_STATIONS_FAILURE = actionType('[Polling Station Effects] Counties Fetched Failure');
 }
 
-export type CountryActions =
-  CountryAnswersFetchAction |
-  CountryAnswersErrorAction |
-  CountryAnswersSuccessAction |
-  CountryPollingStationFetchAction |
-  CountryPollingStationErrorAction |
-  CountryPollingStationSuccessAction;
+export type CountyActions =
+  CountyAnswersFetchAction |
+  CountyAnswersErrorAction |
+  CountyAnswersSuccessAction |
+  CountyPollingStationFetchAction |
+  CountyPollingStationErrorAction |
+  CountyPollingStationSuccessAction;
 
 
-export class CountryAnswersFetchAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_FROM_ANSWERS;
+export class CountyAnswersFetchAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_FROM_ANSWERS;
 }
 
-export class CountryAnswersErrorAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_FAILURE;
+export class CountyAnswersErrorAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_FAILURE;
   errorMessage: string;
 
   constructor(errorMessage: string) {
@@ -35,25 +35,24 @@ export class CountryAnswersErrorAction implements Action {
   }
 }
 
-export class CountryAnswersSuccessAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_SUCCESS;
-  countries: County[];
+export class CountyAnswersSuccessAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_SUCCESS;
+  counties: County[];
 
-  constructor(countries: County[]) {
-    this.countries = countries;
+  constructor(counties: County[]) {
+    this.counties = counties;
   }
-
 }
 
 
-export class CountryPollingStationFetchAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS;
+export class CountyPollingStationFetchAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_FOR_POLLING_STATIONS;
 
   constructor() { }
 }
 
-export class CountryPollingStationErrorAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS_FAILURE;
+export class CountyPollingStationErrorAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_FOR_POLLING_STATIONS_FAILURE;
   errorMessage: string;
 
   constructor(errorMessage: string) {
@@ -61,11 +60,11 @@ export class CountryPollingStationErrorAction implements Action {
   }
 }
 
-export class CountryPollingStationSuccessAction implements Action {
-  readonly type = CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS_SUCCESS;
-  countries: County[];
+export class CountyPollingStationSuccessAction implements Action {
+  readonly type = CountyActionTypes.FETCH_COUNTIES_FOR_POLLING_STATIONS_SUCCESS;
+  counties: County[];
 
-  constructor(countries: County[]) {
-    this.countries = countries;
+  constructor(counties: County[]) {
+    this.counties = counties;
   }
 }

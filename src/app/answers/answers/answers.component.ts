@@ -16,9 +16,8 @@ import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswerFilters } from 'src/app/models/answer.filters.model';
 import { getAnswerThreads, getFilters } from 'src/app/store/answer/answer.selectors';
-import { CountryAnswersFetchAction } from 'src/app/store/county/county.actions';
+import { CountyAnswersFetchAction } from 'src/app/store/county/county.actions';
 import { County } from 'src/app/store/county/county.state';
-import { getCounties } from 'src/app/store/county/county.selectors';
 import { AnswerExtra } from 'src/app/models/answer.extra.model';
 import { FormLoadAction } from 'src/app/store/form/form.actions';
 import { FormBuilder } from '@angular/forms';
@@ -90,7 +89,7 @@ export class AnswersComponent implements OnInit {
       .pipe(
         select(s => s.county),
         take(1),
-        map(_ => new CountryAnswersFetchAction())
+        map(_ => new CountyAnswersFetchAction())
       )
       .subscribe(action => this.store.dispatch(action));
   }

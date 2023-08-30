@@ -67,7 +67,7 @@ export class ObserverProfileComponent implements OnInit, OnDestroy {
         .deleteObserver(this.observer.id)
         .subscribe(() => {
           this.toastr.warning(this.translateService.instant('SUCCESS'), this.translateService.instant('OBSERVER_DELETE_SUCCESS'));
-          this.router.navigateByUrl('/observatori');
+          this.router.navigateByUrl('/observers');
         });
     }
   }
@@ -113,7 +113,7 @@ export class ObserverProfileComponent implements OnInit, OnDestroy {
 
     this.observerService.addNewObserver(observerToAdd).subscribe(() => {
       this.toastr.success('Success', 'Observer has been added');
-      this.router.navigateByUrl('/observatori');
+      this.router.navigateByUrl('/observers');
     });
   }
 
