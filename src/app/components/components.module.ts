@@ -1,4 +1,4 @@
-import { PollingStationsComponent } from './polling-stations/polling-stations.component';
+import { CountiesComponent } from './counties/counties.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { AnswerExtraQuestionsComponent } from './answer/answer-extra-questions/answer-extra-questions.component';
@@ -59,7 +59,7 @@ export let components = [
   NotificationHistoryComponent,
   LoginComponent,
   ObserverImportComponent,
-  PollingStationsComponent
+  CountiesComponent
 ];
 
 @NgModule({

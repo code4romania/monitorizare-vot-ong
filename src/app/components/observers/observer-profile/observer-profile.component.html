@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="d-flex mb-4">
     <div class="mr-auto">
-      <app-base-button 
+      <app-base-button
         [custom-styles]="{ fontSize: '1.2rem' }"
-        [variant]="BaseButtonVariants.ALLTRANSPARENT" 
-        [routerLink]="['/observatori']"
+        [variant]="BaseButtonVariants.ALLTRANSPARENT"
+        [routerLink]="['/observers']"
       >
         <div class="d-flex align-items-center">
           <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
               [placeholder]="'TYPE' | translate"
             />
           </div>
-          
+
           <div class="form-group">
             <label for="phone">{{ 'PHONE_NUMBER' | translate }}</label>
             <input
@@ -60,9 +60,9 @@
         </div>
 
         <div class="c-profile__buttons">
-          <app-base-button 
+          <app-base-button
             class="c-profile__button"
-            [custom-styles]="{ fontWeight: 'normal' }" 
+            [custom-styles]="{ fontWeight: 'normal' }"
             [variant]="BaseButtonVariants.BGYELLOW"
             type="submit"
             [disabled]="observerProfileForm.invalid"
@@ -72,15 +72,15 @@
 
           <app-base-button
             class="c-profile__button"
-            [routerLink]="['/observatori']"
-            [custom-styles]="{ fontWeight: 'normal' }" 
+            [routerLink]="['/observers']"
+            [custom-styles]="{ fontWeight: 'normal' }"
             [variant]="BaseButtonVariants.DEFAULT"
           >
             {{ 'CANCEL' | translate }}
           </app-base-button>
 
           <ng-container *ngIf="pageState === 'edit'">
-            <ng-template 
+            <ng-template
               [ngTemplateOutlet]="editButtons"
             ></ng-template>
           </ng-container>
@@ -94,7 +94,7 @@
   <app-base-button
     (click)="deleteObserver()"
     class="c-profile__button"
-    [custom-styles]="{ fontWeight: 'normal' }" 
+    [custom-styles]="{ fontWeight: 'normal' }"
     [variant]="BaseButtonVariants.ALLTRANSPARENT"
   >
     <span class="c-profile__button--delete">{{ 'DELETE' | translate }}</span>

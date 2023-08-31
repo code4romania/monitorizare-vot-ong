@@ -3,13 +3,9 @@ import { LoginComponent } from '../components/login/login.component';
 import { AuthGuard } from '../core/authGuard/auth.guard';
 import { StatisticsDetailsComponent } from '../components/statistics/statistics-details/statistics-details.component';
 import { ObserversComponent } from '../components/observers/observers.component';
-import { AnswerDetailsComponent } from '../components/answer/answer-details/answer-details.component';
 import { LoadStatisticsGuard } from './guards/load-statistics.guard';
-import { AnswerDetailsGuard } from './guards/load-anwer-details.guard';
-import { AnswerListGuard } from './guards/load-answer-list.guard';
 import { HomeGuard } from './guards/home.guard';
 import { StatisticsComponent } from '../components/statistics/statistics.component';
-import { AnswerComponent } from '../components/answer/answer.component';
 import { Routes } from '@angular/router';
 import { ObserverProfileComponent } from '../components/observers/observer-profile/observer-profile.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
@@ -17,7 +13,7 @@ import { FormsComponent } from '../components/forms/forms.component';
 import { FormCreateComponent } from '../components/forms/form-create/form-create.component';
 import { ObserverImportComponent } from '../components/observers/observer-import/observer-import.component';
 import { NotificationHistoryComponent } from '../components/notifications/notification-history/notification-history.component';
-import { PollingStationsComponent } from '../components/polling-stations/polling-stations.component';
+import { CountiesComponent } from '../components/counties/counties.component';
 
 export let appRoutes: Routes = [
   {
@@ -38,22 +34,22 @@ export let appRoutes: Routes = [
     canActivate: [AuthGuard, LoadStatisticsGuard],
   },
   {
-    path: 'observatori',
+    path: 'observers',
     component: ObserversComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'observatori/profil/:state',
+    path: 'observers/profile/:state',
     component: ObserverProfileComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'observatori/profil/:state/:id',
+    path: 'observers/profile/:state/:id',
     component: ObserverProfileComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'observatori/import',
+    path: 'observers/import',
     component: ObserverImportComponent,
     canActivate: [AuthGuard],
   },
@@ -63,17 +59,17 @@ export let appRoutes: Routes = [
     canActivate: [AuthGuard, LoadStatisticsGuard],
   },
   {
-    path: 'formulare',
+    path: 'forms',
     component: FormsComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'formulare/nou',
+    path: 'forms/new',
     component: FormCreateComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'formulare/:formId',
+    path: 'forms/:formId',
     component: FormCreateComponent,
     canActivate: [AuthGuard],
   },
@@ -93,8 +89,8 @@ export let appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'polling-stations',
-    component: PollingStationsComponent,
+    path: 'counties',
+    component: CountiesComponent,
     canActivate: [AuthGuard]
   }
 ];

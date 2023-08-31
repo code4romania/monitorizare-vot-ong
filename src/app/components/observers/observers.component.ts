@@ -148,7 +148,7 @@ export class ObserversComponent implements OnInit, OnDestroy {
   onDropdownEvent (ev: DropdownEvents, row: Observer) {
     switch (ev) {
       case DropdownEvents.EDIT:
-        this.router.navigate(['profil/edit/', row.phone], { relativeTo: this.route });
+        this.router.navigate(['profile/edit/', row.phone], { relativeTo: this.route });
         break;
       case DropdownEvents.DELETE:
         this.deleteObserver(row);

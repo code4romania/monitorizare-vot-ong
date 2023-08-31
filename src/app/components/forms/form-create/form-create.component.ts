@@ -16,7 +16,6 @@ import { FormQuestion } from '../../../models/form.question.model';
 import { BaseAnswer } from '../../../models/base.answer.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { FormEffects } from 'src/app/store/form/form.effects';
 
 @Component({
@@ -27,7 +26,6 @@ import { FormEffects } from 'src/app/store/form/form.effects';
 export class FormCreateComponent implements OnInit, OnDestroy {
 
   readonly FORM_ID_URL_PARAM = 'formId';
-  title: string;
   formDetailsFormGroup: FormGroup;
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -42,7 +40,6 @@ export class FormCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formDetailsFormGroup = initFormFormGroup(this.formBuilder);
-    this.title = 'Adauga formular nou';
     this.listenToActionSteam();
 
     this.activatedRoute.paramMap.subscribe(params => {

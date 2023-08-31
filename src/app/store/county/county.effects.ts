@@ -1,4 +1,4 @@
-import { CountryActionTypes, CountryAnswersErrorAction, CountryAnswersSuccessAction, CountryPollingStationErrorAction, CountryPollingStationSuccessAction } from './county.actions';
+import { CountyActionTypes, CountyAnswersErrorAction, CountyAnswersSuccessAction, CountyPollingStationErrorAction, CountyPollingStationSuccessAction } from './county.actions';
 import { Injectable } from '@angular/core';
 import {Location} from '@angular/common';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
@@ -24,13 +24,13 @@ export class CountyEffects {
 
   fetchCounties$ = createEffect(
     () => this.actions$.pipe(
-      ofType(CountryActionTypes.FETCH_COUNTRIES_FROM_ANSWERS),
+      ofType(CountyActionTypes.FETCH_COUNTIES_FROM_ANSWERS),
       withLatestFrom(this.store.select(getCounties)),
       filter(([, currentCounties]) => !!currentCounties === false),
       switchMap(
         () => this.apiService.get(this.fetchCountiesURL).pipe(
-          map((counties: County[]) => new CountryAnswersSuccessAction(counties)),
-          catchError((err) => of(new CountryAnswersErrorAction(err.message))
+          map((counties: County[]) => new CountyAnswersSuccessAction(counties)),
+          catchError((err) => of(new CountyAnswersErrorAction(err.message))
           )
         )
       ),
@@ -38,11 +38,11 @@ export class CountyEffects {
   );
 
   @Effect() getPollingStations$ = this.actions$.pipe(
-    ofType(CountryActionTypes.FETCH_COUNTRIES_FOR_POLLING_STATIONS),
+    ofType(CountyActionTypes.FETCH_COUNTIES_FOR_POLLING_STATIONS),
     switchMap(
       () => this.apiService.get(this.fetchCountiesURL).pipe(
-        map((counties: County[]) => new CountryPollingStationSuccessAction(counties)),
-        catchError((err) => of(new CountryPollingStationErrorAction(err.message))
+        map((counties: County[]) => new CountyPollingStationSuccessAction(counties)),
+        catchError((err) => of(new CountyPollingStationErrorAction(err.message))
         )
       )
     ),

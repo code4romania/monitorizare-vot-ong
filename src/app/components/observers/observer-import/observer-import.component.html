@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="d-flex mb-4">
     <div class="mr-auto">
-      <app-base-button 
-        [custom-styles]="{ fontSize: '1.2rem' }" 
+      <app-base-button
+        [custom-styles]="{ fontSize: '1.2rem' }"
         [variant]="BaseButtonVariants.ALLTRANSPARENT"
-        [routerLink]="['/observatori']"
+        [routerLink]="['/observers']"
       >
         <div class="d-flex align-items-center">
           <svg class="c-profile__back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -49,14 +49,14 @@
         />
       </div>
 
-      <app-base-button 
-        class="c-profile__button mt-3" 
+      <app-base-button
+        class="c-profile__button mt-3"
         [custom-styles]="{ fontWeight: 'normal' }"
-        [variant]="BaseButtonVariants.BGYELLOW" 
-        type="submit" 
+        [variant]="BaseButtonVariants.BGYELLOW"
+        type="submit"
         [disabled]="formGroup.invalid"
       >
-        {{ 'IMPORT' | translate }} 
+        {{ 'IMPORT' | translate }}
       </app-base-button>
     </form>
     </div>

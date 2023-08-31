@@ -13,7 +13,7 @@
             <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          <span class="content"> {{ 'IMPORT_COUNTRY' | translate }}</span>
+          <span class="content"> {{ 'IMPORT_COUNTY' | translate }}</span>
         </app-base-button>
 
         <app-base-button [disabled]="true" [variant]="BaseButtonVariants.BGGRAY">
@@ -23,17 +23,17 @@
             <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          <span class="content"> {{ 'EXPORT_COUNTRY' | translate }}</span>
+          <span class="content"> {{ 'EXPORT_COUNTY' | translate }}</span>
         </app-base-button>
 
-        <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/polling-stations/nou']">
+        <app-base-button [variant]="BaseButtonVariants.BGYELLOW" [routerLink]="['/counties/new']">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 4.16699V15.8337" stroke="#464646" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
             <path d="M4.16663 10H15.8333" stroke="#464646" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          <span class="content"> {{ 'ADD_COUNTRY' | translate }}</span>
+          <span class="content"> {{ 'ADD_COUNTY' | translate }}</span>
         </app-base-button>
       </div>
     </div>
@@ -84,16 +84,20 @@
             <th class="w-15 centered-cell no-wrap">
               {{ "DIASPORA" | translate }}
             </th>
-
+            <!-- THIS WAS NOT IMPLEMENTED
             <th class="w-15 centered-cell no-wrap">
               {{ "ACTIONS" | translate }}
-            </th>
+            </th> -->
+            <!-- REORDERING IS NOT IMPLEMENTED
             <th class="centered-cell no-wrap" style="width: 5%"></th>
+            -->
           </tr>
         </thead>
-
-        <tbody cdkDropList (cdkDropListDropped)="onReorder($event)">
-          <tr *ngFor="let county of filteredCountryList" cdkDrag cdkDragLockAxis="y">
+        <!-- REORDERING IS NOT IMPLEMENTED -->
+        <!-- <tbody cdkDropList (cdkDropListDropped)="onReorder($event)"> -->
+        <!-- <tr *ngFor="let county of filteredCounties" cdkDrag cdkDragLockAxis="y"> -->
+        <tbody>
+          <tr *ngFor="let county of filteredCounties">
             <td>
               {{ county.name }}
             </td>
@@ -110,31 +114,31 @@
             <td class="w-15 centered-cell no-wrap">
               <img src="/assets/forms/diaspora-check.png" *ngIf="county.diaspora" alt="" />
             </td>
-
-            <td class="w-15 centered-cell no-wrap">
-              <div class="btn-group">
-                <button type="button" class="btn bg-light" [routerLink]="[county.id]">
-                  {{ "EDIT" | translate }}
-                </button>
-                <div class="btn-group" ngbDropdown role="group" container="body">
-                  <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
-                  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
-                      <img src="/assets/forms/icon-delete.png" alt="">
-                      <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </td>
-
+            <!-- THIS functionality was not implemented
+                  <td class="w-15 centered-cell no-wrap">
+                    <div class="btn-group">
+                        <button type="button" class="btn bg-light" [routerLink]="[county.id]">
+                        {{ "EDIT" | translate }}
+                      </button>
+                      <div class="btn-group" ngbDropdown role="group" container="body">
+                        <button class="btn bg-light dropdown-toggle-split" ngbDropdownToggle></button>
+                        <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                          <button ngbDropdownItem (click)="deleteForm(form)" class="text-danger" style="height: 40px;">
+                            <img src="/assets/forms/icon-delete.png" alt="">
+                            <span style="padding-left: 10px">{{ "DELETE" | translate }}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
             <td style="width: 5%" class="centered-cell no-wrap" cdkDragHandle>
               <img src="/assets/forms/icon-reorder.png" alt="">
             </td>
+                -->
           </tr>
         </tbody>
 
-        <div *ngIf="filteredCountryList?.length === 0">
+        <div *ngIf="filteredCounties?.length === 0">
           {{ 'NO_POLLING_STATIONS' | translate }}
         </div>
       </table>
