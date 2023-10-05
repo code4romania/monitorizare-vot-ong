@@ -9,6 +9,14 @@ export class NoteState {
 }
 export let noteInitialState = new NoteState();
 
+const baseUrl = url => url.indexOf('?') === -1 ? url : url.slice(0, url.indexOf('?'));
+function attachmentIsImage(path: string) {
+  path = baseUrl(path);
+  const isImage = path.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/i);
+
+  return isImage;
+}
+
 export function noteReducer(state = noteInitialState, action: NoteActions | any) {
     switch (action.type) {
         case NoteActionTypes.LOAD:
@@ -22,7 +30,7 @@ export function noteReducer(state = noteInitialState, action: NoteActions | any)
         case NoteActionTypes.LOAD_DONE:
             return Object.assign({}, state, {
                 notes: action.payload.map(
-                    n => ({ ...n, attachmentsPaths: n.attachmentsPaths.map(a => ({ src: a, isImage: a.toLowerCase().endsWith('.jpg')||a.toLowerCase().endsWith('.jpeg') })) })
+                    n => ({ ...n, attachmentsPaths: n.attachmentsPaths.map(a => ({ src: a, isImage: attachmentIsImage(a) })) })
                 ),
                 // loading: false,
                 error: false

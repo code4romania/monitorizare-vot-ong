@@ -17,22 +17,6 @@
           </ng-multiselect-dropdown>
         </div>
 
-        <div *ngIf="selectedCounties.length" class="ml-3">
-          <label>
-            <span>{{'POLLING_STATIONS_FILTER' | translate}}</span>
-            <span *ngIf="maxPollingStationNumber"> [1 &ndash; {{maxPollingStationNumber}}]</span>
-          </label>
-          <div class="d-flex justify-content-between">
-            <input class="form-control mr-2" type="number" [ngModel]="pollingStationFrom"
-                   (ngModelChange)="resetFilteredObservers(); pollingStationFrom = $event"
-                   placeholder="{{'FROM' | translate}}">
-            <div class="mt-1 text-muted">&ndash;</div>
-            <input class="form-control ml-2" type="number" [ngModel]="pollingStationTo"
-                   (ngModelChange)="resetFilteredObservers(); pollingStationTo = $event"
-                   placeholder="{{'TO' | translate}}">
-          </div>
-        </div>
-
         <div class="ml-3">
           <label>&nbsp;</label>
           <div class="w-100">

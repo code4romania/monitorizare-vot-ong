@@ -20,9 +20,8 @@ export const getSelectedAnswersAsObject = createSelector(
         acc[crt.id] = {
           ...crt,
           answers: crt.answers.reduce<CompletedAnswerMap>(
-            (_acc, _crt) => (_acc[_crt.idOption] = _crt, _acc), {}),
+            (_acc, _crt) => (_acc[_crt.optionId] = _crt, _acc), {}),
         };
-
         return acc;
       },
       {}

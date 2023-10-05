@@ -1,41 +1,67 @@
-import {isString, isDate} from 'lodash';
+import { isString, isDate } from 'lodash';
 
 export interface AnswerExtraConstructorData {
-    lastModified: string;
-    urbanArea: boolean;
-    observerArrivalTime: string;
-    observerLeaveTime: string;
-    isPollingStationPresidentFemale: boolean;
+  lastModified: string;
+  observerArrivalTime: string;
+  observerLeaveTime: string;
+  numberOfVotersOnTheList: number;
+  numberOfCommissionMembers: number;
+  numberOfFemaleMembers: number;
+  minPresentMembers: number;
+  chairmanPresence: boolean;
+  singlePollingStationOrCommission: boolean;
+  adequatePollingStationSize: boolean;
 }
 export class AnswerExtra {
-    lastModified: Date;
-    urbanArea = false;
-    observerArrivalTime: Date;
-    observerLeaveTime: Date;
-    isPollingStationPresidentFemale = false;
+  lastModified: Date;
+  observerArrivalTime: Date;
+  observerLeaveTime: Date;
 
-    constructor(formInfo?: AnswerExtraConstructorData) {
-        if (!formInfo) {
-            return;
-        }
-        checkForPropValue(formInfo.lastModified, val => this.lastModified = val);
-        checkForPropValue(formInfo.observerArrivalTime, val => this.observerArrivalTime = val);
-        checkForPropValue(formInfo.observerLeaveTime, val => this.observerLeaveTime = val);
-        this.urbanArea = formInfo.urbanArea;
-        this.isPollingStationPresidentFemale = formInfo.isPollingStationPresidentFemale;
+  numberOfVotersOnTheList: number;
+  numberOfCommissionMembers: number;
+  numberOfFemaleMembers: number;
+  minPresentMembers: number;
+  chairmanPresence: boolean;
+  singlePollingStationOrCommission: boolean;
+  adequatePollingStationSize: boolean;
 
-        function checkForPropValue(value, setPropertyFn: (val: Date) => void) {
-            if (!value) {
-                return;
-            }
-            if (isString(value)) {
-                value = new Date(value);
-            }
-
-            if (isDate(value)) {
-                setPropertyFn(value);
-            }
-        }
-
+  constructor(formInfo?: AnswerExtraConstructorData) {
+    if (!formInfo) {
+      return;
     }
+
+    checkForPropValue(
+      formInfo.lastModified,
+      (val) => (this.lastModified = val)
+    );
+    checkForPropValue(
+      formInfo.observerArrivalTime,
+      (val) => (this.observerArrivalTime = val)
+    );
+    checkForPropValue(
+      formInfo.observerLeaveTime,
+      (val) => (this.observerLeaveTime = val)
+    );
+    this.numberOfVotersOnTheList = formInfo.numberOfVotersOnTheList;
+    this.numberOfCommissionMembers = formInfo.numberOfCommissionMembers;
+    this.numberOfFemaleMembers = formInfo.numberOfFemaleMembers;
+    this.minPresentMembers = formInfo.minPresentMembers;
+    this.chairmanPresence = formInfo.chairmanPresence;
+    this.singlePollingStationOrCommission =
+      formInfo.singlePollingStationOrCommission;
+    this.adequatePollingStationSize = formInfo.adequatePollingStationSize;
+
+    function checkForPropValue(value, setPropertyFn: (val: Date) => void) {
+      if (!value) {
+        return;
+      }
+      if (isString(value)) {
+        value = new Date(value);
+      }
+
+      if (isDate(value)) {
+        setPropertyFn(value);
+      }
+    }
+  }
 }

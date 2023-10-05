@@ -8,23 +8,36 @@
     {{ answerExtra.observerLeaveTime | date: "shortTime" }}
   </span>
   <br />
-  <label class="form-check-label" for="defaultCheck1">
-    {{ "IS_URBAN_AREA" | translate }}:
+
+  <!-- TODO add missing fields -->
+
+  <label class="form-check-label" for="chairmanPresenceCheck">
+    {{ "CHAIRMAN_PRESENCE" | translate }}:
   </label>
   <input
     class="form-check-input ml-2"
     type="checkbox"
-    id="defaultCheck1"
-    [checked]="answerExtra.urbanArea"
+    id="chairmanPresenceCheck"
+    [checked]="answerExtra.chairmanPresence"
   />
-  <br />
-  <label class="form-check-label" for="defaultCheck2">
-    {{ "IS_PRESIDENT_WOMAN" | translate }}:
+
+  <label class="form-check-label" for="singlePollingStationOrCommissionCheck">
+    {{ "SINGLE_POLLING_STATION_OR_COMMISSION" | translate }}:
   </label>
   <input
     class="form-check-input ml-2"
     type="checkbox"
-    id="defaultCheck2"
-    [checked]="answerExtra.isPollingStationPresidentFemale"
+    id="singlePollingStationOrCommissionCheck"
+    [checked]="answerExtra.singlePollingStationOrCommission"
+  />
+
+  <label class="form-check-label" for="adequatePollingStationSizeCheck">
+    {{ "ADEQUATE_POLLING_STATION_SIZE" | translate }}:
+  </label>
+  <input
+    class="form-check-input ml-2"
+    type="checkbox"
+    id="adequatePollingStationSizeCheck"
+    [checked]="answerExtra.adequatePollingStationSize"
   />
 </div>

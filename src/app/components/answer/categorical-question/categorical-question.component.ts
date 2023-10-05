@@ -22,7 +22,7 @@ export class CategoricalQuestionComponent implements OnInit {
         this.validateSingleQuestion(value);
         this.validateTextQuestion(value);
       }
-      this.completedAnswers = keyBy(value, (v) => v.idOption);
+      this.completedAnswers = keyBy(value, (v) => v.optionId);
     } else {
       this.completedAnswers = undefined;
     }
@@ -73,7 +73,7 @@ export class CategoricalQuestionComponent implements OnInit {
   }
 
   isChecked(answer: BaseAnswer) {
-    return this.completedAnswers && this.completedAnswers[answer.idOption];
+    return this.completedAnswers && this.completedAnswers[answer.optionId];
   }
   isTextAnswer(answer: BaseAnswer) {
     return this.isTextQuestion && answer.isFreeText;
@@ -82,15 +82,15 @@ export class CategoricalQuestionComponent implements OnInit {
   isFlaggedAnswer(answer: BaseAnswer) {
     return some(
       values(this.completedAnswers),
-      (a) => a.flagged && a.idOption === answer.idOption
+      (a) => a.flagged && a.optionId === answer.optionId
     );
   }
 
   answerTextValue(answer: BaseAnswer) {
     return (
       this.completedAnswers &&
-      this.completedAnswers[answer.idOption] &&
-      this.completedAnswers[answer.idOption].value
+      this.completedAnswers[answer.optionId] &&
+      this.completedAnswers[answer.optionId].value
     );
   }
 }

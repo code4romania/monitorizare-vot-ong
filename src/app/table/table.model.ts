@@ -5,6 +5,7 @@ export interface TableColumn {
   name: string;
   canBeSorted?: boolean;
   propertyName?: string;
+  dataType?: 'STRING' | 'DATE';
 }
 
 export type TableColumnTranslated = Omit<TableColumn, 'name'> & { name: Observable<any> }

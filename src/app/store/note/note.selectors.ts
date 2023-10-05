@@ -43,7 +43,7 @@ export const getNotesMergedWithQuestions = createSelector(
           ? {
             tabName: tabs[note.formId].description,
             questionCode: correspondingQuestion.code,
-            isQuestionFlagged: correspondingQuestion.optionsToQuestions.some(o => o.flagged && selectedAnswers[correspondingQuestion.id]?.answers[o.id]),
+            isQuestionFlagged: correspondingQuestion.optionsToQuestions.some(o => o.flagged && selectedAnswers[correspondingQuestion.id]?.answers[o.optionId]),
             hasCorrespondingQuestion: true,
           }
           : {

@@ -2,10 +2,10 @@
 
 .c-notes-row, .c-notes-columns {
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr;
+  grid-template-columns: 1fr 2fr 3fr 0.5fr;
 
   @media all and (max-width: 700px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr;
   }
 }
 

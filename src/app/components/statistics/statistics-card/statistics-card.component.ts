@@ -7,23 +7,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-statistics-card',
   templateUrl: './statistics-card.component.html',
-  styleUrls: ['./statistics-card.component.scss']
+  styleUrls: ['./statistics-card.component.scss'],
 })
 export class StatisticsCardComponent implements OnInit {
-
   @Input() item: StatisticsStateItem;
 
-  @Input() sliceNumber: number
+  @Input() sliceNumber: number;
 
   @Input() dialog: boolean;
 
+  constructor(private modalService: NgbModal) {}
 
-  constructor( private modalService: NgbModal) { }
-
-  ngOnInit() {
-  }
-  get itemValues(){
-    if (!this.item.values){
+  ngOnInit() {}
+  get itemValues() {
+    if (!this.item.values) {
       return [];
     }
     if (this.sliceNumber) {
@@ -31,14 +28,10 @@ export class StatisticsCardComponent implements OnInit {
     } else {
       return this.item.values;
     }
-
   }
-
-
 
   public openDetail(item: StatisticsStateItem): void {
     const modalRef = this.modalService.open(StatisticsDetailsComponent);
     modalRef.componentInstance.item = item;
   }
-
 }

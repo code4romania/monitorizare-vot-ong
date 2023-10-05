@@ -1,6 +1,5 @@
 export interface BaseAnswer {
-    id: number;
-    idOption: number;
+    optionId: number;
     text: string;
     isFreeText: boolean;
     flagged: boolean;

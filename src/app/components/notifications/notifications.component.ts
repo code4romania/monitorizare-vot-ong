@@ -22,8 +22,6 @@ export interface NotificationsRouteParams extends Params {
 })
 export class NotificationsComponent implements OnInit {
   counties: CountyPollingStationInfo[] = [];
-  pollingStationFrom = '';
-  pollingStationTo = '';
   selectedCounties: { code: string; name: string }[] = [];
   filteredObserverIds: string[] = null;
   usingObserverFilters = false;
@@ -150,11 +148,9 @@ export class NotificationsComponent implements OnInit {
 
   searchForObservers() {
     this.usingObserverFilters = true;
-    const from = parseInt(this.pollingStationFrom, 10) || 1;
-    const to = parseInt(this.pollingStationTo, 10) || this.maxPollingStationNumber;
 
     this.notificationsService
-      .getActiveObserversInCounties(this.selectedCounties.map(c => c.code), from, to)
+      .getActiveObserversInCounties(this.selectedCounties.map(c => c.code))
       .subscribe((res) => {
         this.filteredObserverIds = res.map(o => o.id);
       });
@@ -169,8 +165,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   changeCountyFilter() {
-    this.pollingStationFrom = '';
-    this.pollingStationTo = '';
     this.resetFilteredObservers();
     if (this.selectedCounties.length) {
       this.usingObserverFilters = true;
