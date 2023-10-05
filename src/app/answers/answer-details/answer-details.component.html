@@ -1,7 +1,7 @@
 <div class="container-fluid c-answer-detail__container">
-  <app-base-button 
+  <app-base-button
       [custom-styles]="{ fontSize: '1.2rem' }"
-      [variant]="BaseButtonVariants.ALLTRANSPARENT" 
+      [variant]="BaseButtonVariants.ALLTRANSPARENT"
       [routerLink]="['../../']"
     >
       <div class="d-flex align-items-center">
@@ -18,7 +18,7 @@
     <h4 class="c-answer-header__title">
       {{ 'ANSWERS_WHICH_BELONG_TO' | translate }} {{ (crtPollingStation$ | async)?.observerName }}
     </h4>
-    
+
     <app-base-button class="c-answer-header__button" routerLink="notification">
       <span class="content">{{ 'SEND_NOTIF' | translate }}</span>
     </app-base-button>
@@ -27,11 +27,11 @@
   <div class="c-answer-stats">
     <ng-container *ngIf="(crtPollingStation$ | async) as crtPollingStation">
       <div class="c-answer-stats__container">
-        <div 
+        <div
           *ngFor="let stat of statsLabels"
           class="c-answer-stats__item"
         >
-          <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ crtPollingStation[stat.propertyName] || '/' }}</span>
+          <span class="c-answer-stats__label">{{ stat.name | async }}</span>: &nbsp; <span>{{ stat.type === 'DATE'? ((crtPollingStation[stat.propertyName] || '/') | date:'medium') : crtPollingStation[stat.propertyName] || '/' }}</span>
         </div>
       </div>
     </ng-container>
@@ -84,19 +84,19 @@
       <p>{{ crtClickedNote.text }}</p>
 
       <ng-container *ngFor="let attachment of crtClickedNote.attachmentsPaths">
-        
+
         <div *ngIf="attachment.isImage" class="c-notes-modal__image-container">
           <img [src]="attachment.src">
         </div>
-        
+
         <div *ngIf="!attachment.isImage" class="c-notes-modal__video-container">
           <video controls>
             <source [src]="attachment.src">
           </video>
         </div>
-        
+
       </ng-container>
-      
+
 
       <app-base-button (click)="activeModal.close()" [disabled]="false" [variant]="BaseButtonVariants.PURPLE"
         [custom-styles]="{ fontSize: '1rem', padding: '0.3rem 0.5rem', border: 'none' }"

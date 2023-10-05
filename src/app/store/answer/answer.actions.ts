@@ -19,6 +19,7 @@ export class AnswerActionTypes {
 }
 export class LoadAnswerPreviewAction implements Action {
     readonly type = AnswerActionTypes.LOAD_PREVIEW;
+    readonly DEFAULT_PAGE_SIZE: number = 20;
 
     payload: {
         page: number,
@@ -26,10 +27,11 @@ export class LoadAnswerPreviewAction implements Action {
         refresh: boolean,
         answerFilters?: AnswerFilters
     };
+
     constructor(page = undefined, pageSize = undefined, refresh = false, answerFilters = undefined) {
         this.payload = {
             page,
-            pageSize,
+            pageSize: pageSize ?? this.DEFAULT_PAGE_SIZE,
             refresh,
             answerFilters,
         };

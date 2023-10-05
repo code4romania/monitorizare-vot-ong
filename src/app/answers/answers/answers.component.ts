@@ -5,7 +5,7 @@ import { AnswerState } from '../../store/answer/answer.reducer';
 import { FormState } from '../../store/form/form.reducer';
 import { AppState } from '../../store/store.module';
 import { AnswersService, AnswersPackFilter } from '../../services/answers.service';
-import { Component, HostBinding, Inject, InjectionToken, OnInit } from '@angular/core';
+import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
@@ -29,8 +29,7 @@ const TABLE_COLUMNS = new InjectionToken('TABLE_COLUMNS', {
       { name: 'ANSWERS_POLLING_STATION', propertyName: 'pollingStationName', },
       { name: 'ANSWERS_NAME', propertyName: 'observerName', },
       { name: 'ANSWERS_PHONE', propertyName: 'observerPhoneNumber', },
-      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'observerArrivalTime', canBeSorted: true },
-      { name: 'ANSWERS_LOCATION_TYPE', propertyName: 'locationType', },
+      { name: 'ANSWERS_DATE_AND_TIME', propertyName: 'lastModified', canBeSorted: true, dataType: 'DATE' },
     ];
 
     return columns;
@@ -58,9 +57,7 @@ export class AnswersComponent implements OnInit {
   previousUsedFilters = null;
 
   answerState$: Observable<AnswerState> = this.store.pipe(select(state => state.answer), shareReplay(1));
-  answers$: Observable<(AnswerThread | AnswerExtra)[]> = this.store.select(getAnswerThreads).pipe(
-    map(threads => threads.map(c => ({ ...c, locationType: (c as any).urbanArea ? 'Urban' : 'Rural' })))
-  );
+  answers$: Observable<(AnswerThread | AnswerExtra)[]> = this.store.select(getAnswerThreads);
   filters$: Observable<AnswerFilters> = this.store.select(getFilters);
 
   public counties$ = this.store.select(state => state.county).pipe(

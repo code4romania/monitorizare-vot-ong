@@ -50,7 +50,7 @@ export class CountiesComponent implements OnInit {
 
   private handleCountyData(): void {
     this.store.select(state => state.county).pipe(
-      map(result => this.countyList = result?.counties),
+      map(result => this.countyList = result?.counties ?? []),
       tap(countyList => this.filteredCounties = countyList),
       takeUntil(this.destroy$)
     ).subscribe();

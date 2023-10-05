@@ -1,8 +1,8 @@
 <div class="card" [ngClass]="{'dialog': dialog}">
   <div class="card-header">
     <div class="card-header-contents">
-      <h4 *ngIf="item.subHeader" class="m-0">
-        {{ item.header }} {{ item.subHeader }}
+      <h4 class="m-0">
+        {{ item.header | translate }}
       </h4>
     </div>
   </div>

@@ -109,12 +109,12 @@ export class AnswerEffects {
     // filter(([, crtAnswerState]) => !!crtAnswerState.selectedAnswer === false),
     map(([action]) => action),
     switchMap((action: LoadAnswerDetailsAction) => {
-      const completedAnswears: string = Location.joinWithSlash(
+      const completedAnswers: string = Location.joinWithSlash(
         this.baseUrl,
         '/api/v1/answers/filledIn'
       );
 
-      return this.http.get<CompletedQuestion[]>(completedAnswears, {
+      return this.http.get<CompletedQuestion[]>(completedAnswers, {
         body: {
           pollingStationId: action.payload.sectionId,
           observerId: action.payload.observerId,

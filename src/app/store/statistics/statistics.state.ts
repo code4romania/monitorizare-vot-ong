@@ -8,7 +8,6 @@ export class StatisticsStateItem {
     method: string;
 
     header: string;
-    subHeader: string;
 
     page: number;
     pageSize: number;
@@ -24,7 +23,6 @@ export class StatisticsStateItem {
             this.key = config.key;
             this.method = config.method;
             this.header = config.header;
-            this.subHeader = config.subHeader;
         }
     }
 }

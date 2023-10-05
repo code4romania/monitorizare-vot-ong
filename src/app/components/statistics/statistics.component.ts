@@ -3,12 +3,9 @@ import {map} from 'rxjs/operators';
 import { StatisticsStateItem } from '../../store/statistics/statistics.state';
 import { AppState } from '../../store/store.module';
 import {select, Store} from '@ngrx/store';
-import { ApiService } from '../../core/apiService/api.service';
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {values} from 'lodash';
-
-
 
 @Component({
   selector: 'app-statistics',

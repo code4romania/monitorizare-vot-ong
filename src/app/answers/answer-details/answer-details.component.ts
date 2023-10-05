@@ -4,8 +4,6 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { concat, Observable, of, Subject, combineLatest, merge } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, distinctUntilKeyChanged, filter, map, scan, shareReplay, startWith, take, tap } from 'rxjs/operators';
-import { AnswerExtra } from 'src/app/models/answer.extra.model';
-import { AnswerThread } from 'src/app/models/answer.thread.model';
 import { FormDetails } from 'src/app/models/form.info.model';
 import { Form } from 'src/app/models/form.model';
 import { BASE_BUTTON_VARIANTS, Variants } from 'src/app/shared/base-button/base-button.component';
@@ -43,10 +41,9 @@ export class AnswerDetailsComponent implements OnInit {
   crtClickedNote: { text: string; questionCode: string; attachmentsPaths: any[]; };
 
   statsLabels = [
-    { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', },
-    { name: this.translate.get('ANSWERS_LOCATION'), propertyName: 'locationType', },
-    { name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber', },
-    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'observerArrivalTime', },
+    { name: this.translate.get('ANSWERS_STATION'), propertyName: 'pollingStationName', type: 'STRING' },
+    { name: this.translate.get('ANSWERS_PHONE'), propertyName: 'observerPhoneNumber', type: 'STRING'},
+    { name: this.translate.get('ANSWERS_DATE_AND_TIME'), propertyName: 'lastModified', type: 'DATE'},
   ];
 
   crtPollingStation$ = this.store.select(getSpecificThreadByIds, {
@@ -56,7 +53,6 @@ export class AnswerDetailsComponent implements OnInit {
   .pipe(
     tap(v => v === void 0 && this.router.navigate(['../../'], { relativeTo: this.route })),
     filter(Boolean),
-    map<AnswerThread & AnswerExtra, any>(a => ({ ...a, locationType: a.urbanArea ? 'Urban' : 'Rural' })),
     shareReplay(1),
   );
 
@@ -106,7 +102,7 @@ export class AnswerDetailsComponent implements OnInit {
       (acc: SectionsState, [crtSections, selectedAnswers, formNotes]) => {
         for (const section of crtSections) {
           for (const q of section.questions) {
-            const isQuestionFlagged = q.optionsToQuestions.some(o => o.flagged && selectedAnswers[q.id]?.answers[o.id]);
+            const isQuestionFlagged = q.optionsToQuestions.some(o => o.flagged && selectedAnswers[q.id]?.answers[o.optionId]);
 
             if (isQuestionFlagged) {
               acc.flaggedQuestions[q.id] = true;

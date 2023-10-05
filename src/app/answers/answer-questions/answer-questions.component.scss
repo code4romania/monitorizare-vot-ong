@@ -8,7 +8,7 @@ $question-text-color: #474747;
   &:not(:first-child) {
     margin-top: 1rem;
   }
-  
+
   &__desc {
     color: $light-text-gray;
     width: 50%;
@@ -68,7 +68,6 @@ $question-text-color: #474747;
 
     &.is-option-text {
       display: flex;
-      flex-direction: row-reverse;
     }
   }
 
@@ -89,4 +88,14 @@ $question-text-color: #474747;
       color: $delete-color;
     }
   }
+}
+
+.checkboxOption {
+  display: inline-flex;
+    gap: 30px;
+}
+
+.textOption {
+     display: inline-flex;
+    gap: 30px;
 }

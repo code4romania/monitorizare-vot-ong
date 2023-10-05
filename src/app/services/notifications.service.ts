@@ -45,14 +45,10 @@ export class NotificationsService {
   }
 
   public getActiveObserversInCounties(
-    counties: string[],
-    fromPollingStationNumber: number,
-    toPollingStationNumber: number
+    counties: string[]
   ): Observable<Observer[]> {
     const urlWithParams = QueryParamBuilder.Instance('/api/v1/observer/active')
       .withParam('countyCodes', counties)
-      .withParam('fromPollingStationNumber', fromPollingStationNumber)
-      .withParam('toPollingStationNumber', toPollingStationNumber)
       .withParam('currentlyCheckedIn', true)
       .build();
 
