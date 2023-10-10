@@ -6,14 +6,15 @@
     <div class="control-container d-flex justify-content-between mt-2">
       <h4>{{ "FORM_EDIT" | translate }}</h4>
       <div class="btn-group-separated" role="group" aria-label="save group">
-        <button class="btn-outline-secondary btn" (click)="saveForm()" type="submit"
+        <!-- <button class="btn-outline-secondary btn" (click)="saveForm()" type="submit"
           [disabled]="!formDetailsFormGroup.valid">
           {{ "FORM_SAVE_DRAFT" | translate }}
-        </button>
+        </button> -->
         <button class="btn-warning btn ml-2" (click)="saveAndPublishForm()" type="submit"
           [disabled]="!formDetailsFormGroup.valid">
           {{ "FORM_PUBLISH" | translate }}
         </button>
+
       </div>
     </div>
   </div>
@@ -23,15 +24,6 @@
       <form [formGroup]="formDetailsFormGroup">
         <div class="row">
           <div class="col-lg-6">
-            <div class="form-group">
-              <label for="form-title">{{ "FORM_TITLE" | translate }}</label>
-              <input class="form-control" id="form-title" formControlName="title"
-                placeholder="{{ 'FORM_TITLE_PLACEHOLDER' | translate }}" />
-              <div class="invalid-feedback"
-                *ngIf="!formDetailsFormGroup.controls['title'].valid && formDetailsFormGroup.controls['title'].touched">
-                Title is required!
-              </div>
-            </div>
             <div class="form-group">
               <label for="form-cde">{{ "FORM_CODE" | translate }}</label>
               <input class="form-control" formControlName="code" id="form-code"
@@ -69,6 +61,8 @@
       <app-section [sectionFormGroup]="section" (sectionDeleteEventEmitter)="onSectionDelete(i)">
       </app-section>
     </div>
+
+
   </div>
 
   <div class="section-add mt-2" (click)="addFormSection()">

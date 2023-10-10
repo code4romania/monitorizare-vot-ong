@@ -40,7 +40,4 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
-
-
 }

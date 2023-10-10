@@ -6,10 +6,10 @@ import { Location } from '@angular/common';
 import { FormSection } from '../../../models/form.section.model';
 import { AppState } from '../../../store/store.module';
 import { Store } from '@ngrx/store';
-import { FormActionTypes, FormUploadAction, FormUploadCompleteAction, FormUploadPublishAction, FullyLoadFormAction } from '../../../store/form/form.actions';
+import { FormActionTypes, FormUpdateAction, FormUploadAction, FormUploadCompleteAction, FormUploadPublishAction, FullyLoadFormAction } from '../../../store/form/form.actions';
 import { Subject, Subscription } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInFormArray } from '../../utils';
 import { initFormFormGroup, initOptionFormGroup, initQuestionFormGroup, initSectionFormGroup } from '../form-groups-builder';
 import { FormQuestion } from '../../../models/form.question.model';
@@ -129,14 +129,14 @@ export class FormCreateComponent implements OnInit, OnDestroy {
     this.sectionsArray.push(initSectionFormGroup(this.formBuilder));
   }
 
-  saveForm() {
-    const form = this.formDetailsFormGroup.value as Form;
-    this.store.dispatch(new FormUploadAction(form));
-  }
+  // saveForm() {
+  //   const form = this.formDetailsFormGroup.value as Form;
+  //   this.store.dispatch(new FormUploadAction(form));
+  // }
 
   saveAndPublishForm() {
     const form = this.formDetailsFormGroup.value as Form;
-    this.store.dispatch(new FormUploadPublishAction(form));
+    this.store.dispatch(new FormUpdateAction(form));
   }
 
   private listenToActionSteam(): void {
