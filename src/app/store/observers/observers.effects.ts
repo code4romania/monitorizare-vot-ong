@@ -22,7 +22,7 @@ import {
   ObserversActions,
   LoadObserversCountCompleteAction,
 } from './observers.actions';
-import { ApiService } from '../../core/apiService/api.service';
+import { ApiService, QueryParamBuilder } from '../../core/apiService/api.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Observer } from '../../models/observer.model';
@@ -58,15 +58,15 @@ export class ObserversEffects {
     mergeMap((obs) =>
       obs.pipe(
         switchMap((a) => {
-          const url: string = Location.joinWithSlash(
-            this.baseUrl,
-            `/api/v1/observer${
-              observersConfig.find((value) => value.key === a.payload.key)
-                .method
-            }?Name=${a.payload.searchParamName}&Number=${
-              a.payload.searchParamPhone
-            }&Page=${a.payload.page}&PageSize=${a.payload.pageSize}`
-          );
+
+          const urlWithParams = QueryParamBuilder.Instance(`/api/v1/observer${observersConfig.find((value) => value.key === a.payload.key).method}`)
+          .withParam('name', a.payload.searchParamName)
+          .withParam('number', a.payload.searchParamPhone)
+          .withParam('page', a.payload.page)
+          .withParam('pageSize', a.payload.pageSize)
+          .build();
+
+          const url: string = Location.joinWithSlash(this.baseUrl,urlWithParams);
 
           return this.http
             .get<{

@@ -130,7 +130,8 @@
       </app-base-dropdown>
 
       <span *ngIf="c.propertyName !== actionsColumnName">
-        {{ r[c.propertyName] ? r[c.propertyName] : r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
+        {{ r[c.propertyName] ?( c.dataType === 'DATE'? (r[c.propertyName] | date:'medium'): r[c.propertyName] ) :
+        r[c.propertyName] === 0 ? 0 : ('UNSPECIFIED' | translate) }}
       </span>
     </ng-template>
 
