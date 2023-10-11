@@ -6,10 +6,10 @@
   "scripts": {
     "start": "ng serve",
     "start-qa": "ng serve --configuration=qa",
-    "start-prod": "ng serve --configuration=prod",
+    "start-prod": "ng serve --configuration=production",
     "start-local": "ng serve --configuration=local",
     "build": "ng build",
-    "build-prod": "ng build --configuration=prod",
+    "build-prod": "ng build --configuration=production",
     "build-qa": "ng build --configuration=qa",
     "build-local": "ng build --configuration=local",
     "lint": "tslint \"src/**/*.ts\""
