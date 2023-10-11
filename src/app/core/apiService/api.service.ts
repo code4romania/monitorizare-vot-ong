@@ -41,10 +41,10 @@ export class QueryParamBuilder {
   ): QueryParamBuilder {
     if (value instanceof Array) {
       value.forEach((x) => {
-        this.params.push(`${paramName}=${x}`);
+        this.params.push(`${paramName}=${encodeURIComponent(x)}`);
       });
     } else {
-      this.params.push(`${paramName}=${value}`);
+      this.params.push(`${paramName}=${encodeURIComponent(value)}`);
     }
     return this;
   }
