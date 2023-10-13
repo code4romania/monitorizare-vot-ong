@@ -114,7 +114,7 @@
   "RESET_PASSWORD": "Reset password",
   "DOWNLOAD_ANSWERS": "Download answers",
   "CREDENTIALS_INVALID": "Credentials are invalid",
-  "ANSWERS_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
+  "DATA_DOWNLOAD_CONFIRMATION": "Are you sure you want to launch a data download request?",
   "BACK": "Back",
 
   "INDEX": "Index",
@@ -171,8 +171,7 @@
 
   "VALIDATION_REQUIRED": "%s is required",
 
-  "EXPORT": "Export answers",
-  "EXPORT_NOTES": "Export notes",
+  "EXPORT": "Export all data",
   "NO_RESULTS": "No results",
   "TRY_AGAIN_MSG": "Please make sure you've typed everything correctly and try again",
   "VIEW_NOTE": "View Note",

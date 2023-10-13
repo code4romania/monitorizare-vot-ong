@@ -91,7 +91,7 @@ export class AnswerComponent implements OnInit {
     }
 
     downloadAnswers() {
-        if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
+        if (!confirm(this.translate.instant('DATA_DOWNLOAD_CONFIRMATION'))) {
             return;
         }
 

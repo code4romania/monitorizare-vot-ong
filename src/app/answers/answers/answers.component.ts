@@ -125,33 +125,19 @@ export class AnswersComponent implements OnInit {
     return value !== null && value !== '';
   }
 
-  downloadAnswers(rawFilters) {
-    if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
+  downloadAllData() {
+    if (!confirm(this.translate.instant('DATA_DOWNLOAD_CONFIRMATION'))) {
       return;
     }
 
-    const filter = this.mapFilterKeys(rawFilters);
 
     this.isLoading = true;
-    return this.answersService.downloadAnswers(filter).subscribe(res => {
+    return this.answersService.downloadAllData().subscribe(res => {
       this.isLoading = false;
-      FileSaver.saveAs(res, 'data.csv');
+      FileSaver.saveAs(res, 'data.xlsx');
     }, error => {
       this.isLoading = false;
     });
-  }
-
-  downloadNotes(rawFilters) {
-    if (!confirm(this.translate.instant('ANSWERS_DOWNLOAD_CONFIRMATION'))) {
-      return;
-    }
-
-    const filter = this.mapFilterKeys(rawFilters);
-
-    this.isLoading = true;
-    return this.answersService.downloadNotes(filter)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe(res => FileSaver.saveAs(res, 'notes-data.csv'));
   }
 
   private mapFilterKeys(rawFilters) {
