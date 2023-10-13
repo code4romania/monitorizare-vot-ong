@@ -115,7 +115,7 @@
   "RESET_PASSWORD": "Resetare Parolă",
   "DOWNLOAD_ANSWERS": "Descarcă răspunsuri",
   "CREDENTIALS_INVALID": "Acreditările sunt invalide",
-  "ANSWERS_DOWNLOAD_CONFIRMATION": "Ești sigur că vrei să lansezi cererea de descărcare a datelor?",
+  "DATA_DOWNLOAD_CONFIRMATION": "Ești sigur că vrei să lansezi cererea de descărcare a datelor?",
   "BACK": "Înapoi",
 
   "INDEX": "Nr.",
@@ -172,8 +172,7 @@
 
   "VALIDATION_REQUIRED": "%s este necesar",
 
-  "EXPORT": "Exportă răspunsurile",
-  "EXPORT_NOTES": "Exportă notele",
+  "EXPORT": "Exportă toate datele",
   "NO_RESULTS": "Niciun rezultat",
   "TRY_AGAIN_MSG": "Asigură-te că ai scris totul corect și încearcă din nou",
   "VIEW_NOTE": "Vezi nota",

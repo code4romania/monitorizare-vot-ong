@@ -40,6 +40,11 @@ export class AnswersService {
     return this.http.get<Blob>(url, {params, responseType: 'blob' as 'json'}).pipe(first());
   }
 
+  downloadAllData() {
+    const url = Location.joinWithSlash(this.baseUrl, '/api/v2/export/all');
+    return this.http.get<Blob>(url, { responseType: 'blob' as 'json' }).pipe(first());
+  }
+
 	fetchExtraDetailsForObserver (observerId: number, sectionId: number) {
 		return this.http.get<AnswerExtraConstructorData>(this.extraDetailsURL, {
 			body: {
